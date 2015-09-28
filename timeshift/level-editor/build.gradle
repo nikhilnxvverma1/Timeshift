@@ -1,0 +1,11 @@
+
+apply plugin: 'application'
+mainClassName = "com.nikhil.Main"
+
+def javaHome = System.properties['java.home']
+
+task execute(type:JavaExec){
+	ext.mainClass='com.nikhil.Main'
+	main=mainClass
+	classpath = sourceSets.main.runtimeClasspath
+}

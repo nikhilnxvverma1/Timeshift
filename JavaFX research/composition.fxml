@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <SplitPane dividerPositions="0.4013377926421405" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="39.0" prefWidth="600.0">
+        <items>
+            <HBox alignment="CENTER_LEFT">
+               <children>
+                  <TextField />
+                  <ToolBar layoutX="59.0" layoutY="6.0" prefHeight="35.0" prefWidth="178.0">
+                    <items>
+                        <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="35.0" text="&lt; ||" />
+                      <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="29.0" text="&gt;" />
+                        <Button layoutX="117.0" layoutY="10.0" mnemonicParsing="false" text="||&gt;" />
+                        <Button layoutX="10.0" layoutY="10.0" mnemonicParsing="false" text="||" />
+                        <Button layoutX="66.0" layoutY="10.0" mnemonicParsing="false" text="[ ]" />
+                    </items>
+                  </ToolBar>
+               </children>
+            </HBox>
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0" />
+        </items>
+      </SplitPane>
+      <TreeTableView layoutY="69.0" prefHeight="250.0" prefWidth="496.0">
+        <columns>
+          <TreeTableColumn prefWidth="75.0" text="Name" />
+          <TreeTableColumn prefWidth="75.0" text="Value" />
+            <TreeTableColumn prefWidth="90.0" text="Option" />
+            <TreeTableColumn prefWidth="359.0" text="Time" />
+        </columns>
+      </TreeTableView>
+      <AnchorPane layoutX="210.0" layoutY="40.0" prefHeight="25.0" prefWidth="355.0" style="-fx-background-color: #275742;" />
+   </children>
+</VBox>

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.VBox?>
+
+
+<fx:root maxHeight="1.7976931348623157E308" maxWidth="-Infinity" minWidth="-Infinity" prefHeight="183.0" prefWidth="600.0" type="javafx.scene.layout.VBox" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <AnchorPane prefHeight="20.0" prefWidth="600.0" style="-fx-border-color: #000000;" />
+      <AnchorPane layoutX="10.0" layoutY="10.0" onMouseClicked="#rowClickedPink" prefHeight="20.0" prefWidth="600.0" style="-fx-border-color: #000000; -fx-background-color: #981375;" />
+      <AnchorPane layoutX="10.0" layoutY="30.0" prefHeight="20.0" prefWidth="600.0" style="-fx-border-color: #000000;" />
+      <AnchorPane layoutX="10.0" layoutY="50.0" prefHeight="20.0" prefWidth="600.0" style="-fx-border-color: #000000;" />
+      <AnchorPane fx:id="greenRow" layoutX="10.0" layoutY="70.0" onMouseClicked="#rowClicked" prefHeight="20.0" prefWidth="600.0" style="-fx-border-color: #000000; -fx-background-color: #426513;" />
+      <AnchorPane layoutX="10.0" layoutY="90.0" prefHeight="20.0" prefWidth="600.0" style="-fx-border-color: #000000;" />
+      <AnchorPane layoutX="10.0" layoutY="110.0" prefHeight="20.0" prefWidth="600.0" style="-fx-border-color: #000000;" />
+   </children>
+</fx:root>

@@ -1,0 +1,5 @@
+task execute(type:JavaExec){
+	ext.mainClass='Main'
+	main=mainClass
+	classpath = sourceSets.main.runtimeClasspath
+}

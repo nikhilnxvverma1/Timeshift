@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.nikhil.controller.RootControllerTest" tests="1" skipped="0" failures="0" errors="0" timestamp="2015-08-16T09:01:20" hostname="Nikhils-MacBook-Air.local" time="0.007">
+  <properties/>
+  <testcase name="testFindContainerFor" classname="com.nikhil.controller.RootControllerTest" time="0.007"/>
+  <system-out><![CDATA[setting up data
+testing find container for
+tearing down
+]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

@@ -1,0 +1,5 @@
+#org.springsource.ide.eclipse.gradle.core.preferences.GradleProjectPreferences
+#Mon Jun 29 20:11:06 IST 2015
+build.family.org.gradle.tooling.model.eclipse.HierarchicalEclipseProject=;game;level-editor;motion;timeline;util;
+org.springsource.ide.eclipse.gradle.linkedresources=
+org.springsource.ide.eclipse.gradle.rootprojectloc=

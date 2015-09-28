@@ -1,0 +1,328 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.input.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.canvas.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane fx:id="rootBorderPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="526.0" prefWidth="745.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+   <top>
+      <VBox prefHeight="62.0" prefWidth="600.0" BorderPane.alignment="CENTER">
+         <children>
+            <MenuBar style="-fx-background-color: #262626;">
+              <menus>
+                <Menu mnemonicParsing="false" style="-fx-text-fill: black;" text="File">
+                  <items>
+                        <MenuItem mnemonicParsing="false" style="-fx-text-fill: black;" text="New">
+                           <accelerator>
+                              <KeyCodeCombination alt="UP" code="N" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
+                           </accelerator></MenuItem>
+                        <MenuItem mnemonicParsing="false" text="Open">
+                           <accelerator>
+                              <KeyCodeCombination alt="UP" code="O" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
+                           </accelerator></MenuItem>
+                        <MenuItem mnemonicParsing="false" text="Save">
+                           <accelerator>
+                              <KeyCodeCombination alt="UP" code="S" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
+                           </accelerator></MenuItem>
+                        <MenuItem mnemonicParsing="false" text="Save As">
+                           <accelerator>
+                              <KeyCodeCombination alt="UP" code="S" control="DOWN" meta="UP" shift="DOWN" shortcut="UP" />
+                           </accelerator></MenuItem>
+                        <SeparatorMenuItem mnemonicParsing="false" />
+                        <MenuItem mnemonicParsing="false" text="Preferences" />
+                        <SeparatorMenuItem mnemonicParsing="false" />
+                    <MenuItem mnemonicParsing="false" text="Close" />
+                  </items>
+                </Menu>
+                <Menu mnemonicParsing="false" text="Edit">
+                  <items>
+                    <MenuItem mnemonicParsing="false" text="Cut">
+                           <accelerator>
+                              <KeyCodeCombination alt="UP" code="X" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
+                           </accelerator></MenuItem>
+                        <MenuItem mnemonicParsing="false" text="Copy">
+                           <accelerator>
+                              <KeyCodeCombination alt="UP" code="C" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
+                           </accelerator></MenuItem>
+                        <MenuItem mnemonicParsing="false" text="Paste">
+                           <accelerator>
+                              <KeyCodeCombination alt="UP" code="V" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
+                           </accelerator></MenuItem>
+                        <SeparatorMenuItem mnemonicParsing="false" />
+                        <MenuItem mnemonicParsing="false" text="Undo">
+                           <accelerator>
+                              <KeyCodeCombination alt="UP" code="Z" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
+                           </accelerator></MenuItem>
+                        <MenuItem mnemonicParsing="false" text="Redo">
+                           <accelerator>
+                              <KeyCodeCombination alt="UP" code="Y" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
+                           </accelerator></MenuItem>
+                  </items>
+                </Menu>
+                <Menu mnemonicParsing="false" text="Help">
+                  <items>
+                    <MenuItem mnemonicParsing="false" text="About" />
+                  </items>
+                </Menu>
+              </menus>
+            </MenuBar>
+            <HBox prefHeight="35.0" prefWidth="600.0" spacing="5.0" style="-fx-background-color: #4D4D4D;">
+               <children>
+                  <Button mnemonicParsing="false">
+                     <graphic>
+                        <ImageView fitHeight="24.0" fitWidth="23.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../art/new.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                     <tooltip>
+                        <Tooltip text="New" />
+                     </tooltip></Button>
+                  <Button mnemonicParsing="false" prefHeight="29.0" prefWidth="34.0">
+                     <graphic>
+                        <ImageView fitHeight="24.0" fitWidth="28.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../art/open.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                     <tooltip>
+                        <Tooltip text="Open" />
+                     </tooltip>
+                  </Button>
+                  <Button mnemonicParsing="false">
+                     <graphic>
+                        <ImageView fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../art/save.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                     <tooltip>
+                        <Tooltip text="Save" />
+                     </tooltip></Button>
+                  <Button mnemonicParsing="false">
+                     <graphic>
+                        <ImageView fitHeight="27.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../art/save_as.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                     <tooltip>
+                        <Tooltip text="Save as" />
+                     </tooltip></Button>
+                  <Separator orientation="VERTICAL" prefHeight="200.0" />
+                  <Button mnemonicParsing="false">
+                     <graphic>
+                        <ImageView fitHeight="25.0" fitWidth="29.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../art/undo.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                     <tooltip>
+                        <Tooltip text="Undo" />
+                     </tooltip></Button>
+                  <Button mnemonicParsing="false">
+                     <graphic>
+                        <ImageView fitHeight="28.0" fitWidth="27.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../art/redo.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                     <tooltip>
+                        <Tooltip text="Redo" />
+                     </tooltip></Button>
+               </children>
+               <padding>
+                  <Insets bottom="5.0" top="5.0" />
+               </padding>
+            </HBox>
+         </children>
+      </VBox>
+   </top>
+   <left>
+      <TilePane maxWidth="-Infinity" minWidth="-Infinity" prefHeight="293.0" prefWidth="52.0" style="-fx-background-color: #4D4D4D;" BorderPane.alignment="CENTER">
+         <children>
+            <Button mnemonicParsing="false">
+               <graphic>
+                  <ImageView fitHeight="24.0" fitWidth="23.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../art/tools/direct_select.png" />
+                     </image>
+                  </ImageView>
+               </graphic></Button>
+            <Button layoutX="10.0" layoutY="10.0" mnemonicParsing="false">
+               <graphic>
+                  <ImageView fitHeight="24.0" fitWidth="23.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../art/tools/select.png" />
+                     </image>
+                  </ImageView>
+               </graphic></Button>
+            <Button layoutX="43.0" layoutY="10.0" mnemonicParsing="false">
+               <graphic>
+                  <ImageView fitHeight="25.0" fitWidth="23.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../art/tools/pen.png" />
+                     </image>
+                  </ImageView>
+               </graphic></Button>
+            <Button layoutX="10.0" layoutY="35.0" mnemonicParsing="false">
+               <graphic>
+                  <ImageView fitHeight="33.0" fitWidth="22.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../art/tools/pen_add.png" />
+                     </image>
+                  </ImageView>
+               </graphic></Button>
+            <Button layoutX="43.0" layoutY="35.0" mnemonicParsing="false">
+               <graphic>
+                  <ImageView fitHeight="22.0" fitWidth="23.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../art/tools/pen_subtract.png" />
+                     </image>
+                  </ImageView>
+               </graphic></Button>
+            <Button layoutX="10.0" layoutY="60.0" mnemonicParsing="false">
+               <graphic>
+                  <ImageView fitHeight="24.0" fitWidth="23.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../art/tools/anchor.png" />
+                     </image>
+                  </ImageView>
+               </graphic></Button>
+            <Button layoutX="43.0" layoutY="60.0" mnemonicParsing="false">
+               <graphic>
+                  <ImageView fitHeight="27.0" fitWidth="23.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../art/tools/circle.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+               <tooltip>
+                  <Tooltip text="Circle" />
+               </tooltip></Button>
+            <Button layoutX="10.0" layoutY="85.0" mnemonicParsing="false">
+               <graphic>
+                  <ImageView fitHeight="25.0" fitWidth="23.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../art/tools/polygon.png" />
+                     </image>
+                  </ImageView>
+               </graphic></Button>
+            <Button layoutX="43.0" layoutY="85.0" mnemonicParsing="false">
+               <graphic>
+                  <ImageView fitHeight="20.0" fitWidth="23.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../art/tools/regular_polygon.png" />
+                     </image>
+                  </ImageView>
+               </graphic></Button>
+            <Button layoutX="10.0" layoutY="110.0" mnemonicParsing="false">
+               <graphic>
+                  <ImageView fitHeight="23.0" fitWidth="23.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../art/tools/rectangle.png" />
+                     </image>
+                  </ImageView>
+               </graphic></Button>
+            <Button mnemonicParsing="false">
+               <graphic>
+                  <ImageView fitHeight="24.0" fitWidth="23.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../art/tools/parlellogram.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Button>
+            <Button mnemonicParsing="false">
+               <graphic>
+                  <ImageView fitHeight="23.0" fitWidth="23.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../art/tools/triangle.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Button>
+            <Button mnemonicParsing="false">
+               <graphic>
+                  <ImageView fitHeight="29.0" fitWidth="23.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../art/tools/path.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Button>
+         </children>
+      </TilePane>
+   </left>
+   <right>
+      <TabPane prefHeight="200.0" prefWidth="200.0" tabClosingPolicy="UNAVAILABLE" BorderPane.alignment="CENTER">
+        <tabs>
+          <Tab text="Info">
+            <content>
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" style="-fx-background-color: #999999;" />
+            </content>
+          </Tab>
+          <Tab text="Properties">
+            <content>
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+            </content>
+          </Tab>
+        </tabs>
+      </TabPane>
+   </right>
+   <bottom>
+      <ScrollPane maxHeight="-Infinity" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="240.0" prefWidth="749.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+   <content>
+      <AnchorPane maxWidth="1.7976931348623157E308" minHeight="0.0" minWidth="0.0" prefHeight="242.0" prefWidth="744.0">
+         <children>
+            <HBox maxWidth="1.7976931348623157E308" prefHeight="240.0" prefWidth="745.0">
+               <children>
+                  <TreeTableView prefHeight="200.0" prefWidth="200.0">
+                     <columns>
+                        <TreeTableColumn prefWidth="75.0" text="Keyframe" />
+                        <TreeTableColumn prefWidth="124.0" text="Object" />
+                     </columns>
+                  </TreeTableView>
+                  <ScrollPane maxWidth="1.7976931348623157E308" prefHeight="240.0" prefWidth="543.0">
+                     <content>
+                        <AnchorPane maxWidth="1.7976931348623157E308" minHeight="0.0" minWidth="0.0" prefHeight="237.0" prefWidth="545.0">
+                           <children>
+                              <TreeTableView layoutY="-1.0" maxWidth="1.7976931348623157E308" prefHeight="240.0" prefWidth="600.0">
+                                 <columns>
+                                    <TreeTableColumn prefWidth="600.0" resizable="false">
+                                       <graphic>
+                                          <Slider maxWidth="1.7976931348623157E308" />
+                                       </graphic>
+                                    </TreeTableColumn>
+                                 </columns>
+                              </TreeTableView>
+                           </children>
+                        </AnchorPane>
+                     </content>
+                  </ScrollPane>
+               </children>
+            </HBox>
+         </children>
+      </AnchorPane>
+   </content>
+</ScrollPane>
+
+   </bottom>
+   <center>
+      <ScrollPane fx:id="workspaceScrollPane" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+        <content>
+          <AnchorPane fx:id="workspace" minHeight="0.0" minWidth="0.0" prefHeight="4000.0" prefWidth="4000.0" style="-fx-background-color: #333333;" />
+        </content>
+      </ScrollPane>
+   </center>
+</BorderPane>

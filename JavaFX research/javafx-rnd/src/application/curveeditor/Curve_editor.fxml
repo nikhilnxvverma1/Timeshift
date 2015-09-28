@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.*?>
+<?import javafx.scene.paint.*?>
+<?import javafx.scene.canvas.*?>
+<?import javafx.scene.chart.*?>
+<?import javafx.scene.shape.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<fx:root type="javafx.scene.layout.VBox" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <HBox alignment="TOP_CENTER" style="-fx-background-color: #666666;">
+         <children>
+            <Label text="Cuve : " textFill="WHITE" />
+            <ComboBox nodeOrientation="LEFT_TO_RIGHT" prefWidth="150.0" />
+         </children>
+      </HBox>
+      <AnchorPane fx:id="anchorPane">
+         <children>
+            <Line fx:id="firstAnchorHint" endX="80.0" endY="70.0" startX="20.0" startY="180.0" />
+            <CubicCurve fx:id="curve" controlX1="80.0" controlX2="110.0" controlY1="70.0" controlY2="180.0" endX="180.0" endY="20.0" fill="#ffffff00" startX="20.0" startY="180.0" stroke="BLACK" />
+            <Line fx:id="lastAnchorHint" endX="110.0" endY="180.0" startX="180.0" startY="20.0" />
+            <Canvas fx:id="canvas" height="200.0" width="200.0" />
+            <Circle fx:id="lastControlPoint" fill="#2750f2" layoutX="110.0" layoutY="180.0" onMouseDragged="#lastControlPointDragged" radius="6.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0">
+               <cursor>
+                  <Cursor fx:constant="MOVE" />
+               </cursor>
+            </Circle>
+            <Circle fx:id="curveStart" fill="#4df029" layoutX="20.0" layoutY="180.0" onMouseDragged="#curveStartDragged" radius="6.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0">
+               <cursor>
+                  <Cursor fx:constant="MOVE" />
+               </cursor>
+            </Circle>
+            <Circle fx:id="curveEnd" fill="#4df029" layoutX="180.0" layoutY="20.0" onMouseDragged="#curveEndDragged" radius="6.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0">
+               <cursor>
+                  <Cursor fx:constant="MOVE" />
+               </cursor>
+            </Circle>
+            <Circle fx:id="firstControlPoint" fill="#2750f2" layoutX="80.0" layoutY="70.0" onMouseDragged="#firstControlPointDragged" radius="6.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0">
+               <cursor>
+                  <Cursor fx:constant="MOVE" />
+               </cursor>
+            </Circle>
+         </children>
+      </AnchorPane>
+   </children>
+</fx:root>

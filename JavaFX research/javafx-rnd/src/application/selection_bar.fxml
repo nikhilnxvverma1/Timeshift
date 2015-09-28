@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.*?>
+<?import javafx.scene.shape.*?>
+<?import javafx.scene.layout.*?>
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+
+<fx:root maxHeight="1.7976931348623157E308" prefHeight="18.0" prefWidth="600.0" type="javafx.scene.layout.Pane" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <Rectangle fx:id="selectionRect" arcHeight="5.0" arcWidth="5.0" fill="#808080" height="18.0" onMouseDragged="#selectionDragged" onMousePressed="#selectionDragEntered" onMouseReleased="#selectionDragExited" stroke="BLACK" strokeLineCap="ROUND" strokeType="INSIDE" width="200.0" />
+      <Rectangle fx:id="leftResize" arcHeight="5.0" arcWidth="5.0" fill="#92e0ff" height="18.0" onMouseDragged="#leftResizeDragged" onMousePressed="#leftResizeDragEntered" onMouseReleased="#leftResizeDragExited" stroke="BLACK" strokeType="INSIDE" width="5.0">
+         <cursor>
+            <Cursor fx:constant="W_RESIZE" />
+         </cursor>
+      </Rectangle>
+      <Rectangle fx:id="rightResize" arcHeight="5.0" arcWidth="5.0" fill="#92e0ff" height="18.0" onMouseDragged="#rightResizeDragged" onMousePressed="#rightResizeDragEntered" onMouseReleased="#rightResizeDragExited" stroke="BLACK" strokeLineCap="BUTT" strokeType="INSIDE" width="5.0">
+         <cursor>
+            <Cursor fx:constant="W_RESIZE" />
+         </cursor>
+      </Rectangle>
+   </children>
+</fx:root>

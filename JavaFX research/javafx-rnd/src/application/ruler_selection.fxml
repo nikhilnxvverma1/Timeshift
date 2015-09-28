@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.*?>
+<?import javafx.scene.shape.*?>
+<?import javafx.scene.layout.*?>
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+
+<AnchorPane maxHeight="1.7976931348623157E308" maxWidth="-Infinity" minWidth="-Infinity" prefHeight="9.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <Rectangle fx:id="selectionBar" arcHeight="5.0" arcWidth="5.0" fill="#808080" height="18.0" layoutX="200.0" stroke="BLACK" strokeLineCap="ROUND" strokeType="INSIDE" width="200.0" />
+      <Rectangle fx:id="resizeLeftBar" arcHeight="5.0" arcWidth="5.0" fill="#92e0ff" height="18.0" layoutX="195.0" stroke="BLACK" strokeType="INSIDE" width="5.0">
+         <cursor>
+            <Cursor fx:constant="W_RESIZE" />
+         </cursor>
+      </Rectangle>
+      <Rectangle fx:id="resizeRightBar" arcHeight="5.0" arcWidth="5.0" fill="#92e0ff" height="18.0" layoutX="400.0" stroke="BLACK" strokeLineCap="BUTT" strokeType="INSIDE" width="5.0">
+         <cursor>
+            <Cursor fx:constant="W_RESIZE" />
+         </cursor>
+      </Rectangle>
+   </children>
+</AnchorPane>

@@ -1,0 +1,40 @@
+subprojects {
+    apply plugin: 'java'
+ 
+    repositories {
+        mavenCentral()
+    }
+      
+    version = '1.0-SNAPSHOT'
+    sourceCompatibility = 1.8
+}
+
+project(":util") {
+    
+    dependencies {
+        
+    }
+}
+project(":timeline") {
+    
+    dependencies {
+        compile project(":util")    
+    }
+}
+project(":motion") {
+    
+    dependencies {
+        compile project(":util")    
+		compile project(":timeline")
+        testCompile 'junit:junit:4.12'
+        testCompile 'org.mockito:mockito-core:1.+'
+    }
+}
+
+project(":level-editor") {
+    
+    dependencies {
+		compile project(":util")    
+        compile project(":motion")    
+    }
+}
