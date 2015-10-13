@@ -4,19 +4,12 @@ import com.nikhil.controller.*;
 import com.nikhil.controller.item.ItemModelController;
 import com.nikhil.controller.item.PolygonModelController;
 import com.nikhil.editor.workspace.Workspace;
-import com.nikhil.model.freeform.MovablePoint;
-import com.nikhil.model.shape.PolygonModel;
-import com.nikhil.util.modal.UtilPoint;
-import com.nikhil.view.item.PolygonView;
 import com.nikhil.xml.XMLReader;
+import javafx.scene.control.TabPane;
 import org.xml.sax.SAXException;
-
-import javax.rmi.CORBA.Util;
 import javax.xml.parsers.ParserConfigurationException;
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by NikhilVerma on 27/09/15.
@@ -24,11 +17,12 @@ import java.util.List;
 public class XMLLoader {
 
     private Workspace workspace;
-
+    private TabPane compositionTabs;
     private RootController rootController;
 
-    public XMLLoader(Workspace workspace) {
+    public XMLLoader(Workspace workspace,TabPane compositionTabs) {
         this.workspace = workspace;
+        this.compositionTabs=compositionTabs;
     }
 
     public RootController loadFile(File file) throws IOException, SAXException, ParserConfigurationException {
@@ -42,13 +36,25 @@ public class XMLLoader {
     private void createCompositions(){
         //create a new composition in the workspace for each composition controller encountered
         CompositionController t=rootController.getCompositionControllerStart();
+        CompositionViewController firstComposition=null;
+        compositionTabs.getTabs().clear();
         while(t!=null){
-            CompositionViewController compositionViewController=new CompositionViewController(t);
+            CompositionViewController compositionViewController=new CompositionViewController(t,workspace);
+            //keep track of the first compostion view controller
+            if(firstComposition==null){
+                firstComposition=compositionViewController;
+            }
 //            workspace.addComposition(compositionViewController);//it already came added from the XMLReader
-            workspace.setCurrentComposition(compositionViewController);//possibly not required
+
             createItemsIn(compositionViewController);
             workspace.getCompositionViewControllers().add(compositionViewController);
+            compositionTabs.getTabs().add(compositionViewController.getTab());
             t=t.getNext();
+        }
+        if(firstComposition!=null){
+            workspace.setCurrentComposition(firstComposition);
+            //select the tab in the tab pane if it exists
+            compositionTabs.getSelectionModel().select(firstComposition.getTab());
         }
     }
 

@@ -1,11 +1,9 @@
 package com.nikhil.view.control;
 
-import java.io.IOException;
-
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
+import com.nikhil.view.ValueFormatter;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
+import javafx.geometry.Pos;
+import javafx.scene.Cursor;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
@@ -13,81 +11,98 @@ import javafx.scene.layout.HBox;
 
 public class DraggableTextValue extends HBox{
 
-	private static final String CUSTOM_CONTROL_FXML = "Draggable_text_value.fxml";
-	
+	private static final String LABEL_STYLE="-fx-text-fill:rgb(0, 0, 255);";
+
+	private DraggableTextValueDelegate delegate;
 	private boolean upperLimitExists=false;
 	private boolean lowerLimitExists=true;
 	private double step=0.5;
 	private double upperLimit=100;
 	private double lowerLimit=0;
 	
-	private double value=50;
-	private ValueFormatter valueFormatter;	
+	private double value=50;//TODO make this an Observable Value
+	private ValueFormatter valueFormatter;
+	private String postfix;
 
 	//for internal uses 
 	private double lastX,lastY;
 	private boolean justGotDragged=false;
 	
-	@FXML private TextField textfield;
-	@FXML private Label label;
+	private TextField textfield;
+	private Label label;
 	
-	public DraggableTextValue() {
+	public DraggableTextValue(DraggableTextValueDelegate delegate) {
 		super();
+		this.delegate=delegate;
+		valueFormatter=v-> String.format("%.2f",v);
+		initView();
+	}
 
-		//load the control via fxml
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(CUSTOM_CONTROL_FXML));
-        fxmlLoader.setRoot(this);
-        fxmlLoader.setController(this);               
-        
-        try {
-            fxmlLoader.load();         
-        } catch (IOException exception) {
-            throw new RuntimeException(exception);
-        }
+	private void initView() {
+		this.setAlignment(Pos.CENTER);
+		textfield=new TextField();
+		textfield.setVisible(false);
+		textfield.textProperty().addListener((observable, oldValue, newValue) -> {
+			int letterWidth = 13;// number is just a guess
 
-        textfield.managedProperty().bind(textfield.visibleProperty());
-        label.setFocusTraversable(true);
-        label.setLabelFor(textfield);
-        valueFormatter=Util.getFormatterFor(ValueType.PERCENTAGE);
-        
-        label.focusedProperty().addListener(new ChangeListener<Boolean>(){
-        	@Override
-        	public void changed(ObservableValue<? extends Boolean> arg0, Boolean oldPropertyValue, Boolean newPropertyValue){
-        		if (newPropertyValue){
-        			System.out.println("label on focus");
-        			editValueInTextfield();
-        		}
-        	}
+			int letters = textfield.getText().length();
+			if(letters<3){
+				letters=3;//at least 3 letters worth of space should be there
+			}
+			textfield.setPrefWidth(letters * letterWidth);
         });
-        
-        textfield.focusedProperty().addListener(new ChangeListener<Boolean>(){
-        	@Override
-        	public void changed(ObservableValue<? extends Boolean> arg0, Boolean oldPropertyValue, Boolean newPropertyValue){
-        		if (newPropertyValue){
-        			System.out.println("Textfield on focus");
-        		}else{
-        			System.out.println("Textfield out focus");
-        			doneEditingValueInTextfield();
-        		}
-        	}
+
+		label=new Label();
+		label.setStyle(LABEL_STYLE);
+		label.setCursor(Cursor.W_RESIZE);
+		label.addEventHandler(MouseEvent.MOUSE_PRESSED, e -> {
+			labelPressed(e);
+		});
+		label.addEventHandler(MouseEvent.MOUSE_DRAGGED, e -> {
+			labelDragged(e);
+		});
+		label.addEventHandler(MouseEvent.MOUSE_RELEASED, e -> {
+			labelReleased(e);
+		});
+		this.getChildren().addAll(textfield, label);
+
+		textfield.managedProperty().bind(textfield.visibleProperty());
+		label.setFocusTraversable(true);
+		label.setLabelFor(textfield);
+		label.focusedProperty().addListener((arg0, oldPropertyValue, newPropertyValue) -> {
+            if (newPropertyValue){
+                editValueInTextfield();
+            }
         });
-        
-        refreshLabelText();
+		textfield.focusedProperty().addListener((arg0, oldPropertyValue, newPropertyValue) -> {
+            if (!newPropertyValue){
+				doneEditingValueInTextfield();
+				delegate.valueFinishedChanging(this, value);
+			}
+        });
+		refreshLabelText();
 	}
 
 
 	private void refreshLabelText() {
-		label.setText(valueFormatter.formatWith(value));
+		label.setText(valueFormatter.format(value)+(postfix!=null?postfix:""));
 	}
 
-	
+	public String getPostfix() {
+		return postfix;
+	}
+
+	public void setPostfix(String postfix) {
+		this.postfix = postfix;
+	}
+
 	private void editValueInTextfield(){
 		if(textfield.isFocused()){
 			return;
 		}
 		textfield.setVisible(true);
 		textfield.setText(value+"");
-		label.setText(valueFormatter.getUnit());
+		label.setText(postfix);
 		textfield.requestFocus();
 		label.setFocusTraversable(false);
 	}
@@ -99,14 +114,12 @@ public class DraggableTextValue extends HBox{
 		refreshLabelText();
 		label.setFocusTraversable(true);
 	}
-	
-	@FXML
+
 	private void labelPressed(MouseEvent mousePressEvent){
 		lastX=mousePressEvent.getX();
 		lastY=mousePressEvent.getY();
 	}
-	
-	@FXML 
+
 	private void labelDragged(MouseEvent dragEvent){
 		double x=dragEvent.getX();
 		double y=dragEvent.getY();
@@ -125,6 +138,7 @@ public class DraggableTextValue extends HBox{
 				
 			}
 		}
+		delegate.valueBeingDragged(this, value);
 		refreshLabelText();
 		lastX=x;
 		lastY=y;
@@ -135,6 +149,8 @@ public class DraggableTextValue extends HBox{
 	private void labelReleased(MouseEvent releaseEvent){
 		if(!justGotDragged){
 			editValueInTextfield();
+		}else{
+			delegate.valueFinishedChanging(this,value);
 		}
 		justGotDragged=false;
 	}

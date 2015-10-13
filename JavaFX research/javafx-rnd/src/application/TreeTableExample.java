@@ -87,7 +87,6 @@ public class TreeTableExample extends Application{
 			public TreeTableCell<ElementModal, String> call(
 					TreeTableColumn<ElementModal, String> param) {
 //				TreeTableCell cell =new TreeTableCell<String,String>();
-				
 				CustomCell cell=new CustomCell();
 				return cell;
 			}
@@ -215,6 +214,7 @@ class CustomCell extends TreeTableCell<ElementModal, String>{
 	@Override
 	protected void updateItem(String type, boolean empty) {
 		super.updateItem(type, empty);
+		ElementModal elementModal= getTreeTableRow().getTreeItem().getValue();
 		if(type!=null){
 			if(type.equalsIgnoreCase("header")){
 //				setText("H1");
@@ -264,5 +264,4 @@ class CustomCell extends TreeTableCell<ElementModal, String>{
 		hbox.getChildren().addAll(previous,keyButton,next);
 		return hbox;
 	}
-	
 }

@@ -18,6 +18,7 @@ public class Main extends Application {
 
 	public static final String TITLE="Untitled";
 	private static final String MAIN_VIEW_LOCATION="views/level-editor.fxml";
+	private static final String STYLESHEET="views/level-editor-style.css";
 
 	private File fileToOpen;
 
@@ -42,6 +43,7 @@ public class Main extends Application {
 
 		FXMLLoader fxmlLoader=new FXMLLoader(getClass().getClassLoader().getResource(MAIN_VIEW_LOCATION));
 		Parent root=fxmlLoader.load();
+		root.getStylesheets().add(STYLESHEET);
 		Scene scene=new Scene(root,WIDTH,HEIGHT);
 		if(fileToOpen==null){
 			primaryStage.setTitle(TITLE);

@@ -7,6 +7,7 @@ import com.nikhil.editor.workspace.Workspace;
 import java.util.Set;
 
 /**
+ * This command is primarily used by the paste operations.
  * Created by NikhilVerma on 28/09/15.
  */
 public class AddItemSet extends ActionOnItemSet {

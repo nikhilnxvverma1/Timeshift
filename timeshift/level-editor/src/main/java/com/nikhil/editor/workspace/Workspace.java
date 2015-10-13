@@ -16,6 +16,8 @@ import com.nikhil.view.util.AlertBox;
 import com.nikhil.view.zoom.ZoomableScrollPane;
 import com.nikhil.xml.XMLWriter;
 import javafx.geometry.Point2D;
+import javafx.scene.control.Tab;
+import javafx.scene.control.TabPane;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.input.ScrollEvent;
 import javafx.scene.layout.Pane;
@@ -75,8 +77,9 @@ public class Workspace  {
      * initializes the workspace for the specified file to load(possibly null).
      * This method should be called only after the worksheetPane has been added to the stage.
      * @param fileToOpen the file that needs to be loaded(this can be null too for an empty document)
+     * @param compositionTabs
      */
-    public void initializeSystem(File fileToOpen) {
+    public void initializeSystem(File fileToOpen, TabPane compositionTabs) {
         file=fileToOpen;
 
         //reset any controllers in the list if they may exist
@@ -84,11 +87,14 @@ public class Workspace  {
         itemViewControllers.clear();
         if(file==null){
             rootController=new RootController();
-            currentComposition = getDefaultComposition();
-            addComposition(currentComposition);
+
+            currentComposition = makeNewComposition();
+            //add its tab after removing dummy
+            compositionTabs.getTabs().clear();
+            compositionTabs.getTabs().add(currentComposition.getTab());
         }else{
             try {
-                open(file);
+                open(file, compositionTabs);
             } catch (Exception e) {
                 Logger.log(e);
                 AlertBox.display("Error", "There were some problems opening the file.");
@@ -156,11 +162,35 @@ public class Workspace  {
     //Items management
     //=============================================================================================
 
-    protected CompositionViewController getDefaultComposition(){
+    public boolean deleteCurrentComposition(){//TODO still need to work on removing from timeline
+
+        if(compositionViewControllers.size()>1){ //stop at the last composition
+            int index = compositionViewControllers.indexOf(currentComposition);
+            compositionViewControllers.remove(currentComposition);
+            removeFromTimelineSystem(currentComposition.getCompositionController());
+
+            //remove tab of the current composition from the tab pane
+            TabPane compositionTabs = currentComposition.getTab().getTabPane();
+            compositionTabs.getTabs().remove(currentComposition.getTab());
+
+            //select the previous tab if possible
+            if(index>1){
+                currentComposition=compositionViewControllers.get(index-1);
+            }else{ //select the tab next to this tab(which already has the same index)
+                currentComposition=compositionViewControllers.get(index);
+            }
+            compositionTabs.getSelectionModel().select(currentComposition.getTab());
+
+            return true;//indicate composition removed
+        }
+        return false;// to indicate that the last composition will not be removed
+    }
+
+    public CompositionViewController makeNewComposition(){
         CompositionController compositionController=new CompositionController();
-        CompositionViewController compositionViewController=new CompositionViewController(compositionController);
-        //TODO add more properties to this as default as needed
-        return compositionViewController;
+        CompositionViewController newComposition=new CompositionViewController(compositionController,this);
+        addComposition(newComposition);
+        return newComposition;
     }
 
     public void addComposition(CompositionViewController compositionViewController){
@@ -174,7 +204,7 @@ public class Workspace  {
         Logger.log("Added item controller to the timeline");
     }
 
-    public boolean removeFromTimelineSystem(ItemViewController itemViewController){
+    public boolean removeFromTimelineSystem(ItemViewController itemViewController){//TODO parameterize with model controller directly
 
         ItemModelController modelController = itemViewController.getModelController();
 
@@ -188,6 +218,10 @@ public class Workspace  {
             }
         }
         return false;//indicate that the node was not found in the system
+    }
+
+    public boolean removeFromTimelineSystem(CompositionController compositionController){
+        return rootController.removeCompositionController(compositionController);
     }
 
     public int pasteFromClipboard(){
@@ -238,8 +272,8 @@ public class Workspace  {
         fileModified(false);//<--here we force the title to be changed to the new file
     }
 
-    private void open(File file) throws ParserConfigurationException, IOException, SAXException {
-        XMLLoader xmlLoader=new XMLLoader(this);
+    private void open(File file, TabPane compositionTabs) throws ParserConfigurationException, IOException, SAXException {
+        XMLLoader xmlLoader=new XMLLoader(this,compositionTabs);
         rootController=xmlLoader.loadFile(file);
         ((Stage) zoomableScrollPane.getScene().getWindow()).setTitle(getWorkspaceTitle());
     }

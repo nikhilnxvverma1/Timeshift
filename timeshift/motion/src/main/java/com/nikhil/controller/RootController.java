@@ -116,6 +116,25 @@ public class RootController implements PulseListener,ModelElement{
         }
     }
 
+    public boolean removeCompositionController(CompositionController compositionController){
+        //traverse through the list to look for the composition controller
+        CompositionController t=compositionControllerStart;
+        CompositionController previous=null;
+        while(t!=null){
+            if(t==compositionController){
+                if(previous==null){//start
+                    compositionControllerStart=t.getNext();
+                }else{
+                    previous.setNext(t.getNext());
+                }
+                return true;// to indicate that the composition controller was found and removed
+            }
+            previous=t;
+            t=t.getNext();
+        }
+        return false;//to inidicate the composition controller was not found
+    }
+
     @Override
     public void acceptVisitor(ModelVisitor visitor) {
         visitor.visit(this);

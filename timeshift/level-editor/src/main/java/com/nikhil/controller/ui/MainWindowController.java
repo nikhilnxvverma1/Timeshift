@@ -1,21 +1,22 @@
 package com.nikhil.controller.ui;
 
 import com.nikhil.Main;
+import com.nikhil.controller.CompositionViewController;
 import com.nikhil.editor.workspace.Workspace;
 import com.nikhil.editor.tool.*;
 import com.nikhil.editor.workspace.WorkspaceListener;
 import com.nikhil.logging.Logger;
+import com.nikhil.view.util.AlertBox;
 import com.nikhil.view.util.ConfirmBox;
+import com.nikhil.view.zoom.ZoomableScrollPane;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Cursor;
 
-import javafx.scene.control.ScrollPane;
-import javafx.scene.control.ToggleButton;
-import javafx.scene.control.ToolBar;
+import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
@@ -46,26 +47,27 @@ public class MainWindowController implements WorkspaceListener {
     //UI components
     //=============================================================================================
 
-    @FXML private BorderPane borderPane;
+    @FXML private AnchorPane workspaceContainer;
+    @FXML private ToolBar toolBar;
     @FXML private ToggleButton selectionToolToggleButton;
-
-    //TODO not needed anymore
-
-    @FXML
-    private Pane workspacePane;
-    @FXML
-    private Pane worksheetPane;
-    @FXML
-    private ScrollPane workspaceScrollPane;
-    @FXML private ToolBar toolBar;//TODO possibly not needed
+    @FXML private ScrollPane dummyWorkspace;
+    @FXML private Pane workspacePane;//TODO this is inside dummy workspace, it will soon go away
+    @FXML private TabPane compositionTabs;
 
     private Workspace workspace;
 
     public void init(File fileToOpen){
         Logger.log("Initializing Main window controller");
+        workspaceContainer.getChildren().remove(dummyWorkspace);
         workspace=new Workspace(this);
-        borderPane.setCenter(workspace.getZoomableScrollPane());
-        workspace.initializeSystem(fileToOpen);
+        ZoomableScrollPane zoomableScrollPane = workspace.getZoomableScrollPane();
+        workspaceContainer.getChildren().add(zoomableScrollPane);
+        AnchorPane.setTopAnchor(zoomableScrollPane,0d);
+        AnchorPane.setRightAnchor(zoomableScrollPane,0d);
+        AnchorPane.setBottomAnchor(zoomableScrollPane,0d);
+        AnchorPane.setLeftAnchor(zoomableScrollPane, toolBar.getWidth());
+
+        workspace.initializeSystem(fileToOpen,compositionTabs );
         initializeTools();
     }
 
@@ -203,12 +205,12 @@ public class MainWindowController implements WorkspaceListener {
         FileChooser fileChooser=new FileChooser();
         fileChooser.setTitle(OPEN_FILE);
         fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Timeshift XML","*.xml"));
-        File file = fileChooser.showOpenDialog(borderPane.getScene().getWindow());
+        File file = fileChooser.showOpenDialog(workspaceContainer.getScene().getWindow());
         Logger.log("File to open is "+file);
 
         if(workspace.isEmptyDocument()){
             //open in the same instance of the application
-            workspace.initializeSystem(file);
+            workspace.initializeSystem(file,compositionTabs );
         }else{
             //open new instance of the application running in a parallel thread
             Platform.runLater(new Runnable() {
@@ -244,7 +246,7 @@ public class MainWindowController implements WorkspaceListener {
         FileChooser fileChooser=new FileChooser();
         fileChooser.setTitle(SAVE_FILE_AS);
         fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Timeshift XML","*.xml"));
-        Window window = borderPane.getScene().getWindow();
+        Window window = workspaceContainer.getScene().getWindow();
         File file = fileChooser.showSaveDialog(window);
         if(file!=null){
             Logger.log("File choosen is "+file);
@@ -266,17 +268,17 @@ public class MainWindowController implements WorkspaceListener {
             if(saveChanges){
                 if(workspace.getFile()==null){
                     if(saveAsNewFile()){
-                        ((Stage)borderPane.getScene().getWindow()).close();
+                        ((Stage)workspaceContainer.getScene().getWindow()).close();
                     }
                 }else{
                     workspace.save();
-                    ((Stage)borderPane.getScene().getWindow()).close();
+                    ((Stage)workspaceContainer.getScene().getWindow()).close();
                 }
             }else{
-                ((Stage)borderPane.getScene().getWindow()).close();
+                ((Stage)workspaceContainer.getScene().getWindow()).close();
             }
         }else{
-            ((Stage)borderPane.getScene().getWindow()).close();
+            ((Stage)workspaceContainer.getScene().getWindow()).close();
         }
     }
 
@@ -321,7 +323,6 @@ public class MainWindowController implements WorkspaceListener {
         }
     }
 
-
     private Tool getToolFrom(ToolType toolType){
 
         switch (toolType){
@@ -341,6 +342,21 @@ public class MainWindowController implements WorkspaceListener {
                 return isoscelesTriangleTool;
             default:
                 return selectionTool;
+        }
+    }
+
+    @FXML
+    private void newComposition(ActionEvent actionEvent){
+        Logger.log("New composition to be created");
+        //create new composition
+        Tab tab = workspace.makeNewComposition().getTab();
+        compositionTabs.getTabs().add(tab);
+    }
+    @FXML
+    private void deleteComposition(ActionEvent actionEvent){
+        boolean wasDeleted = workspace.deleteCurrentComposition();
+        if(!wasDeleted){
+            AlertBox.display("Last composition","At least one composition must exist");
         }
     }
 }
