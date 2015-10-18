@@ -41,7 +41,7 @@ public class Workspace  {
     private RootController rootController;
     private List<CompositionViewController> compositionViewControllers=new LinkedList<CompositionViewController>();
     private CompositionViewController currentComposition;
-    private List<ItemViewController> itemViewControllers = new LinkedList<ItemViewController>();
+//    private List<ItemViewController> itemViewControllers = new LinkedList<ItemViewController>();
 
 
     private Stack<Command> commandStack=new Stack<Command>();
@@ -84,7 +84,7 @@ public class Workspace  {
 
         //reset any controllers in the list if they may exist
         compositionViewControllers.clear();
-        itemViewControllers.clear();
+//        itemViewControllers.clear();
         if(file==null){
             rootController=new RootController();
 
@@ -198,7 +198,7 @@ public class Workspace  {
         compositionViewControllers.add(compositionViewController);
     }
 
-    public void addToTimelineSystem(ItemViewController itemViewController){
+    public void addToTimelineSystem(ItemViewController itemViewController){//TODO this method is not ready yet
         ItemModelController itemModelController = itemViewController.getModelController();
         currentComposition.getCompositionController().addItemController(itemModelController);
         Logger.log("Added item controller to the timeline");
@@ -303,7 +303,7 @@ public class Workspace  {
 
 
     public List<ItemViewController> getItemViewControllers() {
-        return itemViewControllers;
+        return currentComposition.getItemViewControllers();
     }
 
     public ZoomableScrollPane getZoomableScrollPane() {

@@ -49,7 +49,7 @@ public class ClientUI extends Application{
 		
 		AnchorPane timeControl=new AnchorPane();
 		Ruler ruler=new Ruler(30,WIDTH);
-		timeControl.getChildren().add(ruler);
+		timeControl.getChildren().add(selectionBar);
 		TimeValuePane timePane=buildTimePane(30,WIDTH);
 		timePane.setLayoutY(50);
 		timeControl.getChildren().add(timePane);

@@ -3,9 +3,7 @@ package com.nikhil.controller;
 import com.nikhil.Main;
 import com.nikhil.editor.workspace.Workspace;
 import com.nikhil.logging.Logger;
-import com.nikhil.view.custom.DraggableTextValue;
-import com.nikhil.view.custom.DraggableTextValueDelegate;
-import com.nikhil.view.custom.Ruler;
+import com.nikhil.view.custom.*;
 import com.nikhil.view.item.record.Metadata;
 import com.nikhil.view.item.record.PolygonMetadata;
 import javafx.geometry.Insets;
@@ -14,6 +12,9 @@ import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+
+import java.util.LinkedList;
+import java.util.List;
 
 /**
  * Created by NikhilVerma on 26/09/15.
@@ -26,6 +27,7 @@ public class CompositionViewController {
     private Tab tab;
     private Workspace workspace;
     private AnchorPane anchorPane;
+    private List<ItemViewController> itemViewControllers = new LinkedList<ItemViewController>();
 
     public CompositionViewController(CompositionController compositionController,Workspace workspace) {
         this.compositionController=compositionController;
@@ -54,6 +56,10 @@ public class CompositionViewController {
         return tab;
     }
 
+    public List<ItemViewController> getItemViewControllers() {
+        return itemViewControllers;
+    }
+
     private void initView(){
         anchorPane=new AnchorPane();
         tab.setContent(anchorPane);
@@ -61,7 +67,9 @@ public class CompositionViewController {
         HBox outerHBox = initSearchAndPlayback();
         TreeTableView itemTable = initItemTable();
         Ruler ruler=new Ruler(30, Main.WIDTH);//testing
-        VBox vBox=new VBox(outerHBox,ruler);
+        SelectionBar selectionBar=new SelectionBar(Main.WIDTH,null);
+        ThumbSeeker thumbSeeker=new ThumbSeeker(Main.WIDTH);
+        VBox vBox=new VBox(outerHBox,thumbSeeker,selectionBar);
         AnchorPane.setLeftAnchor(vBox,0d);
         AnchorPane.setBottomAnchor(vBox, 0d);
         AnchorPane.setTopAnchor(vBox,0d);

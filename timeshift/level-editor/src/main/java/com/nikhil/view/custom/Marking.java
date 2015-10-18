@@ -5,13 +5,14 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
 import javafx.scene.shape.Line;
 
-enum MarkingStrikeSize{
-	BIG_MARK,
-	SUB_MARK,
-	SMALL_MARK
-};
 
 public class Marking extends VBox{
+
+	enum MarkingStrikeSize{
+		BIG_MARK,
+		SUB_MARK,
+		SMALL_MARK
+	};
 
 	private static final double DEFAULT_WIDTH=30;
 	private static final double DEFAULT_HEIGHT=40;
