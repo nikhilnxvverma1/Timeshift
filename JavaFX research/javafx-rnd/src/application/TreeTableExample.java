@@ -54,7 +54,9 @@ public class TreeTableExample extends Application{
 	    root.setExpanded(true);
 
 	    root.getChildren().setAll(childNode1, childNode2, childNode3);
+		 root.setExpanded(true);
 	    childNode2.getChildren().setAll(grandChild1, grandChild2, grandChild3);
+		 childNode2.setExpanded(true);
 	    
 	    TreeTableColumn<ElementModal, String> column = new TreeTableColumn<>("Column");
 	    column.setPrefWidth(150);
@@ -214,17 +216,31 @@ class CustomCell extends TreeTableCell<ElementModal, String>{
 	@Override
 	protected void updateItem(String type, boolean empty) {
 		super.updateItem(type, empty);
-		ElementModal elementModal= getTreeTableRow().getTreeItem().getValue();
+//		ElementModal elementModal= getTreeTableRow().getTreeItem().getValue();
+		getTreeTableRow().setDisclosureNode(null);
+
 		if(type!=null){
 			if(type.equalsIgnoreCase("header")){
 //				setText("H1");
-				setGraphic(getCheckBoxes());
+				HBox checkBoxes = getCheckBoxes();
+//				checkBoxes.layoutXProperty().addListener((observable, oldValue, newValue) -> {
+//                    checkBoxes.setLayoutX(0);
+//                });
+				setGraphic(checkBoxes);
 			}else if(type.equalsIgnoreCase("subheader")){
 				setText(null);
-				setGraphic(getCycleButtons());
+				HBox cycleButtons = getCycleButtons();
+//				cycleButtons.layoutXProperty().addListener((observable, oldValue, newValue) -> {
+//					cycleButtons.setLayoutX(0);
+//				});
+				setGraphic(cycleButtons);
 			}else if(type.equalsIgnoreCase("property")){
 				setText(null);
-				setGraphic(new DraggableTextValue());
+				DraggableTextValue draggableTextValue = new DraggableTextValue();
+//				draggableTextValue.layoutXProperty().addListener((observable, oldValue, newValue) -> {
+//					draggableTextValue.setLayoutX(0);
+//				});
+				setGraphic(draggableTextValue);
 			}
 		}else{
 			setText(null);

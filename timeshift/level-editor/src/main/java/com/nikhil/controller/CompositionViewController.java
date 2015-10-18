@@ -1,17 +1,19 @@
 package com.nikhil.controller;
 
+import com.nikhil.Main;
 import com.nikhil.editor.workspace.Workspace;
 import com.nikhil.logging.Logger;
-import com.nikhil.view.control.DraggableTextValue;
-import com.nikhil.view.control.DraggableTextValueDelegate;
+import com.nikhil.view.custom.DraggableTextValue;
+import com.nikhil.view.custom.DraggableTextValueDelegate;
+import com.nikhil.view.custom.Ruler;
+import com.nikhil.view.item.record.Metadata;
+import com.nikhil.view.item.record.PolygonMetadata;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.control.Button;
-import javafx.scene.control.Tab;
-import javafx.scene.control.TextField;
-import javafx.scene.control.ToolBar;
+import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 
 /**
  * Created by NikhilVerma on 26/09/15.
@@ -53,10 +55,18 @@ public class CompositionViewController {
     }
 
     private void initView(){
-        HBox outerHBox = initSearchAndPlayback();
-
-        anchorPane=new AnchorPane(outerHBox);
+        anchorPane=new AnchorPane();
         tab.setContent(anchorPane);
+
+        HBox outerHBox = initSearchAndPlayback();
+        TreeTableView itemTable = initItemTable();
+        Ruler ruler=new Ruler(30, Main.WIDTH);//testing
+        VBox vBox=new VBox(outerHBox,ruler);
+        AnchorPane.setLeftAnchor(vBox,0d);
+        AnchorPane.setBottomAnchor(vBox, 0d);
+        AnchorPane.setTopAnchor(vBox,0d);
+        AnchorPane.setRightAnchor(vBox,0d);
+        anchorPane.getChildren().add(vBox);
     }
 
     private HBox initSearchAndPlayback() {
@@ -80,8 +90,28 @@ public class CompositionViewController {
 
         ToolBar playerControls=new ToolBar(gotoBeginning,previousKeyframe,playPause,nextKeyframe,gotoEnd);
         HBox outerHBox=new HBox(draggableTextValue,searchField,playerControls);
-        outerHBox.setAlignment(Pos.CENTER);
+        outerHBox.setAlignment(Pos.CENTER_LEFT);
         outerHBox.setPadding(new Insets(0,2,0,2));
         return outerHBox;
+    }
+
+    private TreeTableView initItemTable(){
+        //making a sample Metadata model for a composition controller
+        TreeItem<Metadata> polygonHeader= new TreeItem<>(new PolygonMetadata("Polygon 1",true,1,null));
+        TreeItem<Metadata> polygonScale= new TreeItem<>(new PolygonMetadata("Scale",false,2,null));
+        TreeItem<Metadata> polygonRotation= new TreeItem<>(new PolygonMetadata("Rotation",false,3,null));
+        TreeItem<Metadata> polygonTranslation= new TreeItem<>(new PolygonMetadata("Translation",false,4,null));
+        TreeItem<Metadata> polygonAnchorPoint= new TreeItem<>(new PolygonMetadata("Anchor Point", false, 5, null));
+        TreeItem<Metadata> polygonVertices= new TreeItem<>(new PolygonMetadata("Vertices", false, 6, null));
+        polygonHeader.getChildren().addAll(polygonScale, polygonRotation, polygonTranslation, polygonAnchorPoint, polygonVertices);
+
+
+        TreeTableColumn<Metadata,String> name=new TreeTableColumn<>("Name");
+        TreeTableColumn<Metadata,String> value=new TreeTableColumn<>("Value");
+        TreeTableColumn<Metadata,String> option=new TreeTableColumn<>("Option");
+
+        TreeTableView<Metadata> treeTableView=new TreeTableView<>(polygonHeader);
+        treeTableView.getColumns().addAll(name,value,option);
+        return treeTableView;
     }
 }

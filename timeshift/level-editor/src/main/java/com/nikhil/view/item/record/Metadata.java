@@ -10,6 +10,12 @@ public abstract class Metadata {
     protected boolean header;
     protected int tag;
 
+    public Metadata(String name, boolean header, int tag) {
+        this.name = name;
+        this.header = header;
+        this.tag = tag;
+    }
+
     public abstract ItemViewController getItemViewController();
 
     public String getName() {

@@ -1,4 +1,4 @@
-package application.ruler;
+package com.nikhil.view.custom;
 
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
@@ -40,6 +40,7 @@ public class Marking extends VBox{
 		translateXProperty().bind(widthProperty().multiply(-0.5));
 				
 		mark=new Label(String.format("%.1f",value));
+
 		double startY=0;
 //		double endY=getEndYForStrikeSize(MarkingStrikeSize.SUB_MARK);
 		double endY=MAIN_STRIKE_SIZE;

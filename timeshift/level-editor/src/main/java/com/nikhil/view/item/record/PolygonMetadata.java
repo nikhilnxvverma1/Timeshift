@@ -9,7 +9,8 @@ import com.nikhil.controller.PolygonViewController;
 public class PolygonMetadata extends Metadata{
     private PolygonViewController polygonViewController;
 
-    public PolygonMetadata(PolygonViewController polygonViewController) {
+    public PolygonMetadata(String name, boolean header, int tag, PolygonViewController polygonViewController) {
+        super(name, header, tag);
         this.polygonViewController = polygonViewController;
     }
 

@@ -83,7 +83,7 @@ public class ClientUI extends Application{
 		AnchorPane anchorPane=new AnchorPane();
 		anchorPane.getChildren().add(scrollPane);
 		selectionAreaPlay(rowCorrespond);
-		Scene scene=new Scene(anchorPane,WIDTH,HEIGHT);
+		Scene scene=new Scene(timeControl,WIDTH,HEIGHT);
 		primaryStage.setScene(scene);
 		primaryStage.show();
 	}

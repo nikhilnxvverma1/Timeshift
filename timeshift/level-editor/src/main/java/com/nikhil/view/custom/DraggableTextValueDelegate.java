@@ -1,4 +1,4 @@
-package com.nikhil.view.control;
+package com.nikhil.view.custom;
 
 /**
  * Created by NikhilVerma on 11/10/15.

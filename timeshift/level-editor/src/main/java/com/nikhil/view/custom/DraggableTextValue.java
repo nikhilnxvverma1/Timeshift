@@ -1,4 +1,4 @@
-package com.nikhil.view.control;
+package com.nikhil.view.custom;
 
 import com.nikhil.view.ValueFormatter;
 import javafx.fxml.FXML;
