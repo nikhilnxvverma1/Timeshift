@@ -41,7 +41,6 @@ public class Workspace  {
     private RootController rootController;
     private List<CompositionViewController> compositionViewControllers=new LinkedList<CompositionViewController>();
     private CompositionViewController currentComposition;
-//    private List<ItemViewController> itemViewControllers = new LinkedList<ItemViewController>();
 
 
     private Stack<Command> commandStack=new Stack<Command>();
@@ -198,28 +197,6 @@ public class Workspace  {
         compositionViewControllers.add(compositionViewController);
     }
 
-    public void addToTimelineSystem(ItemViewController itemViewController){//TODO this method is not ready yet
-        ItemModelController itemModelController = itemViewController.getModelController();
-        currentComposition.getCompositionController().addItemController(itemModelController);
-        Logger.log("Added item controller to the timeline");
-    }
-
-    public boolean removeFromTimelineSystem(ItemViewController itemViewController){//TODO parameterize with model controller directly
-
-        ItemModelController modelController = itemViewController.getModelController();
-
-        //look for the compositionController that contains this model
-        for(CompositionViewController compositionViewController:compositionViewControllers){
-
-            CompositionController compositionController = compositionViewController.getCompositionController();
-            if(compositionController.removeItemController(modelController)){
-                Logger.log("remove item controller from the timeline ");
-                return true;//indicate that the node has been removed
-            }
-        }
-        return false;//indicate that the node was not found in the system
-    }
-
     public boolean removeFromTimelineSystem(CompositionController compositionController){
         return rootController.removeCompositionController(compositionController);
     }
@@ -235,7 +212,7 @@ public class Workspace  {
         Set<ItemViewController> itemsToPaste= Clipboard.getSharedInstance().getDeepCopyOfItems(offsetX,offsetY);
         if(itemsToPaste!=null){
             totalItemsPasted=itemsToPaste.size();
-            AddItemSet addItemSet =new AddItemSet(itemsToPaste,selectedItems,this);
+            AddItemSet addItemSet =new AddItemSet(itemsToPaste,selectedItems,currentComposition);
             pushCommand(addItemSet);
         }
         return totalItemsPasted;
@@ -301,10 +278,10 @@ public class Workspace  {
     }
 
 
-
-    public List<ItemViewController> getItemViewControllers() {
-        return currentComposition.getItemViewControllers();
-    }
+    //this method belongs to the individual compositions now
+//    public List<ItemViewController> getItemViewControllers() {
+//        return currentComposition.getItemViewControllers();
+//    }
 
     public ZoomableScrollPane getZoomableScrollPane() {
         return zoomableScrollPane;

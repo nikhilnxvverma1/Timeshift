@@ -1,18 +1,21 @@
 package com.nikhil.controller;
 
 import com.nikhil.Main;
+import com.nikhil.controller.item.ItemModelController;
 import com.nikhil.editor.workspace.Workspace;
 import com.nikhil.logging.Logger;
 import com.nikhil.view.custom.*;
 import com.nikhil.view.item.record.Metadata;
-import com.nikhil.view.item.record.PolygonMetadata;
+import javafx.beans.value.ObservableValue;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.util.Callback;
 
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -28,6 +31,7 @@ public class CompositionViewController {
     private Workspace workspace;
     private AnchorPane anchorPane;
     private List<ItemViewController> itemViewControllers = new LinkedList<ItemViewController>();
+    private TreeItem<Metadata> rootTreeItem;
 
     public CompositionViewController(CompositionController compositionController,Workspace workspace) {
         this.compositionController=compositionController;
@@ -56,8 +60,36 @@ public class CompositionViewController {
         return tab;
     }
 
+    //TODO remove this, and only provide an iterator, an adder and a remover
     public List<ItemViewController> getItemViewControllers() {
         return itemViewControllers;
+    }
+
+    public void addItemViewController(ItemViewController itemViewController){
+        itemViewControllers.add(itemViewController);
+        //TODO do extra stuff here
+    }
+
+    public boolean removeItemViewController(ItemViewController itemViewController){
+        boolean removed = itemViewControllers.remove(itemViewController);
+        if(removed){
+            //TODO do clean up stuff here
+        }
+        return removed;
+    }
+
+    public Iterator<ItemViewController> getItemViewControllerIterator(){
+        return itemViewControllers.iterator();
+    }
+
+    public Workspace getWorkspace() {
+        return workspace;
+    }
+
+    public void addToTimelineSystem(ItemViewController itemViewController){
+        //add to the timeline
+        ItemModelController itemModelController = itemViewController.getModelController();
+        compositionController.addItemController(itemModelController);
     }
 
     private void initView(){
@@ -69,7 +101,7 @@ public class CompositionViewController {
         Ruler ruler=new Ruler(30, Main.WIDTH);//testing
         SelectionBar selectionBar=new SelectionBar(Main.WIDTH,null);
         ThumbSeeker thumbSeeker=new ThumbSeeker(Main.WIDTH);
-        VBox vBox=new VBox(outerHBox,thumbSeeker,selectionBar);
+        VBox vBox=new VBox(outerHBox,itemTable);
         AnchorPane.setLeftAnchor(vBox,0d);
         AnchorPane.setBottomAnchor(vBox, 0d);
         AnchorPane.setTopAnchor(vBox,0d);
@@ -104,22 +136,25 @@ public class CompositionViewController {
     }
 
     private TreeTableView initItemTable(){
-        //making a sample Metadata model for a composition controller
-        TreeItem<Metadata> polygonHeader= new TreeItem<>(new PolygonMetadata("Polygon 1",true,1,null));
-        TreeItem<Metadata> polygonScale= new TreeItem<>(new PolygonMetadata("Scale",false,2,null));
-        TreeItem<Metadata> polygonRotation= new TreeItem<>(new PolygonMetadata("Rotation",false,3,null));
-        TreeItem<Metadata> polygonTranslation= new TreeItem<>(new PolygonMetadata("Translation",false,4,null));
-        TreeItem<Metadata> polygonAnchorPoint= new TreeItem<>(new PolygonMetadata("Anchor Point", false, 5, null));
-        TreeItem<Metadata> polygonVertices= new TreeItem<>(new PolygonMetadata("Vertices", false, 6, null));
-        polygonHeader.getChildren().addAll(polygonScale, polygonRotation, polygonTranslation, polygonAnchorPoint, polygonVertices);
 
+        rootTreeItem=new TreeItem<>(new Metadata("Root",true,Metadata.ROOT_TAG));
 
         TreeTableColumn<Metadata,String> name=new TreeTableColumn<>("Name");
+        name.setCellValueFactory(param -> param.getValue().getValue().nameProperty());
         TreeTableColumn<Metadata,String> value=new TreeTableColumn<>("Value");
         TreeTableColumn<Metadata,String> option=new TreeTableColumn<>("Option");
 
-        TreeTableView<Metadata> treeTableView=new TreeTableView<>(polygonHeader);
+        TreeTableView<Metadata> treeTableView=new TreeTableView<>(rootTreeItem);
         treeTableView.getColumns().addAll(name,value,option);
         return treeTableView;
+    }
+
+    /**
+     * remove from timeline system
+     * @param itemViewController the associated item view controller whose model controller needs to be removed
+     * @return indicate weather the node has been removed
+     */
+    public boolean removeFromTimelineSystem(ItemViewController itemViewController) {
+        return compositionController.removeItemController(itemViewController.getModelController());
     }
 }

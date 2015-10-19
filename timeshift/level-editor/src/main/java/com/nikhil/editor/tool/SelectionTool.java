@@ -1,12 +1,15 @@
 package com.nikhil.editor.tool;
 
 import com.nikhil.command.Command;
+import com.nikhil.controller.CompositionViewController;
 import com.nikhil.controller.ItemViewController;
 import com.nikhil.editor.selection.SelectionArea;
 import com.nikhil.editor.selection.SelectionOverlap;
 import com.nikhil.editor.workspace.Workspace;
 import javafx.geometry.Bounds;
 import javafx.scene.input.MouseEvent;
+
+import java.util.Iterator;
 
 /**
  * Created by NikhilVerma on 23/08/15.
@@ -53,13 +56,18 @@ public class SelectionTool extends BaseTool implements SelectionOverlap {
     @Override
     public void selectOverlappingItems(SelectionArea selectionArea, Bounds sceneBounds) {
         //check to see how many items overlap with the bounds
-        for(ItemViewController itemViewController:workspace.getItemViewControllers()){
+        for(CompositionViewController compositionViewController:workspace.getCompositionViewControllers()){
 
-            //if it is overlapping with the bounds,add it to the selection
-            if(itemViewController.overlapsWithSceneBounds(sceneBounds)){
-                workspace.getSelectedItems().addToSelection(itemViewController);
-            }else{
-                workspace.getSelectedItems().removeFromSelection(itemViewController);
+            Iterator<ItemViewController> itemViewControllerIterator = compositionViewController.getItemViewControllerIterator();
+            while(itemViewControllerIterator.hasNext()){
+
+                ItemViewController itemViewController=itemViewControllerIterator.next();
+                //if it is overlapping with the bounds,add it to the selection
+                if(itemViewController.overlapsWithSceneBounds(sceneBounds)){
+                    workspace.getSelectedItems().addToSelection(itemViewController);
+                }else{
+                    workspace.getSelectedItems().removeFromSelection(itemViewController);
+                }
             }
         }
     }

@@ -1,29 +1,44 @@
 package com.nikhil.view.item.record;
 
 import com.nikhil.controller.ItemViewController;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
 
 /**
+ * Metadata stores information about the properties of the model. Except the root, every other instantiation
+ * will be from a subclass .
  * Created by NikhilVerma on 13/10/15.
  */
-public abstract class Metadata {
-    protected String name;
+public class Metadata {
+    public static final short ROOT_TAG=-1;
+    protected StringProperty nameProperty;
     protected boolean header;
     protected int tag;
 
+    public Metadata(String name, int tag) {
+        this(name,false,tag);
+    }
+
     public Metadata(String name, boolean header, int tag) {
-        this.name = name;
+        this.nameProperty=new SimpleStringProperty(name);
         this.header = header;
         this.tag = tag;
     }
 
-    public abstract ItemViewController getItemViewController();
-
-    public String getName() {
-        return name;
+    public ItemViewController getItemViewController(){
+        return null;//Applicable for root metadata
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public StringProperty nameProperty() {
+        return nameProperty;
+    }
+
+    public void setName(String name){
+        nameProperty.set(name);
+    }
+
+    public String getName(){
+        return nameProperty.get();
     }
 
     public boolean isHeader() {

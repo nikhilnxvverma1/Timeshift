@@ -1,5 +1,6 @@
 package com.nikhil.command;
 
+import com.nikhil.controller.CompositionViewController;
 import com.nikhil.controller.ItemViewController;
 import com.nikhil.editor.selection.SelectedItems;
 import com.nikhil.editor.workspace.Workspace;
@@ -12,20 +13,20 @@ import java.util.Set;
  */
 public class AddItemSet extends ActionOnItemSet {
 
-    private Workspace workspace;//required to support cross application pasting,where workspaces can be different
+    private CompositionViewController compositionViewController;
 
-    public AddItemSet(Set<ItemViewController> itemSet, SelectedItems selectedItems, Workspace workspace) {
+    public AddItemSet(Set<ItemViewController> itemSet, SelectedItems selectedItems, CompositionViewController compositionViewController) {
         super(itemSet, selectedItems);
-        this.workspace=workspace;
+        this.compositionViewController=compositionViewController;
     }
 
     @Override
     public void execute() {
         for(ItemViewController itemViewController: itemSet){
-            itemViewController.setWorkspace(workspace);
+            itemViewController.setCompositionViewController(compositionViewController);
             itemViewController.addViewsToWorksheet();
-            workspace.getItemViewControllers().add(itemViewController);
-            workspace.addToTimelineSystem(itemViewController);
+            compositionViewController.getItemViewControllers().add(itemViewController);
+//            compositionViewController.addToTimelineSystem(itemViewController);
         }
         makeSelectionOfItemSet();
     }
@@ -33,10 +34,10 @@ public class AddItemSet extends ActionOnItemSet {
     @Override
     public void unexecute() {
         for(ItemViewController itemViewController: itemSet){
-            itemViewController.setWorkspace(workspace);
+            itemViewController.setCompositionViewController(compositionViewController);
             itemViewController.removeViewsFromWorksheet();
-            workspace.getItemViewControllers().remove(itemViewController);
-            workspace.removeFromTimelineSystem(itemViewController);
+            compositionViewController.getItemViewControllers().remove(itemViewController);
+//            compositionViewController.removeFromTimelineSystem(itemViewController);
         }
         selectedItems.clearSelection();
     }

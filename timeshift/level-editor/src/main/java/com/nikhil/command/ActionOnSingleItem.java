@@ -15,7 +15,7 @@ public abstract class ActionOnSingleItem implements Command{
     }
 
     protected void makeSelectionOfThisShape(){
-        SelectedItems selectedItems = shapeViewController.getWorkspace().getSelectedItems();
+        SelectedItems selectedItems = shapeViewController.getCompositionViewController().getWorkspace().getSelectedItems();
         selectedItems.clearSelection();
         selectedItems.addToSelection(shapeViewController);
     }

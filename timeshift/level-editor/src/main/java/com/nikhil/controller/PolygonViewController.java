@@ -15,7 +15,10 @@ import com.nikhil.model.shape.PolygonModel;
 import com.nikhil.util.modal.UtilPoint;
 import com.nikhil.view.item.PolygonView;
 import com.nikhil.view.item.delegate.PolygonViewDelegate;
+import com.nikhil.view.item.record.Metadata;
+import com.nikhil.view.item.record.PolygonMetadata;
 import javafx.geometry.Bounds;
+import javafx.scene.control.TreeItem;
 
 import javax.rmi.CORBA.Util;
 import java.util.ArrayList;
@@ -26,27 +29,34 @@ import java.util.List;
  */
 public class PolygonViewController extends ShapeViewController implements Observer,PolygonViewDelegate {
 
+    private static final short HEADER_TAG=1;
+    private static final short SCALE_TAG=2;
+    private static final short ROTATION_TAG=3;
+    private static final short TRANSLATION_TAG=4;
+    private static final short ANCHOR_POINT_TAG=5;
+    private static final short VERTICES_TAG=6;
+
     private PolygonModelController polygonModelController;
     private PolygonView polygonView;
     private PolygonGizmo polygonGizmo;
 
 
     public PolygonViewController(PolygonViewController polygonViewController){
-        this(polygonViewController.workspace,new PolygonView(polygonViewController.polygonView));
+        this(polygonViewController.compositionViewController,new PolygonView(polygonViewController.polygonView));
     }
 
-    public PolygonViewController(Workspace workspace,PolygonView polygonView) {
-        super(workspace);
+    public PolygonViewController(CompositionViewController compositionViewController,PolygonView polygonView) {
+        super(compositionViewController);
         this.polygonView=polygonView;
         this.polygonView.setDelegate(this);
         constructModelControllerUsingView();
         polygonGizmo=new PolygonGizmo(polygonView);
         polygonGizmo.initializeView();
-        workspace.getSelectedItems().requestFocus(this,false);//TODO objectionable,what if the context doesn't need this to be highlighted
+        compositionViewController.getWorkspace().getSelectedItems().requestFocus(this,false);//TODO objectionable,what if the context doesn't need this to be highlighted
     }
 
-    public PolygonViewController(Workspace workspace,PolygonModelController polygonModelController){
-        super(workspace);
+    public PolygonViewController(CompositionViewController compositionViewController,PolygonModelController polygonModelController){
+        super(compositionViewController);
         this.polygonModelController=polygonModelController;
         this.polygonModelController.getPolygonModel().setObserver(this);
         constructViewUsingModelController();
@@ -64,6 +74,7 @@ public class PolygonViewController extends ShapeViewController implements Observ
         List<UtilPoint> polygonPoints = polygonView.getPolygonPoints();
 
         //set values for translation and anchor point
+        Workspace workspace=compositionViewController.getWorkspace();
         double x=workspace.workPointX(polygonView.getTranslationX());
         double y=workspace.workPointY(polygonView.getTranslationY());
         polygonModel.setTranslation(x,y);
@@ -113,7 +124,7 @@ public class PolygonViewController extends ShapeViewController implements Observ
 
         do{
             //convert to corresponding play point and add to the list
-            UtilPoint playPoint=workspace.playPoint(t.getPoint());
+            UtilPoint playPoint=compositionViewController.getWorkspace().playPoint(t.getPoint());
             polygonPlayPoints.add(playPoint);
 
             t=t.getNext();
@@ -167,19 +178,21 @@ public class PolygonViewController extends ShapeViewController implements Observ
 
     @Override
     public void addViewsToWorksheet(){
+        Workspace workspace = compositionViewController.getWorkspace();
+
         workspace.getWorksheetPane().getChildren().add(polygonView);
         workspace.getWorksheetPane().getChildren().add(polygonGizmo);
     }
 
     @Override
     public void removeViewsFromWorksheet(){
+        Workspace workspace=compositionViewController.getWorkspace();
         workspace.getWorksheetPane().getChildren().remove(polygonView);
         workspace.getWorksheetPane().getChildren().remove(polygonGizmo);
     }
 
     @Override
     public void moveBy(double dx, double dy) {
-        Logger.log("Moving by " + dx + "," + dy);
         //change translation component of the view and gizmo
         double x=polygonView.getTranslationX();
         double y=polygonView.getTranslationY();
@@ -190,6 +203,7 @@ public class PolygonViewController extends ShapeViewController implements Observ
         polygonGizmo.updateView();
 
         //convert to work point and update the business model
+        Workspace workspace=compositionViewController.getWorkspace();
         double workPointX = workspace.workPointX(newX);
         double workPointY = workspace.workPointY(newY);
         polygonModelController.getPolygonModel().setTranslation(new UtilPoint(workPointX,workPointY));
@@ -197,7 +211,6 @@ public class PolygonViewController extends ShapeViewController implements Observ
 
     @Override
     public boolean scaleBy(double dScale) {
-//        Logger.log("Scaling by " + dScale);
 
         //change scale component of the view and gizmo
         double oldScale = polygonView.getScale();
@@ -215,12 +228,9 @@ public class PolygonViewController extends ShapeViewController implements Observ
     }
 
     @Override
-    public void setWorkspace(Workspace workspace){
-        //we do some processing if the workspace changes,so ignore if the workspace is same
-        if(this.workspace==workspace){
-            return;
-        }
-        this.workspace=workspace;
+    public void setCompositionViewController(CompositionViewController compositionViewController) {
+        //we do some processing if the composition controller changes
+        super.setCompositionViewController(compositionViewController);
         constructModelControllerUsingView();//recomputes the model controller based on the new workspace
     }
 
@@ -284,6 +294,18 @@ public class PolygonViewController extends ShapeViewController implements Observ
         return new PolygonViewController(this);
     }
 
+    @Override
+    public TreeItem<Metadata> createItemMetadata() {
+        TreeItem<Metadata> polygonHeader= new TreeItem<>(new PolygonMetadata("Polygon 1",true,HEADER_TAG,this));
+        TreeItem<Metadata> polygonScale= new TreeItem<>(new PolygonMetadata("Scale",SCALE_TAG,this));
+        TreeItem<Metadata> polygonRotation= new TreeItem<>(new PolygonMetadata("Rotation",ROTATION_TAG,this));
+        TreeItem<Metadata> polygonTranslation= new TreeItem<>(new PolygonMetadata("Translation",TRANSLATION_TAG,this));
+        TreeItem<Metadata> polygonAnchorPoint= new TreeItem<>(new PolygonMetadata("Anchor Point", ANCHOR_POINT_TAG, this));
+        TreeItem<Metadata> polygonVertices= new TreeItem<>(new PolygonMetadata("Vertices", VERTICES_TAG, this));
+        polygonHeader.getChildren().addAll(polygonScale, polygonRotation, polygonTranslation, polygonAnchorPoint, polygonVertices);
+        return polygonHeader;
+    }
+
     //=============================================================================================
     //Notifications from model
     //=============================================================================================
@@ -307,7 +329,7 @@ public class PolygonViewController extends ShapeViewController implements Observ
                 index,
                 new UtilPoint(initialX,initialY),
                 finalPosition);
-        workspace.pushCommand(movePolygonPoint,false);
+        getCompositionViewController().getWorkspace().pushCommand(movePolygonPoint, false);
     }
 
 }

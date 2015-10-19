@@ -137,7 +137,7 @@ public class PolygonTool extends BaseTool{
 
     private AddPolygon createAddPolygonCommand() {
         PolygonView polygonView=createPolygonView();
-        PolygonViewController polygonViewController=new PolygonViewController(workspace,polygonView);
+        PolygonViewController polygonViewController=new PolygonViewController(workspace.getCurrentComposition(),polygonView);
         return new AddPolygon(polygonViewController,graphicalPolygonPointArrayList);
     }
 

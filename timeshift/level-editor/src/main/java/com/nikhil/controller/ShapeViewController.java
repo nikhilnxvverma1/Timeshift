@@ -4,7 +4,6 @@ import com.nikhil.editor.selection.SelectedItems;
 import com.nikhil.editor.workspace.Workspace;
 import com.nikhil.logging.Logger;
 import com.nikhil.util.modal.UtilPoint;
-import com.nikhil.view.item.delegate.ItemViewDelegate;
 import javafx.geometry.Bounds;
 import javafx.scene.input.MouseEvent;
 
@@ -13,8 +12,8 @@ import javafx.scene.input.MouseEvent;
  */
 public abstract class ShapeViewController extends ItemViewController {
 
-    public ShapeViewController(Workspace workspace) {
-        super(workspace);
+    public ShapeViewController(CompositionViewController compositionViewController) {
+        super(compositionViewController);
     }
 
     /**
@@ -64,14 +63,14 @@ public abstract class ShapeViewController extends ItemViewController {
         //capture the location and just consume the event
         //so that workspace doesn't clear selection
         UtilPoint normalized=getNormalizedPoint(mouseEvent.getX(),mouseEvent.getY());
-        workspace.getSelectedItems().captureTemporaryValues(normalized.getX(), normalized.getY());
+        compositionViewController.getWorkspace().getSelectedItems().captureTemporaryValues(normalized.getX(), normalized.getY());
 //        workspace.getSelectedItems().captureTemporaryValues(mouseEvent.getX(), mouseEvent.getY());
         mouseEvent.consume();
     }
 
     @Override
     public void mouseDragged(MouseEvent mouseEvent) {
-        SelectedItems selectedItems = workspace.getSelectedItems();
+        SelectedItems selectedItems = compositionViewController.getWorkspace().getSelectedItems();
         boolean selected = selectedItems.contains(this);
         if(!selected){
             selectedItems.requestFocus(this, mouseEvent.isShiftDown());
@@ -89,6 +88,7 @@ public abstract class ShapeViewController extends ItemViewController {
 
     @Override
     public void mouseReleased(MouseEvent mouseEvent) {
+        Workspace workspace=compositionViewController.getWorkspace();
         if(workspace.getSelectedItems().contains(this)){
             double x = mouseEvent.getX();
             double y = mouseEvent.getY();
@@ -108,6 +108,6 @@ public abstract class ShapeViewController extends ItemViewController {
 
     @Override
     public void propertyCurrentlyGettingTweaked() {
-        workspace.getSelectedItems().updateView();
+        compositionViewController.getWorkspace().getSelectedItems().updateView();
     }
 }

@@ -65,8 +65,8 @@ public class XMLLoader {
         while(t!=null){
 
             //create item view controllers and add them to the workspace
-            ItemViewController itemViewController=getItemViewController(t);
-            workspace.getItemViewControllers().add(itemViewController);
+            ItemViewController itemViewController=getItemViewController(t,compositionViewController);
+            compositionViewController.getItemViewControllers().add(itemViewController);
 //            workspace.addToTimelineSystem(itemViewController);//it already came added from the XMLReader
             itemViewController.addViewsToWorksheet();
 
@@ -74,9 +74,9 @@ public class XMLLoader {
         }
     }
 
-    private ItemViewController getItemViewController(ItemModelController itemModelController){
+    private ItemViewController getItemViewController(ItemModelController itemModelController,CompositionViewController compositionViewController){
         if(itemModelController instanceof PolygonModelController){
-            return new PolygonViewController(workspace,(PolygonModelController)itemModelController);
+            return new PolygonViewController(compositionViewController,(PolygonModelController)itemModelController);
         }
         return null;
     }

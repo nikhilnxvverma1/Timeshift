@@ -1,5 +1,6 @@
 package com.nikhil.command;
 
+import com.nikhil.controller.CompositionViewController;
 import com.nikhil.controller.PolygonViewController;
 import com.nikhil.editor.workspace.Workspace;
 import com.nikhil.util.modal.UtilPoint;
@@ -30,22 +31,22 @@ public class AddPolygon implements Command{
         //remove all the graphical polygon points from the front end
         removeGraphicalPolygonPointsFromView();
 
-        Workspace workspace = polygonViewController.getWorkspace();
-        //and controller to the workspace
-        workspace.getItemViewControllers().add(polygonViewController);
+        CompositionViewController compositionViewController = polygonViewController.getCompositionViewController();
+        //and controller to the compositionViewController
+        compositionViewController.getItemViewControllers().add(polygonViewController);
         //add the polygon and its gizmo to the view
         polygonViewController.addViewsToWorksheet();
 
         //add to timeline
-        workspace.addToTimelineSystem(polygonViewController);
+        compositionViewController.addToTimelineSystem(polygonViewController);
     }
 
     @Override
     public void unexecute() {
 
         //remove the controller from the item view controller list
-        Workspace workspace=polygonViewController.getWorkspace();
-        workspace.getItemViewControllers().remove(polygonViewController);
+        CompositionViewController compositionViewController=polygonViewController.getCompositionViewController();
+        compositionViewController.getItemViewControllers().remove(polygonViewController);
         //also remove the polygon views and gizmo from the worksheet
         polygonViewController.removeViewsFromWorksheet();
 
@@ -54,7 +55,7 @@ public class AddPolygon implements Command{
         drawLineBetweenFirstAndLastPoint();
 
         //remove from timeline
-        workspace.removeFromTimelineSystem(polygonViewController);
+        compositionViewController.removeFromTimelineSystem(polygonViewController);
     }
 
     private void drawLineBetweenFirstAndLastPoint() {
@@ -73,14 +74,14 @@ public class AddPolygon implements Command{
     }
 
     private void removeGraphicalPolygonPointsFromView(){
-        Workspace workspace=polygonViewController.getWorkspace();
+        Workspace workspace=polygonViewController.getCompositionViewController().getWorkspace();
         for(GraphicalPolygonPoint graphicalPolygonPoint: graphicalPolygonPointArrayList){
             graphicalPolygonPoint.removeAsChildrenFrom(workspace.getWorksheetPane());
         }
     }
 
     private void addGraphicalPolygonPointsToView(){
-        Workspace workspace=polygonViewController.getWorkspace();
+        Workspace workspace=polygonViewController.getCompositionViewController().getWorkspace();
         for(GraphicalPolygonPoint graphicalPolygonPoint: graphicalPolygonPointArrayList){
             graphicalPolygonPoint.addAsChildrenTo(workspace.getWorksheetPane());
         }

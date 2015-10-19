@@ -19,22 +19,22 @@ public class DeleteItemSet extends ActionOnItemSet {//TODO this always adds to t
     @Override
     public void execute() {
 
-        Workspace workspace = getFirstItemViewController().getWorkspace();
+//        Workspace workspace = getFirstItemViewController().getWorkspace();
         for(ItemViewController itemViewController: itemSet){
             itemViewController.removeViewsFromWorksheet();
-            workspace.getItemViewControllers().remove(itemViewController);
-            workspace.removeFromTimelineSystem(itemViewController);
+            itemViewController.getCompositionViewController().getItemViewControllers().remove(itemViewController);
+            itemViewController.getCompositionViewController().removeFromTimelineSystem(itemViewController);
         }
         selectedItems.clearSelection();
     }
 
     @Override
     public void unexecute() {
-        Workspace workspace = getFirstItemViewController().getWorkspace();
+//        Workspace workspace = getFirstItemViewController().getWorkspace();
         for(ItemViewController itemViewController: itemSet){
             itemViewController.addViewsToWorksheet();
-            workspace.getItemViewControllers().add(itemViewController);
-            workspace.addToTimelineSystem(itemViewController);
+            itemViewController.getCompositionViewController().getItemViewControllers().add(itemViewController);
+            itemViewController.getCompositionViewController().addToTimelineSystem(itemViewController);
         }
         makeSelectionOfItemSet();
     }

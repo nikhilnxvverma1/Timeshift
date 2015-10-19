@@ -34,7 +34,7 @@ public class MovePolygonPoint implements Command {
         polygonViewController.getPolygonGizmo().updateView();
 
         //update the model to final position after converting to work point
-        UtilPoint workPolygonPoint=polygonViewController.getWorkspace().workPoint(finalPosition);
+        UtilPoint workPolygonPoint=polygonViewController.getCompositionViewController().getWorkspace().workPoint(finalPosition);
         polygonViewController.getPolygonModelController().getPolygonModel().getPointAtIndex(index).setPoint(workPolygonPoint);
 
         makeSelectionOfThisShape();
@@ -52,14 +52,14 @@ public class MovePolygonPoint implements Command {
         polygonViewController.getPolygonGizmo().updateView();
 
         //restore the model to initial position after converting to work point
-        UtilPoint workPolygonPoint=polygonViewController.getWorkspace().workPoint(initialPosition);
+        UtilPoint workPolygonPoint=polygonViewController.getCompositionViewController().getWorkspace().workPoint(initialPosition);
         polygonViewController.getPolygonModelController().getPolygonModel().getPointAtIndex(index).setPoint(workPolygonPoint);
 
         makeSelectionOfThisShape();
     }
 
     protected void makeSelectionOfThisShape(){
-        SelectedItems selectedItems = polygonViewController.getWorkspace().getSelectedItems();
+        SelectedItems selectedItems = polygonViewController.getCompositionViewController().getWorkspace().getSelectedItems();
         selectedItems.clearSelection();
         selectedItems.addToSelection(polygonViewController);
     }

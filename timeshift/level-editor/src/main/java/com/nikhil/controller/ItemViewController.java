@@ -3,18 +3,20 @@ package com.nikhil.controller;
 import com.nikhil.controller.item.ItemModelController;
 import com.nikhil.editor.workspace.Workspace;
 import com.nikhil.view.item.delegate.ItemViewDelegate;
+import com.nikhil.view.item.record.Metadata;
 import javafx.geometry.Bounds;
+import javafx.scene.control.TreeItem;
 
 /**
  * Created by NikhilVerma on 30/08/15.
  */
 public abstract class ItemViewController implements ItemViewDelegate {
 
-    protected Workspace workspace;
+    protected CompositionViewController compositionViewController;
     private boolean locked;
 
-    public ItemViewController(Workspace workspace) {
-        this.workspace = workspace;
+    public ItemViewController(CompositionViewController compositionViewController) {
+        this.compositionViewController = compositionViewController;
     }
 
     public boolean isLocked() {
@@ -25,12 +27,12 @@ public abstract class ItemViewController implements ItemViewDelegate {
         this.locked = locked;
     }
 
-    public Workspace getWorkspace() {
-        return workspace;
+    public CompositionViewController getCompositionViewController() {
+        return compositionViewController;
     }
 
-    public void setWorkspace(Workspace workspace) {
-        this.workspace = workspace;
+    public void setCompositionViewController(CompositionViewController compositionViewController) {
+        this.compositionViewController = compositionViewController;
     }
 
     public abstract boolean contains(double x, double y);
@@ -45,10 +47,7 @@ public abstract class ItemViewController implements ItemViewDelegate {
     public abstract ItemModelController getModelController();
     public abstract void addViewsToWorksheet();
     public abstract void removeViewsFromWorksheet();
-
-    /**
-     * @return deep copy of this item controller
-     */
+    /**@return deep copy of this item controller*/
     public abstract ItemViewController clone();
-
+    public abstract TreeItem<Metadata> createItemMetadata();
 }
