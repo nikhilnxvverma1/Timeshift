@@ -20,7 +20,7 @@ public class Parallelogram extends ShapeModel {
     protected TemporalKeyFrame widthStart;
     protected double height;
     protected TemporalKeyFrame heightStart;
-    protected float swayAngle;
+    protected double swayAngle;
     protected TemporalKeyFrame swayAngleStart;
 
     public Parallelogram(double width, double height, float swayAngle) {
@@ -61,7 +61,7 @@ public class Parallelogram extends ShapeModel {
         this.heightStart = heightStart;
     }
 
-    public float getSwayAngle() {
+    public double getSwayAngle() {
         return swayAngle;
     }
 

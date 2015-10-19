@@ -6,7 +6,8 @@ import com.nikhil.editor.workspace.Workspace;
 import com.nikhil.logging.Logger;
 import com.nikhil.view.custom.*;
 import com.nikhil.view.item.record.Metadata;
-import javafx.beans.value.ChangeListener;
+import javafx.beans.property.SimpleBooleanProperty;
+import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.value.ObservableValue;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -14,7 +15,9 @@ import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.util.Callback;
 
+import javax.lang.model.element.Name;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
@@ -25,6 +28,9 @@ import java.util.List;
 public class CompositionViewController {
 
     public static int TOTAL_COMPOSITIONS_SO_FAR =0;
+    private static final double NAME_COLUMN_WIDTH=175;
+    private static final double VALUE_COLUMN_WIDTH=75;
+
 
     private CompositionController compositionController;
     private Tab tab;
@@ -134,11 +140,17 @@ public class CompositionViewController {
 
     private TreeTableView initItemTable(){
 
-        rootTreeItem=new TreeItem<>(new Metadata("Root",true,Metadata.ROOT_TAG));
+        rootTreeItem=new TreeItem<>(new Metadata("Root",Metadata.ROOT_TAG));
 
         TreeTableColumn<Metadata,String> name=new TreeTableColumn<>("Name");
         name.setCellValueFactory(param -> param.getValue().getValue().nameProperty());
-        TreeTableColumn<Metadata,String> value=new TreeTableColumn<>("Value");
+        name.setPrefWidth(NAME_COLUMN_WIDTH);
+
+        TreeTableColumn<Metadata,Metadata> value=new TreeTableColumn<>("Value");
+        value.setCellFactory(param -> new ItemTableValueCell());
+        value.setCellValueFactory(param -> new SimpleObjectProperty<Metadata>(param.getValue().getValue()));
+        value.setPrefWidth(VALUE_COLUMN_WIDTH);
+
         TreeTableColumn<Metadata,String> option=new TreeTableColumn<>("Option");
 
         TreeTableView<Metadata> treeTableView=new TreeTableView<>(rootTreeItem);

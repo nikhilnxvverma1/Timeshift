@@ -53,7 +53,7 @@ public class SpatialChangeNode extends ChangeNode{
 		interpolatedValue.setValue(0, (float) position.getX());
 		interpolatedValue.setValue(1, (float) position.getY());
 		for(int i=0;i<startValue.getDimension();i++){
-			float progressedValue=startValue.getValue(i)+progression*(endValue.getValue(i)-startValue.getValue(i));
+			double progressedValue=startValue.getValue(i)+progression*(endValue.getValue(i)-startValue.getValue(i));
 			interpolatedValue.setValue(i+2, progressedValue);
 		}
 		return interpolatedValue;

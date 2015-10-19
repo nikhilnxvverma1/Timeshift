@@ -15,16 +15,16 @@ public class Circle extends ShapeModel {
 	public static final int ENDING_ANGLE_HANDLE =4;
 	
 	
-	private float innerRadius;
+	private double innerRadius;
 	private TemporalKeyFrame innerRadiusStart;
 	
-	private float outerRadius;
+	private double outerRadius;
 	private TemporalKeyFrame outerRadiusStart;
 	
-	private float startingAngle;
+	private double startingAngle;
 	private TemporalKeyFrame startingAngleStart;
 	
-	private float endingAngle;
+	private double endingAngle;
 	private TemporalKeyFrame endingAngleStart;
 	
 	public Circle(float innerRadius,float outerRadius,float startingAngle,float endingAngle){
@@ -38,25 +38,25 @@ public class Circle extends ShapeModel {
 	//Accessors
 	//================================================================================
 	
-	public float getInnerRadius() {
+	public double getInnerRadius() {
 		return innerRadius;
 	}
 	public void setInnerRadius(float innerRadius) {
 		this.innerRadius = innerRadius;
 	}
-	public float getOuterRadius() {
+	public double getOuterRadius() {
 		return outerRadius;
 	}
 	public void setOuterRadius(float outerRadius) {
 		this.outerRadius = outerRadius;
 	}
-	public float getStartingAngle() {
+	public double getStartingAngle() {
 		return startingAngle;
 	}
 	public void setStartingAngle(float startingAngle) {
 		this.startingAngle = startingAngle;
 	}
-	public float getEndingAngle() {
+	public double getEndingAngle() {
 		return endingAngle;
 	}
 	public void setEndingAngle(float endingAngle) {

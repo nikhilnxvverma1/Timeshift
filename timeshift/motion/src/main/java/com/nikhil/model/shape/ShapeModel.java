@@ -32,9 +32,9 @@ public abstract class ShapeModel extends ItemModel implements ChangeHandler,Subj
 	/** General purpose tag that can be used by client to identify this shape among others */
 	public int tag;
 	
-	protected float scale=(float)DEFAULT_SCALE;//TODO change type to double
+	protected double scale=DEFAULT_SCALE;
 	private TemporalKeyFrame scaleStart;
-	protected float rotation=(float)DEFAULT_ROTATION;
+	protected double rotation=DEFAULT_ROTATION;
 	private TemporalKeyFrame rotationStart;
 	protected UtilPoint translation=new UtilPoint(DEFAULT_TRANSLATION_X,DEFAULT_TRANSLATION_Y);
 	private KeyFramablePoint translationStart;
@@ -44,7 +44,7 @@ public abstract class ShapeModel extends ItemModel implements ChangeHandler,Subj
 	
 	protected Observer observer;
 	
-	public float getScale() {
+	public double getScale() {
 		return scale;
 	}
 
@@ -52,7 +52,7 @@ public abstract class ShapeModel extends ItemModel implements ChangeHandler,Subj
 		this.scale = scale;
 	}
 
-	public float getRotation() {
+	public double getRotation() {
 		return rotation;
 	}
 

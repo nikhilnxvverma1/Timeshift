@@ -30,7 +30,11 @@ public class DraggableTextValue extends HBox{
 	
 	private TextField textfield;
 	private Label label;
-	
+
+	/**
+	 * creates a new DraggableTextValue with an associated delegate
+	 * @param delegate the listener for each change event. Cannot be null
+	 */
 	public DraggableTextValue(DraggableTextValueDelegate delegate) {
 		super();
 		this.delegate=delegate;

@@ -29,12 +29,12 @@ import java.util.List;
  */
 public class PolygonViewController extends ShapeViewController implements Observer,PolygonViewDelegate {
 
-    private static final short HEADER_TAG=1;
-    private static final short SCALE_TAG=2;
-    private static final short ROTATION_TAG=3;
-    private static final short TRANSLATION_TAG=4;
-    private static final short ANCHOR_POINT_TAG=5;
-    private static final short VERTICES_TAG=6;
+    public static final short HEADER_TAG=1;
+    public static final short SCALE_TAG=2;
+    public static final short ROTATION_TAG=3;
+    public static final short TRANSLATION_TAG=4;
+    public static final short ANCHOR_POINT_TAG=5;
+    public static final short VERTICES_TAG=6;
 
     private PolygonModelController polygonModelController;
     private PolygonView polygonView;
@@ -298,7 +298,7 @@ public class PolygonViewController extends ShapeViewController implements Observ
     public TreeItem<Metadata> getMetadataTree() {
         if(metadataTree==null){
             TreeItem<Metadata> polygonHeader= new TreeItem<>(
-                    new PolygonMetadata(polygonModelController.getPolygonModel().getName(),true,HEADER_TAG,this));
+                    new PolygonMetadata(polygonModelController.getPolygonModel().getName(),HEADER_TAG,this));
             TreeItem<Metadata> polygonScale= new TreeItem<>(new PolygonMetadata("Scale",SCALE_TAG,this));
             TreeItem<Metadata> polygonRotation= new TreeItem<>(new PolygonMetadata("Rotation",ROTATION_TAG,this));
             TreeItem<Metadata> polygonTranslation= new TreeItem<>(new PolygonMetadata("Translation",TRANSLATION_TAG,this));

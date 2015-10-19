@@ -17,7 +17,7 @@ public class IsoscelesTriangle extends ShapeModel {
 
     protected double baseWidth;
     protected TemporalKeyFrame baseWidthStart;
-    protected float tipAngle;
+    protected double tipAngle;
     protected TemporalKeyFrame tipAngleStart;
 
     public IsoscelesTriangle(double baseWidth, float tipAngle) {
@@ -41,7 +41,7 @@ public class IsoscelesTriangle extends ShapeModel {
         this.baseWidthStart = baseWidthStart;
     }
 
-    public float getTipAngle() {
+    public double getTipAngle() {
         return tipAngle;
     }
 

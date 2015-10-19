@@ -8,14 +8,14 @@ package com.nikhil.timeline;
  * 3D value for 3d coordinates,
  * 4D value for RGBA value 
  * etc.
- * Internally it holds a float array which stores all these primitive values
+ * Internally it holds a double array which stores all these primitive values
  * @author Nikhil Verma 
  *
  */
 public class KeyValue {
 	
 	private int dimension;
-	private float []values;//TODO replace floats with doubles
+	private double []values;//TODO replace doubles with doubles
 	public int getDimension() {
 		return dimension;
 	}
@@ -25,12 +25,12 @@ public class KeyValue {
 	 */
 	public void setDimension(int dimension) {
 		this.dimension = dimension;
-		this.values=new float[dimension];
+		this.values=new double[dimension];
 	}
-	public float[] getValues() {
+	public double[] getValues() {
 		return values;
 	}
-	public void setValues(float[] values) {
+	public void setValues(double[] values) {
 		this.values = values;
 	}
 	
@@ -40,7 +40,7 @@ public class KeyValue {
 	 * @param index should not cross dimensions of this KeyValue
 	 * @return value value at index from the array
 	 */
-	public float getValue(int index){
+	public double getValue(int index){
 		return values[index];
 	}
 	
@@ -50,7 +50,7 @@ public class KeyValue {
 	 * @param index index to set value at.it should not cross dimensions of this KeyValue
 	 * @param value value to set for index
 	 */
-	public void setValue(int index,float value){
+	public void setValue(int index,double value){
 		values[index]=value;
 	}
 	
@@ -65,7 +65,7 @@ public class KeyValue {
 	 * Creates a 1D Key value
 	 * @param value value of this key frame
 	 */
-	public KeyValue(float value){
+	public KeyValue(double value){
 		this.setDimension(1);
 		this.setValue(0, value);
 	}
@@ -73,7 +73,7 @@ public class KeyValue {
 	/**
 	 * Creates a 2D Key value
 	 */
-	public KeyValue(float value1,float value2){
+	public KeyValue(double value1,double value2){
 		this.setDimension(2);
 		this.setValue(0, value1);
 		this.setValue(1, value2);
@@ -82,7 +82,7 @@ public class KeyValue {
 	/**
 	 * Creates a 3D Key value
 	 */
-	public KeyValue(float value1,float value2,float value3){
+	public KeyValue(double value1,double value2,double value3){
 		this.setDimension(3);
 		this.setValue(0, value1);
 		this.setValue(1, value2);
@@ -92,7 +92,7 @@ public class KeyValue {
 	/**
 	 * Creates a 4D Key value
 	 */
-	public KeyValue(float value1,float value2,float value3,float value4){
+	public KeyValue(double value1,double value2,double value3,double value4){
 		this.setDimension(4);
 		this.setValue(0, value1);
 		this.setValue(1, value2);
@@ -118,7 +118,7 @@ public class KeyValue {
 	 * @param prependedValue value added before values from second argument
 	 * @param keyValue key value to copy values from
 	 */
-	public KeyValue(float prependedValue,KeyValue keyValue){
+	public KeyValue(double prependedValue,KeyValue keyValue){
 		int totalDimension=keyValue.dimension+1;
 		this.setDimension(totalDimension);
 		setValue(0, prependedValue);
@@ -135,7 +135,7 @@ public class KeyValue {
 	 * @param secondPrependedValue second value of this keyframe
 	 * @param keyValue key value to copy values from post first two arguments
 	 */
-	public KeyValue(float firstPrependedValue,float secondPrependedValue,KeyValue keyValue){
+	public KeyValue(double firstPrependedValue,double secondPrependedValue,KeyValue keyValue){
 		int totalDimension=keyValue.dimension+2;
 		this.setDimension(totalDimension);
 		setValue(0, firstPrependedValue);
@@ -150,7 +150,7 @@ public class KeyValue {
 	 * where the length acts as dimension
 	 * @param values values to be set in this key value.
 	 */
-	public KeyValue(float[] values){
+	public KeyValue(double[] values){
 		this.values=values;
 		this.dimension=values.length;
 	}

@@ -330,7 +330,7 @@ public class ChangeNode {
 	public KeyValue getInterpolatedValue(float progression){
 		KeyValue interpolatedValue=new KeyValue(startValue);
 		for(int i=0;i<interpolatedValue.getDimension();i++){
-			float progressedValue=startValue.getValue(i)+progression*(endValue.getValue(i)-startValue.getValue(i));
+			double progressedValue=startValue.getValue(i)+progression*(endValue.getValue(i)-startValue.getValue(i));
 			interpolatedValue.setValue(i, progressedValue);
 		}
 		return interpolatedValue;
