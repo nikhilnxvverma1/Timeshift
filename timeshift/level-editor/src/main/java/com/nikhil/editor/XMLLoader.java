@@ -66,7 +66,7 @@ public class XMLLoader {
 
             //create item view controllers and add them to the workspace
             ItemViewController itemViewController=getItemViewController(t,compositionViewController);
-            compositionViewController.getItemViewControllers().add(itemViewController);
+            compositionViewController.addItemViewController(itemViewController);
 //            workspace.addToTimelineSystem(itemViewController);//it already came added from the XMLReader
             itemViewController.addViewsToWorksheet();
 

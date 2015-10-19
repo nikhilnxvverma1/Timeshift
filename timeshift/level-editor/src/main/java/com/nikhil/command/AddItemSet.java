@@ -25,7 +25,7 @@ public class AddItemSet extends ActionOnItemSet {
         for(ItemViewController itemViewController: itemSet){
             itemViewController.setCompositionViewController(compositionViewController);
             itemViewController.addViewsToWorksheet();
-            compositionViewController.getItemViewControllers().add(itemViewController);
+            compositionViewController.addItemViewController(itemViewController);
 //            compositionViewController.addToTimelineSystem(itemViewController);
         }
         makeSelectionOfItemSet();
@@ -36,7 +36,7 @@ public class AddItemSet extends ActionOnItemSet {
         for(ItemViewController itemViewController: itemSet){
             itemViewController.setCompositionViewController(compositionViewController);
             itemViewController.removeViewsFromWorksheet();
-            compositionViewController.getItemViewControllers().remove(itemViewController);
+            compositionViewController.removeItemViewController(itemViewController);
 //            compositionViewController.removeFromTimelineSystem(itemViewController);
         }
         selectedItems.clearSelection();

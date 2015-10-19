@@ -5,6 +5,7 @@ import com.nikhil.common.Subject;
 import com.nikhil.keyframe.KeyFramablePoint;
 import com.nikhil.keyframe.KeyFrame;
 import com.nikhil.keyframe.TemporalKeyFrame;
+import com.nikhil.model.ItemModel;
 import com.nikhil.model.ModelElement;
 import com.nikhil.timeline.ChangeNode;
 import com.nikhil.timeline.KeyValue;
@@ -16,7 +17,7 @@ import com.nikhil.util.modal.UtilPoint;
  * Abstract shape class defines scale,rotation,translation,anchor point,color and opacity.
  * TODO make contains and overlaps method
  */
-public abstract class ShapeModel implements ChangeHandler,Subject,ModelElement {
+public abstract class ShapeModel extends ItemModel implements ChangeHandler,Subject,ModelElement {
 
 	public static final int SCALE_CHANGE_TAG = -2;
 	public static final int ROTATION_CHANGE_TAG = -3;
@@ -27,8 +28,6 @@ public abstract class ShapeModel implements ChangeHandler,Subject,ModelElement {
 	public static final double DEFAULT_ROTATION=0;
 	public static final double DEFAULT_TRANSLATION_X=0;
 	public static final double DEFAULT_TRANSLATION_Y=0;
-
-
 
 	/** General purpose tag that can be used by client to identify this shape among others */
 	public int tag;

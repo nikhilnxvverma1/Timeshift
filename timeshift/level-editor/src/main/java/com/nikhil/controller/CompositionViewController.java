@@ -6,6 +6,7 @@ import com.nikhil.editor.workspace.Workspace;
 import com.nikhil.logging.Logger;
 import com.nikhil.view.custom.*;
 import com.nikhil.view.item.record.Metadata;
+import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -13,7 +14,6 @@ import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import javafx.util.Callback;
 
 import java.util.Iterator;
 import java.util.LinkedList;
@@ -29,9 +29,9 @@ public class CompositionViewController {
     private CompositionController compositionController;
     private Tab tab;
     private Workspace workspace;
-    private AnchorPane anchorPane;
     private List<ItemViewController> itemViewControllers = new LinkedList<ItemViewController>();
     private TreeItem<Metadata> rootTreeItem;
+    private TreeTableView<Metadata> itemTable;
 
     public CompositionViewController(CompositionController compositionController,Workspace workspace) {
         this.compositionController=compositionController;
@@ -60,20 +60,17 @@ public class CompositionViewController {
         return tab;
     }
 
-    //TODO remove this, and only provide an iterator, an adder and a remover
-    public List<ItemViewController> getItemViewControllers() {
-        return itemViewControllers;
-    }
-
     public void addItemViewController(ItemViewController itemViewController){
         itemViewControllers.add(itemViewController);
-        //TODO do extra stuff here
+        rootTreeItem.getChildren().add(itemViewController.getMetadataTree());
+        //TODO add to the timeline
     }
 
     public boolean removeItemViewController(ItemViewController itemViewController){
         boolean removed = itemViewControllers.remove(itemViewController);
         if(removed){
-            //TODO do clean up stuff here
+            rootTreeItem.getChildren().remove(itemViewController.getMetadataTree());
+            //TODO remove from timeline
         }
         return removed;
     }
@@ -93,15 +90,15 @@ public class CompositionViewController {
     }
 
     private void initView(){
-        anchorPane=new AnchorPane();
+        AnchorPane anchorPane = new AnchorPane();
         tab.setContent(anchorPane);
 
         HBox outerHBox = initSearchAndPlayback();
-        TreeTableView itemTable = initItemTable();
+        itemTable = initItemTable();
         Ruler ruler=new Ruler(30, Main.WIDTH);//testing
         SelectionBar selectionBar=new SelectionBar(Main.WIDTH,null);
         ThumbSeeker thumbSeeker=new ThumbSeeker(Main.WIDTH);
-        VBox vBox=new VBox(outerHBox,itemTable);
+        VBox vBox=new VBox(outerHBox, itemTable);
         AnchorPane.setLeftAnchor(vBox,0d);
         AnchorPane.setBottomAnchor(vBox, 0d);
         AnchorPane.setTopAnchor(vBox,0d);
@@ -146,6 +143,12 @@ public class CompositionViewController {
 
         TreeTableView<Metadata> treeTableView=new TreeTableView<>(rootTreeItem);
         treeTableView.getColumns().addAll(name,value,option);
+        treeTableView.setShowRoot(false);
+        treeTableView.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+            if(newValue!=null){//TODO NPE occurs during copy paste
+                workspace.getSelectedItems().selectOnly(newValue.getValue().getItemViewController());
+            }
+        });
         return treeTableView;
     }
 
@@ -156,5 +159,14 @@ public class CompositionViewController {
      */
     public boolean removeFromTimelineSystem(ItemViewController itemViewController) {
         return compositionController.removeItemController(itemViewController.getModelController());
+    }
+
+    /**
+     * selects the header record from the item table for the supplied metadata tag,
+     * if it exists
+     * @param headerTreeItem the metadata tag to select
+     */
+    public void selectRecordFromItemTable(TreeItem<Metadata> headerTreeItem){
+        itemTable.getSelectionModel().select(headerTreeItem);
     }
 }

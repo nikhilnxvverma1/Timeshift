@@ -21,6 +21,6 @@ public class PolygonMetadata extends Metadata{
 
     @Override
     public ItemViewController getItemViewController() {
-        return null;
+        return polygonViewController;
     }
 }

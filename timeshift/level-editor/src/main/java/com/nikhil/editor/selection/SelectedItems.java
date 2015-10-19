@@ -185,9 +185,16 @@ public class SelectedItems extends Group implements EventHandler<MouseEvent>{
     }
 
     public boolean addToSelection(ItemViewController itemViewController){
+        return addToSelection(itemViewController,true);
+    }
+
+    private boolean addToSelection(ItemViewController itemViewController, boolean selectRecordFromItemTable){
         boolean wasNewlyAdded = managedItems.add(itemViewController);
         if(wasNewlyAdded){
             itemViewController.hasSelectionFocus(true);
+            if((selectRecordFromItemTable)&&(managedItems.size()==1)){
+                itemViewController.selectFromItemTable();
+            }
             updateView();
         }
         singleItemSelectedInDetail =false;
@@ -202,6 +209,11 @@ public class SelectedItems extends Group implements EventHandler<MouseEvent>{
         }
         singleItemSelectedInDetail =false;
         return wasRemoved;
+    }
+
+    public void selectOnly(ItemViewController itemViewController){
+        clearSelection();
+        addToSelection(itemViewController,false);
     }
 
     /**

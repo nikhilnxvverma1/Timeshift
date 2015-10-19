@@ -33,7 +33,7 @@ public class AddPolygon implements Command{
 
         CompositionViewController compositionViewController = polygonViewController.getCompositionViewController();
         //and controller to the compositionViewController
-        compositionViewController.getItemViewControllers().add(polygonViewController);
+        compositionViewController.addItemViewController(polygonViewController);
         //add the polygon and its gizmo to the view
         polygonViewController.addViewsToWorksheet();
 
@@ -46,7 +46,7 @@ public class AddPolygon implements Command{
 
         //remove the controller from the item view controller list
         CompositionViewController compositionViewController=polygonViewController.getCompositionViewController();
-        compositionViewController.getItemViewControllers().remove(polygonViewController);
+        compositionViewController.removeItemViewController(polygonViewController);
         //also remove the polygon views and gizmo from the worksheet
         polygonViewController.removeViewsFromWorksheet();
 

@@ -15,8 +15,15 @@ import com.nikhil.timeline.Timeline;
  */
 public class PolygonModel extends ShapeModel {
 
+	private static int POLYGON_MODEL_COUNT=1;
+
 	/** start node of circular list*/
 	protected MovablePoint polygonPointStart;
+
+	public PolygonModel() {
+		super();
+		this.setName("Polygon "+POLYGON_MODEL_COUNT++);
+	}
 
 	public MovablePoint getPolygonPointStart() {
 		return polygonPointStart;

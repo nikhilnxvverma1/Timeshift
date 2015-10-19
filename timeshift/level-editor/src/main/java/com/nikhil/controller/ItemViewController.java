@@ -13,6 +13,7 @@ import javafx.scene.control.TreeItem;
 public abstract class ItemViewController implements ItemViewDelegate {
 
     protected CompositionViewController compositionViewController;
+    protected TreeItem<Metadata> metadataTree;
     private boolean locked;
 
     public ItemViewController(CompositionViewController compositionViewController) {
@@ -35,6 +36,11 @@ public abstract class ItemViewController implements ItemViewDelegate {
         this.compositionViewController = compositionViewController;
     }
 
+    /** selects this record from the item table */
+    public void selectFromItemTable(){
+        compositionViewController.selectRecordFromItemTable(getMetadataTree());
+    }
+
     public abstract boolean contains(double x, double y);
     public abstract void hoveredOver(boolean isHoveringOver, boolean isSelected);
     public abstract Bounds getLayoutBoundsInWorksheet();
@@ -49,5 +55,6 @@ public abstract class ItemViewController implements ItemViewDelegate {
     public abstract void removeViewsFromWorksheet();
     /**@return deep copy of this item controller*/
     public abstract ItemViewController clone();
-    public abstract TreeItem<Metadata> createItemMetadata();
+    /**@return returns the metadata that contains all information about the properties of this item(lazily created)*/
+    public abstract TreeItem<Metadata> getMetadataTree();
 }

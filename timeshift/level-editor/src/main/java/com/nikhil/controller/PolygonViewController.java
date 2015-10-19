@@ -295,15 +295,19 @@ public class PolygonViewController extends ShapeViewController implements Observ
     }
 
     @Override
-    public TreeItem<Metadata> createItemMetadata() {
-        TreeItem<Metadata> polygonHeader= new TreeItem<>(new PolygonMetadata("Polygon 1",true,HEADER_TAG,this));
-        TreeItem<Metadata> polygonScale= new TreeItem<>(new PolygonMetadata("Scale",SCALE_TAG,this));
-        TreeItem<Metadata> polygonRotation= new TreeItem<>(new PolygonMetadata("Rotation",ROTATION_TAG,this));
-        TreeItem<Metadata> polygonTranslation= new TreeItem<>(new PolygonMetadata("Translation",TRANSLATION_TAG,this));
-        TreeItem<Metadata> polygonAnchorPoint= new TreeItem<>(new PolygonMetadata("Anchor Point", ANCHOR_POINT_TAG, this));
-        TreeItem<Metadata> polygonVertices= new TreeItem<>(new PolygonMetadata("Vertices", VERTICES_TAG, this));
-        polygonHeader.getChildren().addAll(polygonScale, polygonRotation, polygonTranslation, polygonAnchorPoint, polygonVertices);
-        return polygonHeader;
+    public TreeItem<Metadata> getMetadataTree() {
+        if(metadataTree==null){
+            TreeItem<Metadata> polygonHeader= new TreeItem<>(
+                    new PolygonMetadata(polygonModelController.getPolygonModel().getName(),true,HEADER_TAG,this));
+            TreeItem<Metadata> polygonScale= new TreeItem<>(new PolygonMetadata("Scale",SCALE_TAG,this));
+            TreeItem<Metadata> polygonRotation= new TreeItem<>(new PolygonMetadata("Rotation",ROTATION_TAG,this));
+            TreeItem<Metadata> polygonTranslation= new TreeItem<>(new PolygonMetadata("Translation",TRANSLATION_TAG,this));
+            TreeItem<Metadata> polygonAnchorPoint= new TreeItem<>(new PolygonMetadata("Anchor Point", ANCHOR_POINT_TAG, this));
+            TreeItem<Metadata> polygonVertices= new TreeItem<>(new PolygonMetadata("Vertices", VERTICES_TAG, this));
+            polygonHeader.getChildren().addAll(polygonScale, polygonRotation, polygonTranslation, polygonAnchorPoint, polygonVertices);
+            metadataTree=polygonHeader;
+        }
+        return metadataTree;
     }
 
     //=============================================================================================

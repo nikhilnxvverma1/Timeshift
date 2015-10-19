@@ -22,7 +22,7 @@ public class DeleteItemSet extends ActionOnItemSet {//TODO this always adds to t
 //        Workspace workspace = getFirstItemViewController().getWorkspace();
         for(ItemViewController itemViewController: itemSet){
             itemViewController.removeViewsFromWorksheet();
-            itemViewController.getCompositionViewController().getItemViewControllers().remove(itemViewController);
+            itemViewController.getCompositionViewController().removeItemViewController(itemViewController);
             itemViewController.getCompositionViewController().removeFromTimelineSystem(itemViewController);
         }
         selectedItems.clearSelection();
@@ -33,7 +33,7 @@ public class DeleteItemSet extends ActionOnItemSet {//TODO this always adds to t
 //        Workspace workspace = getFirstItemViewController().getWorkspace();
         for(ItemViewController itemViewController: itemSet){
             itemViewController.addViewsToWorksheet();
-            itemViewController.getCompositionViewController().getItemViewControllers().add(itemViewController);
+            itemViewController.getCompositionViewController().addItemViewController(itemViewController);
             itemViewController.getCompositionViewController().addToTimelineSystem(itemViewController);
         }
         makeSelectionOfItemSet();
