@@ -3,6 +3,7 @@ package com.nikhil.view.item;
 import com.nikhil.util.modal.UtilPoint;
 import com.nikhil.view.item.delegate.PolygonViewDelegate;
 //import javafx.geometry.Point2D;
+import javafx.beans.property.DoubleProperty;
 import javafx.event.EventHandler;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
@@ -20,31 +21,19 @@ public class PolygonView extends Path{
 
     private PolygonViewDelegate delegate;
 
-    //=============================================================================================
-    //Polygon Properties
-    //=============================================================================================
-
-    private double scale;
-    private double rotation;
-    private double translationX;
-    private double translationY;
-    private double anchorPointX;
-    private double anchorPointY;
-
     private List<UtilPoint> polygonPoints;
 
     public PolygonView(PolygonView polygonView) {
-        this(polygonView.polygonPoints,polygonView.translationX,polygonView.translationY,polygonView.rotation,polygonView.scale);
+        this(polygonView.polygonPoints,polygonView.getLayoutX(),polygonView.getLayoutY(),polygonView.getRotate(),polygonView.getScale());
     }
 
-    public PolygonView(List<UtilPoint> polygonPoints,double translationX,double translationY,double rotation,double scale) {
+    public PolygonView(List<UtilPoint> polygonPoints,double x,double y,double rotation,double scale) {
         this.polygonPoints =polygonPoints;
-        this.translationX=translationX;
-        this.translationY=translationY;
-        this.rotation=rotation;
-        this.scale=scale;
         initializeView();
-        updateTransform();
+        this.setLayoutX(x);
+        this.setLayoutY(y);
+        this.setRotate(rotation);
+        this.setScale(scale);
     }
 
     private void initializeView(){
@@ -66,6 +55,7 @@ public class PolygonView extends Path{
         this.getElements().add(new ClosePath());
         this.setFill(Color.ORANGE);
         this.setStroke(null);
+        this.scaleYProperty().bind(this.scaleXProperty());
     }
 
     public void updatePoint(int index,UtilPoint newLocation){
@@ -84,12 +74,6 @@ public class PolygonView extends Path{
 
     }
 
-    public void updateView(){
-        updateTransform();
-        updatePoints();
-
-    }
-
     public void updatePoints() {
         int index=0;
         for(UtilPoint utilPoint : polygonPoints){
@@ -98,66 +82,17 @@ public class PolygonView extends Path{
         }
     }
 
-    public void updateTransform(){
-        this.setLayoutX(translationX);
-        this.setLayoutY(translationY);
-        this.setRotate(rotation);
-        this.setScaleX(scale);
-        this.setScaleY(scale);
+    public DoubleProperty scaleProperty(){
+        return scaleXProperty();
     }
 
     public double getScale() {
-        return scale;
+
+        return getScaleX();
     }
 
     public void setScale(double scale) {
-        this.scale = scale;
-        updateTransform();
-    }
-
-    public double getRotation() {
-        return rotation;
-    }
-
-    public void setRotation(double rotation) {
-        this.rotation = rotation;
-        updateTransform();
-    }
-
-    public double getTranslationX() {
-        return translationX;
-    }
-
-    public void setTranslationX(double translationX) {
-        this.translationX = translationX;
-        updateTransform();
-    }
-
-    public double getTranslationY() {
-        return translationY;
-    }
-
-    public void setTranslationY(double translationY) {
-        this.translationY = translationY;
-        updateTransform();
-    }
-
-    public double getAnchorPointX() {
-        return anchorPointX;
-    }
-
-    public void setAnchorPointX(double anchorPointX) {
-        this.anchorPointX = anchorPointX;
-        updateTransform();
-    }
-
-    public double getAnchorPointY() {
-        return anchorPointY;
-    }
-
-    public void setAnchorPointY(double anchorPointY) {
-        this.anchorPointY = anchorPointY;
-        updateTransform();
+        this.setScaleX(scale);
     }
 
     public List<UtilPoint> getPolygonPoints() {

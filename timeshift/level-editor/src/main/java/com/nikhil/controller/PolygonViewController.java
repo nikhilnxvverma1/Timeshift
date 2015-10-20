@@ -8,7 +8,6 @@ import com.nikhil.controller.item.PolygonModelController;
 import com.nikhil.editor.gizmo.GizmoVisibilityOption;
 import com.nikhil.editor.gizmo.PolygonGizmo;
 import com.nikhil.editor.workspace.Workspace;
-import com.nikhil.logging.Logger;
 import com.nikhil.math.MathUtil;
 import com.nikhil.model.freeform.MovablePoint;
 import com.nikhil.model.shape.PolygonModel;
@@ -20,7 +19,6 @@ import com.nikhil.view.item.record.PolygonMetadata;
 import javafx.geometry.Bounds;
 import javafx.scene.control.TreeItem;
 
-import javax.rmi.CORBA.Util;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -75,12 +73,12 @@ public class PolygonViewController extends ShapeViewController implements Observ
 
         //set values for translation and anchor point
         Workspace workspace=compositionViewController.getWorkspace();
-        double x=workspace.workPointX(polygonView.getTranslationX());
-        double y=workspace.workPointY(polygonView.getTranslationY());
+        double x=workspace.workPointX(polygonView.getLayoutX());
+        double y=workspace.workPointY(polygonView.getLayoutY());
         polygonModel.setTranslation(x,y);
 
-        double ax=workspace.workPointX(polygonView.getAnchorPointX());
-        double ay=workspace.workPointY(polygonView.getAnchorPointY());
+        double ax=workspace.workPointX(polygonView.getTranslateX());
+        double ay=workspace.workPointY(polygonView.getTranslateY());
         polygonModel.setAnchorPoint(ax,ay);
 
         //for each point in the polygon
@@ -153,12 +151,12 @@ public class PolygonViewController extends ShapeViewController implements Observ
 
     @Override
     public double getRotation(){
-        return polygonView.getRotation();
+        return polygonView.getRotate();
     }
 
     @Override
     public UtilPoint getTranslation() {
-        return new UtilPoint(polygonView.getTranslationX(),polygonView.getTranslationY());
+        return new UtilPoint(polygonView.getLayoutX(),polygonView.getLayoutY());
     }
 
     //=============================================================================================
@@ -194,12 +192,12 @@ public class PolygonViewController extends ShapeViewController implements Observ
     @Override
     public void moveBy(double dx, double dy) {
         //change translation component of the view and gizmo
-        double x=polygonView.getTranslationX();
-        double y=polygonView.getTranslationY();
+        double x=polygonView.getLayoutX();
+        double y=polygonView.getLayoutY();
         double newX = x + dx;
         double newY = y + dy;
-        polygonView.setTranslationX(newX);
-        polygonView.setTranslationY(newY);
+        polygonView.setLayoutX(newX);
+        polygonView.setLayoutY(newY);
         polygonGizmo.updateView();
 
         //convert to work point and update the business model
@@ -237,10 +235,10 @@ public class PolygonViewController extends ShapeViewController implements Observ
     @Override
     public boolean rotateBy(double dAngle) {
         //change rotation component of the view and gizmo
-        double oldRotation= polygonView.getRotation();
+        double oldRotation= polygonView.getRotate();
         double newRotation=dAngle+ oldRotation;
-        newRotation= MathUtil.getAngleBetween0And360(newRotation);
-        polygonView.setRotation(newRotation);
+        newRotation= MathUtil.under360(newRotation);
+        polygonView.setRotate(newRotation);
         polygonGizmo.updateView();
 
         //TODO convert to work point scale and update the business model

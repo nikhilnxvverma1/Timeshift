@@ -1,5 +1,6 @@
 package com.nikhil.editor.gizmo;
 
+import com.nikhil.math.MathUtil;
 import com.nikhil.util.modal.UtilPoint;
 import com.nikhil.view.item.PolygonView;
 import com.nikhil.view.item.delegate.PolygonViewDelegate;
@@ -48,38 +49,59 @@ public class PolygonGizmo extends Group implements EventHandler<MouseEvent> {
 
         for(UtilPoint point2D: polygonView.getPolygonPoints()){
             Circle pointHandle=getGenericHandle();
-            //new lines in group
+            //handles should come rotated if the original polygon is rotated by some example
+//            UtilPoint rotatedPoint = MathUtil.getRotatedPoint(point2D, polygonView.getRotate());
+//            UtilPoint transformedPoint = rotatedPoint.multiply(polygonView.getScale());
+//            pointHandle.setCenterX(transformedPoint.getX());
+//            pointHandle.setCenterY(transformedPoint.getY());
+//            pointHandle.setCenterX(0);
+//            pointHandle.setCenterY(0);
+
+            //storing location in center later helps us in event handling while tweaking this point
             pointHandle.setCenterX(point2D.getX());
             pointHandle.setCenterY(point2D.getY());
             pointHandles.add(pointHandle);
             this.getChildren().add(pointHandle);
         }
-        this.setLayoutX(polygonView.getTranslationX());
-        this.setLayoutY(polygonView.getTranslationY());
+        //the parent group takes care of the scale,rotation,translation
+        //therefore this outline will always be at 0,0
+        outlinePolygon.setLayoutX(0);
+        outlinePolygon.setLayoutY(0);
+        outlinePolygon.setRotate(0);
+        outlinePolygon.setScale(1);
 
-        //the parent group takes care of the translation,
-        //therefore this outine will always be at 0,0
-        outlinePolygon.setTranslationX(0);
-        outlinePolygon.setTranslationY(0);
+        //TODO consider making a single call to updateView()
+        this.setLayoutX(polygonView.getLayoutX());
+        this.setLayoutY(polygonView.getLayoutY());
+        this.setScaleX(polygonView.getScaleX());
+        this.setScaleY(polygonView.getScaleY());
+        this.setRotate(polygonView.getRotate());
+
+
     }
 
     public void updateView(){
         int index=0;
         for(UtilPoint point2D: polygonView.getPolygonPoints()){
             Circle pointHandle = pointHandles.get(index);
+            //handles should come rotated if the original polygon is rotated by some example
+//            UtilPoint rotatedPoint = MathUtil.getRotatedPoint(point2D, polygonView.getRotate());
+//            UtilPoint transformedPoint = rotatedPoint.multiply(polygonView.getScale());
+//            pointHandle.setCenterX(transformedPoint.getX());
+//            pointHandle.setCenterY(transformedPoint.getY());
+//            pointHandle.setCenterX(0);
+//            pointHandle.setCenterY(0);
             pointHandle.setCenterX(point2D.getX());
             pointHandle.setCenterY(point2D.getY());
             outlinePolygon.updatePoint(index,point2D);
             index++;
         }
-        this.setLayoutX(polygonView.getTranslationX());
-        this.setLayoutY(polygonView.getTranslationY());
+        this.setLayoutX(polygonView.getLayoutX());
+        this.setLayoutY(polygonView.getLayoutY());
         //TODO work on syncing scale without affecting size of handles
-//        outlinePolygon.setScale(polygonView.getScale());
-//        outlinePolygon.setRotation(polygonView.getRotation());
         this.setScaleX(polygonView.getScaleX());
         this.setScaleY(polygonView.getScaleY());
-        this.setRotate(polygonView.getRotate());//code smell, mind rotate (from Node) and rotation(from PolygonView)
+        this.setRotate(polygonView.getRotate());
     }
 
     private Circle getGenericHandle(){
@@ -119,15 +141,15 @@ public class PolygonGizmo extends Group implements EventHandler<MouseEvent> {
         EventTarget eventTarget=event.getTarget();
         int index=pointHandles.indexOf(eventTarget);
         if(index!=-1){
+            Circle handle=(Circle)eventTarget;
             double relativeX=event.getX();
             double relativeY=event.getY();
 
             UtilPoint relativePoint = new UtilPoint(relativeX, relativeY);
             polygonView.updatePoint(index, relativePoint);
             outlinePolygon.updatePoint(index, relativePoint);
-            Circle handle=(Circle)eventTarget;
-            handle.setCenterX(event.getX());
-            handle.setCenterY(event.getY());
+            handle.setCenterX(relativeX);
+            handle.setCenterY(relativeY);
             polygonView.getDelegate().propertyCurrentlyGettingTweaked();
         }
         event.consume();

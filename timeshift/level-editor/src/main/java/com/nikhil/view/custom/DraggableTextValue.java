@@ -9,13 +9,17 @@ import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 
+/**
+ * Custom draggable text field whose value can be changed by dragging the text left and right.
+ * By default ,lower and upper limits don't exist ,but they can be set.
+ */
 public class DraggableTextValue extends HBox{
 
 	private static final String LABEL_STYLE="-fx-text-fill:rgb(0, 0, 255);";
 
 	private DraggableTextValueDelegate delegate;
 	private boolean upperLimitExists=false;
-	private boolean lowerLimitExists=true;
+	private boolean lowerLimitExists=false;
 	private double step=0.5;
 	private double upperLimit=100;
 	private double lowerLimit=0;

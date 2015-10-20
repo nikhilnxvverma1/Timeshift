@@ -1,6 +1,7 @@
 package com.nikhil.math;
 
 import com.nikhil.logging.Logger;
+import com.nikhil.util.modal.UtilPoint;
 
 public class MathUtil {
 
@@ -45,7 +46,7 @@ public class MathUtil {
 		return angle;
 	}
 
-	public static double getAngleBetween0And360(double angle){
+	public static double under360(double angle){
 		double angleBetween0And360=0;
 		if(angle>=0&&angle<360){
 			angleBetween0And360=angle;
@@ -56,5 +57,15 @@ public class MathUtil {
 			angleBetween0And360=angle%360;
 		}
 		return angleBetween0And360;
+	}
+	public static UtilPoint getRotatedPoint(UtilPoint point,double degree){
+		return getRotatedPoint(new UtilPoint(0,0),point,degree);
+	}
+	public static UtilPoint getRotatedPoint(UtilPoint around,UtilPoint point,double degree){
+		UtilPoint translatedToOrigin = point.subtract(around);//translate the point to origin
+		double radAng = Math.toRadians(degree);
+		double rx=translatedToOrigin.getX()*Math.cos(radAng)-translatedToOrigin.getY()*Math.sin(radAng);
+		double ry=translatedToOrigin.getX()*Math.sin(radAng)+translatedToOrigin.getY()*Math.cos(radAng);
+		return around.add(new UtilPoint(rx,ry));
 	}
 }

@@ -3,17 +3,19 @@ package com.nikhil.view.item.record;
 import com.nikhil.command.ScaleShape;
 import com.nikhil.controller.ItemViewController;
 import com.nikhil.controller.PolygonViewController;
+import com.nikhil.math.MathUtil;
 import com.nikhil.timeline.KeyValue;
 import com.nikhil.view.custom.DraggableTextValue;
 import com.nikhil.view.custom.DraggableTextValueDelegate;
 import javafx.scene.Node;
-import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
 
 /**
+ * TODO Each draggable text field registers a listener on the polygon view. This might leak memory
+ * because the table cells are getting recycled(they are virtualized).
  * Created by NikhilVerma on 13/10/15.
  */
 public class PolygonMetadata extends Metadata{
@@ -54,13 +56,13 @@ public class PolygonMetadata extends Metadata{
             case PolygonViewController.SCALE_TAG:
                 return new KeyValue(polygonViewController.getPolygonView().getScale());
             case PolygonViewController.ROTATION_TAG:
-                return new KeyValue(polygonViewController.getPolygonView().getRotation());
+                return new KeyValue(polygonViewController.getPolygonView().getRotate());
             case PolygonViewController.TRANSLATION_TAG:
-                return new KeyValue(polygonViewController.getPolygonView().getTranslationX(),
-                        polygonViewController.getPolygonView().getTranslationY());
+                return new KeyValue(polygonViewController.getPolygonView().getLayoutX(),
+                        polygonViewController.getPolygonView().getLayoutY());
             case PolygonViewController.ANCHOR_POINT_TAG:
-                return new KeyValue(polygonViewController.getPolygonView().getAnchorPointX(),
-                        polygonViewController.getPolygonView().getAnchorPointY());
+                return new KeyValue(polygonViewController.getPolygonView().getTranslateX(),
+                        polygonViewController.getPolygonView().getTranslateY());
             case PolygonViewController.VERTICES_TAG:
                 return new KeyValue(polygonViewController.getPolygonView().getPolygonPoints().size());
         }
@@ -79,7 +81,6 @@ public class PolygonMetadata extends Metadata{
 
             @Override
             public void valueFinishedChanging(DraggableTextValue draggableTextValue, double finalValue) {
-//                double initialScale=temporaryValue1;
                 double finalScale=finalValue;
                 ScaleShape scaleShape =new ScaleShape(polygonViewController,initialScale,finalScale);
                 polygonViewController.getCompositionViewController().getWorkspace().pushCommand(scaleShape,false);
@@ -88,10 +89,12 @@ public class PolygonMetadata extends Metadata{
             }
         });
         draggableTextValue.setLowerLimit(0);
-        draggableTextValue.setUpperLimit(5);
-        draggableTextValue.setUpperLimitExists(true);
+        draggableTextValue.setLowerLimitExists(true);
         draggableTextValue.setStep(0.01);
         draggableTextValue.setValue(polygonViewController.getPolygonView().getScale());
+        polygonViewController.getPolygonView().scaleProperty().addListener((observable, oldValue, newValue) -> {
+            draggableTextValue.setValue(newValue.doubleValue());
+        });
         return new HBox(draggableTextValue);
     }
 
@@ -100,15 +103,22 @@ public class PolygonMetadata extends Metadata{
 
             @Override
             public void valueBeingDragged(DraggableTextValue draggableTextValue, double newValue) {
-
+                if(newValue<0||newValue>=360){
+                    draggableTextValue.setValue(MathUtil.under360(newValue));
+                }
             }
 
             @Override
             public void valueFinishedChanging(DraggableTextValue draggableTextValue, double finalValue) {
-
+                if(finalValue<0||finalValue>=360){
+                    draggableTextValue.setValue(MathUtil.under360(finalValue));
+                }
             }
         });
-        draggableTextValue.setValue(polygonViewController.getPolygonView().getRotation());
+        draggableTextValue.setValue(polygonViewController.getPolygonView().getRotate());
+        polygonViewController.getPolygonView().rotateProperty().addListener((observable, oldValue, newValue) -> {
+            draggableTextValue.setValue(newValue.doubleValue());
+        });
         return new HBox(draggableTextValue);
     }
 
@@ -125,7 +135,10 @@ public class PolygonMetadata extends Metadata{
 
             }
         });
-        xValue.setValue(polygonViewController.getPolygonView().getTranslationX());
+        xValue.setValue(polygonViewController.getPolygonView().getLayoutX());
+        polygonViewController.getPolygonView().layoutXProperty().addListener((observable, oldValue, newValue) -> {
+            xValue.setValue(newValue.doubleValue());
+        });
 
         DraggableTextValue yValue=new DraggableTextValue(new DraggableTextValueDelegate() {
 
@@ -139,7 +152,10 @@ public class PolygonMetadata extends Metadata{
 
             }
         });
-        yValue.setValue(polygonViewController.getPolygonView().getTranslationY());
+        yValue.setValue(polygonViewController.getPolygonView().getLayoutY());
+        polygonViewController.getPolygonView().layoutYProperty().addListener((observable, oldValue, newValue) -> {
+            yValue.setValue(newValue.doubleValue());
+        });
         return new HBox(xValue,new Label(","),yValue);
     }
 
@@ -156,7 +172,10 @@ public class PolygonMetadata extends Metadata{
 
             }
         });
-        xValue.setValue(polygonViewController.getPolygonView().getAnchorPointX());
+        xValue.setValue(polygonViewController.getPolygonView().getTranslateX());
+        polygonViewController.getPolygonView().translateXProperty().addListener((observable, oldValue, newValue) -> {
+            xValue.setValue(newValue.doubleValue());
+        });
 
         DraggableTextValue yValue=new DraggableTextValue(new DraggableTextValueDelegate() {
 
@@ -170,7 +189,10 @@ public class PolygonMetadata extends Metadata{
 
             }
         });
-        yValue.setValue(polygonViewController.getPolygonView().getAnchorPointY());
+        yValue.setValue(polygonViewController.getPolygonView().getTranslateY());
+        polygonViewController.getPolygonView().translateYProperty().addListener((observable, oldValue, newValue) -> {
+            yValue.setValue(newValue.doubleValue());
+        });
         return new HBox(xValue,new Label(","),yValue);
     }
 

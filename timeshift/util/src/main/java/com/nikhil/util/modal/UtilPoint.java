@@ -68,7 +68,7 @@ public class UtilPoint {
 	 * @param scaler the floating number to multiply against
 	 * @return a new point with multiplied scaler
 	 */
-	public UtilPoint multiply(float scaler){
+	public UtilPoint multiply(double scaler){
 		return new UtilPoint(x*scaler,y*scaler);
 	}
 	
