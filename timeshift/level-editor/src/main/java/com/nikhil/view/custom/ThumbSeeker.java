@@ -1,6 +1,10 @@
 package com.nikhil.view.custom;
 
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
+import javafx.geometry.Point2D;
 import javafx.geometry.Pos;
+import javafx.scene.control.Control;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
@@ -21,6 +25,7 @@ public class ThumbSeeker extends Pane {
     private ThumbSeekerDelegate delegate;
 
     private VBox thumb;
+    private Line lineMark;
 
     public ThumbSeeker(double width) {
         this(width,0,100,null);
@@ -38,7 +43,8 @@ public class ThumbSeeker extends Pane {
 //        current= (start + end) / 2;
         current=0;
         this.setPrefSize(width, THUMB_HEIGHT);
-        this.setMaxSize(Double.MAX_VALUE,Double.MAX_VALUE);
+        this.setMaxHeight(Control.USE_PREF_SIZE);
+//        this.setMaxSize(Double.MAX_VALUE,Double.MAX_VALUE);
         initView();
 
     }
@@ -46,10 +52,15 @@ public class ThumbSeeker extends Pane {
     private void initView(){
         Path thumbShape=createThumb(THUMB_WIDTH,THUMB_HEIGHT);
 
-        Line line=new Line(0,0,0,300);//TODO hardcoded
-        line.setStroke(Color.RED);
+        lineMark=new Line(0,0,0,300);//TODO hardcoded
+        lineMark.setStroke(Color.RED);
 
-        thumb=new VBox(thumbShape,line);
+        thumb=new VBox(thumbShape);
+        thumb.layoutXProperty().addListener((observable, oldValue, newValue) -> {
+            Point2D point2D = ThumbSeeker.this.localToParent(newValue.doubleValue(), 0d);
+            lineMark.setLayoutX(point2D.getX());
+        });
+
         thumb.setAlignment(Pos.CENTER);
         thumb.translateXProperty().bind(thumb.widthProperty().multiply(-.5));
         this.getChildren().add(thumb);
@@ -89,6 +100,10 @@ public class ThumbSeeker extends Pane {
         current=value;
         double h = getPositionOf(current);
         thumb.setLayoutX(h);
+    }
+
+    public Line getLineMark() {
+        return lineMark;
     }
 
     private double getPositionOf(double value){

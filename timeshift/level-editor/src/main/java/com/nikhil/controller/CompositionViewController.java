@@ -27,9 +27,13 @@ import java.util.List;
  */
 public class CompositionViewController {
 
+    public static final double PLAYBACK_FEATURES_HEIGHT = 40d;
     public static int TOTAL_COMPOSITIONS_SO_FAR =0;
     private static final double NAME_COLUMN_WIDTH=175;
-    private static final double VALUE_COLUMN_WIDTH=75;
+    private static final double VALUE_COLUMN_WIDTH=125;
+    private static final double OPTION_COLUMN_WIDTH=100;
+    private static final double CELL_SIZE= 25;
+
 
 
     private CompositionController compositionController;
@@ -96,20 +100,52 @@ public class CompositionViewController {
     }
 
     private void initView(){
+        final double LEFT_COMPONENT_WIDTH=NAME_COLUMN_WIDTH+VALUE_COLUMN_WIDTH+OPTION_COLUMN_WIDTH;
+        final double RIGHT_COMPONENT_WIDTH = Main.WIDTH - LEFT_COMPONENT_WIDTH;
+
         AnchorPane anchorPane = new AnchorPane();
         tab.setContent(anchorPane);
 
         HBox outerHBox = initSearchAndPlayback();
+        outerHBox.setSpacing(5);
         itemTable = initItemTable();
-        Ruler ruler=new Ruler(30, Main.WIDTH);//testing
-        SelectionBar selectionBar=new SelectionBar(Main.WIDTH,null);
-        ThumbSeeker thumbSeeker=new ThumbSeeker(Main.WIDTH);
-        VBox vBox=new VBox(outerHBox, itemTable);
-        AnchorPane.setLeftAnchor(vBox,0d);
-        AnchorPane.setBottomAnchor(vBox, 0d);
-        AnchorPane.setTopAnchor(vBox,0d);
-        AnchorPane.setRightAnchor(vBox,0d);
-        anchorPane.getChildren().add(vBox);
+
+
+        SelectionBar selectionBar=new SelectionBar(RIGHT_COMPONENT_WIDTH,null);
+        Ruler ruler=new Ruler(30, RIGHT_COMPONENT_WIDTH);
+        ThumbSeeker thumbSeeker=new ThumbSeeker(RIGHT_COMPONENT_WIDTH);
+        TreeTableView keyframeTable=initKeyframeTable();
+        thumbSeeker.setPrefHeight(PLAYBACK_FEATURES_HEIGHT);
+        thumbSeeker.setMaxHeight(Control.USE_PREF_SIZE);
+        anchorPane.getChildren().addAll(outerHBox, itemTable, ruler, keyframeTable,selectionBar, thumbSeeker.getLineMark(),thumbSeeker);
+        thumbSeeker.getLineMark().setLayoutX(LEFT_COMPONENT_WIDTH);
+        thumbSeeker.getLineMark().endYProperty().bind(anchorPane.heightProperty());
+
+        AnchorPane.setLeftAnchor(outerHBox, 0d);
+        AnchorPane.setTopAnchor(outerHBox, 0d);
+
+        AnchorPane.setTopAnchor(itemTable, PLAYBACK_FEATURES_HEIGHT);
+        AnchorPane.setLeftAnchor(itemTable, 0d);
+        AnchorPane.setBottomAnchor(itemTable, 0d);
+
+        AnchorPane.setTopAnchor(ruler,0d);
+        AnchorPane.setLeftAnchor(ruler, LEFT_COMPONENT_WIDTH);
+        AnchorPane.setRightAnchor(ruler,0d);
+
+        AnchorPane.setTopAnchor(thumbSeeker, 0d);
+        AnchorPane.setLeftAnchor(thumbSeeker,LEFT_COMPONENT_WIDTH);
+        AnchorPane.setRightAnchor(thumbSeeker, 0d);
+
+        AnchorPane.setTopAnchor(keyframeTable, PLAYBACK_FEATURES_HEIGHT);
+        AnchorPane.setLeftAnchor(keyframeTable,LEFT_COMPONENT_WIDTH);
+        AnchorPane.setRightAnchor(keyframeTable, 0d);
+        AnchorPane.setBottomAnchor(keyframeTable, 0d);
+
+
+        AnchorPane.setTopAnchor(selectionBar, PLAYBACK_FEATURES_HEIGHT);
+        AnchorPane.setLeftAnchor(selectionBar,LEFT_COMPONENT_WIDTH);
+        AnchorPane.setRightAnchor(selectionBar, 0d);
+
     }
 
     private HBox initSearchAndPlayback() {
@@ -138,7 +174,20 @@ public class CompositionViewController {
         return outerHBox;
     }
 
-    private TreeTableView initItemTable(){
+    private TreeTableView initKeyframeTable(){
+        TreeTableColumn keyframe=new TreeTableColumn<>();
+        final double LEFT_COMPONENT_WIDTH=NAME_COLUMN_WIDTH+VALUE_COLUMN_WIDTH+OPTION_COLUMN_WIDTH;
+        double RIGHT_COMPONENT_WIDTH = Main.WIDTH - LEFT_COMPONENT_WIDTH;
+        keyframe.setPrefWidth(RIGHT_COMPONENT_WIDTH);
+
+        TreeTableView<Metadata> treeTableView=new TreeTableView<>(rootTreeItem);
+        treeTableView.getColumns().addAll(keyframe);
+        treeTableView.setShowRoot(false);
+        treeTableView.setFixedCellSize(CELL_SIZE);
+        return treeTableView;
+    }
+
+    private TreeTableView<Metadata> initItemTable(){
 
         rootTreeItem=new TreeItem<>(new Metadata("Root",Metadata.ROOT_TAG));
 
@@ -152,6 +201,7 @@ public class CompositionViewController {
         value.setPrefWidth(VALUE_COLUMN_WIDTH);
 
         TreeTableColumn<Metadata,String> option=new TreeTableColumn<>("Option");
+        option.setPrefWidth(OPTION_COLUMN_WIDTH);
 
         TreeTableView<Metadata> treeTableView=new TreeTableView<>(rootTreeItem);
         treeTableView.getColumns().addAll(name,value,option);
@@ -161,6 +211,7 @@ public class CompositionViewController {
                 workspace.getSelectedItems().selectOnly(newValue.getValue().getItemViewController());
             }
         });
+        treeTableView.setFixedCellSize(CELL_SIZE);
         return treeTableView;
     }
 

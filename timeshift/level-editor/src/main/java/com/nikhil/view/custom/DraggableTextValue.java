@@ -87,6 +87,13 @@ public class DraggableTextValue extends HBox{
 		refreshLabelText();
 	}
 
+	public double getStep() {
+		return step;
+	}
+
+	public void setStep(double step) {
+		this.step = step;
+	}
 
 	private void refreshLabelText() {
 		label.setText(valueFormatter.format(value)+(postfix!=null?postfix:""));

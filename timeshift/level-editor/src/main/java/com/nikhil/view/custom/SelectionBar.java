@@ -4,6 +4,7 @@ import com.nikhil.logging.Logger;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Cursor;
+import javafx.scene.control.TreeTableRow;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.shape.Rectangle;
@@ -15,7 +16,7 @@ public class SelectionBar extends Pane{
 	private static final String BAR_STYLE="-fx-fill:#A6A6A6;";
 	private static final String RESIZE_HANDLE_STYLE="-fx-fill:#0095FF;";
 
-	private static final int DEFAULT_AREA_HEIGHT = 20;
+	private static final int DEFAULT_AREA_HEIGHT = 27;
 	private static final double RESIZE_HANDLE_WIDTH=5;
 	@FXML private Rectangle selectionRect;
 	@FXML private Rectangle leftResize;

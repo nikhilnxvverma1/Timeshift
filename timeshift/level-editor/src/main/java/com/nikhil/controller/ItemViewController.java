@@ -57,4 +57,6 @@ public abstract class ItemViewController implements ItemViewDelegate {
     public abstract ItemViewController clone();
     /**@return returns the metadata that contains all information about the properties of this item(lazily created)*/
     public abstract TreeItem<Metadata> getMetadataTree();
+    /** call this method anytime the properties change so as to refresh the metadata*/
+    public abstract void refreshMetadata();
 }

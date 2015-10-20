@@ -1,6 +1,7 @@
 package com.nikhil.view.item.record;
 
 import com.nikhil.controller.ItemViewController;
+import com.nikhil.timeline.KeyValue;
 import com.nikhil.view.custom.DraggableTextValue;
 import com.nikhil.view.custom.DraggableTextValueDelegate;
 import javafx.beans.property.SimpleObjectProperty;
@@ -18,7 +19,6 @@ import javafx.scene.layout.HBox;
 public class Metadata {
     public static final short ROOT_TAG=-1;
     protected StringProperty nameProperty;
-//    protected boolean header;
     protected int tag;
 
     public Metadata(String name, int tag) {
@@ -52,5 +52,10 @@ public class Metadata {
 
     public Node getValueNode(){
         return null;
+    }
+
+    public void refresh(){
+        //do nothing, based on the tag information subclasses are
+        //supposed to override this method and ping for relevant information
     }
 }

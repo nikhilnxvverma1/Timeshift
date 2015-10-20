@@ -1,5 +1,6 @@
 package com.nikhil.view.item.record;
 
+import com.nikhil.command.ScaleShape;
 import com.nikhil.controller.ItemViewController;
 import com.nikhil.controller.PolygonViewController;
 import com.nikhil.timeline.KeyValue;
@@ -69,16 +70,27 @@ public class PolygonMetadata extends Metadata{
     private HBox getScaleValueNode(){
         DraggableTextValue draggableTextValue=new DraggableTextValue(new DraggableTextValueDelegate() {
 
+            private double initialScale=polygonViewController.getPolygonView().getScale();
+
             @Override
             public void valueBeingDragged(DraggableTextValue draggableTextValue, double newValue) {
-
+                polygonViewController.scaleBy(newValue - polygonViewController.getPolygonView().getScale());
             }
 
             @Override
             public void valueFinishedChanging(DraggableTextValue draggableTextValue, double finalValue) {
-
+//                double initialScale=temporaryValue1;
+                double finalScale=finalValue;
+                ScaleShape scaleShape =new ScaleShape(polygonViewController,initialScale,finalScale);
+                polygonViewController.getCompositionViewController().getWorkspace().pushCommand(scaleShape,false);
+                //TODO now the new initialValue is the final value, next time this happens,
+                initialScale=finalScale;//it will take this to be the initial value on undoing
             }
         });
+        draggableTextValue.setLowerLimit(0);
+        draggableTextValue.setUpperLimit(5);
+        draggableTextValue.setUpperLimitExists(true);
+        draggableTextValue.setStep(0.01);
         draggableTextValue.setValue(polygonViewController.getPolygonView().getScale());
         return new HBox(draggableTextValue);
     }

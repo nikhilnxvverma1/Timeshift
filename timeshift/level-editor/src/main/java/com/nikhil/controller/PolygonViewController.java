@@ -310,6 +310,14 @@ public class PolygonViewController extends ShapeViewController implements Observ
         return metadataTree;
     }
 
+    @Override
+    public void refreshMetadata() {
+        for(TreeItem<Metadata> treeItem: metadataTree.getChildren()){
+            Metadata metadata=treeItem.getValue();
+
+        }
+    }
+
     //=============================================================================================
     //Notifications from model
     //=============================================================================================
@@ -322,7 +330,6 @@ public class PolygonViewController extends ShapeViewController implements Observ
     //=============================================================================================
     //Polygon events coming from view
     //=============================================================================================
-
 
     @Override
     public void finishedTweakingPolygonPoint(int index,double initialX,double initialY) {
