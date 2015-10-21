@@ -374,8 +374,8 @@ public class SelectedItems extends Group implements EventHandler<MouseEvent>{
             Point2D initialPoint=new Point2D(initialX,initialY);
 
             Set<ItemViewController> itemSetForNewCommand = getItemSetForNewCommand();
-            MoveItemSet moveItemSet=new MoveItemSet(itemSetForNewCommand,this,initialPoint,finalPoint,true);
-            workspace.pushCommand(moveItemSet);
+            MoveItemSet moveItemSet=new MoveItemSet(itemSetForNewCommand,this,initialPoint,finalPoint);
+            workspace.pushCommand(moveItemSet,false);
 
             moveCommandWasIssued=true;
         }
@@ -385,7 +385,7 @@ public class SelectedItems extends Group implements EventHandler<MouseEvent>{
         return moveCommandWasIssued;
     }
 
-    private Set<ItemViewController> getItemSetForNewCommand(){
+    public Set<ItemViewController> getItemSetForNewCommand(){
         Command topCommand=workspace.getTopCommandOnCommandStack();
         if(topCommand instanceof ActionOnItemSet){
 

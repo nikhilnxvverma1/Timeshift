@@ -13,7 +13,7 @@ import javafx.scene.control.TreeItem;
 public abstract class ItemViewController implements ItemViewDelegate {
 
     protected CompositionViewController compositionViewController;
-    protected TreeItem<Metadata> metadataTree;
+    protected TreeItem<Metadata> metadataTree;//TODO let subclasses take care of this
     private boolean locked;
 
     public ItemViewController(CompositionViewController compositionViewController) {

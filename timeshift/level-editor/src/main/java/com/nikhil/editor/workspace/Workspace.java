@@ -320,7 +320,7 @@ public class Workspace  {
      * Pushes a command on top of the command stack,
      * executes it,
      * and clears the undo stack
-     * @param command the last command that just needs to be placed
+     * @param command the latest command that needs to be placed
      *                on top of the command stack.
      */
     public void pushCommand(Command command) {
@@ -330,7 +330,7 @@ public class Workspace  {
     /**
      * Pushes a command on top of the command stack,
      * and clears the undo stack
-     * @param command the last command that just needs to be placed
+     * @param command the latest command that needs to be placed
      *                on top of the command stack.
      * @param executeBeforePushing should this command be executed before being pushed on the command stack
      */

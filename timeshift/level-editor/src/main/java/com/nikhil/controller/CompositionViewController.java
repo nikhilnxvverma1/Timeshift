@@ -6,18 +6,13 @@ import com.nikhil.editor.workspace.Workspace;
 import com.nikhil.logging.Logger;
 import com.nikhil.view.custom.*;
 import com.nikhil.view.item.record.Metadata;
-import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleObjectProperty;
-import javafx.beans.value.ObservableValue;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
-import javafx.util.Callback;
 
-import javax.lang.model.element.Name;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
@@ -151,11 +146,11 @@ public class CompositionViewController {
     private HBox initSearchAndPlayback() {
         DraggableTextValue draggableTextValue=new DraggableTextValue(new DraggableTextValueDelegate() {
             @Override
-            public void valueBeingDragged(DraggableTextValue draggableTextValue, double newValue) {
+            public void valueBeingDragged(DraggableTextValue draggableTextValue, double initialValue, double oldValue, double newValue) {
 
             }
             @Override
-            public void valueFinishedChanging(DraggableTextValue draggableTextValue, double finalValue) {
+            public void valueFinishedChanging(DraggableTextValue draggableTextValue, double initialValue, double finalValue, boolean dragged) {
 
             }
         });

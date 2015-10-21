@@ -13,7 +13,7 @@ import javafx.scene.layout.HBox;
  * Custom draggable text field whose value can be changed by dragging the text left and right.
  * By default ,lower and upper limits don't exist ,but they can be set.
  */
-public class DraggableTextValue extends HBox{
+public class DraggableTextValue extends HBox{ //TODO textfield listeners may leak memory
 
 	private static final String LABEL_STYLE="-fx-text-fill:rgb(0, 0, 255);";
 
@@ -28,9 +28,13 @@ public class DraggableTextValue extends HBox{
 	private ValueFormatter valueFormatter;
 	private String postfix;
 
-	//for internal uses 
-	private double lastX,lastY;
+	//=============================================================================================
+	//For internal use
+	//=============================================================================================
+
+	private double lastX;
 	private boolean justGotDragged=false;
+	private double valueBeforeChange;
 	
 	private TextField textfield;
 	private Label label;
@@ -77,15 +81,14 @@ public class DraggableTextValue extends HBox{
 		textfield.managedProperty().bind(textfield.visibleProperty());
 		label.setFocusTraversable(true);
 		label.setLabelFor(textfield);
-		label.focusedProperty().addListener((arg0, oldPropertyValue, newPropertyValue) -> {
-            if (newPropertyValue){
+		label.focusedProperty().addListener((arg0, wasFocused, nowFocused) -> {
+            if (nowFocused){
                 editValueInTextfield();
             }
         });
-		textfield.focusedProperty().addListener((arg0, oldPropertyValue, newPropertyValue) -> {
-            if (!newPropertyValue){
+		textfield.focusedProperty().addListener((arg0, wasFocused, nowFocused) -> {
+            if (!nowFocused){
 				doneEditingValueInTextfield();
-				delegate.valueFinishedChanging(this, value);
 			}
         });
 		refreshLabelText();
@@ -120,25 +123,25 @@ public class DraggableTextValue extends HBox{
 		label.setText(postfix);
 		textfield.requestFocus();
 		label.setFocusTraversable(false);
+		valueBeforeChange=value;
 	}
 	
 	private void doneEditingValueInTextfield(){
 		value=Double.parseDouble(textfield.getText());
 		textfield.setVisible(false);
-//		label.setText(textfield.getText());
 		refreshLabelText();
 		label.setFocusTraversable(true);
+		delegate.valueFinishedChanging(this,valueBeforeChange , value, false);
 	}
 
 	private void labelPressed(MouseEvent mousePressEvent){
 		lastX=mousePressEvent.getX();
-		lastY=mousePressEvent.getY();
+		valueBeforeChange=value;
 	}
 
 	private void labelDragged(MouseEvent dragEvent){
 		double x=dragEvent.getX();
-		double y=dragEvent.getY();
-		
+		double oldValue=value;
 		if(x>=lastX){
 			if((upperLimitExists)&&(value+step>upperLimit)){
 				value=upperLimit;//never overshoot upper limit ,just in case 'step' is large enough
@@ -153,10 +156,9 @@ public class DraggableTextValue extends HBox{
 				
 			}
 		}
-		delegate.valueBeingDragged(this, value);
+		delegate.valueBeingDragged(this,valueBeforeChange,oldValue, value);
 		refreshLabelText();
 		lastX=x;
-		lastY=y;
 		justGotDragged=true;
 	}
 	
@@ -165,7 +167,7 @@ public class DraggableTextValue extends HBox{
 		if(!justGotDragged){
 			editValueInTextfield();
 		}else{
-			delegate.valueFinishedChanging(this,value);
+			delegate.valueFinishedChanging(this,valueBeforeChange , value, true);
 		}
 		justGotDragged=false;
 	}

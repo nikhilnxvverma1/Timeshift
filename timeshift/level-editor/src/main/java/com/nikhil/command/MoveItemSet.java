@@ -13,40 +13,35 @@ import java.util.Set;
  */
 public class MoveItemSet extends ActionOnItemSet {
 
-    private boolean alreadyExecuted;
     private Point2D from;
     private Point2D to;
 
-    public MoveItemSet(Set<ItemViewController> itemSet,SelectedItems selectedItems,Point2D from,Point2D to,boolean alreadyExecuted) {
+    public MoveItemSet(Set<ItemViewController> itemSet,SelectedItems selectedItems,Point2D from,Point2D to) {
         super(itemSet,selectedItems);
         this.from=from;
         this.to=to;
-        this.alreadyExecuted=alreadyExecuted;
     }
 
     @Override
     public void execute() {
-        if(!alreadyExecuted){
-            double dx=to.getX()-from.getX();
-            double dy=to.getY()-from.getY();
-            for(ItemViewController itemViewController:itemSet){
-                itemViewController.moveBy(dx,dy);
-            }
-            makeSelectionOfItemSet();
+        double dx = to.getX() - from.getX();
+        double dy = to.getY() - from.getY();
+        for (ItemViewController itemViewController : itemSet) {
+            itemViewController.moveBy(dx, dy);
         }
-        alreadyExecuted=true;
+        makeSelectionOfItemSet();
+
     }
 
     @Override
     public void unexecute() {
-        if(alreadyExecuted){
-            double dx=from.getX()-to.getX();
-            double dy=from.getY()-to.getY();
-            for(ItemViewController itemViewController:itemSet){
-                itemViewController.moveBy(dx,dy);
-            }
-            makeSelectionOfItemSet();
+
+        double dx = from.getX() - to.getX();
+        double dy = from.getY() - to.getY();
+        for (ItemViewController itemViewController : itemSet) {
+            itemViewController.moveBy(dx, dy);
         }
-        alreadyExecuted=false;
+        makeSelectionOfItemSet();
+
     }
 }
