@@ -11,12 +11,11 @@ import com.nikhil.math.MathUtil;
 import com.nikhil.timeline.KeyValue;
 import com.nikhil.view.custom.DraggableTextValue;
 import com.nikhil.view.custom.DraggableTextValueDelegate;
+import com.nikhil.view.item.PolygonView;
 import javafx.beans.value.ChangeListener;
 import javafx.geometry.Point2D;
 import javafx.scene.Node;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
 
 import java.util.Set;
@@ -27,6 +26,14 @@ import java.util.Set;
  * Created by NikhilVerma on 13/10/15.
  */
 public class PolygonMetadata extends Metadata{
+    
+    public static final short HEADER_TAG=1;
+    public static final short SCALE_TAG=2;
+    public static final short ROTATION_TAG=3;
+    public static final short TRANSLATION_TAG=4;
+    public static final short ANCHOR_POINT_TAG=5;
+    public static final short VERTICES_TAG=6;
+    
     private PolygonViewController polygonViewController;
     private ChangeListener<? super Number>[]propertyListeners=null;//hold reference to prevent it from being garbage collected
 
@@ -40,21 +47,29 @@ public class PolygonMetadata extends Metadata{
         return polygonViewController;
     }
 
+    @Override
+    public boolean isHeader() {
+        if(tag==HEADER_TAG||
+                tag== VERTICES_TAG){
+            return true;
+        }
+        return false;
+    }
 
     @Override
     public Node getValueNode() {
         switch (tag){
-            case PolygonViewController.HEADER_TAG:
+            case HEADER_TAG:
                 return new Button("Reset");//TODO delegation and visual size
-            case PolygonViewController.SCALE_TAG:
+            case SCALE_TAG:
                 return getScaleValueNode();
-            case PolygonViewController.ROTATION_TAG:
+            case ROTATION_TAG:
                 return getRotationValueNode();
-            case PolygonViewController.TRANSLATION_TAG:
+            case TRANSLATION_TAG:
                 return getTranslationValueNode();
-            case PolygonViewController.ANCHOR_POINT_TAG:
+            case ANCHOR_POINT_TAG:
                 return getAnchorPointValueNode();
-            case PolygonViewController.VERTICES_TAG:
+            case VERTICES_TAG:
                 return getVertexCountValueNode();
         }
         return null;
@@ -62,17 +77,17 @@ public class PolygonMetadata extends Metadata{
 
     private KeyValue getKeyValue(){
         switch (tag){
-            case PolygonViewController.SCALE_TAG:
+            case SCALE_TAG:
                 return new KeyValue(polygonViewController.getPolygonView().getScale());
-            case PolygonViewController.ROTATION_TAG:
+            case ROTATION_TAG:
                 return new KeyValue(polygonViewController.getPolygonView().getRotate());
-            case PolygonViewController.TRANSLATION_TAG:
+            case TRANSLATION_TAG:
                 return new KeyValue(polygonViewController.getPolygonView().getLayoutX(),
                         polygonViewController.getPolygonView().getLayoutY());
-            case PolygonViewController.ANCHOR_POINT_TAG:
+            case ANCHOR_POINT_TAG:
                 return new KeyValue(polygonViewController.getPolygonView().getTranslateX(),
                         polygonViewController.getPolygonView().getTranslateY());
-            case PolygonViewController.VERTICES_TAG:
+            case VERTICES_TAG:
                 return new KeyValue(polygonViewController.getPolygonView().getPolygonPoints().size());
         }
         return null;
@@ -278,4 +293,31 @@ public class PolygonMetadata extends Metadata{
         return new HBox(textField);
     }
 
+    @Override
+    public Node getOptionNode() {
+        if(tag==HEADER_TAG){
+            CheckBox visibility=new CheckBox();
+            visibility.setSelected(true);//TODO register listener
+            Tooltip.install(visibility,new Tooltip("Visible"));
+
+            CheckBox solo=new CheckBox();
+            Tooltip.install(solo,new Tooltip("Solo"));
+
+            CheckBox lock=new CheckBox();
+            Tooltip.install(lock,new Tooltip("Lock"));
+            return new HBox(visibility,solo,lock);
+        }else if(tag==VERTICES_TAG){
+            return null;
+        }else{
+            Button previousKeyframe=new Button("<");
+            Tooltip.install(previousKeyframe,new Tooltip("Previous Keyframe"));
+
+            ToggleButton toggleButton=new ToggleButton("*");
+            Tooltip.install(toggleButton,new Tooltip("Toggle Keyframe"));
+
+            Button nextKeyframe=new Button(">");
+            Tooltip.install(nextKeyframe,new Tooltip("Next Keyframe"));
+            return new HBox(previousKeyframe,toggleButton,nextKeyframe);
+        }
+    }
 }

@@ -6,10 +6,25 @@ import com.nikhil.editor.workspace.Workspace;
 import com.nikhil.logging.Logger;
 import com.nikhil.view.custom.*;
 import com.nikhil.view.item.record.Metadata;
+import com.sun.javafx.scene.control.skin.VirtualFlow;
+import com.sun.javafx.scene.control.skin.VirtualScrollBar;
 import javafx.beans.property.SimpleObjectProperty;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
+import javafx.collections.ObservableList;
+import javafx.event.Event;
+import javafx.event.EventHandler;
+import javafx.event.EventTarget;
+import javafx.event.EventType;
 import javafx.geometry.Insets;
+import javafx.geometry.Orientation;
 import javafx.geometry.Pos;
+import javafx.scene.Node;
+import javafx.scene.Parent;
 import javafx.scene.control.*;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.input.PickResult;
+import javafx.scene.input.ScrollEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 
@@ -27,9 +42,6 @@ public class CompositionViewController {
     private static final double NAME_COLUMN_WIDTH=175;
     private static final double VALUE_COLUMN_WIDTH=125;
     private static final double OPTION_COLUMN_WIDTH=100;
-    private static final double CELL_SIZE= 25;
-
-
 
     private CompositionController compositionController;
     private Tab tab;
@@ -37,6 +49,7 @@ public class CompositionViewController {
     private List<ItemViewController> itemViewControllers = new LinkedList<ItemViewController>();
     private TreeItem<Metadata> rootTreeItem;
     private TreeTableView<Metadata> itemTable;
+    private TreeView<Metadata> keyframeTable;
 
     public CompositionViewController(CompositionController compositionController,Workspace workspace) {
         this.compositionController=compositionController;
@@ -67,17 +80,37 @@ public class CompositionViewController {
 
     public void addItemViewController(ItemViewController itemViewController){
         itemViewControllers.add(itemViewController);
-        rootTreeItem.getChildren().add(itemViewController.getMetadataTree());
+        TreeItem<Metadata> metadataTree = itemViewController.getMetadataTree();
+        rootTreeItem.getChildren().add(metadataTree);
+//        int totalNewRecords = countExpandedChildren(metadataTree);
+//        commonScrollBar.setMax(commonScrollBar.getMax()+totalNewRecords);
         //TODO add to the timeline
     }
 
     public boolean removeItemViewController(ItemViewController itemViewController){
         boolean removed = itemViewControllers.remove(itemViewController);
         if(removed){
-            rootTreeItem.getChildren().remove(itemViewController.getMetadataTree());
+            TreeItem<Metadata> metadataTree = itemViewController.getMetadataTree();
+            rootTreeItem.getChildren().remove(metadataTree);
+//            int totalRecordsDeleted = countExpandedChildren(metadataTree);
+//            commonScrollBar.setMax(commonScrollBar.getMax()-totalRecordsDeleted);
             //TODO remove from timeline
         }
         return removed;
+    }
+
+    /**
+     * counts all children of this tree item recursively
+     * @param treeItem children under this node(including itself)
+     * @return total count expanded
+     */
+    private int countExpandedChildren(TreeItem treeItem){
+        ObservableList children = treeItem.getChildren();
+        int count=1;
+        for(Object node: children){
+            count+=countExpandedChildren((TreeItem)node);
+        }
+        return count;
     }
 
     public Iterator<ItemViewController> getItemViewControllerIterator(){
@@ -94,6 +127,35 @@ public class CompositionViewController {
         compositionController.addItemController(itemModelController);
     }
 
+    /**
+     * finds the virtual flow if present in a node
+     * @param parent parent which has unmodifieable children
+     * @return virtual flow if found,else null
+     */
+    private VirtualFlow findVirtualFlow(Parent parent){
+        for(Node node:parent.getChildrenUnmodifiable()){
+            if(node instanceof VirtualFlow){
+                return (VirtualFlow)node;
+            }
+        }
+        return null;
+    }
+
+    /**
+     * @deprecated
+     * finds the virtual scroll bar if present in a node
+     * @param parent parent which has unmodifieable children
+     * @return virtual scrollbar if found,else null
+     */
+    private VirtualScrollBar findVirtualScrollBar(Parent parent){
+        for(Node node:parent.getChildrenUnmodifiable()){
+            if(node instanceof VirtualScrollBar){
+                return (VirtualScrollBar)node;
+            }
+        }
+        return null;
+    }
+
     private void initView(){
         final double LEFT_COMPONENT_WIDTH=NAME_COLUMN_WIDTH+VALUE_COLUMN_WIDTH+OPTION_COLUMN_WIDTH;
         final double RIGHT_COMPONENT_WIDTH = Main.WIDTH - LEFT_COMPONENT_WIDTH;
@@ -103,18 +165,56 @@ public class CompositionViewController {
 
         HBox outerHBox = initSearchAndPlayback();
         outerHBox.setSpacing(5);
-        itemTable = initItemTable();
-
 
         SelectionBar selectionBar=new SelectionBar(RIGHT_COMPONENT_WIDTH,null);
         Ruler ruler=new Ruler(30, RIGHT_COMPONENT_WIDTH);
         ThumbSeeker thumbSeeker=new ThumbSeeker(RIGHT_COMPONENT_WIDTH);
-        TreeTableView keyframeTable=initKeyframeTable();
         thumbSeeker.setPrefHeight(PLAYBACK_FEATURES_HEIGHT);
         thumbSeeker.setMaxHeight(Control.USE_PREF_SIZE);
+
+        itemTable = initItemTable();
+        keyframeTable = initKeyframeTable();
+
+        itemTable.addEventFilter(ScrollEvent.SCROLL, e -> {
+
+            //a true for alt down indicates a mocked event
+            if (!e.isAltDown()) {
+                VirtualFlow virtualFlow = findVirtualFlow(keyframeTable);
+
+                Event.fireEvent(virtualFlow, new ScrollEvent(virtualFlow, virtualFlow, ScrollEvent.SCROLL, e.getX(),
+                        e.getY(), e.getScreenX(), e.getScreenY(), e.isShiftDown(), e.isControlDown(),true,// <-----mocked event
+                        e.isMetaDown(), e.isDirect(), e.isInertia(), e.getDeltaX(), e.getDeltaY(), e.getTotalDeltaX(),
+                        e.getTotalDeltaY(), e.getTextDeltaXUnits(), e.getTextDeltaX(), e.getTextDeltaYUnits(), e.getTextDeltaY(),
+                        e.getTouchCount(), e.getPickResult()));
+            }
+        });
+        keyframeTable.addEventFilter(ScrollEvent.SCROLL, e -> {
+            //a true for alt down indicates a mocked event
+            if (!e.isAltDown()) {
+                VirtualFlow virtualFlow = findVirtualFlow(itemTable);
+
+                Event.fireEvent(virtualFlow, new ScrollEvent(virtualFlow, virtualFlow, ScrollEvent.SCROLL, e.getX(),
+                        e.getY(), e.getScreenX(), e.getScreenY(), e.isShiftDown(), e.isControlDown(), true,// <-----mocked event
+                        e.isMetaDown(), e.isDirect(), e.isInertia(), e.getDeltaX(), e.getDeltaY(), e.getTotalDeltaX(),
+                        e.getTotalDeltaY(), e.getTextDeltaXUnits(), e.getTextDeltaX(), e.getTextDeltaYUnits(), e.getTextDeltaY(),
+                        e.getTouchCount(), e.getPickResult()));
+            }
+        });
+
+        ScrollBar commonScrollBar = new ScrollBar();
+        commonScrollBar.setOrientation(Orientation.VERTICAL);
+        commonScrollBar.setMin(0);
+        commonScrollBar.setMax(0);
+        commonScrollBar.valueProperty().addListener((observable, oldValue, newValue) -> {
+            itemTable.scrollTo(newValue.intValue());
+            keyframeTable.scrollTo(newValue.intValue());
+        });
+
+//        anchorPane.getChildren().addAll(outerHBox, itemTable, ruler, keyframeTable,selectionBar, thumbSeeker.getLineMark(),thumbSeeker, commonScrollBar);
         anchorPane.getChildren().addAll(outerHBox, itemTable, ruler, keyframeTable,selectionBar, thumbSeeker.getLineMark(),thumbSeeker);
         thumbSeeker.getLineMark().setLayoutX(LEFT_COMPONENT_WIDTH);
-        thumbSeeker.getLineMark().endYProperty().bind(anchorPane.heightProperty());
+        thumbSeeker.getLineMark().endYProperty().//just below so that it doesn't increase with every resize
+                bind(itemTable.heightProperty().add(PLAYBACK_FEATURES_HEIGHT - 2));
 
         AnchorPane.setLeftAnchor(outerHBox, 0d);
         AnchorPane.setTopAnchor(outerHBox, 0d);
@@ -131,11 +231,14 @@ public class CompositionViewController {
         AnchorPane.setLeftAnchor(thumbSeeker,LEFT_COMPONENT_WIDTH);
         AnchorPane.setRightAnchor(thumbSeeker, 0d);
 
-        AnchorPane.setTopAnchor(keyframeTable, PLAYBACK_FEATURES_HEIGHT);
+        AnchorPane.setTopAnchor(keyframeTable, PLAYBACK_FEATURES_HEIGHT+selectionBar.getAreaHeight());
         AnchorPane.setLeftAnchor(keyframeTable,LEFT_COMPONENT_WIDTH);
         AnchorPane.setRightAnchor(keyframeTable, 0d);
         AnchorPane.setBottomAnchor(keyframeTable, 0d);
 
+//        AnchorPane.setTopAnchor(commonScrollBar, PLAYBACK_FEATURES_HEIGHT+selectionBar.getAreaHeight());
+//        AnchorPane.setRightAnchor(commonScrollBar, 0d);
+//        AnchorPane.setBottomAnchor(commonScrollBar, 0d);
 
         AnchorPane.setTopAnchor(selectionBar, PLAYBACK_FEATURES_HEIGHT);
         AnchorPane.setLeftAnchor(selectionBar,LEFT_COMPONENT_WIDTH);
@@ -169,17 +272,13 @@ public class CompositionViewController {
         return outerHBox;
     }
 
-    private TreeTableView initKeyframeTable(){
-        TreeTableColumn keyframe=new TreeTableColumn<>();
-        final double LEFT_COMPONENT_WIDTH=NAME_COLUMN_WIDTH+VALUE_COLUMN_WIDTH+OPTION_COLUMN_WIDTH;
-        double RIGHT_COMPONENT_WIDTH = Main.WIDTH - LEFT_COMPONENT_WIDTH;
-        keyframe.setPrefWidth(RIGHT_COMPONENT_WIDTH);
-
-        TreeTableView<Metadata> treeTableView=new TreeTableView<>(rootTreeItem);
-        treeTableView.getColumns().addAll(keyframe);
-        treeTableView.setShowRoot(false);
-        treeTableView.setFixedCellSize(CELL_SIZE);
-        return treeTableView;
+    private TreeView<Metadata> initKeyframeTable(){
+        TreeView<Metadata> treeView=new TreeView<>(rootTreeItem);
+        treeView.setCellFactory(param -> new KeyframeCell());
+        treeView.setShowRoot(false);
+        treeView.setFixedCellSize(Metadata.CELL_HEIGHT);
+        treeView.getStyleClass().add("no-horizontal-scrollbar");
+        return treeView;
     }
 
     private TreeTableView<Metadata> initItemTable(){
@@ -191,11 +290,13 @@ public class CompositionViewController {
         name.setPrefWidth(NAME_COLUMN_WIDTH);
 
         TreeTableColumn<Metadata,Metadata> value=new TreeTableColumn<>("Value");
-        value.setCellFactory(param -> new ItemTableValueCell());
+        value.setCellFactory(param -> new ValueCell());
         value.setCellValueFactory(param -> new SimpleObjectProperty<Metadata>(param.getValue().getValue()));
         value.setPrefWidth(VALUE_COLUMN_WIDTH);
 
-        TreeTableColumn<Metadata,String> option=new TreeTableColumn<>("Option");
+        TreeTableColumn<Metadata,Metadata> option=new TreeTableColumn<>("Option");
+        option.setCellFactory(param -> new OptionCell());
+        option.setCellValueFactory(param -> new SimpleObjectProperty<Metadata>(param.getValue().getValue()));
         option.setPrefWidth(OPTION_COLUMN_WIDTH);
 
         TreeTableView<Metadata> treeTableView=new TreeTableView<>(rootTreeItem);
@@ -204,9 +305,13 @@ public class CompositionViewController {
         treeTableView.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
             if(newValue!=null){//TODO NPE occurs during copy paste
                 workspace.getSelectedItems().selectOnly(newValue.getValue().getItemViewController());
+                keyframeTable.getSelectionModel().select(newValue);
             }
         });
-        treeTableView.setFixedCellSize(CELL_SIZE);
+        treeTableView.getStyleClass().add("no-vertical-scrollbar");
+        treeTableView.setFixedCellSize(Metadata.CELL_HEIGHT);
+//        treeTableView.addEventFilter(ScrollEvent.SCROLL, Event::consume);
+
         return treeTableView;
     }
 
@@ -226,5 +331,6 @@ public class CompositionViewController {
      */
     public void selectRecordFromItemTable(TreeItem<Metadata> headerTreeItem){
         itemTable.getSelectionModel().select(headerTreeItem);
+        keyframeTable.getSelectionModel().select(headerTreeItem);
     }
 }
