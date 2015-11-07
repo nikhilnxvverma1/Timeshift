@@ -16,7 +16,7 @@ public class SelectionBar extends Pane{
 	private static final String BAR_STYLE="-fx-fill:#A6A6A6;";
 	private static final String RESIZE_HANDLE_STYLE="-fx-fill:#0095FF;";
 
-	private static final int DEFAULT_AREA_HEIGHT = 27;
+	private static final int DEFAULT_AREA_HEIGHT = 26;
 	private static final double RESIZE_HANDLE_WIDTH=5;
 	@FXML private Rectangle selectionRect;
 	@FXML private Rectangle leftResize;

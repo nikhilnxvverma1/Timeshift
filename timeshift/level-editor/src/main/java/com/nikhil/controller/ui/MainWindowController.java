@@ -249,11 +249,11 @@ public class MainWindowController implements WorkspaceListener {
         Window window = workspaceContainer.getScene().getWindow();
         File file = fileChooser.showSaveDialog(window);
         if(file!=null){
-            Logger.log("File choosen is "+file);
+            Logger.log("File chosen is "+file);
             workspace.saveAs(file);
             return true;
         }else{
-            Logger.log("no file choosen ");
+            Logger.log("no file chosen ");
             return false;
         }
 

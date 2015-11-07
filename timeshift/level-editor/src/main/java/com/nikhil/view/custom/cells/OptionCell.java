@@ -1,4 +1,4 @@
-package com.nikhil.view.custom;
+package com.nikhil.view.custom.cells;
 
 import com.nikhil.view.item.record.Metadata;
 import javafx.scene.control.TreeTableCell;

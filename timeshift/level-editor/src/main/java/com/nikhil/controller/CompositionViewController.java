@@ -2,28 +2,29 @@ package com.nikhil.controller;
 
 import com.nikhil.Main;
 import com.nikhil.controller.item.ItemModelController;
+import com.nikhil.editor.selection.SelectionArea;
 import com.nikhil.editor.workspace.Workspace;
 import com.nikhil.logging.Logger;
 import com.nikhil.view.custom.*;
+import com.nikhil.view.custom.cells.KeyframeCell;
+import com.nikhil.view.custom.cells.OptionCell;
+import com.nikhil.view.custom.cells.ValueCell;
+import com.nikhil.view.custom.keyframe.KeyframeTreeView;
 import com.nikhil.view.item.record.Metadata;
 import com.sun.javafx.scene.control.skin.VirtualFlow;
 import com.sun.javafx.scene.control.skin.VirtualScrollBar;
 import javafx.beans.property.SimpleObjectProperty;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
+import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.event.Event;
-import javafx.event.EventHandler;
-import javafx.event.EventTarget;
-import javafx.event.EventType;
 import javafx.geometry.Insets;
 import javafx.geometry.Orientation;
+import javafx.geometry.Point2D;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.input.PickResult;
 import javafx.scene.input.ScrollEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
@@ -49,7 +50,7 @@ public class CompositionViewController {
     private List<ItemViewController> itemViewControllers = new LinkedList<ItemViewController>();
     private TreeItem<Metadata> rootTreeItem;
     private TreeTableView<Metadata> itemTable;
-    private TreeView<Metadata> keyframeTable;
+    private KeyframeTreeView keyframeTable;
 
     public CompositionViewController(CompositionController compositionController,Workspace workspace) {
         this.compositionController=compositionController;
@@ -121,6 +122,10 @@ public class CompositionViewController {
         return workspace;
     }
 
+    public KeyframeTreeView getKeyframeTable() {
+        return keyframeTable;
+    }
+
     public void addToTimelineSystem(ItemViewController itemViewController){
         //add to the timeline
         ItemModelController itemModelController = itemViewController.getModelController();
@@ -143,19 +148,51 @@ public class CompositionViewController {
 
     /**
      * @deprecated
-     * finds the virtual scroll bar if present in a node
+     * finds the vertical virtual scroll bar if present in a node
      * @param parent parent which has unmodifieable children
      * @return virtual scrollbar if found,else null
      */
     private VirtualScrollBar findVirtualScrollBar(Parent parent){
         for(Node node:parent.getChildrenUnmodifiable()){
-            if(node instanceof VirtualScrollBar){
+            if(node instanceof VirtualScrollBar&& ((VirtualScrollBar)node).getOrientation()==Orientation.VERTICAL){
                 return (VirtualScrollBar)node;
             }
         }
         return null;
     }
 
+    private ScrollBar itemTableScrollBar=null;
+    private ScrollBar keyframeScrollBar=null;
+    ListChangeListener<Node> itemTableUnmodifiedChildrenListener = (ListChangeListener<Node>) c -> {
+        while (c.next()) {
+            if (c.wasAdded() && !c.wasRemoved()) {
+                List<? extends Node> addedSubList = c.getAddedSubList();
+                for (Node node : addedSubList) {
+                    if (node instanceof VirtualFlow) {
+                        itemTableScrollBar = CompositionViewController.this.findVirtualScrollBar((VirtualFlow) node);
+                        if (keyframeScrollBar != null) {
+                            keyframeScrollBar.valueProperty().bindBidirectional(itemTableScrollBar.valueProperty());
+                        }
+                    }
+                }
+            }
+        }
+    };
+    ListChangeListener<Node> keyframeTableUnmodifiedChildrenListener = (ListChangeListener<Node>) c -> {
+        while (c.next()) {
+            if (c.wasAdded() && !c.wasRemoved()) {
+                List<? extends Node> addedSubList = c.getAddedSubList();
+                for (Node node : addedSubList) {
+                    if (node instanceof VirtualFlow) {
+                        keyframeScrollBar = CompositionViewController.this.findVirtualScrollBar((VirtualFlow) node);
+                        if (itemTableScrollBar != null) {
+                            itemTableScrollBar.valueProperty().bindBidirectional(keyframeScrollBar.valueProperty());
+                        }
+                    }
+                }
+            }
+        }
+    };
     private void initView(){
         final double LEFT_COMPONENT_WIDTH=NAME_COLUMN_WIDTH+VALUE_COLUMN_WIDTH+OPTION_COLUMN_WIDTH;
         final double RIGHT_COMPONENT_WIDTH = Main.WIDTH - LEFT_COMPONENT_WIDTH;
@@ -172,46 +209,53 @@ public class CompositionViewController {
         thumbSeeker.setPrefHeight(PLAYBACK_FEATURES_HEIGHT);
         thumbSeeker.setMaxHeight(Control.USE_PREF_SIZE);
 
-        itemTable = initItemTable();
-        keyframeTable = initKeyframeTable();
+        rootTreeItem=new TreeItem<>(new Metadata("Root",Metadata.ROOT_TAG));
+        itemTable = initItemTable(rootTreeItem);
+        keyframeTable =new KeyframeTreeView(rootTreeItem);
 
-        itemTable.addEventFilter(ScrollEvent.SCROLL, e -> {
+        //bind the scrollbars of the two tables TODO unhook these listeners later
 
-            //a true for alt down indicates a mocked event
-            if (!e.isAltDown()) {
-                VirtualFlow virtualFlow = findVirtualFlow(keyframeTable);
+        itemTable.getChildrenUnmodifiable().addListener(itemTableUnmodifiedChildrenListener);
+        keyframeTable.getChildrenUnmodifiable().addListener(keyframeTableUnmodifiedChildrenListener);
 
-                Event.fireEvent(virtualFlow, new ScrollEvent(virtualFlow, virtualFlow, ScrollEvent.SCROLL, e.getX(),
-                        e.getY(), e.getScreenX(), e.getScreenY(), e.isShiftDown(), e.isControlDown(),true,// <-----mocked event
-                        e.isMetaDown(), e.isDirect(), e.isInertia(), e.getDeltaX(), e.getDeltaY(), e.getTotalDeltaX(),
-                        e.getTotalDeltaY(), e.getTextDeltaXUnits(), e.getTextDeltaX(), e.getTextDeltaYUnits(), e.getTextDeltaY(),
-                        e.getTouchCount(), e.getPickResult()));
-            }
-        });
-        keyframeTable.addEventFilter(ScrollEvent.SCROLL, e -> {
-            //a true for alt down indicates a mocked event
-            if (!e.isAltDown()) {
-                VirtualFlow virtualFlow = findVirtualFlow(itemTable);
+//        itemTable.addEventFilter(ScrollEvent.SCROLL, e -> {
+//
+//            //a true for alt down indicates a mocked event
+//            if (!e.isAltDown()) {
+//                VirtualFlow virtualFlow = findVirtualFlow(keyframeTable);
+//
+//                Event.fireEvent(virtualFlow, new ScrollEvent(virtualFlow, virtualFlow, ScrollEvent.SCROLL, e.getX(),
+//                        e.getY(), e.getScreenX(), e.getScreenY(), e.isShiftDown(), e.isControlDown(),true,// <-----mocked event
+//                        e.isMetaDown(), e.isDirect(), e.isInertia(), e.getDeltaX(), e.getDeltaY(), e.getTotalDeltaX(),
+//                        e.getTotalDeltaY(), e.getTextDeltaXUnits(), e.getTextDeltaX(), e.getTextDeltaYUnits(), e.getTextDeltaY(),
+//                        e.getTouchCount(), e.getPickResult()));
+//            }
+//        });
+//        keyframeTable.addEventFilter(ScrollEvent.SCROLL, e -> {
+//            //a true for alt down indicates a mocked event
+//            if (!e.isAltDown()) {
+//                VirtualFlow virtualFlow = findVirtualFlow(itemTable);
+//
+//                Event.fireEvent(virtualFlow, new ScrollEvent(virtualFlow, virtualFlow, ScrollEvent.SCROLL, e.getX(),
+//                        e.getY(), e.getScreenX(), e.getScreenY(), e.isShiftDown(), e.isControlDown(), true,// <-----mocked event
+//                        e.isMetaDown(), e.isDirect(), e.isInertia(), e.getDeltaX(), e.getDeltaY(), e.getTotalDeltaX(),
+//                        e.getTotalDeltaY(), e.getTextDeltaXUnits(), e.getTextDeltaX(), e.getTextDeltaYUnits(), e.getTextDeltaY(),
+//                        e.getTouchCount(), e.getPickResult()));
+//            }
+//        });
 
-                Event.fireEvent(virtualFlow, new ScrollEvent(virtualFlow, virtualFlow, ScrollEvent.SCROLL, e.getX(),
-                        e.getY(), e.getScreenX(), e.getScreenY(), e.isShiftDown(), e.isControlDown(), true,// <-----mocked event
-                        e.isMetaDown(), e.isDirect(), e.isInertia(), e.getDeltaX(), e.getDeltaY(), e.getTotalDeltaX(),
-                        e.getTotalDeltaY(), e.getTextDeltaXUnits(), e.getTextDeltaX(), e.getTextDeltaYUnits(), e.getTextDeltaY(),
-                        e.getTouchCount(), e.getPickResult()));
-            }
-        });
-
-        ScrollBar commonScrollBar = new ScrollBar();
-        commonScrollBar.setOrientation(Orientation.VERTICAL);
-        commonScrollBar.setMin(0);
-        commonScrollBar.setMax(0);
-        commonScrollBar.valueProperty().addListener((observable, oldValue, newValue) -> {
-            itemTable.scrollTo(newValue.intValue());
-            keyframeTable.scrollTo(newValue.intValue());
-        });
+//        ScrollBar commonScrollBar = new ScrollBar();
+//        commonScrollBar.setOrientation(Orientation.VERTICAL);
+//        commonScrollBar.setMin(0);
+//        commonScrollBar.setMax(0);
+//        commonScrollBar.valueProperty().addListener((observable, oldValue, newValue) -> {
+//            itemTable.scrollTo(newValue.intValue());
+//            keyframeTable.scrollTo(newValue.intValue());
+//        });
 
 //        anchorPane.getChildren().addAll(outerHBox, itemTable, ruler, keyframeTable,selectionBar, thumbSeeker.getLineMark(),thumbSeeker, commonScrollBar);
-        anchorPane.getChildren().addAll(outerHBox, itemTable, ruler, keyframeTable,selectionBar, thumbSeeker.getLineMark(),thumbSeeker);
+        anchorPane.getChildren().addAll(outerHBox, itemTable, ruler, keyframeTable,selectionBar,
+                thumbSeeker.getLineMark(),thumbSeeker,keyframeTable.getSelectionArea().getSelectRect());
         thumbSeeker.getLineMark().setLayoutX(LEFT_COMPONENT_WIDTH);
         thumbSeeker.getLineMark().endYProperty().//just below so that it doesn't increase with every resize
                 bind(itemTable.heightProperty().add(PLAYBACK_FEATURES_HEIGHT - 2));
@@ -272,6 +316,11 @@ public class CompositionViewController {
         return outerHBox;
     }
 
+
+    /**
+     * @deprecated use custom {@link KeyframeTreeView} instead
+     * @return a treeview for keyframes
+     */
     private TreeView<Metadata> initKeyframeTable(){
         TreeView<Metadata> treeView=new TreeView<>(rootTreeItem);
         treeView.setCellFactory(param -> new KeyframeCell());
@@ -281,9 +330,7 @@ public class CompositionViewController {
         return treeView;
     }
 
-    private TreeTableView<Metadata> initItemTable(){
-
-        rootTreeItem=new TreeItem<>(new Metadata("Root",Metadata.ROOT_TAG));
+    private TreeTableView<Metadata> initItemTable(TreeItem<Metadata> root){
 
         TreeTableColumn<Metadata,String> name=new TreeTableColumn<>("Name");
         name.setCellValueFactory(param -> param.getValue().getValue().nameProperty());
@@ -299,7 +346,7 @@ public class CompositionViewController {
         option.setCellValueFactory(param -> new SimpleObjectProperty<Metadata>(param.getValue().getValue()));
         option.setPrefWidth(OPTION_COLUMN_WIDTH);
 
-        TreeTableView<Metadata> treeTableView=new TreeTableView<>(rootTreeItem);
+        TreeTableView<Metadata> treeTableView=new TreeTableView<>(root);
         treeTableView.getColumns().addAll(name,value,option);
         treeTableView.setShowRoot(false);
         treeTableView.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {

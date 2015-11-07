@@ -1,4 +1,4 @@
-package com.nikhil.view.custom;
+package com.nikhil.view.custom.cells;
 
 import com.nikhil.controller.ItemViewController;
 import com.nikhil.view.item.record.Metadata;

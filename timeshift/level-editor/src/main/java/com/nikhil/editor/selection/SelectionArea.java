@@ -62,7 +62,7 @@ public class SelectionArea implements EventHandler<MouseEvent>{
 	 * @param dragX x in workspace coordinates
 	 * @param dragY y in workspace coordinates
 	 */
-	public void draggedTo(double dragX,double dragY){
+	private void draggedTo(double dragX, double dragY){
 		this.dragX=dragX;
 		this.dragY=dragY;
 		computeSelectRectDimensions();

@@ -10,7 +10,7 @@ import java.util.Set;
 /**
  * Created by NikhilVerma on 27/09/15.
  */
-public class Clipboard {
+public class Clipboard {//TODO synchronize these methods
 
     private static Clipboard sharedInstance=null;
 

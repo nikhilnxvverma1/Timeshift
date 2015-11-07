@@ -32,6 +32,9 @@ public class Main extends Application {
 	 */
 	public Main(File fileToOpen) {
 		this.fileToOpen = fileToOpen;
+		//testing purposes
+//		/Users/NikhilVerma/Desktop/myfile.xml
+		this.fileToOpen=new File("/Users/NikhilVerma/Desktop/myfile.xml");
 	}
 
 	public static void main(String[] args) {

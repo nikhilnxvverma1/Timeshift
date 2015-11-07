@@ -5,15 +5,28 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="fbabe40c-a25f-4f81-a178-f8a94da87cbf" name="Default" comment="Worked on ruler which auto lays out markings on resizing">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/level-editor/src/main/java/com/nikhil/view/custom/KeyframeCell.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/level-editor/src/main/java/com/nikhil/view/custom/KeyframePane.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/level-editor/src/main/java/com/nikhil/view/custom/OptionCell.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/level-editor/src/main/java/com/nikhil/view/custom/TimeValueKey.java" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/../JavaFX research/javafx-rnd/bin/application/timepane/KeyFill.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/level-editor/build/classes/main/com/nikhil/view/custom/ItemTableValueCell.class" afterPath="" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/level-editor/src/main/java/com/nikhil/view/custom/ItemTableValueCell.java" afterPath="$PROJECT_DIR$/level-editor/src/main/java/com/nikhil/view/custom/ValueCell.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/level-editor/src/main/resources/art/first_keyframe.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/level-editor/src/main/resources/art/keyframe.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/level-editor/src/main/resources/art/last_keyframe.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/level-editor/src/main/java/com/nikhil/view/custom/keyframe/KeyframeImageView.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/level-editor/src/main/java/com/nikhil/view/custom/keyframe/KeyframeTreeView.java" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/level-editor/build/classes/main/com/nikhil/controller/ui/AnimationController.class" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/level-editor/build/classes/main/com/nikhil/view/custom/KeyframeCell.class" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/level-editor/build/classes/main/com/nikhil/view/custom/KeyframePane$1.class" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/level-editor/build/classes/main/com/nikhil/view/custom/KeyframePane.class" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/level-editor/build/classes/main/com/nikhil/view/custom/OptionCell.class" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/level-editor/build/classes/main/com/nikhil/view/custom/TimeValueKey.class" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/level-editor/build/classes/main/com/nikhil/view/custom/ValueCell.class" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/level-editor/src/main/java/com/nikhil/controller/ui/AnimationController.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/level-editor/src/main/java/com/nikhil/view/custom/TimeValueKey.java" afterPath="" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/level-editor/src/main/java/com/nikhil/view/custom/KeyframeCell.java" afterPath="$PROJECT_DIR$/level-editor/src/main/java/com/nikhil/view/custom/cells/KeyframeCell.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/level-editor/src/main/java/com/nikhil/view/custom/KeyframePane.java" afterPath="$PROJECT_DIR$/level-editor/src/main/java/com/nikhil/view/custom/keyframe/KeyframePane.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/level-editor/src/main/java/com/nikhil/view/custom/OptionCell.java" afterPath="$PROJECT_DIR$/level-editor/src/main/java/com/nikhil/view/custom/cells/OptionCell.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/level-editor/src/main/java/com/nikhil/view/custom/ValueCell.java" afterPath="$PROJECT_DIR$/level-editor/src/main/java/com/nikhil/view/custom/cells/ValueCell.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/level-editor/build/classes/main/com/nikhil/controller/CompositionViewController$1.class" afterPath="$PROJECT_DIR$/level-editor/build/classes/main/com/nikhil/controller/CompositionViewController$1.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/level-editor/build/classes/main/com/nikhil/controller/CompositionViewController.class" afterPath="$PROJECT_DIR$/level-editor/build/classes/main/com/nikhil/controller/CompositionViewController.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/level-editor/build/classes/main/com/nikhil/Main.class" afterPath="$PROJECT_DIR$/level-editor/build/classes/main/com/nikhil/Main.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/level-editor/build/classes/main/com/nikhil/controller/ui/MainWindowController.class" afterPath="$PROJECT_DIR$/level-editor/build/classes/main/com/nikhil/controller/ui/MainWindowController.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/level-editor/build/classes/main/com/nikhil/view/item/record/Metadata.class" afterPath="$PROJECT_DIR$/level-editor/build/classes/main/com/nikhil/view/item/record/Metadata.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/level-editor/build/classes/main/com/nikhil/view/item/record/PolygonMetadata$1.class" afterPath="$PROJECT_DIR$/level-editor/build/classes/main/com/nikhil/view/item/record/PolygonMetadata$1.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/level-editor/build/classes/main/com/nikhil/view/item/record/PolygonMetadata$2.class" afterPath="$PROJECT_DIR$/level-editor/build/classes/main/com/nikhil/view/item/record/PolygonMetadata$2.class" />
@@ -22,17 +35,18 @@
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/level-editor/build/classes/main/com/nikhil/view/item/record/PolygonMetadata$5.class" afterPath="$PROJECT_DIR$/level-editor/build/classes/main/com/nikhil/view/item/record/PolygonMetadata$5.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/level-editor/build/classes/main/com/nikhil/view/item/record/PolygonMetadata$6.class" afterPath="$PROJECT_DIR$/level-editor/build/classes/main/com/nikhil/view/item/record/PolygonMetadata$6.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/level-editor/build/classes/main/com/nikhil/view/item/record/PolygonMetadata.class" afterPath="$PROJECT_DIR$/level-editor/build/classes/main/com/nikhil/view/item/record/PolygonMetadata.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/level-editor/build/classes/main/com/nikhil/controller/PolygonViewController.class" afterPath="$PROJECT_DIR$/level-editor/build/classes/main/com/nikhil/controller/PolygonViewController.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../JavaFX research/javafx-rnd/bin/application/timepane/TimeValueKey.class" afterPath="$PROJECT_DIR$/../JavaFX research/javafx-rnd/bin/application/timepane/TimeValueKey.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/level-editor/build/classes/main/com/nikhil/editor/selection/SelectionArea.class" afterPath="$PROJECT_DIR$/level-editor/build/classes/main/com/nikhil/editor/selection/SelectionArea.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/level-editor/build/classes/main/com/nikhil/view/custom/SelectionBar.class" afterPath="$PROJECT_DIR$/level-editor/build/classes/main/com/nikhil/view/custom/SelectionBar.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/level-editor/build/classes/main/com/nikhil/editor/workspace/Workspace.class" afterPath="$PROJECT_DIR$/level-editor/build/classes/main/com/nikhil/editor/workspace/Workspace.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../artwork/iconography.ai" afterPath="$PROJECT_DIR$/../artwork/iconography.ai" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/level-editor/src/main/java/com/nikhil/editor/selection/Clipboard.java" afterPath="$PROJECT_DIR$/level-editor/src/main/java/com/nikhil/editor/selection/Clipboard.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/level-editor/src/main/java/com/nikhil/controller/CompositionViewController.java" afterPath="$PROJECT_DIR$/level-editor/src/main/java/com/nikhil/controller/CompositionViewController.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/level-editor/src/main/java/com/nikhil/Main.java" afterPath="$PROJECT_DIR$/level-editor/src/main/java/com/nikhil/Main.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/level-editor/src/main/java/com/nikhil/controller/ui/MainWindowController.java" afterPath="$PROJECT_DIR$/level-editor/src/main/java/com/nikhil/controller/ui/MainWindowController.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/level-editor/src/main/java/com/nikhil/view/item/record/Metadata.java" afterPath="$PROJECT_DIR$/level-editor/src/main/java/com/nikhil/view/item/record/Metadata.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/level-editor/src/main/java/com/nikhil/view/item/record/PolygonMetadata.java" afterPath="$PROJECT_DIR$/level-editor/src/main/java/com/nikhil/view/item/record/PolygonMetadata.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/level-editor/src/main/java/com/nikhil/controller/PolygonViewController.java" afterPath="$PROJECT_DIR$/level-editor/src/main/java/com/nikhil/controller/PolygonViewController.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../JavaFX research/javafx-rnd/src/application/timepane/TimeValueKey.java" afterPath="$PROJECT_DIR$/../JavaFX research/javafx-rnd/src/application/timepane/TimeValueKey.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/level-editor/build/resources/main/views/level-editor-style.css" afterPath="$PROJECT_DIR$/level-editor/build/resources/main/views/level-editor-style.css" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/level-editor/src/main/resources/views/level-editor-style.css" afterPath="$PROJECT_DIR$/level-editor/src/main/resources/views/level-editor-style.css" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../JavaFX research/javafx-rnd/.idea/workspace.xml" afterPath="$PROJECT_DIR$/../JavaFX research/javafx-rnd/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/level-editor/src/main/java/com/nikhil/editor/selection/SelectionArea.java" afterPath="$PROJECT_DIR$/level-editor/src/main/java/com/nikhil/editor/selection/SelectionArea.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/level-editor/src/main/java/com/nikhil/view/custom/SelectionBar.java" afterPath="$PROJECT_DIR$/level-editor/src/main/java/com/nikhil/view/custom/SelectionBar.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="timeshift.iws" />
@@ -89,100 +103,117 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="CompositionViewController.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="CompositionViewController.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/level-editor/src/main/java/com/nikhil/controller/CompositionViewController.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.5945946">
-              <caret line="305" column="66" selection-start-line="305" selection-start-column="66" selection-end-line="305" selection-end-column="66" />
+            <state vertical-scroll-proportion="0.0">
+              <caret line="124" column="48" selection-start-line="124" selection-start-column="48" selection-end-line="124" selection-end-column="48" />
               <folding>
-                <element signature="imports" expanded="true" />
-                <element signature="e#4244#4245#0" expanded="true" />
-                <element signature="e#4297#4298#0" expanded="true" />
-                <element signature="e#4336#4337#0" expanded="true" />
-                <element signature="e#4368#4369#0" expanded="true" />
+                <element signature="docComment;class#CompositionViewController#0" expanded="false" />
+                <element signature="method#CompositionViewController#0;class#CompositionViewController#0" expanded="false" />
+                <element signature="method#getNewTabName#0;class#CompositionViewController#0" expanded="false" />
+                <element signature="method#addItemViewController#0;class#CompositionViewController#0" expanded="false" />
+                <element signature="e#3082#3150#0" expanded="false" />
+                <element signature="method#removeItemViewController#0;class#CompositionViewController#0" expanded="false" />
+                <element signature="e#3593#3669#0" expanded="false" />
+                <element signature="docComment;method#countExpandedChildren#0;class#CompositionViewController#0" expanded="false" />
+                <element signature="method#countExpandedChildren#0;class#CompositionViewController#0" expanded="false" />
+                <element signature="e#4561#4562#0" expanded="true" />
+                <element signature="method#addToTimelineSystem#0;class#CompositionViewController#0" expanded="false" />
+                <element signature="method#initSearchAndPlayback#0;class#CompositionViewController#0" expanded="false" />
+                <element signature="class#12709:13105" expanded="false" />
+                <element signature="method#valueBeingDragged#0;class#12709:13105" expanded="false" />
+                <element signature="method#valueFinishedChanging#0;class#12709:13105" expanded="false" />
+                <element signature="method#removeFromTimelineSystem#0;class#CompositionViewController#0" expanded="false" />
+                <element signature="docComment;method#selectRecordFromItemTable#0;class#CompositionViewController#0" expanded="false" />
+                <element signature="method#selectRecordFromItemTable#0;class#CompositionViewController#0" expanded="false" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="level-editor-style.css" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/level-editor/src/main/resources/views/level-editor-style.css">
+      <file leaf-file-name="Main.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/level-editor/src/main/java/com/nikhil/Main.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-37.77778">
-              <caret line="68" column="1" selection-start-line="68" selection-start-column="1" selection-end-line="68" selection-end-column="1" />
+            <state vertical-scroll-proportion="0.0">
+              <caret line="53" column="57" selection-start-line="53" selection-start-column="57" selection-end-line="53" selection-end-column="57" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Metadata.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/level-editor/src/main/java/com/nikhil/view/item/record/Metadata.java">
+      <file leaf-file-name="KeyframeTreeView.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/level-editor/src/main/java/com/nikhil/view/custom/keyframe/KeyframeTreeView.java">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="80" column="41" selection-start-line="80" selection-start-column="41" selection-end-line="80" selection-end-column="41" />
+              <caret line="225" column="0" selection-start-line="225" selection-start-column="0" selection-end-line="225" selection-end-column="0" />
+              <folding>
+                <element signature="imports" expanded="true" />
+                <element signature="e#6060#6061#0" expanded="true" />
+                <element signature="e#6104#6105#0" expanded="true" />
+                <element signature="e#7907#7908#0" expanded="true" />
+                <element signature="e#7964#7965#0" expanded="true" />
+                <element signature="e#9697#9698#0" expanded="true" />
+                <element signature="e#9759#9760#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="KeyframeCell.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/level-editor/src/main/java/com/nikhil/view/custom/cells/KeyframeCell.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="9" column="40" selection-start-line="9" selection-start-column="40" selection-end-line="9" selection-end-column="40" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="KeyframeImageView.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/level-editor/src/main/java/com/nikhil/view/custom/keyframe/KeyframeImageView.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="70" column="22" selection-start-line="70" selection-start-column="22" selection-end-line="70" selection-end-column="22" />
+              <folding>
+                <element signature="imports" expanded="true" />
+                <element signature="e#2091#2092#0" expanded="true" />
+                <element signature="e#2122#2123#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Metadata.java" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/level-editor/src/main/java/com/nikhil/view/item/record/Metadata.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.5743243">
+              <caret line="24" column="57" selection-start-line="24" selection-start-column="57" selection-end-line="24" selection-end-column="57" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
       <file leaf-file-name="KeyframePane.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/level-editor/src/main/java/com/nikhil/view/custom/KeyframePane.java">
+        <entry file="file://$PROJECT_DIR$/level-editor/src/main/java/com/nikhil/view/custom/keyframe/KeyframePane.java">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="159" column="10" selection-start-line="159" selection-start-column="10" selection-end-line="159" selection-end-column="10" />
+              <caret line="260" column="43" selection-start-line="260" selection-start-column="43" selection-end-line="260" selection-end-column="43" />
               <folding>
-                <element signature="imports" expanded="true" />
-                <element signature="e#7010#7011#0" expanded="true" />
-                <element signature="e#7037#7038#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="PolygonViewController.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/level-editor/src/main/java/com/nikhil/controller/PolygonViewController.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="300" column="111" selection-start-line="300" selection-start-column="111" selection-end-line="300" selection-end-column="111" />
-              <folding>
-                <element signature="docComment;class#PolygonViewController#0" expanded="false" />
-                <element signature="method#PolygonViewController#0;class#PolygonViewController#0" expanded="false" />
-                <element signature="method#PolygonViewController#1;class#PolygonViewController#0" expanded="false" />
-                <element signature="docComment;method#constructModelControllerUsingView#0;class#PolygonViewController#0" expanded="false" />
-                <element signature="docComment;method#constructViewUsingModelController#0;class#PolygonViewController#0" expanded="false" />
-                <element signature="e#4634#4745#0" expanded="false" />
-                <element signature="method#getLayoutBoundsInWorksheet#0;class#PolygonViewController#0" expanded="false" />
-                <element signature="method#addViewsToWorksheet#0;class#PolygonViewController#0" expanded="false" />
-                <element signature="method#removeViewsFromWorksheet#0;class#PolygonViewController#0" expanded="false" />
-                <element signature="method#setCompositionViewController#0;class#PolygonViewController#0" expanded="false" />
-                <element signature="method#overlapsWithSceneBounds#0;class#PolygonViewController#0" expanded="false" />
-                <element signature="method#hoveredOver#0;class#PolygonViewController#0" expanded="false" />
-                <element signature="e#12271#12366#0" expanded="false" />
-                <element signature="method#update#0;class#PolygonViewController#0" expanded="false" />
-                <element signature="e#12567#12662#0" expanded="false" />
-                <element signature="method#finishedTweakingPolygonPoint#0;class#PolygonViewController#0" expanded="false" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="SelectionArea.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/level-editor/src/main/java/com/nikhil/editor/selection/SelectionArea.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="23" column="0" selection-start-line="23" selection-start-column="0" selection-end-line="23" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="KeyframeCell.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/level-editor/src/main/java/com/nikhil/view/custom/KeyframeCell.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="21" column="65" selection-start-line="21" selection-start-column="65" selection-end-line="21" selection-end-column="65" />
-              <folding>
-                <element signature="imports" expanded="true" />
+                <element signature="method#selectAllKeys#0;class#KeyframePane#0" expanded="false" />
+                <element signature="method#shiftKeys#0;class#KeyframePane#0" expanded="false" />
+                <element signature="method#getLayoutXFor#0;class#KeyframePane#0" expanded="false" />
+                <element signature="method#zoomTo#0;class#KeyframePane#0" expanded="false" />
+                <element signature="method#addKeyAt#0;class#KeyframePane#0" expanded="false" />
+                <element signature="docComment;method#sortKeys#0;class#KeyframePane#0" expanded="false" />
+                <element signature="method#sortKeys#0;class#KeyframePane#0" expanded="false" />
+                <element signature="class#5596:5938" expanded="false" />
+                <element signature="method#compare#0;class#5596:5938" expanded="false" />
+                <element signature="method#timeAtX#0;class#KeyframePane#0" expanded="false" />
+                <element signature="method#selectKey#0;class#KeyframePane#0" expanded="false" />
+                <element signature="method#findKeyAt#0;class#KeyframePane#0" expanded="false" />
               </folding>
             </state>
           </provider>
@@ -1211,17 +1242,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/level-editor/src/main/java/com/nikhil/Main.java" />
-        <option value="$PROJECT_DIR$/level-editor/src/main/java/com/nikhil/view/control/DraggableTextValueDelegate.java" />
-        <option value="$PROJECT_DIR$/level-editor/src/main/java/com/nikhil/view/control/DraggableTextValue.java" />
-        <option value="$PROJECT_DIR$/level-editor/src/main/java/com/nikhil/view/item/metadata/Metadata.java" />
-        <option value="$PROJECT_DIR$/level-editor/src/main/java/com/nikhil/view/custom/Ruler.java" />
-        <option value="$PROJECT_DIR$/level-editor/src/main/java/com/nikhil/view/custom/SelectionBarDelegate.java" />
-        <option value="$PROJECT_DIR$/level-editor/src/main/java/com/nikhil/view/custom/ThumbSeekerDelegate.java" />
-        <option value="$PROJECT_DIR$/level-editor/src/main/java/com/nikhil/controller/ShapeViewController.java" />
-        <option value="$PROJECT_DIR$/level-editor/src/main/java/com/nikhil/editor/tool/PolygonTool.java" />
-        <option value="$PROJECT_DIR$/level-editor/src/main/java/com/nikhil/command/ActionOnSingleItem.java" />
-        <option value="$PROJECT_DIR$/level-editor/src/main/java/com/nikhil/command/MovePolygonPoint.java" />
         <option value="$PROJECT_DIR$/level-editor/src/main/java/com/nikhil/editor/tool/SelectionTool.java" />
         <option value="$PROJECT_DIR$/level-editor/src/main/java/com/nikhil/editor/XMLLoader.java" />
         <option value="$PROJECT_DIR$/level-editor/src/main/java/com/nikhil/command/AddItemSet.java" />
@@ -1251,17 +1271,28 @@
         <option value="$PROJECT_DIR$/level-editor/src/main/java/com/nikhil/view/custom/ItemTableValueCell.java" />
         <option value="$PROJECT_DIR$/level-editor/src/main/java/com/nikhil/view/custom/ItemTableOptionCell.java" />
         <option value="$PROJECT_DIR$/level-editor/src/main/java/com/nikhil/view/custom/ValueCell.java" />
-        <option value="$PROJECT_DIR$/level-editor/src/main/java/com/nikhil/view/item/record/PolygonMetadata.java" />
         <option value="$PROJECT_DIR$/level-editor/src/main/java/com/nikhil/controller/PolygonViewController.java" />
         <option value="$PROJECT_DIR$/level-editor/src/main/java/com/nikhil/view/custom/OptionCell.java" />
-        <option value="$PROJECT_DIR$/level-editor/src/main/java/com/nikhil/view/custom/TimeValueKey.java" />
         <option value="$PROJECT_DIR$/level-editor/src/main/java/com/nikhil/view/custom/TimeValuePane.java" />
-        <option value="$PROJECT_DIR$/level-editor/src/main/java/com/nikhil/view/custom/SelectionBar.java" />
         <option value="$PROJECT_DIR$/level-editor/src/main/java/com/nikhil/view/custom/KeyframePane.java" />
         <option value="$PROJECT_DIR$/level-editor/src/main/java/com/nikhil/view/custom/KeyframeCell.java" />
-        <option value="$PROJECT_DIR$/level-editor/src/main/java/com/nikhil/view/item/record/Metadata.java" />
         <option value="$PROJECT_DIR$/level-editor/src/main/resources/views/level-editor-style.css" />
+        <option value="$PROJECT_DIR$/level-editor/src/main/java/com/nikhil/view/custom/SelectionBar.java" />
+        <option value="$PROJECT_DIR$/level-editor/src/main/java/com/nikhil/view/custom/TimeValueKey.java" />
+        <option value="$PROJECT_DIR$/level-editor/src/main/java/com/nikhil/view/custom/KeyframeView.java" />
+        <option value="$PROJECT_DIR$/level-editor/src/main/java/com/nikhil/editor/selection/Clipboard.java" />
+        <option value="$PROJECT_DIR$/level-editor/src/main/java/com/nikhil/editor/selection/SelectionArea.java" />
+        <option value="$PROJECT_DIR$/level-editor/src/main/java/com/nikhil/view/custom/keyframe/KeyframeImage.java" />
+        <option value="$PROJECT_DIR$/level-editor/src/main/java/com/nikhil/view/custom/keyframe/KeyframeView.java" />
+        <option value="$PROJECT_DIR$/level-editor/src/main/java/com/nikhil/view/item/record/Metadata.java" />
+        <option value="$PROJECT_DIR$/level-editor/src/main/java/com/nikhil/view/custom/cells/KeyframeCell.java" />
+        <option value="$PROJECT_DIR$/level-editor/src/main/java/com/nikhil/controller/ui/MainWindowController.java" />
+        <option value="$PROJECT_DIR$/level-editor/src/main/java/com/nikhil/Main.java" />
+        <option value="$PROJECT_DIR$/level-editor/src/main/java/com/nikhil/view/item/record/PolygonMetadata.java" />
+        <option value="$PROJECT_DIR$/level-editor/src/main/java/com/nikhil/view/custom/keyframe/KeyframeImageView.java" />
         <option value="$PROJECT_DIR$/level-editor/src/main/java/com/nikhil/controller/CompositionViewController.java" />
+        <option value="$PROJECT_DIR$/level-editor/src/main/java/com/nikhil/view/custom/keyframe/KeyframeTreeView.java" />
+        <option value="$PROJECT_DIR$/level-editor/src/main/java/com/nikhil/view/custom/keyframe/KeyframePane.java" />
       </list>
     </option>
   </component>
@@ -1334,9 +1365,6 @@
       <sortByType />
     </navigator>
     <panes>
-      <pane id="Scratches">
-        <subPane />
-      </pane>
       <pane id="PackagesPane">
         <subPane>
           <PATH>
@@ -1346,6 +1374,9 @@
             </PATH_ELEMENT>
           </PATH>
         </subPane>
+      </pane>
+      <pane id="Scratches">
+        <subPane />
       </pane>
       <pane id="Scope">
         <subPane subId="Tests">
@@ -1720,6 +1751,10 @@
               <option name="myItemId" value="resources" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="art" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
           </PATH>
           <PATH>
             <PATH_ELEMENT>
@@ -1933,6 +1968,48 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
+              <option name="myItemId" value="view" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="custom" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="keyframe" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="timeshift" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="timeshift" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="level-editor" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="main" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="java" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="nikhil" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
               <option name="myItemId" value="editor" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
@@ -1975,6 +2052,40 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="timeshift" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="timeshift" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="level-editor" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="main" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="java" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="nikhil" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="controller" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
         </subPane>
       </pane>
     </panes>
@@ -1994,7 +2105,7 @@
     <property name="com.intellij.testIntegration.createTest.CreateTestDialog.includeInheritedMembers" value="false" />
     <property name="extract.method.default.visibility" value="private" />
     <property name="SearchEverywhereHistoryKey" value="&#9;FILE&#9;file:///Users/NikhilVerma/Documents/Timeshift Project/timeshift/level-editor/src/main/java/com/nikhil/view/zoomable/Zoomable.java&#10;RootContr&#9;FILE&#9;file:///Users/NikhilVerma/Documents/Timeshift Project/timeshift/motion/src/main/java/com/nikhil/controller/RootController.java&#10;roottes&#9;FILE&#9;file:///Users/NikhilVerma/Documents/Timeshift Project/timeshift/motion/src/test/java/com/nikhil/controller/RootControllerTest.java" />
-    <property name="last_opened_file_path" value="$USER_HOME$/Desktop/overlap2d-master" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
   </component>
   <component name="RecentsManager">
     <key name="CreateTestDialog.RecentsKey">
@@ -2008,6 +2119,7 @@
       <recent name="com.nikhil.view.control" />
     </key>
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/level-editor/src/main/resources/art" />
       <recent name="$PROJECT_DIR$/level-editor/src/main/java/com/nikhil/view/custom" />
       <recent name="$PROJECT_DIR$/level-editor/src/main/java/com/nikhil/editor/selection" />
     </key>
@@ -2397,13 +2509,12 @@
       <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32891566" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.36737588" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32765958" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.24964234" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.33049646" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32907802" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25751072" sideWeight="0.5048193" order="3" side_tool="true" content_ui="tabs" />
-      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3281471" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32765958" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3248227" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32624114" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Gradle" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3297568" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -2417,37 +2528,10 @@
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.24964234" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.36737588" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
     </layout>
-    <layout-to-restore>
-      <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Palette&#9;" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
-      <window_info id="Documentation" active="false" anchor="right" auto_hide="true" internal_type="DOCKED" type="FLOATING" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" x="100" y="100" width="1240" height="700" />
-      <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.24964234" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32907802" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
-      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3281471" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
-      <window_info id="Coverage" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3297568" sideWeight="0.5" order="8" side_tool="true" content_ui="tabs" />
-      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32650602" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Gradle" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3297568" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.20171674" sideWeight="0.49518073" order="0" side_tool="false" content_ui="combo" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32891566" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.24964234" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
-      <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
-      <window_info id="Designer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32891566" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
-      <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
-      <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.36737588" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.4028369" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25751072" sideWeight="0.5048193" order="3" side_tool="true" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3248227" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
-      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.24964234" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
-      <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
-    </layout-to-restore>
   </component>
   <component name="Vcs.Log.UiProperties">
     <option name="RECENTLY_FILTERED_USER_GROUPS">
@@ -2471,11 +2555,17 @@
           <properties class="java.lang.NullPointerException" package="java.lang" />
           <option name="timeStamp" value="131" />
         </breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/level-editor/src/main/java/com/nikhil/view/custom/keyframe/KeyframeTreeView.java</url>
+          <line>225</line>
+          <properties />
+          <option name="timeStamp" value="164" />
+        </line-breakpoint>
       </breakpoints>
       <breakpoints-dialog>
         <breakpoints-dialog />
       </breakpoints-dialog>
-      <option name="time" value="152" />
+      <option name="time" value="165" />
     </breakpoint-manager>
     <watches-manager />
   </component>
@@ -2484,129 +2574,10 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/timeline/src/main/java/com/nikhil/timeline/ChangeNode.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-5.5185184">
-          <caret line="332" column="19" selection-start-line="332" selection-start-column="19" selection-end-line="332" selection-end-column="19" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/timeline/src/main/java/com/nikhil/timeline/SpatialChangeNode.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="55" column="19" selection-start-line="55" selection-start-column="19" selection-end-line="55" selection-end-column="19" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/motion/src/main/java/com/nikhil/model/shape/ShapeModel.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="109" column="48" selection-start-line="109" selection-start-column="48" selection-end-line="109" selection-end-column="48" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/motion/src/main/java/com/nikhil/model/shape/Parallelogram.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="99" column="22" selection-start-line="99" selection-start-column="22" selection-end-line="99" selection-end-column="22" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/motion/src/main/java/com/nikhil/model/shape/IsoscelesTriangle.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="68" column="16" selection-start-line="68" selection-start-column="16" selection-end-line="68" selection-end-column="16" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/motion/src/main/java/com/nikhil/model/shape/Circle.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-0.14503817">
-          <caret line="81" column="29" selection-start-line="81" selection-start-column="29" selection-end-line="81" selection-end-column="29" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/timeline/src/main/java/com/nikhil/timeline/KeyValue.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="33" column="29" selection-start-line="33" selection-start-column="29" selection-end-line="33" selection-end-column="29" />
-          <folding>
-            <element signature="e#485#486#0" expanded="false" />
-            <element signature="e#508#509#0" expanded="false" />
-            <element signature="e#824#825#0" expanded="false" />
-            <element signature="e#893#894#0" expanded="false" />
-            <element signature="e#1144#1145#0" expanded="false" />
-            <element signature="e#1404#1405#0" expanded="false" />
-            <element signature="e#1431#1432#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar:///Library/Java/JavaVirtualMachines/jdk1.8.0_45.jdk/Contents/Home/javafx-src.zip!/javafx/scene/shape/Path.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.40966922">
-          <caret line="90" column="33" selection-start-line="90" selection-start-column="33" selection-end-line="90" selection-end-column="33" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/level-editor/src/main/java/com/nikhil/view/custom/Marking.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.29781422">
-          <caret line="40" column="66" selection-start-line="40" selection-start-column="66" selection-end-line="40" selection-end-column="66" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/level-editor/src/main/java/com/nikhil/view/custom/ThumbSeeker.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-2.0992367">
-          <caret line="16" column="39" selection-start-line="16" selection-start-column="39" selection-end-line="16" selection-end-column="39" />
-          <folding>
-            <element signature="imports" expanded="false" />
-            <element signature="e#3329#3330#0" expanded="false" />
-            <element signature="e#3360#3361#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/level-editor/src/main/java/com/nikhil/editor/XMLLoader.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="78" column="0" selection-start-line="78" selection-start-column="0" selection-end-line="78" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/level-editor/src/main/java/com/nikhil/view/item/PolygonView.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="84" column="32" selection-start-line="84" selection-start-column="32" selection-end-line="84" selection-end-column="32" />
-          <folding>
-            <element signature="e#2755#2756#0" expanded="false" />
-            <element signature="e#2794#2795#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/util/src/main/java/com/nikhil/math/MathUtil.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.46564886">
-          <caret line="48" column="33" selection-start-line="48" selection-start-column="33" selection-end-line="48" selection-end-column="33" />
-          <folding>
-            <element signature="imports" expanded="false" />
-            <element signature="method#isBetween#0;class#MathUtil#0" expanded="false" />
-            <element signature="method#distance#0;class#MathUtil#0" expanded="false" />
-            <element signature="method#angleOfPoint#0;class#MathUtil#0" expanded="false" />
-            <element signature="e#1118#1134#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/level-editor/src/main/java/com/nikhil/editor/gizmo/PolygonGizmo.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="60" column="28" selection-start-line="60" selection-start-column="28" selection-end-line="60" selection-end-column="28" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -2614,10 +2585,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.71196455">
           <caret line="70" column="30" selection-start-line="70" selection-start-column="30" selection-end-line="70" selection-end-column="30" />
-          <folding>
-            <element signature="e#1339#1340#0" expanded="false" />
-            <element signature="e#1385#1386#0" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -2632,43 +2599,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.44529262">
           <caret line="332" column="46" selection-start-line="332" selection-start-column="46" selection-end-line="332" selection-end-column="46" />
-          <folding>
-            <element signature="docComment;class#Workspace#0" expanded="false" />
-            <element signature="docComment;field#selectedItems#0;class#Workspace#0" expanded="false" />
-            <element signature="e#1810#1905#0" expanded="false" />
-            <element signature="docComment;method#Workspace#0;class#Workspace#0" expanded="false" />
-            <element signature="docComment;method#initializeSystem#0;class#Workspace#0" expanded="false" />
-            <element signature="method#initializeGraphics#0;class#Workspace#0" expanded="false" />
-            <element signature="docComment;method#configureViews#0;class#Workspace#0" expanded="false" />
-            <element signature="method#configureViews#0;class#Workspace#0" expanded="false" />
-            <element signature="e#5375#5445#0" expanded="false" />
-            <element signature="e#6085#6180#0" expanded="false" />
-            <element signature="method#addComposition#0;class#Workspace#0" expanded="false" />
-            <element signature="e#8989#9084#0" expanded="false" />
-            <element signature="method#saveAs#0;class#Workspace#0" expanded="false" />
-            <element signature="method#open#0;class#Workspace#0" expanded="false" />
-            <element signature="method#fileModified#0;class#Workspace#0" expanded="false" />
-            <element signature="method#setCurrentComposition#0;class#Workspace#0" expanded="false" />
-            <element signature="e#11837#11932#0" expanded="false" />
-            <element signature="docComment;method#undo#0;class#Workspace#0" expanded="false" />
-            <element signature="method#undo#0;class#Workspace#0" expanded="false" />
-            <element signature="docComment;method#redo#0;class#Workspace#0" expanded="false" />
-            <element signature="method#redo#0;class#Workspace#0" expanded="false" />
-            <element signature="method#getTopCommandOnCommandStack#0;class#Workspace#0" expanded="false" />
-            <element signature="method#toWorksheetPoint#0;class#Workspace#0" expanded="false" />
-            <element signature="method#toContainerPoint#0;class#Workspace#0" expanded="false" />
-            <element signature="e#14516#14611#0" expanded="false" />
-            <element signature="docComment;method#workPointX#0;class#Workspace#0" expanded="false" />
-            <element signature="docComment;method#workPointY#0;class#Workspace#0" expanded="false" />
-            <element signature="docComment;method#workPoint#0;class#Workspace#0" expanded="false" />
-            <element signature="docComment;method#workPoint#1;class#Workspace#0" expanded="false" />
-            <element signature="method#workPoint#1;class#Workspace#0" expanded="false" />
-            <element signature="docComment;method#playPointX#0;class#Workspace#0" expanded="false" />
-            <element signature="docComment;method#playPointY#0;class#Workspace#0" expanded="false" />
-            <element signature="docComment;method#playPoint#0;class#Workspace#0" expanded="false" />
-            <element signature="docComment;method#playPoint#1;class#Workspace#0" expanded="false" />
-            <element signature="method#playPoint#1;class#Workspace#0" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -2676,7 +2606,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="35" column="5" selection-start-line="35" selection-start-column="5" selection-end-line="35" selection-end-column="5" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -2684,7 +2613,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="25" column="27" selection-start-line="25" selection-start-column="27" selection-end-line="25" selection-end-column="27" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -2692,7 +2620,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.6730769">
           <caret line="21" column="74" selection-start-line="21" selection-start-column="74" selection-end-line="21" selection-end-column="74" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -2700,41 +2627,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="169" column="78" selection-start-line="169" selection-start-column="78" selection-end-line="169" selection-end-column="78" />
-          <folding>
-            <element signature="imports" expanded="false" />
-            <element signature="e#3011#3012#0" expanded="false" />
-            <element signature="e#3029#3030#0" expanded="false" />
-            <element signature="e#3066#3067#0" expanded="false" />
-            <element signature="e#3089#3090#0" expanded="false" />
-            <element signature="e#3125#3126#0" expanded="false" />
-            <element signature="e#3202#3203#0" expanded="false" />
-            <element signature="e#3233#3234#0" expanded="false" />
-            <element signature="e#3254#3255#0" expanded="false" />
-            <element signature="e#3297#3298#0" expanded="false" />
-            <element signature="e#3326#3327#0" expanded="false" />
-            <element signature="e#4850#4851#0" expanded="false" />
-            <element signature="e#4880#4881#0" expanded="false" />
-            <element signature="e#4943#4944#0" expanded="false" />
-            <element signature="e#4990#4991#0" expanded="false" />
-            <element signature="e#5031#5032#0" expanded="false" />
-            <element signature="e#5061#5062#0" expanded="false" />
-            <element signature="e#5124#5125#0" expanded="false" />
-            <element signature="e#5171#5172#0" expanded="false" />
-            <element signature="e#5206#5207#0" expanded="false" />
-            <element signature="e#5230#5231#0" expanded="false" />
-            <element signature="e#5280#5281#0" expanded="false" />
-            <element signature="e#5315#5316#0" expanded="false" />
-            <element signature="e#5350#5351#0" expanded="false" />
-            <element signature="e#5374#5375#0" expanded="false" />
-            <element signature="e#5424#5425#0" expanded="false" />
-            <element signature="e#5459#5460#0" expanded="false" />
-            <element signature="e#5489#5490#0" expanded="false" />
-            <element signature="e#5508#5509#0" expanded="false" />
-            <element signature="e#5642#5643#0" expanded="false" />
-            <element signature="e#5670#5671#0" expanded="false" />
-            <element signature="e#5736#5737#0" expanded="false" />
-            <element signature="e#5779#5780#0" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -2742,46 +2634,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="375" column="74" selection-start-line="375" selection-start-column="74" selection-end-line="375" selection-end-column="74" />
-          <folding>
-            <element signature="imports" expanded="false" />
-            <element signature="docComment;class#SelectedItems#0" expanded="false" />
-            <element signature="e#1682#1683#0" expanded="false" />
-            <element signature="e#1722#1723#0" expanded="false" />
-            <element signature="method#initializeView#0;class#SelectedItems#0" expanded="false" />
-            <element signature="method#getGenericHandle#0;class#SelectedItems#0" expanded="false" />
-            <element signature="e#2989#2990#0" expanded="false" />
-            <element signature="e#3027#3028#0" expanded="false" />
-            <element signature="e#3069#3070#0" expanded="false" />
-            <element signature="e#3107#3108#0" expanded="false" />
-            <element signature="e#3160#3161#0" expanded="false" />
-            <element signature="e#3209#3210#0" expanded="false" />
-            <element signature="method#updateView#0;class#SelectedItems#0" expanded="false" />
-            <element signature="method#getContainingBounds#0;class#SelectedItems#0" expanded="false" />
-            <element signature="e#5584#5603#0" expanded="false" />
-            <element signature="method#clearSelection#0;class#SelectedItems#0" expanded="false" />
-            <element signature="method#addToSelection#0;class#SelectedItems#0" expanded="false" />
-            <element signature="method#addToSelection#1;class#SelectedItems#0" expanded="false" />
-            <element signature="method#removeFromSelection#0;class#SelectedItems#0" expanded="false" />
-            <element signature="method#selectOnly#0;class#SelectedItems#0" expanded="false" />
-            <element signature="docComment;method#requestFocus#0;class#SelectedItems#0" expanded="false" />
-            <element signature="method#requestFocus#0;class#SelectedItems#0" expanded="false" />
-            <element signature="method#requestFocusInDetail#0;class#SelectedItems#0" expanded="false" />
-            <element signature="method#showHandles#0;class#SelectedItems#0" expanded="false" />
-            <element signature="method#handle#0;class#SelectedItems#0" expanded="false" />
-            <element signature="method#tweakRotation#0;class#SelectedItems#0" expanded="false" />
-            <element signature="method#tweakScale#0;class#SelectedItems#0" expanded="false" />
-            <element signature="method#getFirstItemViewController#0;class#SelectedItems#0" expanded="false" />
-            <element signature="method#captureTemporaryValues#0;class#SelectedItems#0" expanded="false" />
-            <element signature="method#moveSelectionBy#0;class#SelectedItems#0" expanded="false" />
-            <element signature="method#getManagedItemsInNewSet#0;class#SelectedItems#0" expanded="false" />
-            <element signature="e#15816#15817#0" expanded="false" />
-            <element signature="e#15861#15862#0" expanded="false" />
-            <element signature="method#copyToClipboard#1;class#SelectedItems#0" expanded="false" />
-            <element signature="method#cutToClipboard#0;class#SelectedItems#0" expanded="false" />
-            <element signature="method#deleteSelection#0;class#SelectedItems#0" expanded="false" />
-            <element signature="e#16936#16937#0" expanded="false" />
-            <element signature="e#17000#17001#0" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -2793,7 +2645,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/level-editor/src/main/java/com/nikhil/view/custom/ValueCell.java">
+    <entry file="file://$PROJECT_DIR$/level-editor/src/main/java/com/nikhil/view/custom/cells/ValueCell.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="18" column="16" selection-start-line="18" selection-start-column="16" selection-end-line="18" selection-end-column="16" />
@@ -2803,31 +2655,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/level-editor/src/main/java/com/nikhil/view/custom/OptionCell.java">
+    <entry file="file://$PROJECT_DIR$/level-editor/src/main/java/com/nikhil/view/custom/cells/OptionCell.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.48076922">
           <caret line="15" column="16" selection-start-line="15" selection-start-column="16" selection-end-line="15" selection-end-column="16" />
-          <folding>
-            <element signature="imports" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/level-editor/src/main/java/com/nikhil/view/item/record/PolygonMetadata.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="155" column="50" selection-start-line="155" selection-start-column="50" selection-end-line="155" selection-end-column="50" />
-          <folding>
-            <element signature="docComment;class#PolygonMetadata#0" expanded="false" />
-            <element signature="method#PolygonMetadata#0;class#PolygonMetadata#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/level-editor/src/main/java/com/nikhil/view/custom/TimeValueKey.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="23" column="58" selection-start-line="23" selection-start-column="58" selection-end-line="23" selection-end-column="58" />
           <folding>
             <element signature="imports" expanded="false" />
           </folding>
@@ -2838,7 +2669,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="4" column="17" selection-start-line="4" selection-start-column="17" selection-end-line="4" selection-end-column="17" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -2846,7 +2676,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.33333334">
           <caret line="37" column="31" selection-start-line="37" selection-start-column="31" selection-end-line="37" selection-end-column="31" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -2854,7 +2683,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="74" column="13" selection-start-line="74" selection-start-column="13" selection-end-line="74" selection-end-column="13" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -2862,10 +2690,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="734" column="61" selection-start-line="734" selection-start-column="61" selection-end-line="734" selection-end-column="61" />
-          <folding>
-            <element signature="e#15187#15188#0" expanded="false" />
-            <element signature="e#15236#15237#0" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -2873,7 +2697,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.33333334">
           <caret line="80" column="0" selection-start-line="80" selection-start-column="0" selection-end-line="80" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -2892,18 +2715,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.33333334">
           <caret line="82" column="17" selection-start-line="82" selection-start-column="17" selection-end-line="82" selection-end-column="17" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/level-editor/src/main/java/com/nikhil/view/custom/SelectionBar.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="40" column="11" selection-start-line="40" selection-start-column="11" selection-end-line="40" selection-end-column="11" />
-          <folding>
-            <element signature="e#1119#1120#0" expanded="false" />
-            <element signature="e#1170#1171#0" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -2911,176 +2722,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.39029127">
           <caret line="111" column="13" selection-start-line="111" selection-start-column="13" selection-end-line="111" selection-end-column="13" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar:///Library/Java/JavaVirtualMachines/jdk1.8.0_45.jdk/Contents/Home/javafx-src.zip!/javafx/scene/control/TreeView.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="8.038835">
-          <caret line="1629" column="0" selection-start-line="1629" selection-start-column="0" selection-end-line="1629" selection-end-column="0" />
-          <folding>
-            <element signature="docComment;class#TreeView#0" expanded="false" />
-            <element signature="docComment;method#editAnyEvent#0;class#TreeView#0" expanded="false" />
-            <element signature="docComment;method#editStartEvent#0;class#TreeView#0" expanded="false" />
-            <element signature="docComment;method#editCancelEvent#0;class#TreeView#0" expanded="false" />
-            <element signature="docComment;method#editCommitEvent#0;class#TreeView#0" expanded="false" />
-            <element signature="docComment;method#getNodeLevel#0;class#TreeView#0" expanded="false" />
-            <element signature="method#getNodeLevel#0;class#TreeView#0" expanded="false" />
-            <element signature="docComment;method#TreeView#0;class#TreeView#0" expanded="false" />
-            <element signature="e#13801#13802#0" expanded="false" />
-            <element signature="e#13827#13828#0" expanded="false" />
-            <element signature="docComment;method#TreeView#1;class#TreeView#0" expanded="false" />
-            <element signature="e#14317#14399#0" expanded="false" />
-            <element signature="docComment;field#expandedItemCountDirty#0;class#TreeView#0" expanded="false" />
-            <element signature="docComment;field#rootEvent#0;class#TreeView#0" expanded="false" />
-            <element signature="e#16163#16225#0" expanded="false" />
-            <element signature="docComment;field#cellFactory#0;class#TreeView#0" expanded="false" />
-            <element signature="docComment;method#setCellFactory#0;class#TreeView#0" expanded="false" />
-            <element signature="docComment;method#getCellFactory#0;class#TreeView#0" expanded="false" />
-            <element signature="method#getCellFactory#0;class#TreeView#0" expanded="false" />
-            <element signature="docComment;method#cellFactoryProperty#0;class#TreeView#0" expanded="false" />
-            <element signature="method#cellFactoryProperty#0;class#TreeView#0" expanded="false" />
-            <element signature="class#19067:19977" expanded="false" />
-            <element signature="method#invalidated#0;class#19067:19977" expanded="false" />
-            <element signature="docComment;method#setRoot#0;class#TreeView#0" expanded="false" />
-            <element signature="docComment;method#getRoot#0;class#TreeView#0" expanded="false" />
-            <element signature="docComment;method#rootProperty#0;class#TreeView#0" expanded="false" />
-            <element signature="docComment;method#setShowRoot#0;class#TreeView#0" expanded="false" />
-            <element signature="docComment;method#isShowRoot#0;class#TreeView#0" expanded="false" />
-            <element signature="docComment;method#showRootProperty#0;class#TreeView#0" expanded="false" />
-            <element signature="method#showRootProperty#0;class#TreeView#0" expanded="false" />
-            <element signature="class#21659:21893" expanded="false" />
-            <element signature="method#invalidated#0;class#21659:21893" expanded="false" />
-            <element signature="docComment;method#setSelectionModel#0;class#TreeView#0" expanded="false" />
-            <element signature="method#setSelectionModel#0;class#TreeView#0" expanded="false" />
-            <element signature="docComment;method#getSelectionModel#0;class#TreeView#0" expanded="false" />
-            <element signature="method#getSelectionModel#0;class#TreeView#0" expanded="false" />
-            <element signature="docComment;method#selectionModelProperty#0;class#TreeView#0" expanded="false" />
-            <element signature="method#selectionModelProperty#0;class#TreeView#0" expanded="false" />
-            <element signature="docComment;method#setFocusModel#0;class#TreeView#0" expanded="false" />
-            <element signature="docComment;method#getFocusModel#0;class#TreeView#0" expanded="false" />
-            <element signature="docComment;method#focusModelProperty#0;class#TreeView#0" expanded="false" />
-            <element signature="method#focusModelProperty#0;class#TreeView#0" expanded="false" />
-            <element signature="docComment;field#expandedItemCount#0;class#TreeView#0" expanded="false" />
-            <element signature="method#getExpandedItemCount#0;class#TreeView#0" expanded="false" />
-            <element signature="docComment;method#setFixedCellSize#0;class#TreeView#0" expanded="false" />
-            <element signature="docComment;method#getFixedCellSize#0;class#TreeView#0" expanded="false" />
-            <element signature="method#getFixedCellSize#0;class#TreeView#0" expanded="false" />
-            <element signature="docComment;method#fixedCellSizeProperty#0;class#TreeView#0" expanded="false" />
-            <element signature="method#fixedCellSizeProperty#0;class#TreeView#0" expanded="false" />
-            <element signature="class#27930:28389" expanded="false" />
-            <element signature="method#getCssMetaData#0;class#27930:28389" expanded="false" />
-            <element signature="docComment;method#editableProperty#0;class#TreeView#0" expanded="false" />
-            <element signature="method#editableProperty#0;class#TreeView#0" expanded="false" />
-            <element signature="docComment;method#getEditingItem#0;class#TreeView#0" expanded="false" />
-            <element signature="docComment;method#editingItemProperty#0;class#TreeView#0" expanded="false" />
-            <element signature="method#editingItemProperty#0;class#TreeView#0" expanded="false" />
-            <element signature="method#editingItemPropertyImpl#0;class#TreeView#0" expanded="false" />
-            <element signature="docComment;method#setOnEditStart#0;class#TreeView#0" expanded="false" />
-            <element signature="docComment;method#getOnEditStart#0;class#TreeView#0" expanded="false" />
-            <element signature="docComment;method#onEditStartProperty#0;class#TreeView#0" expanded="false" />
-            <element signature="method#onEditStartProperty#0;class#TreeView#0" expanded="false" />
-            <element signature="class#31124:31358" expanded="false" />
-            <element signature="docComment;method#setOnEditCommit#0;class#TreeView#0" expanded="false" />
-            <element signature="docComment;method#getOnEditCommit#0;class#TreeView#0" expanded="false" />
-            <element signature="method#getOnEditCommit#0;class#TreeView#0" expanded="false" />
-            <element signature="docComment;method#onEditCommitProperty#0;class#TreeView#0" expanded="false" />
-            <element signature="method#onEditCommitProperty#0;class#TreeView#0" expanded="false" />
-            <element signature="class#32589:32825" expanded="false" />
-            <element signature="docComment;method#setOnEditCancel#0;class#TreeView#0" expanded="false" />
-            <element signature="docComment;method#getOnEditCancel#0;class#TreeView#0" expanded="false" />
-            <element signature="method#getOnEditCancel#0;class#TreeView#0" expanded="false" />
-            <element signature="docComment;method#onEditCancelProperty#0;class#TreeView#0" expanded="false" />
-            <element signature="method#onEditCancelProperty#0;class#TreeView#0" expanded="false" />
-            <element signature="class#33701:33937" expanded="false" />
-            <element signature="docComment;method#layoutChildren#0;class#TreeView#0" expanded="false" />
-            <element signature="method#layoutChildren#0;class#TreeView#0" expanded="false" />
-            <element signature="docComment;method#edit#0;class#TreeView#0" expanded="false" />
-            <element signature="method#edit#0;class#TreeView#0" expanded="false" />
-            <element signature="docComment;method#scrollTo#0;class#TreeView#0" expanded="false" />
-            <element signature="docComment;field#onScrollTo#0;class#TreeView#0" expanded="false" />
-            <element signature="method#getOnScrollTo#0;class#TreeView#0" expanded="false" />
-            <element signature="method#onScrollToProperty#0;class#TreeView#0" expanded="false" />
-            <element signature="class#36307:36806" expanded="false" />
-            <element signature="docComment;method#getRow#0;class#TreeView#0" expanded="false" />
-            <element signature="method#getRow#0;class#TreeView#0" expanded="false" />
-            <element signature="docComment;method#getTreeItem#0;class#TreeView#0" expanded="false" />
-            <element signature="method#getTreeItem#0;class#TreeView#0" expanded="false" />
-            <element signature="docComment;method#getTreeItemLevel#0;class#TreeView#0" expanded="false" />
-            <element signature="method#getTreeItemLevel#0;class#TreeView#0" expanded="false" />
-            <element signature="docComment;method#createDefaultSkin#0;class#TreeView#0" expanded="false" />
-            <element signature="docComment;method#updateExpandedItemCount#0;class#TreeView#0" expanded="false" />
-            <element signature="method#updateExpandedItemCount#0;class#TreeView#0" expanded="false" />
-            <element signature="e#40324#40393#0" expanded="false" />
-            <element signature="method#updateRootExpanded#0;class#TreeView#0" expanded="false" />
-            <element signature="e#40586#40658#0" expanded="false" />
-            <element signature="docComment;field#DEFAULT_STYLE_CLASS#0;class#TreeView#0" expanded="false" />
-            <element signature="docComment;class#StyleableProperties#0;class#TreeView#0" expanded="false" />
-            <element signature="class#StyleableProperties#0;class#TreeView#0" expanded="false" />
-            <element signature="class#41494:42303" expanded="false" />
-            <element signature="method#isSettable#0;class#41494:42303" expanded="false" />
-            <element signature="method#getStyleableProperty#0;class#41494:42303" expanded="false" />
-            <element signature="initializer##0;class#StyleableProperties#0;class#TreeView#0" expanded="false" />
-            <element signature="docComment;method#getClassCssMetaData#0;class#TreeView#0" expanded="false" />
-            <element signature="method#getClassCssMetaData#0;class#TreeView#0" expanded="false" />
-            <element signature="docComment;method#getControlCssMetaData#0;class#TreeView#0" expanded="false" />
-            <element signature="docComment;method#queryAccessibleAttribute#0;class#TreeView#0" expanded="false" />
-            <element signature="method#queryAccessibleAttribute#0;class#TreeView#0" expanded="false" />
-            <element signature="docComment;class#EditEvent#0;class#TreeView#0" expanded="false" />
-            <element signature="class#EditEvent#0;class#TreeView#0" expanded="false" />
-            <element signature="docComment;field#ANY#0;class#EditEvent#0;class#TreeView#0" expanded="false" />
-            <element signature="docComment;method#EditEvent#0;class#EditEvent#0;class#TreeView#0" expanded="false" />
-            <element signature="method#EditEvent#0;class#EditEvent#0;class#TreeView#0" expanded="false" />
-            <element signature="docComment;method#getSource#0;class#EditEvent#0;class#TreeView#0" expanded="false" />
-            <element signature="docComment;method#getTreeItem#0;class#EditEvent#0;class#TreeView#0" expanded="false" />
-            <element signature="docComment;method#getNewValue#0;class#EditEvent#0;class#TreeView#0" expanded="false" />
-            <element signature="docComment;method#getOldValue#0;class#EditEvent#0;class#TreeView#0" expanded="false" />
-            <element signature="class#TreeViewBitSetSelectionModel#0;class#TreeView#0" expanded="false" />
-            <element signature="docComment;field#treeView#0;class#TreeViewBitSetSelectionModel#0;class#TreeView#0" expanded="false" />
-            <element signature="docComment;method#TreeViewBitSetSelectionModel#0;class#TreeViewBitSetSelectionModel#0;class#TreeView#0" expanded="false" />
-            <element signature="method#TreeViewBitSetSelectionModel#0;class#TreeViewBitSetSelectionModel#0;class#TreeView#0" expanded="false" />
-            <element signature="method#updateTreeEventListener#0;class#TreeViewBitSetSelectionModel#0;class#TreeView#0" expanded="false" />
-            <element signature="e#49746#49809#0" expanded="false" />
-            <element signature="e#50242#50305#0" expanded="false" />
-            <element signature="e#51579#51648#0" expanded="false" />
-            <element signature="e#52267#52325#0" expanded="false" />
-            <element signature="e#52948#53008#0" expanded="false" />
-            <element signature="e#53370#53429#0" expanded="false" />
-            <element signature="docComment;method#selectAll#0;class#TreeViewBitSetSelectionModel#0;class#TreeView#0" expanded="false" />
-            <element signature="method#selectAll#0;class#TreeViewBitSetSelectionModel#0;class#TreeView#0" expanded="false" />
-            <element signature="e#56033#56106#0" expanded="false" />
-            <element signature="docComment;method#select#0;class#TreeViewBitSetSelectionModel#0;class#TreeView#0" expanded="false" />
-            <element signature="method#select#0;class#TreeViewBitSetSelectionModel#0;class#TreeView#0" expanded="false" />
-            <element signature="e#56650#56714#0" expanded="false" />
-            <element signature="e#57123#57192#0" expanded="false" />
-            <element signature="e#57327#57395#0" expanded="false" />
-            <element signature="e#57633#57702#0" expanded="false" />
-            <element signature="docComment;method#clearAndSelect#0;class#TreeViewBitSetSelectionModel#0;class#TreeView#0" expanded="false" />
-            <element signature="method#clearAndSelect#0;class#TreeViewBitSetSelectionModel#0;class#TreeView#0" expanded="false" />
-            <element signature="docComment;method#focus#0;class#TreeViewBitSetSelectionModel#0;class#TreeView#0" expanded="false" />
-            <element signature="method#focus#0;class#TreeViewBitSetSelectionModel#0;class#TreeView#0" expanded="false" />
-            <element signature="docComment;method#getFocusedIndex#0;class#TreeViewBitSetSelectionModel#0;class#TreeView#0" expanded="false" />
-            <element signature="method#getFocusedIndex#0;class#TreeViewBitSetSelectionModel#0;class#TreeView#0" expanded="false" />
-            <element signature="docComment;method#getItemCount#0;class#TreeViewBitSetSelectionModel#0;class#TreeView#0" expanded="false" />
-            <element signature="docComment;method#getModelItem#0;class#TreeViewBitSetSelectionModel#0;class#TreeView#0" expanded="false" />
-            <element signature="method#getModelItem#0;class#TreeViewBitSetSelectionModel#0;class#TreeView#0" expanded="false" />
-            <element signature="docComment;method#updateDefaultSelection#0;class#TreeViewBitSetSelectionModel#0;class#TreeView#0" expanded="false" />
-            <element signature="method#updateDefaultSelection#0;class#TreeViewBitSetSelectionModel#0;class#TreeView#0" expanded="false" />
-            <element signature="e#60407#60464#0" expanded="false" />
-            <element signature="docComment;class#TreeViewFocusModel#0;class#TreeView#0" expanded="false" />
-            <element signature="class#TreeViewFocusModel#0;class#TreeView#0" expanded="false" />
-            <element signature="method#TreeViewFocusModel#0;class#TreeViewFocusModel#0;class#TreeView#0" expanded="false" />
-            <element signature="method#updateTreeEventListener#0;class#TreeViewFocusModel#0;class#TreeView#0" expanded="false" />
-            <element signature="class#62266:65177" expanded="false" />
-            <element signature="method#handle#0;class#62266:65177" expanded="false" />
-            <element signature="e#62396#62459#0" expanded="false" />
-            <element signature="e#63106#63168#0" expanded="false" />
-            <element signature="e#63390#63449#0" expanded="false" />
-            <element signature="method#getModelItem#0;class#TreeViewFocusModel#0;class#TreeView#0" expanded="false" />
-            <element signature="docComment;method#focus#0;class#TreeViewFocusModel#0;class#TreeView#0" expanded="false" />
-            <element signature="method#focus#0;class#TreeViewFocusModel#0;class#TreeView#0" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -3088,7 +2729,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.33203885">
           <caret line="772" column="27" selection-start-line="772" selection-start-column="27" selection-end-line="772" selection-end-column="27" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -3096,342 +2736,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.6524272">
           <caret line="1958" column="32" selection-start-line="1958" selection-start-column="32" selection-end-line="1958" selection-end-column="32" />
-          <folding>
-            <element signature="imports" expanded="false" />
-            <element signature="docComment;method#TreeTableView#0;class#TreeTableView#0" expanded="false" />
-            <element signature="docComment;method#TreeTableView#1;class#TreeTableView#0" expanded="false" />
-            <element signature="method#TreeTableView#1;class#TreeTableView#0" expanded="false" />
-            <element signature="e#17724#17806#0" expanded="false" />
-            <element signature="e#17989#18058#0" expanded="false" />
-            <element signature="e#18205#18274#0" expanded="false" />
-            <element signature="e#18493#18548#0" expanded="false" />
-            <element signature="docComment;method#editAnyEvent#0;class#TreeTableView#0" expanded="false" />
-            <element signature="method#editAnyEvent#0;class#TreeTableView#0" expanded="false" />
-            <element signature="docComment;method#editStartEvent#0;class#TreeTableView#0" expanded="false" />
-            <element signature="method#editStartEvent#0;class#TreeTableView#0" expanded="false" />
-            <element signature="docComment;method#editCancelEvent#0;class#TreeTableView#0" expanded="false" />
-            <element signature="method#editCancelEvent#0;class#TreeTableView#0" expanded="false" />
-            <element signature="docComment;method#editCommitEvent#0;class#TreeTableView#0" expanded="false" />
-            <element signature="method#editCommitEvent#0;class#TreeTableView#0" expanded="false" />
-            <element signature="docComment;method#getNodeLevel#0;class#TreeTableView#0" expanded="false" />
-            <element signature="docComment;field#UNCONSTRAINED_RESIZE_POLICY#0;class#TreeTableView#0" expanded="false" />
-            <element signature="class#23990:24382" expanded="false" />
-            <element signature="method#call#0;class#23990:24382" expanded="false" />
-            <element signature="docComment;field#CONSTRAINED_RESIZE_POLICY#0;class#TreeTableView#0" expanded="false" />
-            <element signature="class#25197:25996" expanded="false" />
-            <element signature="method#call#0;class#25197:25996" expanded="false" />
-            <element signature="docComment;field#DEFAULT_SORT_POLICY#0;class#TreeTableView#0" expanded="false" />
-            <element signature="class#26561:27902" expanded="false" />
-            <element signature="method#call#0;class#26561:27902" expanded="false" />
-            <element signature="e#27146#27208#0" expanded="false" />
-            <element signature="docComment;field#expandedItemCountDirty#0;class#TreeTableView#0" expanded="false" />
-            <element signature="docComment;field#rootEvent#0;class#TreeTableView#0" expanded="false" />
-            <element signature="e#30840#30902#0" expanded="false" />
-            <element signature="class#31472:37923" expanded="false" />
-            <element signature="method#onChanged#0;class#31472:37923" expanded="false" />
-            <element signature="e#31632#31703#0" expanded="false" />
-            <element signature="e#31838#31899#0" expanded="false" />
-            <element signature="e#33971#34032#0" expanded="false" />
-            <element signature="e#35124#35186#0" expanded="false" />
-            <element signature="e#35796#35859#0" expanded="false" />
-            <element signature="e#36267#36332#0" expanded="false" />
-            <element signature="docComment;field#root#0;class#TreeTableView#0" expanded="false" />
-            <element signature="class#40975:41897" expanded="false" />
-            <element signature="method#invalidated#0;class#40975:41897" expanded="false" />
-            <element signature="docComment;method#setRoot#0;class#TreeTableView#0" expanded="false" />
-            <element signature="docComment;method#getRoot#0;class#TreeTableView#0" expanded="false" />
-            <element signature="docComment;method#rootProperty#0;class#TreeTableView#0" expanded="false" />
-            <element signature="docComment;method#setShowRoot#0;class#TreeTableView#0" expanded="false" />
-            <element signature="docComment;method#isShowRoot#0;class#TreeTableView#0" expanded="false" />
-            <element signature="docComment;method#showRootProperty#0;class#TreeTableView#0" expanded="false" />
-            <element signature="method#showRootProperty#0;class#TreeTableView#0" expanded="false" />
-            <element signature="class#43619:43853" expanded="false" />
-            <element signature="method#invalidated#0;class#43619:43853" expanded="false" />
-            <element signature="docComment;method#treeColumnProperty#0;class#TreeTableView#0" expanded="false" />
-            <element signature="method#treeColumnProperty#0;class#TreeTableView#0" expanded="false" />
-            <element signature="docComment;method#setSelectionModel#0;class#TreeTableView#0" expanded="false" />
-            <element signature="docComment;method#getSelectionModel#0;class#TreeTableView#0" expanded="false" />
-            <element signature="method#getSelectionModel#0;class#TreeTableView#0" expanded="false" />
-            <element signature="docComment;method#selectionModelProperty#0;class#TreeTableView#0" expanded="false" />
-            <element signature="method#selectionModelProperty#0;class#TreeTableView#0" expanded="false" />
-            <element signature="class#46185:47275" expanded="false" />
-            <element signature="method#invalidated#0;class#46185:47275" expanded="false" />
-            <element signature="e#46439#46492#0" expanded="false" />
-            <element signature="docComment;method#setFocusModel#0;class#TreeTableView#0" expanded="false" />
-            <element signature="docComment;method#getFocusModel#0;class#TreeTableView#0" expanded="false" />
-            <element signature="docComment;method#focusModelProperty#0;class#TreeTableView#0" expanded="false" />
-            <element signature="method#focusModelProperty#0;class#TreeTableView#0" expanded="false" />
-            <element signature="docComment;field#expandedItemCount#0;class#TreeTableView#0" expanded="false" />
-            <element signature="method#getExpandedItemCount#0;class#TreeTableView#0" expanded="false" />
-            <element signature="docComment;method#editableProperty#0;class#TreeTableView#0" expanded="false" />
-            <element signature="method#editableProperty#0;class#TreeTableView#0" expanded="false" />
-            <element signature="docComment;method#editingCellProperty#0;class#TreeTableView#0" expanded="false" />
-            <element signature="method#editingCellProperty#0;class#TreeTableView#0" expanded="false" />
-            <element signature="method#editingCellPropertyImpl#0;class#TreeTableView#0" expanded="false" />
-            <element signature="docComment;method#tableMenuButtonVisibleProperty#0;class#TreeTableView#0" expanded="false" />
-            <element signature="method#tableMenuButtonVisibleProperty#0;class#TreeTableView#0" expanded="false" />
-            <element signature="method#isTableMenuButtonVisible#0;class#TreeTableView#0" expanded="false" />
-            <element signature="method#setColumnResizePolicy#0;class#TreeTableView#0" expanded="false" />
-            <element signature="method#getColumnResizePolicy#0;class#TreeTableView#0" expanded="false" />
-            <element signature="docComment;method#columnResizePolicyProperty#0;class#TreeTableView#0" expanded="false" />
-            <element signature="method#columnResizePolicyProperty#0;class#TreeTableView#0" expanded="false" />
-            <element signature="class#52757:53799" expanded="false" />
-            <element signature="method#invalidated#0;class#52757:53799" expanded="false" />
-            <element signature="docComment;method#rowFactoryProperty#0;class#TreeTableView#0" expanded="false" />
-            <element signature="method#rowFactoryProperty#0;class#TreeTableView#0" expanded="false" />
-            <element signature="method#setRowFactory#0;class#TreeTableView#0" expanded="false" />
-            <element signature="method#getRowFactory#0;class#TreeTableView#0" expanded="false" />
-            <element signature="docComment;method#placeholderProperty#0;class#TreeTableView#0" expanded="false" />
-            <element signature="method#placeholderProperty#0;class#TreeTableView#0" expanded="false" />
-            <element signature="docComment;method#setFixedCellSize#0;class#TreeTableView#0" expanded="false" />
-            <element signature="docComment;method#getFixedCellSize#0;class#TreeTableView#0" expanded="false" />
-            <element signature="method#getFixedCellSize#0;class#TreeTableView#0" expanded="false" />
-            <element signature="docComment;method#fixedCellSizeProperty#0;class#TreeTableView#0" expanded="false" />
-            <element signature="method#fixedCellSizeProperty#0;class#TreeTableView#0" expanded="false" />
-            <element signature="class#58816:59285" expanded="false" />
-            <element signature="method#getCssMetaData#0;class#58816:59285" expanded="false" />
-            <element signature="docComment;field#sortMode#0;class#TreeTableView#0" expanded="false" />
-            <element signature="method#sortModeProperty#0;class#TreeTableView#0" expanded="false" />
-            <element signature="docComment;field#comparator#0;class#TreeTableView#0" expanded="false" />
-            <element signature="method#comparatorProperty#0;class#TreeTableView#0" expanded="false" />
-            <element signature="method#comparatorPropertyImpl#0;class#TreeTableView#0" expanded="false" />
-            <element signature="docComment;field#sortPolicy#0;class#TreeTableView#0" expanded="false" />
-            <element signature="method#setSortPolicy#0;class#TreeTableView#0" expanded="false" />
-            <element signature="method#getSortPolicy#0;class#TreeTableView#0" expanded="false" />
-            <element signature="method#sortPolicyProperty#0;class#TreeTableView#0" expanded="false" />
-            <element signature="class#62597:62881" expanded="false" />
-            <element signature="docComment;field#onSort#0;class#TreeTableView#0" expanded="false" />
-            <element signature="method#getOnSort#0;class#TreeTableView#0" expanded="false" />
-            <element signature="method#onSortProperty#0;class#TreeTableView#0" expanded="false" />
-            <element signature="class#63549:64185" expanded="false" />
-            <element signature="method#invalidated#0;class#63549:64185" expanded="false" />
-            <element signature="docComment;method#layoutChildren#0;class#TreeTableView#0" expanded="false" />
-            <element signature="method#layoutChildren#0;class#TreeTableView#0" expanded="false" />
-            <element signature="e#65260#65261#0" expanded="false" />
-            <element signature="e#65315#65316#0" expanded="false" />
-            <element signature="method#getOnScrollTo#0;class#TreeTableView#0" expanded="false" />
-            <element signature="method#onScrollToProperty#0;class#TreeTableView#0" expanded="false" />
-            <element signature="class#65974:66447" expanded="false" />
-            <element signature="method#scrollToColumnIndex#0;class#TreeTableView#0" expanded="false" />
-            <element signature="docComment;field#onScrollToColumn#0;class#TreeTableView#0" expanded="false" />
-            <element signature="method#setOnScrollToColumn#0;class#TreeTableView#0" expanded="false" />
-            <element signature="method#getOnScrollToColumn#0;class#TreeTableView#0" expanded="false" />
-            <element signature="method#onScrollToColumnProperty#0;class#TreeTableView#0" expanded="false" />
-            <element signature="class#67996:68599" expanded="false" />
-            <element signature="method#invalidated#0;class#67996:68599" expanded="false" />
-            <element signature="docComment;method#getRow#0;class#TreeTableView#0" expanded="false" />
-            <element signature="docComment;method#getTreeItem#0;class#TreeTableView#0" expanded="false" />
-            <element signature="method#getTreeItem#0;class#TreeTableView#0" expanded="false" />
-            <element signature="docComment;method#getTreeItemLevel#0;class#TreeTableView#0" expanded="false" />
-            <element signature="method#getTreeItemLevel#0;class#TreeTableView#0" expanded="false" />
-            <element signature="docComment;method#getColumns#0;class#TreeTableView#0" expanded="false" />
-            <element signature="docComment;method#getSortOrder#0;class#TreeTableView#0" expanded="false" />
-            <element signature="docComment;method#resizeColumn#0;class#TreeTableView#0" expanded="false" />
-            <element signature="method#resizeColumn#0;class#TreeTableView#0" expanded="false" />
-            <element signature="e#73475#73543#0" expanded="false" />
-            <element signature="docComment;method#edit#0;class#TreeTableView#0" expanded="false" />
-            <element signature="method#edit#0;class#TreeTableView#0" expanded="false" />
-            <element signature="docComment;method#getVisibleLeafColumns#0;class#TreeTableView#0" expanded="false" />
-            <element signature="docComment;method#getVisibleLeafIndex#0;class#TreeTableView#0" expanded="false" />
-            <element signature="docComment;method#getVisibleLeafColumn#0;class#TreeTableView#0" expanded="false" />
-            <element signature="method#getVisibleLeafColumn#0;class#TreeTableView#0" expanded="false" />
-            <element signature="docComment;method#sort#0;class#TreeTableView#0" expanded="false" />
-            <element signature="method#sort#0;class#TreeTableView#0" expanded="false" />
-            <element signature="e#76239#76295#0" expanded="false" />
-            <element signature="e#76515#76585#0" expanded="false" />
-            <element signature="e#77126#77195#0" expanded="false" />
-            <element signature="e#77941#78003#0" expanded="false" />
-            <element signature="e#78897#78965#0" expanded="false" />
-            <element signature="docComment;field#sortLock#0;class#TreeTableView#0" expanded="false" />
-            <element signature="method#doSort#0;class#TreeTableView#0" expanded="false" />
-            <element signature="method#updateExpandedItemCount#0;class#TreeTableView#0" expanded="false" />
-            <element signature="e#80771#80840#0" expanded="false" />
-            <element signature="method#updateRootExpanded#0;class#TreeTableView#0" expanded="false" />
-            <element signature="e#81033#81105#0" expanded="false" />
-            <element signature="docComment;method#refresh#0;class#TreeTableView#0" expanded="false" />
-            <element signature="method#setContentWidth#0;class#TreeTableView#0" expanded="false" />
-            <element signature="e#81991#82060#0" expanded="false" />
-            <element signature="docComment;method#updateVisibleLeafColumns#0;class#TreeTableView#0" expanded="false" />
-            <element signature="method#updateVisibleLeafColumns#0;class#TreeTableView#0" expanded="false" />
-            <element signature="e#82911#82980#0" expanded="false" />
-            <element signature="method#buildVisibleLeafColumns#0;class#TreeTableView#0" expanded="false" />
-            <element signature="docComment;field#DEFAULT_STYLE_CLASS#0;class#TreeTableView#0" expanded="false" />
-            <element signature="docComment;class#StyleableProperties#0;class#TreeTableView#0" expanded="false" />
-            <element signature="class#StyleableProperties#0;class#TreeTableView#0" expanded="false" />
-            <element signature="class#84791:85620" expanded="false" />
-            <element signature="method#isSettable#0;class#84791:85620" expanded="false" />
-            <element signature="method#getStyleableProperty#0;class#84791:85620" expanded="false" />
-            <element signature="initializer##0;class#StyleableProperties#0;class#TreeTableView#0" expanded="false" />
-            <element signature="docComment;method#getClassCssMetaData#0;class#TreeTableView#0" expanded="false" />
-            <element signature="method#getClassCssMetaData#0;class#TreeTableView#0" expanded="false" />
-            <element signature="docComment;method#getControlCssMetaData#0;class#TreeTableView#0" expanded="false" />
-            <element signature="docComment;method#createDefaultSkin#0;class#TreeTableView#0" expanded="false" />
-            <element signature="e#86560#86561#0" expanded="false" />
-            <element signature="e#86613#86614#0" expanded="false" />
-            <element signature="docComment;method#queryAccessibleAttribute#0;class#TreeTableView#0" expanded="false" />
-            <element signature="method#queryAccessibleAttribute#0;class#TreeTableView#0" expanded="false" />
-            <element signature="docComment;class#ResizeFeatures#0;class#TreeTableView#0" expanded="false" />
-            <element signature="class#ResizeFeatures#0;class#TreeTableView#0" expanded="false" />
-            <element signature="docComment;method#ResizeFeatures#0;class#ResizeFeatures#0;class#TreeTableView#0" expanded="false" />
-            <element signature="method#ResizeFeatures#0;class#ResizeFeatures#0;class#TreeTableView#0" expanded="false" />
-            <element signature="docComment;method#getColumn#0;class#ResizeFeatures#0;class#TreeTableView#0" expanded="false" />
-            <element signature="docComment;method#getTable#0;class#ResizeFeatures#0;class#TreeTableView#0" expanded="false" />
-            <element signature="method#getTable#0;class#ResizeFeatures#0;class#TreeTableView#0" expanded="false" />
-            <element signature="docComment;class#EditEvent#0;class#TreeTableView#0" expanded="false" />
-            <element signature="class#EditEvent#0;class#TreeTableView#0" expanded="false" />
-            <element signature="docComment;field#ANY#0;class#EditEvent#0;class#TreeTableView#0" expanded="false" />
-            <element signature="docComment;method#EditEvent#0;class#EditEvent#0;class#TreeTableView#0" expanded="false" />
-            <element signature="method#EditEvent#0;class#EditEvent#0;class#TreeTableView#0" expanded="false" />
-            <element signature="docComment;method#getSource#0;class#EditEvent#0;class#TreeTableView#0" expanded="false" />
-            <element signature="docComment;method#getTreeItem#0;class#EditEvent#0;class#TreeTableView#0" expanded="false" />
-            <element signature="docComment;method#getNewValue#0;class#EditEvent#0;class#TreeTableView#0" expanded="false" />
-            <element signature="docComment;method#getOldValue#0;class#EditEvent#0;class#TreeTableView#0" expanded="false" />
-            <element signature="docComment;class#TreeTableViewSelectionModel#0;class#TreeTableView#0" expanded="false" />
-            <element signature="class#TreeTableViewSelectionModel#0;class#TreeTableView#0" expanded="false" />
-            <element signature="docComment;field#treeTableView#0;class#TreeTableViewSelectionModel#0;class#TreeTableView#0" expanded="false" />
-            <element signature="docComment;method#TreeTableViewSelectionModel#0;class#TreeTableViewSelectionModel#0;class#TreeTableView#0" expanded="false" />
-            <element signature="method#TreeTableViewSelectionModel#0;class#TreeTableViewSelectionModel#0;class#TreeTableView#0" expanded="false" />
-            <element signature="docComment;method#getSelectedCells#0;class#TreeTableViewSelectionModel#0;class#TreeTableView#0" expanded="false" />
-            <element signature="docComment;method#getTreeTableView#0;class#TreeTableViewSelectionModel#0;class#TreeTableView#0" expanded="false" />
-            <element signature="docComment;method#getModelItem#0;class#TreeTableViewSelectionModel#0;class#TreeTableView#0" expanded="false" />
-            <element signature="docComment;method#getItemCount#0;class#TreeTableViewSelectionModel#0;class#TreeTableView#0" expanded="false" />
-            <element signature="docComment;method#focus#0;class#TreeTableViewSelectionModel#0;class#TreeTableView#0" expanded="false" />
-            <element signature="docComment;method#getFocusedIndex#0;class#TreeTableViewSelectionModel#0;class#TreeTableView#0" expanded="false" />
-            <element signature="docComment;method#selectRange#0;class#TreeTableViewSelectionModel#0;class#TreeTableView#0" expanded="false" />
-            <element signature="method#selectRange#0;class#TreeTableViewSelectionModel#0;class#TreeTableView#0" expanded="false" />
-            <element signature="docComment;method#focus#1;class#TreeTableViewSelectionModel#0;class#TreeTableView#0" expanded="false" />
-            <element signature="method#focus#1;class#TreeTableViewSelectionModel#0;class#TreeTableView#0" expanded="false" />
-            <element signature="method#focus#2;class#TreeTableViewSelectionModel#0;class#TreeTableView#0" expanded="false" />
-            <element signature="method#getFocusedCell#0;class#TreeTableViewSelectionModel#0;class#TreeTableView#0" expanded="false" />
-            <element signature="docComment;class#TreeTableViewArrayListSelectionModel#0;class#TreeTableView#0" expanded="false" />
-            <element signature="class#TreeTableViewArrayListSelectionModel#0;class#TreeTableView#0" expanded="false" />
-            <element signature="docComment;method#TreeTableViewArrayListSelectionModel#0;class#TreeTableViewArrayListSelectionModel#0;class#TreeTableView#0" expanded="false" />
-            <element signature="method#TreeTableViewArrayListSelectionModel#0;class#TreeTableViewArrayListSelectionModel#0;class#TreeTableView#0" expanded="false" />
-            <element signature="class#100386:100667" expanded="false" />
-            <element signature="method#isCellSelectionEnabled#0;class#100386:100667" expanded="false" />
-            <element signature="class#100702:101030" expanded="false" />
-            <element signature="class#101080:101408" expanded="false" />
-            <element signature="method#updateTreeEventListener#0;class#TreeTableViewArrayListSelectionModel#0;class#TreeTableView#0" expanded="false" />
-            <element signature="class#102527:112663" expanded="false" />
-            <element signature="method#handle#0;class#102527:112663" expanded="false" />
-            <element signature="e#103116#103179#0" expanded="false" />
-            <element signature="e#103669#103732#0" expanded="false" />
-            <element signature="e#104883#104940#0" expanded="false" />
-            <element signature="e#106497#106566#0" expanded="false" />
-            <element signature="e#107020#107079#0" expanded="false" />
-            <element signature="e#107603#107661#0" expanded="false" />
-            <element signature="e#108926#108986#0" expanded="false" />
-            <element signature="e#109392#109451#0" expanded="false" />
-            <element signature="class#111086:112637" expanded="false" />
-            <element signature="method#call#0;class#111086:112637" expanded="false" />
-            <element signature="e#111211#111266#0" expanded="false" />
-            <element signature="docComment;field#selectedCellsMap#0;class#TreeTableViewArrayListSelectionModel#0;class#TreeTableView#0" expanded="false" />
-            <element signature="docComment;method#clearAndSelect#0;class#TreeTableViewArrayListSelectionModel#0;class#TreeTableView#0" expanded="false" />
-            <element signature="method#clearAndSelect#1;class#TreeTableViewArrayListSelectionModel#0;class#TreeTableView#0" expanded="false" />
-            <element signature="e#115496#115565#0" expanded="false" />
-            <element signature="e#115793#115860#0" expanded="false" />
-            <element signature="e#116123#116182#0" expanded="false" />
-            <element signature="e#116583#116648#0" expanded="false" />
-            <element signature="e#117516#117581#0" expanded="false" />
-            <element signature="method#select#1;class#TreeTableViewArrayListSelectionModel#0;class#TreeTableView#0" expanded="false" />
-            <element signature="e#118996#119064#0" expanded="false" />
-            <element signature="method#select#2;class#TreeTableViewArrayListSelectionModel#0;class#TreeTableView#0" expanded="false" />
-            <element signature="e#120281#120349#0" expanded="false" />
-            <element signature="e#121062#121131#0" expanded="false" />
-            <element signature="method#selectIndices#0;class#TreeTableViewArrayListSelectionModel#0;class#TreeTableView#0" expanded="false" />
-            <element signature="e#122734#122790#0" expanded="false" />
-            <element signature="method#selectAll#0;class#TreeTableViewArrayListSelectionModel#0;class#TreeTableView#0" expanded="false" />
-            <element signature="method#selectRange#0;class#TreeTableViewArrayListSelectionModel#0;class#TreeTableView#0" expanded="false" />
-            <element signature="e#128029#128089#0" expanded="false" />
-            <element signature="e#128600#128669#0" expanded="false" />
-            <element signature="e#129098#129116#0" expanded="false" />
-            <element signature="method#clearSelection#1;class#TreeTableViewArrayListSelectionModel#0;class#TreeTableView#0" expanded="false" />
-            <element signature="method#clearSelection#2;class#TreeTableViewArrayListSelectionModel#0;class#TreeTableView#0" expanded="false" />
-            <element signature="method#clearSelection#3;class#TreeTableViewArrayListSelectionModel#0;class#TreeTableView#0" expanded="false" />
-            <element signature="method#quietClearSelection#0;class#TreeTableViewArrayListSelectionModel#0;class#TreeTableView#0" expanded="false" />
-            <element signature="method#isSelected#1;class#TreeTableViewArrayListSelectionModel#0;class#TreeTableView#0" expanded="false" />
-            <element signature="e#131728#131797#0" expanded="false" />
-            <element signature="method#selectPrevious#0;class#TreeTableViewArrayListSelectionModel#0;class#TreeTableView#0" expanded="false" />
-            <element signature="e#132464#132525#0" expanded="false" />
-            <element signature="method#selectNext#0;class#TreeTableViewArrayListSelectionModel#0;class#TreeTableView#0" expanded="false" />
-            <element signature="e#133493#133554#0" expanded="false" />
-            <element signature="method#selectAboveCell#0;class#TreeTableViewArrayListSelectionModel#0;class#TreeTableView#0" expanded="false" />
-            <element signature="method#selectBelowCell#0;class#TreeTableViewArrayListSelectionModel#0;class#TreeTableView#0" expanded="false" />
-            <element signature="method#selectFirst#0;class#TreeTableViewArrayListSelectionModel#0;class#TreeTableView#0" expanded="false" />
-            <element signature="method#selectLast#0;class#TreeTableViewArrayListSelectionModel#0;class#TreeTableView#0" expanded="false" />
-            <element signature="method#selectLeftCell#0;class#TreeTableViewArrayListSelectionModel#0;class#TreeTableView#0" expanded="false" />
-            <element signature="method#selectRightCell#0;class#TreeTableViewArrayListSelectionModel#0;class#TreeTableView#0" expanded="false" />
-            <element signature="docComment;method#updateDefaultSelection#0;class#TreeTableViewArrayListSelectionModel#0;class#TreeTableView#0" expanded="false" />
-            <element signature="method#updateDefaultSelection#0;class#TreeTableViewArrayListSelectionModel#0;class#TreeTableView#0" expanded="false" />
-            <element signature="e#137260#137317#0" expanded="false" />
-            <element signature="method#getTableColumn#1;class#TreeTableViewArrayListSelectionModel#0;class#TreeTableView#0" expanded="false" />
-            <element signature="method#updateSelectedIndex#0;class#TreeTableViewArrayListSelectionModel#0;class#TreeTableView#0" expanded="false" />
-            <element signature="method#focus#1;class#TreeTableViewArrayListSelectionModel#0;class#TreeTableView#0" expanded="false" />
-            <element signature="method#focus#2;class#TreeTableViewArrayListSelectionModel#0;class#TreeTableView#0" expanded="false" />
-            <element signature="method#getFocusedCell#0;class#TreeTableViewArrayListSelectionModel#0;class#TreeTableView#0" expanded="false" />
-            <element signature="method#handleSelectedCellsListChangeEvent#0;class#TreeTableViewArrayListSelectionModel#0;class#TreeTableView#0" expanded="false" />
-            <element signature="e#139407#139471#0" expanded="false" />
-            <element signature="e#142090#142161#0" expanded="false" />
-            <element signature="e#142611#142667#0" expanded="false" />
-            <element signature="e#144371#144438#0" expanded="false" />
-            <element signature="e#144620#144677#0" expanded="false" />
-            <element signature="e#145407#145474#0" expanded="false" />
-            <element signature="docComment;class#TreeTableViewFocusModel#0;class#TreeTableView#0" expanded="false" />
-            <element signature="class#TreeTableViewFocusModel#0;class#TreeTableView#0" expanded="false" />
-            <element signature="docComment;method#TreeTableViewFocusModel#0;class#TreeTableViewFocusModel#0;class#TreeTableView#0" expanded="false" />
-            <element signature="method#TreeTableViewFocusModel#0;class#TreeTableViewFocusModel#0;class#TreeTableView#0" expanded="false" />
-            <element signature="method#updateTreeEventListener#0;class#TreeTableViewFocusModel#0;class#TreeTableView#0" expanded="false" />
-            <element signature="class#149091:152081" expanded="false" />
-            <element signature="method#handle#0;class#149091:152081" expanded="false" />
-            <element signature="e#149239#149302#0" expanded="false" />
-            <element signature="e#149954#150016#0" expanded="false" />
-            <element signature="e#150238#150297#0" expanded="false" />
-            <element signature="docComment;method#getItemCount#0;class#TreeTableViewFocusModel#0;class#TreeTableView#0" expanded="false" />
-            <element signature="method#getItemCount#0;class#TreeTableViewFocusModel#0;class#TreeTableView#0" expanded="false" />
-            <element signature="e#152261#152319#0" expanded="false" />
-            <element signature="docComment;method#getModelItem#0;class#TreeTableViewFocusModel#0;class#TreeTableView#0" expanded="false" />
-            <element signature="method#getModelItem#0;class#TreeTableViewFocusModel#0;class#TreeTableView#0" expanded="false" />
-            <element signature="docComment;field#focusedCell#0;class#TreeTableViewFocusModel#0;class#TreeTableView#0" expanded="false" />
-            <element signature="method#focusedCellProperty#0;class#TreeTableViewFocusModel#0;class#TreeTableView#0" expanded="false" />
-            <element signature="method#setFocusedCell#0;class#TreeTableViewFocusModel#0;class#TreeTableView#0" expanded="false" />
-            <element signature="method#getFocusedCell#0;class#TreeTableViewFocusModel#0;class#TreeTableView#0" expanded="false" />
-            <element signature="method#focusedCellPropertyImpl#0;class#TreeTableViewFocusModel#0;class#TreeTableView#0" expanded="false" />
-            <element signature="class#153414:154302" expanded="false" />
-            <element signature="method#invalidated#0;class#153414:154302" expanded="false" />
-            <element signature="docComment;method#focus#0;class#TreeTableViewFocusModel#0;class#TreeTableView#0" expanded="false" />
-            <element signature="method#focus#0;class#TreeTableViewFocusModel#0;class#TreeTableView#0" expanded="false" />
-            <element signature="docComment;method#focus#1;class#TreeTableViewFocusModel#0;class#TreeTableView#0" expanded="false" />
-            <element signature="method#focus#1;class#TreeTableViewFocusModel#0;class#TreeTableView#0" expanded="false" />
-            <element signature="docComment;method#isFocused#0;class#TreeTableViewFocusModel#0;class#TreeTableView#0" expanded="false" />
-            <element signature="method#isFocused#0;class#TreeTableViewFocusModel#0;class#TreeTableView#0" expanded="false" />
-            <element signature="docComment;method#focus#2;class#TreeTableViewFocusModel#0;class#TreeTableView#0" expanded="false" />
-            <element signature="method#focus#2;class#TreeTableViewFocusModel#0;class#TreeTableView#0" expanded="false" />
-            <element signature="docComment;method#focusAboveCell#0;class#TreeTableViewFocusModel#0;class#TreeTableView#0" expanded="false" />
-            <element signature="method#focusAboveCell#0;class#TreeTableViewFocusModel#0;class#TreeTableView#0" expanded="false" />
-            <element signature="docComment;method#focusBelowCell#0;class#TreeTableViewFocusModel#0;class#TreeTableView#0" expanded="false" />
-            <element signature="method#focusBelowCell#0;class#TreeTableViewFocusModel#0;class#TreeTableView#0" expanded="false" />
-            <element signature="docComment;method#focusLeftCell#0;class#TreeTableViewFocusModel#0;class#TreeTableView#0" expanded="false" />
-            <element signature="method#focusLeftCell#0;class#TreeTableViewFocusModel#0;class#TreeTableView#0" expanded="false" />
-            <element signature="docComment;method#focusRightCell#0;class#TreeTableViewFocusModel#0;class#TreeTableView#0" expanded="false" />
-            <element signature="method#focusRightCell#0;class#TreeTableViewFocusModel#0;class#TreeTableView#0" expanded="false" />
-            <element signature="docComment;method#focusPrevious#0;class#TreeTableViewFocusModel#0;class#TreeTableView#0" expanded="false" />
-            <element signature="method#focusPrevious#0;class#TreeTableViewFocusModel#0;class#TreeTableView#0" expanded="false" />
-            <element signature="docComment;method#focusNext#0;class#TreeTableViewFocusModel#0;class#TreeTableView#0" expanded="false" />
-            <element signature="method#focusNext#0;class#TreeTableViewFocusModel#0;class#TreeTableView#0" expanded="false" />
-            <element signature="docComment;method#getColumnCount#0;class#TreeTableViewFocusModel#0;class#TreeTableView#0" expanded="false" />
-            <element signature="method#getTableColumn#0;class#TreeTableViewFocusModel#0;class#TreeTableView#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar:///Library/Java/JavaVirtualMachines/jdk1.8.0_45.jdk/Contents/Home/javafx-src.zip!/javafx/scene/Parent.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.33203885">
-          <caret line="522" column="39" selection-start-line="522" selection-start-column="39" selection-end-line="522" selection-end-column="39" />
-          <folding>
-            <element signature="e#23538#23539#0" expanded="true" />
-            <element signature="e#23581#23582#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -3439,31 +2743,12 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="43" column="23" selection-start-line="43" selection-start-column="23" selection-end-line="43" selection-end-column="23" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/level-editor/src/main/java/com/nikhil/view/custom/KeyframeCell.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="21" column="65" selection-start-line="21" selection-start-column="65" selection-end-line="21" selection-end-column="65" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/level-editor/src/main/java/com/nikhil/editor/selection/SelectionArea.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="23" column="0" selection-start-line="23" selection-start-column="0" selection-end-line="23" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/level-editor/src/main/java/com/nikhil/controller/PolygonViewController.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
+        <state vertical-scroll-proportion="0.33783785">
           <caret line="300" column="111" selection-start-line="300" selection-start-column="111" selection-end-line="300" selection-end-column="111" />
           <folding>
             <element signature="docComment;class#PolygonViewController#0" expanded="false" />
@@ -3490,31 +2775,13 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.33203885">
           <caret line="87" column="43" selection-start-line="87" selection-start-column="43" selection-end-line="87" selection-end-column="43" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar:///Library/Java/JavaVirtualMachines/jdk1.8.0_45.jdk/Contents/Home/javafx-src.zip!/com/sun/javafx/scene/control/skin/VirtualFlow.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.33203885">
-          <caret line="2133" column="13" selection-start-line="2133" selection-start-column="13" selection-end-line="2133" selection-end-column="13" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/level-editor/src/main/java/com/nikhil/view/item/record/Metadata.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="80" column="41" selection-start-line="80" selection-start-column="41" selection-end-line="80" selection-end-column="41" />
-          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/level-editor/src/main/resources/views/level-editor-style.css">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-37.77778">
+        <state vertical-scroll-proportion="2.4460433">
           <caret line="68" column="1" selection-start-line="68" selection-start-column="1" selection-end-line="68" selection-end-column="1" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -3522,33 +2789,251 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.33203885">
           <caret line="100" column="19" selection-start-line="100" selection-start-column="19" selection-end-line="100" selection-end-column="19" />
-          <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/level-editor/src/main/java/com/nikhil/view/custom/KeyframePane.java">
+    <entry file="file://$PROJECT_DIR$/level-editor/src/main/java/com/nikhil/view/custom/SelectionBar.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="159" column="10" selection-start-line="159" selection-start-column="10" selection-end-line="159" selection-end-column="10" />
+          <caret line="39" column="0" selection-start-line="39" selection-start-column="0" selection-end-line="39" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar:///Library/Java/JavaVirtualMachines/jdk1.8.0_45.jdk/Contents/Home/javafx-src.zip!/com/sun/javafx/scene/control/skin/VirtualScrollBar.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-0.6418919">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar:///Library/Java/JavaVirtualMachines/jdk1.8.0_45.jdk/Contents/Home/javafx-src.zip!/javafx/scene/Parent.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="522" column="39" selection-start-line="522" selection-start-column="39" selection-end-line="522" selection-end-column="39" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/motion/src/main/java/com/nikhil/keyframe/KeyFrame.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/level-editor/src/main/java/com/nikhil/editor/selection/Clipboard.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.25119618">
+          <caret line="12" column="57" selection-start-line="12" selection-start-column="57" selection-end-line="12" selection-end-column="57" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar:///Library/Java/JavaVirtualMachines/jdk1.8.0_45.jdk/Contents/Home/javafx-src.zip!/javafx/scene/control/TreeView.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.33333334">
+          <caret line="310" column="11" selection-start-line="310" selection-start-column="11" selection-end-line="310" selection-end-column="11" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/level-editor/bin/com/nikhil/editor/gadget/SelectionArea.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.035971224">
+          <caret line="18" column="26" selection-start-line="18" selection-start-column="26" selection-end-line="18" selection-end-column="26" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/level-editor/src/main/resources/art/keyframe.png">
+      <provider selected="true" editor-type-id="images">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/level-editor/src/main/resources/art/last_keyframe.png">
+      <provider selected="true" editor-type-id="images">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/level-editor/src/main/resources/art/first_keyframe.png">
+      <provider selected="true" editor-type-id="images">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/level-editor/src/main/java/com/nikhil/editor/selection/SelectionArea.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="64" column="18" selection-start-line="64" selection-start-column="18" selection-end-line="64" selection-end-column="18" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/level-editor/src/main/java/com/nikhil/editor/tool/SelectionTool.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="13" column="3" selection-start-line="13" selection-start-column="3" selection-end-line="13" selection-end-column="3" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar:///Library/Java/JavaVirtualMachines/jdk1.8.0_45.jdk/Contents/Home/javafx-src.zip!/javafx/scene/control/TableColumnBase.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.3243243">
+          <caret line="768" column="34" selection-start-line="768" selection-start-column="34" selection-end-line="768" selection-end-column="34" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar:///Library/Java/JavaVirtualMachines/jdk1.8.0_45.jdk/Contents/Home/javafx-src.zip!/javafx/event/EventTarget.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.033783782">
+          <caret line="32" column="17" selection-start-line="32" selection-start-column="17" selection-end-line="32" selection-end-column="17" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/level-editor/src/main/java/com/nikhil/view/item/record/PolygonMetadata.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.4009009">
+          <caret line="309" column="32" selection-start-line="309" selection-start-column="32" selection-end-line="309" selection-end-column="32" />
           <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#7010#7011#0" expanded="true" />
-            <element signature="e#7037#7038#0" expanded="true" />
+            <element signature="docComment;class#PolygonMetadata#0" expanded="false" />
+            <element signature="method#PolygonMetadata#0;class#PolygonMetadata#0" expanded="false" />
+            <element signature="method#getValueNode#0;class#PolygonMetadata#0" expanded="false" />
+            <element signature="class#2936:3773" expanded="false" />
+            <element signature="method#valueBeingDragged#0;class#2936:3773" expanded="false" />
+            <element signature="method#valueFinishedChanging#0;class#2936:3773" expanded="false" />
+            <element signature="method#getRotationValueNode#0;class#PolygonMetadata#0" expanded="false" />
+            <element signature="class#4620:5843" expanded="false" />
+            <element signature="method#valueBeingDragged#0;class#4620:5843" expanded="false" />
+            <element signature="method#valueFinishedChanging#0;class#4620:5843" expanded="false" />
+            <element signature="method#getTranslationValueNode#0;class#PolygonMetadata#0" expanded="false" />
+            <element signature="class#6584:8282" expanded="false" />
+            <element signature="method#valueBeingDragged#0;class#6584:8282" expanded="false" />
+            <element signature="method#valueFinishedChanging#0;class#6584:8282" expanded="false" />
+            <element signature="class#9035:10727" expanded="false" />
+            <element signature="method#valueBeingDragged#0;class#9035:10727" expanded="false" />
+            <element signature="method#valueFinishedChanging#0;class#9035:10727" expanded="false" />
+            <element signature="method#getAnchorPointValueNode#0;class#PolygonMetadata#0" expanded="false" />
+            <element signature="class#11332:11730" expanded="false" />
+            <element signature="method#valueBeingDragged#0;class#11332:11730" expanded="false" />
+            <element signature="method#valueFinishedChanging#0;class#11332:11730" expanded="false" />
+            <element signature="class#12086:12484" expanded="false" />
+            <element signature="method#valueBeingDragged#0;class#12086:12484" expanded="false" />
+            <element signature="method#valueFinishedChanging#0;class#12086:12484" expanded="false" />
+            <element signature="method#getVertexCountValueNode#0;class#PolygonMetadata#0" expanded="false" />
+            <element signature="method#getOptionNode#0;class#PolygonMetadata#0" expanded="false" />
+            <element signature="e#14800#14801#0" expanded="true" />
+            <element signature="e#14835#14836#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/level-editor/src/main/java/com/nikhil/controller/ui/MainWindowController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.8648649">
+          <caret line="260" column="0" selection-start-line="260" selection-start-column="0" selection-end-line="260" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar:///Library/Java/JavaVirtualMachines/jdk1.8.0_45.jdk/Contents/Home/javafx-src.zip!/com/sun/javafx/scene/control/skin/VirtualFlow.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.8063063">
+          <caret line="1759" column="13" selection-start-line="1759" selection-start-column="13" selection-end-line="1759" selection-end-column="13" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/level-editor/src/main/java/com/nikhil/controller/CompositionViewController.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.5945946">
-          <caret line="305" column="66" selection-start-line="305" selection-start-column="66" selection-end-line="305" selection-end-column="66" />
+        <state vertical-scroll-proportion="0.0">
+          <caret line="124" column="48" selection-start-line="124" selection-start-column="48" selection-end-line="124" selection-end-column="48" />
+          <folding>
+            <element signature="docComment;class#CompositionViewController#0" expanded="false" />
+            <element signature="method#CompositionViewController#0;class#CompositionViewController#0" expanded="false" />
+            <element signature="method#getNewTabName#0;class#CompositionViewController#0" expanded="false" />
+            <element signature="method#addItemViewController#0;class#CompositionViewController#0" expanded="false" />
+            <element signature="e#3082#3150#0" expanded="false" />
+            <element signature="method#removeItemViewController#0;class#CompositionViewController#0" expanded="false" />
+            <element signature="e#3593#3669#0" expanded="false" />
+            <element signature="docComment;method#countExpandedChildren#0;class#CompositionViewController#0" expanded="false" />
+            <element signature="method#countExpandedChildren#0;class#CompositionViewController#0" expanded="false" />
+            <element signature="e#4561#4562#0" expanded="true" />
+            <element signature="method#addToTimelineSystem#0;class#CompositionViewController#0" expanded="false" />
+            <element signature="method#initSearchAndPlayback#0;class#CompositionViewController#0" expanded="false" />
+            <element signature="class#12709:13105" expanded="false" />
+            <element signature="method#valueBeingDragged#0;class#12709:13105" expanded="false" />
+            <element signature="method#valueFinishedChanging#0;class#12709:13105" expanded="false" />
+            <element signature="method#removeFromTimelineSystem#0;class#CompositionViewController#0" expanded="false" />
+            <element signature="docComment;method#selectRecordFromItemTable#0;class#CompositionViewController#0" expanded="false" />
+            <element signature="method#selectRecordFromItemTable#0;class#CompositionViewController#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/level-editor/src/main/java/com/nikhil/Main.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="53" column="57" selection-start-line="53" selection-start-column="57" selection-end-line="53" selection-end-column="57" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/level-editor/src/main/java/com/nikhil/view/custom/keyframe/KeyframeTreeView.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="225" column="0" selection-start-line="225" selection-start-column="0" selection-end-line="225" selection-end-column="0" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#4244#4245#0" expanded="true" />
-            <element signature="e#4297#4298#0" expanded="true" />
-            <element signature="e#4336#4337#0" expanded="true" />
-            <element signature="e#4368#4369#0" expanded="true" />
+            <element signature="e#6060#6061#0" expanded="true" />
+            <element signature="e#6104#6105#0" expanded="true" />
+            <element signature="e#7907#7908#0" expanded="true" />
+            <element signature="e#7964#7965#0" expanded="true" />
+            <element signature="e#9697#9698#0" expanded="true" />
+            <element signature="e#9759#9760#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/level-editor/src/main/java/com/nikhil/view/custom/cells/KeyframeCell.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="9" column="40" selection-start-line="9" selection-start-column="40" selection-end-line="9" selection-end-column="40" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/level-editor/src/main/java/com/nikhil/view/custom/keyframe/KeyframeImageView.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="70" column="22" selection-start-line="70" selection-start-column="22" selection-end-line="70" selection-end-column="22" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#2091#2092#0" expanded="true" />
+            <element signature="e#2122#2123#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/level-editor/src/main/java/com/nikhil/view/custom/keyframe/KeyframePane.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="260" column="43" selection-start-line="260" selection-start-column="43" selection-end-line="260" selection-end-column="43" />
+          <folding>
+            <element signature="method#selectAllKeys#0;class#KeyframePane#0" expanded="false" />
+            <element signature="method#shiftKeys#0;class#KeyframePane#0" expanded="false" />
+            <element signature="method#getLayoutXFor#0;class#KeyframePane#0" expanded="false" />
+            <element signature="method#zoomTo#0;class#KeyframePane#0" expanded="false" />
+            <element signature="method#addKeyAt#0;class#KeyframePane#0" expanded="false" />
+            <element signature="docComment;method#sortKeys#0;class#KeyframePane#0" expanded="false" />
+            <element signature="method#sortKeys#0;class#KeyframePane#0" expanded="false" />
+            <element signature="class#5596:5938" expanded="false" />
+            <element signature="method#compare#0;class#5596:5938" expanded="false" />
+            <element signature="method#timeAtX#0;class#KeyframePane#0" expanded="false" />
+            <element signature="method#selectKey#0;class#KeyframePane#0" expanded="false" />
+            <element signature="method#findKeyAt#0;class#KeyframePane#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/level-editor/src/main/java/com/nikhil/view/item/record/Metadata.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.5743243">
+          <caret line="24" column="57" selection-start-line="24" selection-start-column="57" selection-end-line="24" selection-end-column="57" />
+          <folding />
         </state>
       </provider>
     </entry>
