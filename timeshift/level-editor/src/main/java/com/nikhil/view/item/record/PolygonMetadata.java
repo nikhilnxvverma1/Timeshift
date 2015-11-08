@@ -15,6 +15,8 @@ import com.nikhil.view.custom.keyframe.KeyframePane;
 import com.nikhil.view.item.PolygonView;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.value.ChangeListener;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.geometry.Point2D;
 import javafx.scene.Node;
 import javafx.scene.control.*;
@@ -37,9 +39,20 @@ public class PolygonMetadata extends Metadata{
     public static final short TRANSLATION_TAG=4;
     public static final short ANCHOR_POINT_TAG=5;
     public static final short VERTICES_TAG=6;
+
     private KeyframePane keyframePane;
     private PolygonViewController polygonViewController;
     private ChangeListener<? super Number>[]propertyListeners=null;//hold reference to prevent it from being garbage collected
+
+    //TODO we might not need these, on remove from the scene graph , the buttons will be garbage collected
+    private EventHandler<ActionEvent> selectPreviousKeyframe=e->{
+        polygonViewController.getCompositionViewController().getKeyframeTable().resetSelectionOfEachExcept(keyframePane);
+        keyframePane.selectPreviousKeyframe();
+    };
+    private EventHandler<ActionEvent> selectNextKeyframe=e->{
+        polygonViewController.getCompositionViewController().getKeyframeTable().resetSelectionOfEachExcept(keyframePane);
+        keyframePane.selectNextKeyframe();
+    };
 
     public PolygonMetadata(String name, int tag, PolygonViewController polygonViewController) {
         super(name, tag);
@@ -296,12 +309,14 @@ public class PolygonMetadata extends Metadata{
             return null;
         }else{
             Button previousKeyframe=new Button("<");
+            previousKeyframe.setOnAction(selectPreviousKeyframe);
             Tooltip.install(previousKeyframe,new Tooltip("Previous Keyframe"));
 
             ToggleButton toggleButton=new ToggleButton("*");
             Tooltip.install(toggleButton,new Tooltip("Toggle Keyframe"));
 
             Button nextKeyframe=new Button(">");
+            nextKeyframe.setOnAction(selectNextKeyframe);
             Tooltip.install(nextKeyframe,new Tooltip("Next Keyframe"));
             return new HBox(previousKeyframe,toggleButton,nextKeyframe);
         }
@@ -325,5 +340,11 @@ public class PolygonMetadata extends Metadata{
     @Override
     public KeyframePane getKeyframePane() {
         return keyframePane;
+    }
+
+    @Override
+    public void cleanUp() {
+        //remove all event handlers that may cause this node to leak memory
+
     }
 }

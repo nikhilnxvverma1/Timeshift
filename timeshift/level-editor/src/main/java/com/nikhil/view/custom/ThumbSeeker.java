@@ -96,6 +96,7 @@ public class ThumbSeeker extends Pane {
         thumb.setStroke(Color.BLACK);
         return thumb;
     }
+
     public void setThumbAt(double value){
         current=value;
         double h = getPositionOf(current);
@@ -125,5 +126,27 @@ public class ThumbSeeker extends Pane {
         if(delegate!=null){
             delegate.thumbWasSeeked(this,oldValue,current);
         }
+    }
+
+    /**
+     * computes and returns the value of the current thumb against a total value
+     * @param total the total across which the value is computed
+     * @return the fraction of total basis the current position of the thumb
+     */
+    public double getCurrentValueAcross(double total){
+        double ratio=(current-start)/(end-start);
+        return ratio*total;
+    }
+
+    /**
+     * sets the thumb at a current thats calculated from a fraction given from total
+     * @param number a number out of total that gives the ratio at which current thumb
+     *                 should be at.
+     * @param total total value of across which the current needs to be calculated
+     */
+    public void setCurrentValueAcross(double number,double total){
+        double ratio=number/total;
+        double newCurrent=start+ratio*(end - start);
+        setThumbAt(newCurrent);
     }
 }

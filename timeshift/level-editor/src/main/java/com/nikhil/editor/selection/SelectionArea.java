@@ -10,6 +10,11 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
+/**
+ * Widget class that is used to make a rectangular selection area ot select elements inside.
+ * A {@link SelectionOverlap} delegate can be supplied to receive relevant
+ * callbacks for selection and deselection.
+ */
 public class SelectionArea implements EventHandler<MouseEvent>{
 	
 	private Rectangle selectRect;

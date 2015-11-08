@@ -237,7 +237,7 @@ public class KeyframeTreeView extends TreeView<Metadata> implements SelectionOve
             keyframePane.resetSelection();
         }
         for(TreeItem<Metadata> child:treeItem.getChildren()){
-            resetSelectionOfEachChild(child);
+            resetSelectionOfEachChildExcept(child, notToReset);
         }
     }
 
@@ -264,5 +264,133 @@ public class KeyframeTreeView extends TreeView<Metadata> implements SelectionOve
         }
     }
 
+    public KeyframeImageView findKeyframeAfter(double time){
+        return bestNextKeyframeAfter(this.getRoot(),time,null);
+    }
 
+    private KeyframeImageView bestNextKeyframeAfter(TreeItem<Metadata> treeItem,double time,KeyframeImageView bestSoFar){
+
+        if(treeItem.getValue().isHeader()){
+
+            //amongst all children of this tree item,find the keyframe that's closest to the time
+            for(TreeItem<Metadata> child:treeItem.getChildren()){
+                KeyframeImageView childBest = bestNextKeyframeAfter(child, time, bestSoFar);
+                if(bestSoFar==null||
+                        (childBest!=null &&
+                                childBest.getTime()<bestSoFar.getTime())){
+                    bestSoFar=childBest;
+                }
+            }
+            return bestSoFar;
+        }else{
+            KeyframePane keyframePane = treeItem.getValue().getKeyframePane();
+            if(keyframePane==null){
+                return bestSoFar;
+            }
+            KeyframeImageView keyframeRightAfter = keyframePane.findKeyframeAfter(time);
+            if(bestSoFar==null||
+                    (keyframeRightAfter!=null&&
+                            keyframeRightAfter.getTime()<bestSoFar.getTime())){
+                return keyframeRightAfter;
+            }else{
+                return bestSoFar;
+            }
+        }
+    }
+
+    public KeyframeImageView findKeyframeBefore(double currentTime) {
+        return bestPreviousKeyframeBefore(this.getRoot(),currentTime,null);
+    }
+
+    private KeyframeImageView bestPreviousKeyframeBefore(TreeItem<Metadata> treeItem,double time,KeyframeImageView bestSoFar){
+
+        if(treeItem.getValue().isHeader()){
+
+            //amongst all children of this tree item,find the keyframe that's closest to the time
+            for(TreeItem<Metadata> child:treeItem.getChildren()){
+                KeyframeImageView childBest = bestPreviousKeyframeBefore(child, time, bestSoFar);
+                if(bestSoFar==null||
+                        (childBest!=null &&
+                                childBest.getTime()>bestSoFar.getTime())){
+                    bestSoFar=childBest;
+                }
+            }
+            return bestSoFar;
+        }else{
+            KeyframePane keyframePane = treeItem.getValue().getKeyframePane();
+            if(keyframePane==null){
+                return bestSoFar;
+            }
+            KeyframeImageView keyframeRightBefore = keyframePane.findKeyframeBefore(time);
+            if(bestSoFar==null||
+                    (keyframeRightBefore!=null&&
+                            keyframeRightBefore.getTime()>bestSoFar.getTime())){
+                return keyframeRightBefore;
+            }else{
+                return bestSoFar;
+            }
+        }
+    }
+
+    public KeyframeImageView findLastSelectedKeyframe(){
+        return bestLastKeyframe(this.getRoot(),null);
+    }
+
+    public KeyframeImageView bestLastKeyframe(TreeItem<Metadata> treeItem,KeyframeImageView bestSoFar){
+        if(treeItem.getValue().isHeader()){
+            for(TreeItem<Metadata> child:treeItem.getChildren()){
+                KeyframeImageView childBest = bestLastKeyframe(child, bestSoFar);
+                if(bestSoFar==null||
+                        (childBest!=null &&
+                                childBest.getTime()>bestSoFar.getTime())){
+                    bestSoFar=childBest;
+                }
+            }
+            return bestSoFar;
+        }else{
+            KeyframePane keyframePane = treeItem.getValue().getKeyframePane();
+            if(keyframePane==null){
+                return bestSoFar;
+            }
+            KeyframeImageView lastSelectedKeyframe = keyframePane.findLastSelectedKeyframe();
+            if(bestSoFar==null||
+                    (lastSelectedKeyframe!=null&&
+                            lastSelectedKeyframe.getTime()>bestSoFar.getTime())){
+                return lastSelectedKeyframe;
+            }else{
+                return bestSoFar;
+            }
+        }
+    }
+
+    public KeyframeImageView findFirstSelectedKeyframe() {
+        return bestFirstKeyframe(this.getRoot(), null);
+    }
+
+    public KeyframeImageView bestFirstKeyframe(TreeItem<Metadata> treeItem,KeyframeImageView bestSoFar){
+        if(treeItem.getValue().isHeader()){
+            for(TreeItem<Metadata> child:treeItem.getChildren()){
+                KeyframeImageView childBest = bestFirstKeyframe(child, bestSoFar);
+                if(bestSoFar==null||
+                        (childBest!=null &&
+                                childBest.getTime()<bestSoFar.getTime())){
+                    bestSoFar=childBest;
+                }
+            }
+            return bestSoFar;
+        }else{
+            KeyframePane keyframePane = treeItem.getValue().getKeyframePane();
+            if(keyframePane==null){
+                return bestSoFar;
+            }
+            KeyframeImageView firstSelectedKeyframe = keyframePane.findFirstSelectedKeyframe();
+            if(bestSoFar==null||
+                    (firstSelectedKeyframe!=null &&
+                            firstSelectedKeyframe.getTime()<bestSoFar.getTime())){
+                return firstSelectedKeyframe;
+            }else{
+                return bestSoFar;
+            }
+        }
+    }
 }

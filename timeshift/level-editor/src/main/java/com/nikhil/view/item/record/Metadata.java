@@ -14,7 +14,7 @@ import java.util.Random;
  * will be from a subclass .
  * Created by NikhilVerma on 13/10/15.
  */
-public class Metadata {
+public class Metadata { //TODO ideally this should be an abstract class. But just because of "Root" node its not
 
     public static final double CELL_HEIGHT= 25;
     public static final short ROOT_TAG=-1;
@@ -74,5 +74,14 @@ public class Metadata {
     }
     public KeyframePane getKeyframePane(){
         return null;
+    }
+
+    /**
+     * Called just before this metadata is about to be removed from the view.
+     * Subclasses are expected to override this method and remove any event handlers
+     * that may leak memory later
+     */
+    public void cleanUp(){
+
     }
 }

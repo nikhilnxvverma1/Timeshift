@@ -286,4 +286,197 @@ public class KeyframePane extends AnchorPane implements SelectionOverlap{
 		selectAllKeys(false);
 		//DON'T use the keyframe table here to reset entire selection otherwise, it will go in an infinite loop
 	}
+
+	/**
+	 * Selects the next keyframe to the currently selected keyframe.
+	 * If multiple keyframes are selected, it considers the one after
+	 * the last selected keyframe
+	 * @return null if currently selected keyframe is last selected keyframe and there is no next
+	 * (or if there are no keyframes),otherwise the next keyframe every other time
+	 */
+	public KeyframeImageView selectNextKeyframe(){
+
+		if(keyContainer.getChildren().size()==0){
+			return null;
+		}
+		KeyframeImageView lastSelectedKeyframe=null;
+		KeyframeImageView firstKeyframe=null;
+		//find the last selected keyframe
+		for(Node node : keyContainer.getChildren()){
+			KeyframeImageView keyframe=(KeyframeImageView)node;
+			if (keyframe.isSelected()&&
+					((lastSelectedKeyframe==null) || (lastSelectedKeyframe.getTime() < keyframe.getTime()))
+					){
+				lastSelectedKeyframe=keyframe;
+			}
+
+			//side by side, also find the first keyframe(in case no keyframe is selected,
+			// we will select the first keyframe)
+			if(firstKeyframe==null||keyframe.getTime()<firstKeyframe.getTime()){
+				firstKeyframe=keyframe;
+			}
+		}
+
+		KeyframeImageView keyframeRightAfter=null;
+		if(lastSelectedKeyframe==null){
+			keyframeRightAfter=firstKeyframe;
+		}else{
+			//find the key frame after this
+			for(Node node : keyContainer.getChildren()){
+				KeyframeImageView keyframe=(KeyframeImageView)node;
+				if((keyframe.getTime()>lastSelectedKeyframe.getTime())&&
+						(keyframeRightAfter==null||keyframe.getTime()<keyframeRightAfter.getTime())){
+					keyframeRightAfter=keyframe;
+				}
+			}
+		}
+
+		if(keyframeRightAfter==null){
+			return null;
+		}else{
+			selectAllKeys(false);
+			keyframeRightAfter.setSelected(true);
+			return keyframeRightAfter;
+		}
+	}
+
+	/**
+	 * Selects the previous keyframe to the currently selected keyframe.
+	 * If multiple keyframes are selected, it considers the  one before the
+	 * first selected keyframe.
+	 * @return null if currently selected keyframe is the first keyframe
+	 * and there is no previous,(or if there are no keyframes),
+	 * otherwise the previous keyframe every other time
+	 */
+	public KeyframeImageView selectPreviousKeyframe(){
+		if(keyContainer.getChildren().size()==0){
+			return null;
+		}
+		KeyframeImageView firstSelectedKeyframe=null;
+		KeyframeImageView lastKeyframe=null;
+		//find the last selected keyframe
+		for(Node node : keyContainer.getChildren()){
+			KeyframeImageView keyframe=(KeyframeImageView)node;
+			if (keyframe.isSelected() &&
+					((firstSelectedKeyframe == null) || (firstSelectedKeyframe.getTime() > keyframe.getTime()))
+					){
+				firstSelectedKeyframe=keyframe;
+			}
+
+			//side by side, also find the last keyframe(in case no keyframe is selected,
+			// we will select the last keyframe)
+			if(lastKeyframe==null||keyframe.getTime()>lastKeyframe.getTime()){
+				lastKeyframe=keyframe;
+			}
+		}
+
+		KeyframeImageView keyframeRightBefore=null;
+		if(firstSelectedKeyframe==null){
+			keyframeRightBefore=lastKeyframe;
+		}else{
+			//find the key frame right before this
+			for(Node node : keyContainer.getChildren()){
+				KeyframeImageView keyframe=(KeyframeImageView)node;
+				if((keyframe.getTime()<firstSelectedKeyframe.getTime())&&
+						(keyframeRightBefore==null||keyframe.getTime()>keyframeRightBefore.getTime())){
+					keyframeRightBefore=keyframe;
+				}
+			}
+		}
+
+		if(keyframeRightBefore==null){
+			return null;
+		}else{
+			selectAllKeys(false);
+			keyframeRightBefore.setSelected(true);
+			return keyframeRightBefore;
+		}
+	}
+
+	/**
+	 * finds the keyframe right after this time
+	 * @param time the time after which keyframe needs to be found
+	 * @return keyframe right after the specified time, null otherwise
+	 */
+	public KeyframeImageView findKeyframeAfter(double time){
+		//find the key frame after this
+		KeyframeImageView keyframeRightAfter=null;
+		for(Node node : keyContainer.getChildren()){
+			KeyframeImageView keyframe=(KeyframeImageView)node;
+			if((keyframe.getTime()>time)&&
+					(keyframeRightAfter==null||keyframe.getTime()<keyframeRightAfter.getTime())){
+				keyframeRightAfter=keyframe;
+			}
+		}
+		return keyframeRightAfter;
+	}
+
+	/**
+	 * finds the keyframe before after this time
+	 * @param time the time before which keyframe needs to be found
+	 * @return keyframe right before the specified time, null otherwise
+	 */
+
+	public KeyframeImageView findKeyframeBefore(double time){
+		//find the key frame after this
+		KeyframeImageView keyframeRightBefore=null;
+		for(Node node : keyContainer.getChildren()){
+			KeyframeImageView keyframe=(KeyframeImageView)node;
+			if((keyframe.getTime()<time)&&
+					(keyframeRightBefore==null||keyframe.getTime()>keyframeRightBefore.getTime())){
+				keyframeRightBefore=keyframe;
+			}
+		}
+		return keyframeRightBefore;
+	}
+
+	/**
+	 * Finds the last selected keyframe.If multiple keyframes are selected,
+	 * it considers the the last selected keyframe
+	 * @return null if no keyframes are selected or if there are no keyframes,
+	 * otherwise the last selected keyframe every other time
+	 */
+	public KeyframeImageView findLastSelectedKeyframe(){
+
+		if(keyContainer.getChildren().size()==0){
+			return null;
+		}
+		KeyframeImageView lastSelectedKeyframe=null;
+		//find the last selected keyframe
+		for(Node node : keyContainer.getChildren()){
+			KeyframeImageView keyframe=(KeyframeImageView)node;
+			if (keyframe.isSelected()&&
+					((lastSelectedKeyframe==null) || (lastSelectedKeyframe.getTime() < keyframe.getTime()))
+					){
+				lastSelectedKeyframe=keyframe;
+			}
+		}
+
+		return lastSelectedKeyframe;//this can also be null if nothing is selected
+	}
+
+	/**
+	 * Finds the first selected keyframe.If multiple keyframes are selected,
+	 * it considers the the first selected keyframe
+	 * @return null if no keyframes are selected or if there are no keyframes,
+	 * otherwise the first selected keyframe every other time
+	 */
+	public KeyframeImageView findFirstSelectedKeyframe(){
+
+		if(keyContainer.getChildren().size()==0){
+			return null;
+		}
+		KeyframeImageView firstSelectedKeyframe=null;
+		//find the first selected keyframe
+		for(Node node : keyContainer.getChildren()){
+			KeyframeImageView keyframe=(KeyframeImageView)node;
+			if (keyframe.isSelected()&&
+					((firstSelectedKeyframe==null) || (firstSelectedKeyframe.getTime() > keyframe.getTime()))
+					){
+				firstSelectedKeyframe=keyframe;
+			}
+		}
+
+		return firstSelectedKeyframe;//this can also be null if nothing is selected
+	}
 }

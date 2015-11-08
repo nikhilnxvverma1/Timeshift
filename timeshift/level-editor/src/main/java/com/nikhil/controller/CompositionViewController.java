@@ -9,6 +9,7 @@ import com.nikhil.view.custom.*;
 import com.nikhil.view.custom.cells.KeyframeCell;
 import com.nikhil.view.custom.cells.OptionCell;
 import com.nikhil.view.custom.cells.ValueCell;
+import com.nikhil.view.custom.keyframe.KeyframeImageView;
 import com.nikhil.view.custom.keyframe.KeyframeTreeView;
 import com.nikhil.view.item.record.Metadata;
 import com.sun.javafx.scene.control.skin.VirtualFlow;
@@ -16,7 +17,9 @@ import com.sun.javafx.scene.control.skin.VirtualScrollBar;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.event.Event;
+import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Orientation;
 import javafx.geometry.Point2D;
@@ -43,6 +46,7 @@ public class CompositionViewController {
     private static final double NAME_COLUMN_WIDTH=175;
     private static final double VALUE_COLUMN_WIDTH=125;
     private static final double OPTION_COLUMN_WIDTH=100;
+    private static final double NEGLIGIBLE_TIME_DIFFERENCE=0.1;
 
     private CompositionController compositionController;
     private Tab tab;
@@ -51,6 +55,7 @@ public class CompositionViewController {
     private TreeItem<Metadata> rootTreeItem;
     private TreeTableView<Metadata> itemTable;
     private KeyframeTreeView keyframeTable;
+    private ThumbSeeker thumbSeeker;
 
     public CompositionViewController(CompositionController compositionController,Workspace workspace) {
         this.compositionController=compositionController;
@@ -205,7 +210,7 @@ public class CompositionViewController {
 
         SelectionBar selectionBar=new SelectionBar(RIGHT_COMPONENT_WIDTH,null);
         Ruler ruler=new Ruler(30, RIGHT_COMPONENT_WIDTH);
-        ThumbSeeker thumbSeeker=new ThumbSeeker(RIGHT_COMPONENT_WIDTH);
+        thumbSeeker = new ThumbSeeker(RIGHT_COMPONENT_WIDTH);
         thumbSeeker.setPrefHeight(PLAYBACK_FEATURES_HEIGHT);
         thumbSeeker.setMaxHeight(Control.USE_PREF_SIZE);
 
@@ -218,44 +223,8 @@ public class CompositionViewController {
         itemTable.getChildrenUnmodifiable().addListener(itemTableUnmodifiedChildrenListener);
         keyframeTable.getChildrenUnmodifiable().addListener(keyframeTableUnmodifiedChildrenListener);
 
-//        itemTable.addEventFilter(ScrollEvent.SCROLL, e -> {
-//
-//            //a true for alt down indicates a mocked event
-//            if (!e.isAltDown()) {
-//                VirtualFlow virtualFlow = findVirtualFlow(keyframeTable);
-//
-//                Event.fireEvent(virtualFlow, new ScrollEvent(virtualFlow, virtualFlow, ScrollEvent.SCROLL, e.getX(),
-//                        e.getY(), e.getScreenX(), e.getScreenY(), e.isShiftDown(), e.isControlDown(),true,// <-----mocked event
-//                        e.isMetaDown(), e.isDirect(), e.isInertia(), e.getDeltaX(), e.getDeltaY(), e.getTotalDeltaX(),
-//                        e.getTotalDeltaY(), e.getTextDeltaXUnits(), e.getTextDeltaX(), e.getTextDeltaYUnits(), e.getTextDeltaY(),
-//                        e.getTouchCount(), e.getPickResult()));
-//            }
-//        });
-//        keyframeTable.addEventFilter(ScrollEvent.SCROLL, e -> {
-//            //a true for alt down indicates a mocked event
-//            if (!e.isAltDown()) {
-//                VirtualFlow virtualFlow = findVirtualFlow(itemTable);
-//
-//                Event.fireEvent(virtualFlow, new ScrollEvent(virtualFlow, virtualFlow, ScrollEvent.SCROLL, e.getX(),
-//                        e.getY(), e.getScreenX(), e.getScreenY(), e.isShiftDown(), e.isControlDown(), true,// <-----mocked event
-//                        e.isMetaDown(), e.isDirect(), e.isInertia(), e.getDeltaX(), e.getDeltaY(), e.getTotalDeltaX(),
-//                        e.getTotalDeltaY(), e.getTextDeltaXUnits(), e.getTextDeltaX(), e.getTextDeltaYUnits(), e.getTextDeltaY(),
-//                        e.getTouchCount(), e.getPickResult()));
-//            }
-//        });
-
-//        ScrollBar commonScrollBar = new ScrollBar();
-//        commonScrollBar.setOrientation(Orientation.VERTICAL);
-//        commonScrollBar.setMin(0);
-//        commonScrollBar.setMax(0);
-//        commonScrollBar.valueProperty().addListener((observable, oldValue, newValue) -> {
-//            itemTable.scrollTo(newValue.intValue());
-//            keyframeTable.scrollTo(newValue.intValue());
-//        });
-
-//        anchorPane.getChildren().addAll(outerHBox, itemTable, ruler, keyframeTable,selectionBar, thumbSeeker.getLineMark(),thumbSeeker, commonScrollBar);
-        anchorPane.getChildren().addAll(outerHBox, itemTable, ruler, keyframeTable,selectionBar,
-                thumbSeeker.getLineMark(),thumbSeeker,keyframeTable.getSelectionArea().getSelectRect());
+        anchorPane.getChildren().addAll(outerHBox, itemTable, ruler, keyframeTable, selectionBar,
+                thumbSeeker.getLineMark(), thumbSeeker, keyframeTable.getSelectionArea().getSelectRect());
         thumbSeeker.getLineMark().setLayoutX(LEFT_COMPONENT_WIDTH);
         thumbSeeker.getLineMark().endYProperty().//just below so that it doesn't increase with every resize
                 bind(itemTable.heightProperty().add(PLAYBACK_FEATURES_HEIGHT - 2));
@@ -280,10 +249,6 @@ public class CompositionViewController {
         AnchorPane.setRightAnchor(keyframeTable, 0d);
         AnchorPane.setBottomAnchor(keyframeTable, 0d);
 
-//        AnchorPane.setTopAnchor(commonScrollBar, PLAYBACK_FEATURES_HEIGHT+selectionBar.getAreaHeight());
-//        AnchorPane.setRightAnchor(commonScrollBar, 0d);
-//        AnchorPane.setBottomAnchor(commonScrollBar, 0d);
-
         AnchorPane.setTopAnchor(selectionBar, PLAYBACK_FEATURES_HEIGHT);
         AnchorPane.setLeftAnchor(selectionBar,LEFT_COMPONENT_WIDTH);
         AnchorPane.setRightAnchor(selectionBar, 0d);
@@ -305,8 +270,10 @@ public class CompositionViewController {
         searchField.setPromptText("Search");
         Button gotoBeginning=new Button("|<");
         Button previousKeyframe=new Button("<|");
+        previousKeyframe.setOnAction(event -> this.jumpTimeToPreviousKeyframe());
         Button playPause=new Button(">");
         Button nextKeyframe=new Button("|>");
+        nextKeyframe.setOnAction(event -> this.jumpTimeToNextKeyframe());
         Button gotoEnd=new Button(">|");
 
         ToolBar playerControls=new ToolBar(gotoBeginning,previousKeyframe,playPause,nextKeyframe,gotoEnd);
@@ -316,6 +283,66 @@ public class CompositionViewController {
         return outerHBox;
     }
 
+
+    private void jumpTimeToNextKeyframe(){
+        //seek the current value from the value of the thumb
+        double currentTime;//in seconds
+        currentTime=thumbSeeker.getCurrentValueAcross(30);
+
+        //find the last selected keyframe which possibly might be where the thumb is at
+        //as a result of a similar last "next" operation
+        KeyframeImageView lastSelectedKeyframe = keyframeTable.findLastSelectedKeyframe();
+        if (lastSelectedKeyframe != null) {
+
+            //if the last selected keyframe from the keyframe table has its time SLIGHTLY greater
+            //than current time, then use that.(this is so as to prevent time mismatch as a result of
+            //double rounding problem where last selected keyframe maybe where the thumb is set at
+            //and the thumb gives a lower value (which doesn't move the thumb forward,later)
+            double timeDifference = lastSelectedKeyframe.getTime() - currentTime;
+            if (timeDifference>0 && timeDifference <= NEGLIGIBLE_TIME_DIFFERENCE) {
+                //the current time becomes the time of the last selected keyframe
+                currentTime = lastSelectedKeyframe.getTime();
+            }
+        }
+
+
+        KeyframeImageView keyframeAfter = keyframeTable.findKeyframeAfter(currentTime);
+        if (keyframeAfter!=null) {
+            keyframeTable.resetSelection();
+            thumbSeeker.setCurrentValueAcross(keyframeAfter.getTime(), 30);
+            keyframeAfter.setSelected(true);
+        }
+    }
+
+    private void jumpTimeToPreviousKeyframe(){
+        //seek the current value from the value of the thumb
+        double currentTime;//in seconds
+        currentTime=thumbSeeker.getCurrentValueAcross(30);
+
+        //find the last selected keyframe which possibly might be where the thumb is at
+        //as a result of a similar last "next" operation
+        KeyframeImageView firstSelectedKeyframe = keyframeTable.findFirstSelectedKeyframe();
+        if (firstSelectedKeyframe != null) {
+
+            //if the first selected keyframe from the keyframe table has its time SLIGHTLY lesser
+            //than current time, then use that.(this is so as to prevent time mismatch as a result of
+            //double rounding problem where first selected keyframe maybe where the thumb is set at
+            //and the thumb gives a higher value (which doesn't move the thumb forward,later)
+            double timeDifference = currentTime - firstSelectedKeyframe.getTime();
+            if (timeDifference>0 && timeDifference <= NEGLIGIBLE_TIME_DIFFERENCE) {
+                //the current time becomes the time of the last selected keyframe
+                currentTime = firstSelectedKeyframe.getTime();
+            }
+        }
+
+
+        KeyframeImageView keyframeBefore = keyframeTable.findKeyframeBefore(currentTime);
+        if (keyframeBefore!=null) {
+            keyframeTable.resetSelection();
+            thumbSeeker.setCurrentValueAcross(keyframeBefore.getTime(), 30);
+            keyframeBefore.setSelected(true);
+        }
+    }
 
     /**
      * @deprecated use custom {@link KeyframeTreeView} instead
@@ -357,7 +384,6 @@ public class CompositionViewController {
         });
         treeTableView.getStyleClass().add("no-vertical-scrollbar");
         treeTableView.setFixedCellSize(Metadata.CELL_HEIGHT);
-//        treeTableView.addEventFilter(ScrollEvent.SCROLL, Event::consume);
 
         return treeTableView;
     }
