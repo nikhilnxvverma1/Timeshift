@@ -39,11 +39,6 @@ public class ParallelogramModelController extends ItemModelController {
     }
 
     @Override
-    public void addChangeNodes(Timeline timeline) {
-        parallelogram.registerWithTimeline(timeline);
-    }
-
-    @Override
     public void update(Subject subject) {
         //expected to be overridden in subclasses
     }

@@ -22,7 +22,7 @@ public class QuadraticBezier implements Parametric{
 	}
 	
 	@Override
-	public UtilPoint getPointFor(float t) {
+	public UtilPoint getPointFor(double t) {
 		//B(t)=(1-t)^2*P0 + 2*(1-t)*t*P1 + t^2*P2
 		UtilPoint firstComponent=starting.multiply((1-t)*(1-t));
 		UtilPoint secondComponent=controlPoint.multiply(2*(1-t)*t);

@@ -1,14 +1,19 @@
 package com.nikhil.timeline;
 
 /**
- * A value on the timeline which could be multi-dimensional
- * For example: 
- * 1D value for rotation,
- * 2D value for 2d coordinates,
- * 3D value for 3d coordinates,
- * 4D value for RGBA value 
+ * A value of a property which could be multi-dimensional.
+ * Once a dimension is set it cannot be changed,
+ * although the values at those dimension can.
+ * For example:
+ * <ul>
+ *     <li>1D value for rotation</li>
+ *     <li>2D value for 2d coordinates</li>
+ *     <li>3D value for 3d coordinates</li>
+ *     <li>4D value for RGBA value</li>
+ * </ul>
  * etc.
- * Internally it holds a double array which stores all these primitive values
+ * Internally it holds a double array which stores all these primitive values.
+ *
  * @author Nikhil Verma 
  *
  */
@@ -20,10 +25,11 @@ public class KeyValue {
 		return dimension;
 	}
 	/**
-	 * sets the dimension of the values array.this truncates all the old values too(if they exist)
+	 * Sets the dimension of the values array. This is only used privately
+	 * This truncates all the old values too(if they exist)
 	 * @param dimension size of the values array
 	 */
-	public void setDimension(int dimension) {
+	private void setDimension(int dimension) {
 		this.dimension = dimension;
 		this.values=new double[dimension];
 	}
@@ -40,7 +46,7 @@ public class KeyValue {
 	 * @param index should not cross dimensions of this KeyValue
 	 * @return value value at index from the array
 	 */
-	public double getValue(int index){
+	public double get(int index){
 		return values[index];
 	}
 	
@@ -50,7 +56,7 @@ public class KeyValue {
 	 * @param index index to set value at.it should not cross dimensions of this KeyValue
 	 * @param value value to set for index
 	 */
-	public void setValue(int index,double value){
+	public void set(int index, double value){
 		values[index]=value;
 	}
 	
@@ -67,7 +73,7 @@ public class KeyValue {
 	 */
 	public KeyValue(double value){
 		this.setDimension(1);
-		this.setValue(0, value);
+		this.set(0, value);
 	}
 	
 	/**
@@ -75,8 +81,8 @@ public class KeyValue {
 	 */
 	public KeyValue(double value1,double value2){
 		this.setDimension(2);
-		this.setValue(0, value1);
-		this.setValue(1, value2);
+		this.set(0, value1);
+		this.set(1, value2);
 	}
 	
 	/**
@@ -84,9 +90,9 @@ public class KeyValue {
 	 */
 	public KeyValue(double value1,double value2,double value3){
 		this.setDimension(3);
-		this.setValue(0, value1);
-		this.setValue(1, value2);
-		this.setValue(2, value3);
+		this.set(0, value1);
+		this.set(1, value2);
+		this.set(2, value3);
 	}
 	
 	/**
@@ -94,10 +100,10 @@ public class KeyValue {
 	 */
 	public KeyValue(double value1,double value2,double value3,double value4){
 		this.setDimension(4);
-		this.setValue(0, value1);
-		this.setValue(1, value2);
-		this.setValue(2, value3);
-		this.setValue(3, value4);
+		this.set(0, value1);
+		this.set(1, value2);
+		this.set(2, value3);
+		this.set(3, value4);
 	}
 	
 	/**
@@ -108,7 +114,7 @@ public class KeyValue {
 	public KeyValue(KeyValue keyValue){
 		this.setDimension(keyValue.dimension);
 		for(int i=0;i<dimension;i++){
-			setValue(i, keyValue.getValue(i));
+			set(i, keyValue.get(i));
 		}
 	}
 	
@@ -121,9 +127,9 @@ public class KeyValue {
 	public KeyValue(double prependedValue,KeyValue keyValue){
 		int totalDimension=keyValue.dimension+1;
 		this.setDimension(totalDimension);
-		setValue(0, prependedValue);
+		set(0, prependedValue);
 		for(int i=1;i<totalDimension;i++){
-			setValue(i, keyValue.getValue(i-1));
+			set(i, keyValue.get(i - 1));
 		}
 	}
 	
@@ -138,10 +144,10 @@ public class KeyValue {
 	public KeyValue(double firstPrependedValue,double secondPrependedValue,KeyValue keyValue){
 		int totalDimension=keyValue.dimension+2;
 		this.setDimension(totalDimension);
-		setValue(0, firstPrependedValue);
-		setValue(1, secondPrependedValue);
+		set(0, firstPrependedValue);
+		set(1, secondPrependedValue);
 		for(int i=2;i<totalDimension;i++){
-			setValue(i, keyValue.getValue(i-2));
+			set(i, keyValue.get(i - 2));
 		}
 	}
 	

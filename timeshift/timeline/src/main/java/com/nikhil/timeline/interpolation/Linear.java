@@ -5,11 +5,10 @@ public class Linear implements InterpolationCurve{
 	public static final String CURVE_NAME="Linear";
 	
 	@Override
-	public double valueFor(float t) {
+	public double valueFor(double t) {
 		return t;
 	}
 
-	@Override
 	public String getCurveName() {
 		return CURVE_NAME;
 	}

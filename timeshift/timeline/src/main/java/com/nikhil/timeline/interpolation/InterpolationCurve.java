@@ -15,12 +15,6 @@ public interface InterpolationCurve {
 	 * @param t time, this will always be between 0.0 to 1.0
 	 * @return value of y as 't' goes right.
 	 */
-	public double valueFor(float t);
-	
-	/**
-	 * User friendly name of the curve. This has nothing to do with the computation
-	 * @return name of the curve example : Linear, Bezier ,etc.	
-	 */
-	public String getCurveName();
+	double valueFor(double t);
 	
 }

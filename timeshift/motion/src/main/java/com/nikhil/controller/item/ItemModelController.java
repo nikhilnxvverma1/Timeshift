@@ -41,6 +41,4 @@ public abstract class ItemModelController implements ModelElement,Observer{
      */
     public abstract void step(double delta,double totalTime,CompositionController parent);
 
-    public abstract void addChangeNodes(Timeline timeline);
-
 }

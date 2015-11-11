@@ -6,7 +6,7 @@ import com.nikhil.model.ModelElement;
 import com.nikhil.model.ModelVisitor;
 import com.nikhil.playback.SimpleTimelinePlayer;
 import com.nikhil.playback.TimelinePlayer;
-import com.nikhil.timeline.TimelineTerminal;
+import com.nikhil.timeline.TimelineReachedTerminal;
 import com.nikhil.timeline.Timeline;
 
 /**
@@ -14,7 +14,7 @@ import com.nikhil.timeline.Timeline;
  * Each Composition has a list of item controllers
  * Created by NikhilVerma on 10/08/15.
  */
-public class CompositionController implements PulseListener,TimelineTerminal,ModelElement {
+public class CompositionController implements PulseListener,TimelineReachedTerminal,ModelElement {
     private Timeline timeline;
     private CompositionController next;
     private ItemModelController itemModelControllerStart;

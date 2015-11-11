@@ -40,11 +40,6 @@ public class TravelPathModelController extends ItemModelController {
     }
 
     @Override
-    public void addChangeNodes(Timeline timeline) {
-        //TODO come up with some way to register change nodes for all movable link points
-    }
-
-    @Override
     public void update(Subject subject) {
         //expected to be overridden in subclasses
     }

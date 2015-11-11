@@ -27,7 +27,7 @@ public class Metadata { //TODO ideally this should be an abstract class. But jus
     }
 
     public ItemViewController getItemViewController(){
-        return null;//Applicable for root metadata
+        return null;//null for root metadata
     }
 
     public StringProperty nameProperty() {
@@ -56,10 +56,6 @@ public class Metadata { //TODO ideally this should be an abstract class. But jus
 
     public Node getOptionNode(){ return null; }
 
-    public void refresh(){//TODO might not be needed,handled by listeners
-        //do nothing, based on the tag information subclasses are
-        //supposed to override this method and ping for relevant information
-    }
     public boolean isHeader(){
         return true;
     }

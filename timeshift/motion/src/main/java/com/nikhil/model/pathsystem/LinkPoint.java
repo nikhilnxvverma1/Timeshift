@@ -7,7 +7,7 @@ import com.nikhil.util.modal.UtilPoint;
  * A link point connects two travel points. A series of alternate link point and travel point make up the "Alt" list.
  * Created by NikhilVerma on 15/08/15.
  */
-public abstract class LinkPoint implements ModelElement {
+public abstract class LinkPoint implements ModelElement {//TODO shouldn't this be keyframable
     protected UtilPoint conrolPointWithPrevious;
     protected UtilPoint anchorPoint;
     protected UtilPoint controlPointWithNext;

@@ -1,11 +1,11 @@
 package com.nikhil.timeline;
 
 /**
- * delegate for what to do after timeline reaches one of the endpoints(moving forward or backward in time)
- * @author Home
+ * Delegate for what to do after timeline reaches one of the endpoints(moving forward or backward in time)
+ * @author Nikhil Verma
  *
  */
-public interface TimelineTerminal {
+public interface TimelineReachedTerminal {
 
 	/**
 	 * callback whenever timeline reaches its end weather moving forward or backward 

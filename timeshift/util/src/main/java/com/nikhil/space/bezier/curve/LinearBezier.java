@@ -22,7 +22,7 @@ public class LinearBezier implements Parametric{
 	}
 	
 	@Override
-	public UtilPoint getPointFor(float t) {
+	public UtilPoint getPointFor(double t) {
 		//B(t)=P0 + t*(P1-P0)
 		return starting.add(difference.multiply(t));
 	}

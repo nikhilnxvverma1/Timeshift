@@ -2,7 +2,6 @@ package com.nikhil.view.custom.keyframe;
 
 import com.nikhil.editor.selection.SelectionArea;
 import com.nikhil.editor.selection.SelectionOverlap;
-import com.nikhil.logging.Logger;
 import com.nikhil.view.custom.cells.KeyframeCell;
 import com.nikhil.view.item.record.Metadata;
 import com.sun.javafx.scene.control.skin.VirtualFlow;
@@ -31,7 +30,7 @@ public class KeyframeTreeView extends TreeView<Metadata> implements SelectionOve
     private boolean startedPressOnVirtualFlow=false;//we assume that the press is initially not made on the virtual flow
     private final EventHandler<MouseEvent> mousePressedListener = e -> {
 //        startedPressOnVirtualFlow=false;//we assume that the press is initially not made on the virtual flow
-        if(e.getTarget() instanceof KeyframeImageView){
+        if(e.getTarget() instanceof KeyframeView){
             return;
         }
         VirtualFlow virtualFlow=null;
@@ -65,7 +64,7 @@ public class KeyframeTreeView extends TreeView<Metadata> implements SelectionOve
         e.consume();
     };
     private final EventHandler<MouseEvent> mouseDraggedListener = e-> {
-        if(!startedPressOnVirtualFlow||e.getTarget() instanceof KeyframeImageView){
+        if(!startedPressOnVirtualFlow||e.getTarget() instanceof KeyframeView){
             return;
         }
         VirtualFlow virtualFlow=null;
@@ -97,7 +96,7 @@ public class KeyframeTreeView extends TreeView<Metadata> implements SelectionOve
     };
     private final EventHandler<MouseEvent> mouseReleasedListener = e->{
 
-        if(e.getTarget() instanceof KeyframeImageView){
+        if(e.getTarget() instanceof KeyframeView){
             return;
         }
         VirtualFlow virtualFlow=null;
@@ -264,17 +263,17 @@ public class KeyframeTreeView extends TreeView<Metadata> implements SelectionOve
         }
     }
 
-    public KeyframeImageView findKeyframeAfter(double time){
+    public KeyframeView findKeyframeAfter(double time){
         return bestNextKeyframeAfter(this.getRoot(),time,null);
     }
 
-    private KeyframeImageView bestNextKeyframeAfter(TreeItem<Metadata> treeItem,double time,KeyframeImageView bestSoFar){
+    private KeyframeView bestNextKeyframeAfter(TreeItem<Metadata> treeItem,double time,KeyframeView bestSoFar){
 
         if(treeItem.getValue().isHeader()){
 
             //amongst all children of this tree item,find the keyframe that's closest to the time
             for(TreeItem<Metadata> child:treeItem.getChildren()){
-                KeyframeImageView childBest = bestNextKeyframeAfter(child, time, bestSoFar);
+                KeyframeView childBest = bestNextKeyframeAfter(child, time, bestSoFar);
                 if(bestSoFar==null||
                         (childBest!=null &&
                                 childBest.getTime()<bestSoFar.getTime())){
@@ -287,7 +286,7 @@ public class KeyframeTreeView extends TreeView<Metadata> implements SelectionOve
             if(keyframePane==null){
                 return bestSoFar;
             }
-            KeyframeImageView keyframeRightAfter = keyframePane.findKeyframeAfter(time);
+            KeyframeView keyframeRightAfter = keyframePane.findKeyframeAfter(time);
             if(bestSoFar==null||
                     (keyframeRightAfter!=null&&
                             keyframeRightAfter.getTime()<bestSoFar.getTime())){
@@ -298,17 +297,17 @@ public class KeyframeTreeView extends TreeView<Metadata> implements SelectionOve
         }
     }
 
-    public KeyframeImageView findKeyframeBefore(double currentTime) {
+    public KeyframeView findKeyframeBefore(double currentTime) {
         return bestPreviousKeyframeBefore(this.getRoot(),currentTime,null);
     }
 
-    private KeyframeImageView bestPreviousKeyframeBefore(TreeItem<Metadata> treeItem,double time,KeyframeImageView bestSoFar){
+    private KeyframeView bestPreviousKeyframeBefore(TreeItem<Metadata> treeItem,double time,KeyframeView bestSoFar){
 
         if(treeItem.getValue().isHeader()){
 
             //amongst all children of this tree item,find the keyframe that's closest to the time
             for(TreeItem<Metadata> child:treeItem.getChildren()){
-                KeyframeImageView childBest = bestPreviousKeyframeBefore(child, time, bestSoFar);
+                KeyframeView childBest = bestPreviousKeyframeBefore(child, time, bestSoFar);
                 if(bestSoFar==null||
                         (childBest!=null &&
                                 childBest.getTime()>bestSoFar.getTime())){
@@ -321,7 +320,7 @@ public class KeyframeTreeView extends TreeView<Metadata> implements SelectionOve
             if(keyframePane==null){
                 return bestSoFar;
             }
-            KeyframeImageView keyframeRightBefore = keyframePane.findKeyframeBefore(time);
+            KeyframeView keyframeRightBefore = keyframePane.findKeyframeBefore(time);
             if(bestSoFar==null||
                     (keyframeRightBefore!=null&&
                             keyframeRightBefore.getTime()>bestSoFar.getTime())){
@@ -332,14 +331,14 @@ public class KeyframeTreeView extends TreeView<Metadata> implements SelectionOve
         }
     }
 
-    public KeyframeImageView findLastSelectedKeyframe(){
+    public KeyframeView findLastSelectedKeyframe(){
         return bestLastKeyframe(this.getRoot(),null);
     }
 
-    public KeyframeImageView bestLastKeyframe(TreeItem<Metadata> treeItem,KeyframeImageView bestSoFar){
+    public KeyframeView bestLastKeyframe(TreeItem<Metadata> treeItem,KeyframeView bestSoFar){
         if(treeItem.getValue().isHeader()){
             for(TreeItem<Metadata> child:treeItem.getChildren()){
-                KeyframeImageView childBest = bestLastKeyframe(child, bestSoFar);
+                KeyframeView childBest = bestLastKeyframe(child, bestSoFar);
                 if(bestSoFar==null||
                         (childBest!=null &&
                                 childBest.getTime()>bestSoFar.getTime())){
@@ -352,7 +351,7 @@ public class KeyframeTreeView extends TreeView<Metadata> implements SelectionOve
             if(keyframePane==null){
                 return bestSoFar;
             }
-            KeyframeImageView lastSelectedKeyframe = keyframePane.findLastSelectedKeyframe();
+            KeyframeView lastSelectedKeyframe = keyframePane.findLastSelectedKeyframe();
             if(bestSoFar==null||
                     (lastSelectedKeyframe!=null&&
                             lastSelectedKeyframe.getTime()>bestSoFar.getTime())){
@@ -363,14 +362,14 @@ public class KeyframeTreeView extends TreeView<Metadata> implements SelectionOve
         }
     }
 
-    public KeyframeImageView findFirstSelectedKeyframe() {
+    public KeyframeView findFirstSelectedKeyframe() {
         return bestFirstKeyframe(this.getRoot(), null);
     }
 
-    public KeyframeImageView bestFirstKeyframe(TreeItem<Metadata> treeItem,KeyframeImageView bestSoFar){
+    public KeyframeView bestFirstKeyframe(TreeItem<Metadata> treeItem,KeyframeView bestSoFar){
         if(treeItem.getValue().isHeader()){
             for(TreeItem<Metadata> child:treeItem.getChildren()){
-                KeyframeImageView childBest = bestFirstKeyframe(child, bestSoFar);
+                KeyframeView childBest = bestFirstKeyframe(child, bestSoFar);
                 if(bestSoFar==null||
                         (childBest!=null &&
                                 childBest.getTime()<bestSoFar.getTime())){
@@ -383,7 +382,7 @@ public class KeyframeTreeView extends TreeView<Metadata> implements SelectionOve
             if(keyframePane==null){
                 return bestSoFar;
             }
-            KeyframeImageView firstSelectedKeyframe = keyframePane.findFirstSelectedKeyframe();
+            KeyframeView firstSelectedKeyframe = keyframePane.findFirstSelectedKeyframe();
             if(bestSoFar==null||
                     (firstSelectedKeyframe!=null &&
                             firstSelectedKeyframe.getTime()<bestSoFar.getTime())){

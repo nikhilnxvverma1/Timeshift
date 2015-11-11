@@ -28,11 +28,6 @@ public class CircleModelController extends ItemModelController implements Observ
     }
 
     @Override
-    public void addChangeNodes(Timeline timeline) {
-        circle.registerWithTimeline(timeline);
-    }
-
-    @Override
     public void acceptVisitor(ModelVisitor visitor) {
         circle.acceptVisitor(visitor);
     }

@@ -8,6 +8,11 @@ public class UtilPoint {
 	public UtilPoint() {
 		super();
 	}
+
+	/**
+	 * Creates a copy of an existing point
+	 * @param p the point to copy from
+	 */
 	public UtilPoint(UtilPoint p){
 		super();
 		this.x=p.x;
@@ -44,7 +49,12 @@ public class UtilPoint {
 		this.x=x;
 		this.y=y;
 	}
-	
+
+	public void set(UtilPoint copyFrom){
+		this.x=copyFrom.getX();
+		this.y=copyFrom.getY();
+	}
+
 	/**
 	 * subtract from this point without making and changes to this object
 	 * @param subtractThis point to subtract

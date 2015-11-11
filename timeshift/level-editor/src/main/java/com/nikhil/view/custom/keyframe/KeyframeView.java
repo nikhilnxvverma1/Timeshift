@@ -1,5 +1,6 @@
 package com.nikhil.view.custom.keyframe;
 
+import com.nikhil.timeline.keyframe.Keyframe;
 import com.nikhil.timeline.KeyValue;
 import javafx.beans.binding.DoubleBinding;
 import javafx.beans.property.DoubleProperty;
@@ -11,13 +12,8 @@ import javafx.scene.image.ImageView;
 /**
  * Created by NikhilVerma on 27/10/15.
  */
-public class KeyframeImageView extends ImageView {
+public class KeyframeView extends ImageView {
 
-//    enum KeyFill{
-//        LEFT_UNFILLED,
-//        BOTH_FILLED,
-//        RIGHT_UNFILLED
-//    };
     private static final String TIME_PROPERTY_NAME="time";
     private static final double DEFAULT_WIDTH =12;
     private static final Image MIDDLE_KEYFRAME=new Image("art/keyframe.png");
@@ -33,12 +29,13 @@ public class KeyframeImageView extends ImageView {
     private KeyValue keyValue;
     private boolean selected=false;
     private KeyframePane keyframePane;
+    private Keyframe keyframe;
 
-    public KeyframeImageView(KeyframePane keyframePane) {
+    public KeyframeView(KeyframePane keyframePane) {
         this(keyframePane,DEFAULT_WIDTH);
     }
 
-    public KeyframeImageView(KeyframePane keyframePane,double width) {
+    public KeyframeView(KeyframePane keyframePane, double width) {
         super(MIDDLE_KEYFRAME);
         this.keyframePane=keyframePane;
         this.setFitWidth(width);

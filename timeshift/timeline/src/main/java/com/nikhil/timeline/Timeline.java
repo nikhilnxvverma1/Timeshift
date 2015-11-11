@@ -1,5 +1,7 @@
 package com.nikhil.timeline;
 
+import com.nikhil.timeline.change.ChangeNode;
+
 /**
  * Timeline class holds all the nodes for value changes in a double linked list.
  * Using this list , animation can be performed by time stepping through 
@@ -16,13 +18,13 @@ public class Timeline {
 	
 	private ChangeNode head;
 	private ChangeNode tail;
-	private float currentTime;
+	private double currentTime;
 	private boolean timeMovingForward=true;
-	private TimelineTerminal timelineTerminal;
+	private TimelineReachedTerminal timelineReachedTerminal;
 	
 	/**
 	 * Creates a new timeline using the tail of the list of change nodes
-	 * @param tail tail of the list.this can be used in making concatenated ChangeNode in code 
+	 * @param tail tail of the list.this can be used in making concatenated ChangeNode in code
 	 */
 	public Timeline(ChangeNode tail){
 		this(null,tail);
@@ -30,29 +32,16 @@ public class Timeline {
 	
 	/**
 	 * Creates a new timeline with a completion delegate using the tail of the list of change nodes 
-	 * @param timelineTerminal completion delegate thats triggered when timeline reaches end or beginning
+	 * @param timelineReachedTerminal completion delegate thats triggered when timeline reaches end or beginning
 	 * @param tail tail of the list.this can be used in making concatenated ChangeNode in code 
 	 */
-	public Timeline(TimelineTerminal timelineTerminal,ChangeNode tail){
+	public Timeline(TimelineReachedTerminal timelineReachedTerminal,ChangeNode tail){
 		this.tail=tail;
 		this.head=tail!=null?tail.getFirstNode():null;
-		this.timelineTerminal = timelineTerminal;
+		this.timelineReachedTerminal = timelineReachedTerminal;
 	}
-	
-	public ChangeNode getHead() {
-		return head;
-	}
-	public void setHead(ChangeNode head) {
-		this.head = head;
-	}
-	public ChangeNode getTail() {
-		return tail;
-	}
-	public void setTail(ChangeNode tail) {
-		this.tail = tail;
-	}
-	
-	public float getCurrentTime() {
+
+	public double getCurrentTime() {
 		return currentTime;
 	}
 
@@ -79,12 +68,12 @@ public class Timeline {
 		this.timeMovingForward = timeMovingForward;
 	}
 	
-	public TimelineTerminal getTimelineTerminal() {
-		return timelineTerminal;
+	public TimelineReachedTerminal getTimelineReachedTerminal() {
+		return timelineReachedTerminal;
 	}
 
-	public void setTimelineTerminal(TimelineTerminal timelineTerminal) {
-		this.timelineTerminal = timelineTerminal;
+	public void setTimelineReachedTerminal(TimelineReachedTerminal timelineReachedTerminal) {
+		this.timelineReachedTerminal = timelineReachedTerminal;
 	}
 	
 	/**
@@ -105,7 +94,7 @@ public class Timeline {
 	 * @param delta timestep to step timeline forward
 	 * @return true if any change is still taking place or pending to take place,false otherwise
 	 */
-	public boolean step(float delta){//TODO make the argument in double
+	public boolean step(double delta){//TODO make the argument in double
 		//step the current time forward or backward depending on flag value
 		if(timeMovingForward){
 			currentTime+=delta;
@@ -119,7 +108,7 @@ public class Timeline {
 		ChangeNode t=head;
 		while(t!=null){
 			//update all nodes
-			boolean nodePendingCompletion=t.step(delta, this);
+			boolean nodePendingCompletion=t.step(delta,currentTime);
 			if(nodePendingCompletion){
 				pendingCompletion=true;
 			}
@@ -128,8 +117,8 @@ public class Timeline {
 		
 		//if a delegate exists fire the callback
 		//TODO doesnt work for time moving backward
-		if((!pendingCompletion)&&(timelineTerminal !=null)){
-			timelineTerminal.timelineReachedTerminal(this);
+		if((!pendingCompletion)&&(timelineReachedTerminal !=null)){
+			timelineReachedTerminal.timelineReachedTerminal(this);
 		}
 		return pendingCompletion;
 	}
@@ -166,11 +155,11 @@ public class Timeline {
 	 * Computes the ending time for this timeline
 	 * @return the ending time at which the timeline finishes
 	 */
-	public float getEndingTime(){
-		float endingTime=0;
+	public double findEndingTime(){
+		double endingTime=0;
 		ChangeNode t=head;
 		while(t!=null){
-			float currentChangeNodeEndingTime=t.getStart()+t.getDuration();
+			double currentChangeNodeEndingTime=t.findEndingTime();
 			if(currentChangeNodeEndingTime>endingTime){
 				endingTime=currentChangeNodeEndingTime;
 			}

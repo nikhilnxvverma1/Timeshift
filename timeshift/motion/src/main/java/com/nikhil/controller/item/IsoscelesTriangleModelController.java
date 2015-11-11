@@ -39,11 +39,6 @@ public class IsoscelesTriangleModelController extends ItemModelController {
     }
 
     @Override
-    public void addChangeNodes(Timeline timeline) {
-        isoscelesTriangle.registerWithTimeline(timeline);
-    }
-
-    @Override
     public void update(Subject subject) {
         //expected to be overridden in subclasses
     }

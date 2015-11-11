@@ -57,12 +57,6 @@ public class TravelPath implements Parametric,ModelElement {
 		this.endingPoint = endingPoint;
 	}
 
-	@Override
-	public UtilPoint getPointFor(float t) {
-		// TODO Use travel points for cubic bezier interpolated value
-		return null;
-	}
-
 	public Transition getTransitionStart() {
 		return transitionStart;
 	}
@@ -105,5 +99,10 @@ public class TravelPath implements Parametric,ModelElement {
 	@Override
 	public void acceptVisitor(ModelVisitor visitor) {
 		visitor.visit(this);
+	}
+
+	@Override
+	public UtilPoint getPointFor(double t) {
+		return null;
 	}
 }

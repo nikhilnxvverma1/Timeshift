@@ -13,5 +13,5 @@ public interface Parametric {
 	 * @param t a value between 0.0 to 1.0
 	 * @return 2D point which lies on the Parametric curve
 	 */
-	public UtilPoint getPointFor(float t);
+	UtilPoint getPointFor(double t);
 }

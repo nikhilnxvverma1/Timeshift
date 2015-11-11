@@ -32,11 +32,6 @@ public class PolygonModelController extends ItemModelController {
     }
 
     @Override
-    public void addChangeNodes(Timeline timeline) {
-        polygonModel.registerWithTimeline(timeline);
-    }
-
-    @Override
     public void acceptVisitor(ModelVisitor visitor) {
         polygonModel.acceptVisitor(visitor);
     }

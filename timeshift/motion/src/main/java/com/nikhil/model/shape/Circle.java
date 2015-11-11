@@ -1,103 +1,52 @@
 package com.nikhil.model.shape;
 
-import com.nikhil.keyframe.KeyFrame;
-import com.nikhil.keyframe.TemporalKeyFrame;
+import com.nikhil.timeline.keyframe.Keyframe;
+import com.nikhil.timeline.keyframe.TemporalKeyframe;
 import com.nikhil.model.ModelVisitor;
-import com.nikhil.timeline.ChangeNode;
+import com.nikhil.timeline.change.ChangeNode;
 import com.nikhil.timeline.KeyValue;
 import com.nikhil.timeline.Timeline;
 
+/**
+ * Circle consists of the following properties:
+ * <ul>
+ *     <li>Inner radius</li>
+ *     <li>Outer radius</li>
+ *     <li>Starting angle</li>
+ *     <li>Ending angle</li>
+ * </ul>
+ */
 public class Circle extends ShapeModel {
 
-	public static final int INNER_RADIUS_HANDLE =1;
-	public static final int OUTER_RADIUS_HANDLE =2;
-	public static final int STARTING_ANGLE_HANDLE =3;
-	public static final int ENDING_ANGLE_HANDLE =4;
-	
-	
-	private double innerRadius;
-	private TemporalKeyFrame innerRadiusStart;
-	
-	private double outerRadius;
-	private TemporalKeyFrame outerRadiusStart;
-	
-	private double startingAngle;
-	private TemporalKeyFrame startingAngleStart;
-	
-	private double endingAngle;
-	private TemporalKeyFrame endingAngleStart;
-	
 	public Circle(float innerRadius,float outerRadius,float startingAngle,float endingAngle){
-		this.innerRadius=innerRadius;
-		this.outerRadius=outerRadius;
-		this.startingAngle=startingAngle;
-		this.endingAngle=endingAngle;
+		//TODO
 	}
-	
-	//================================================================================
-	//Accessors
-	//================================================================================
-	
+
+	//TODO
+
 	public double getInnerRadius() {
-		return innerRadius;
+		return 0;
 	}
 	public void setInnerRadius(float innerRadius) {
-		this.innerRadius = innerRadius;
+//		this.innerRadius = innerRadius;
 	}
 	public double getOuterRadius() {
-		return outerRadius;
+		return 0;
 	}
 	public void setOuterRadius(float outerRadius) {
-		this.outerRadius = outerRadius;
+//		this.outerRadius = outerRadius;
 	}
 	public double getStartingAngle() {
-		return startingAngle;
+		return 0;
 	}
 	public void setStartingAngle(float startingAngle) {
-		this.startingAngle = startingAngle;
+//		this.startingAngle = startingAngle;
 	}
 	public double getEndingAngle() {
-		return endingAngle;
+		return 0;
 	}
 	public void setEndingAngle(float endingAngle) {
-		this.endingAngle = endingAngle;
-	}
-
-	@Override
-	public void valueChanged(Timeline timeline, ChangeNode changeNode,
-			KeyValue changedValue) {
-		
-		//call to super for SRT and anchor property values
-		super.valueChanged(timeline, changeNode, changedValue);
-		
-		//since same handler is used for all 4 properties , we will use tag to identify this callback
-		switch (changeNode.tag) {
-		case INNER_RADIUS_HANDLE:
-			innerRadius=changedValue.getValue(0);
-			break;
-		case OUTER_RADIUS_HANDLE:
-			outerRadius=changedValue.getValue(0);
-			break;
-		case STARTING_ANGLE_HANDLE:
-			startingAngle=changedValue.getValue(0);
-			break;
-		case ENDING_ANGLE_HANDLE:
-			endingAngle=changedValue.getValue(0);
-			break;
-
-		default:
-			break;
-		}
-		notifyModelChangeListener();
-	}
-
-	@Override
-	public void registerWithTimeline(Timeline timeline) {
-		super.registerWithTimeline(timeline);
-		KeyFrame.addAllChangeNodesToTimeline(innerRadiusStart, timeline, this, INNER_RADIUS_HANDLE);
-		KeyFrame.addAllChangeNodesToTimeline(outerRadiusStart, timeline, this, OUTER_RADIUS_HANDLE);
-		KeyFrame.addAllChangeNodesToTimeline(startingAngleStart, timeline, this, STARTING_ANGLE_HANDLE);
-		KeyFrame.addAllChangeNodesToTimeline(endingAngleStart, timeline, this, ENDING_ANGLE_HANDLE);
+//		this.endingAngle = endingAngle;
 	}
 
 	@Override

@@ -17,11 +17,10 @@ public class PolygonModel extends ShapeModel {
 
 	private static int POLYGON_MODEL_COUNT=1;
 
-	/** start node of circular list*/
+	/** polygon points in a circular linked list*/
 	protected MovablePoint polygonPointStart;
 
 	public PolygonModel() {
-		super();
 		this.setName("Polygon "+POLYGON_MODEL_COUNT++);
 	}
 
@@ -88,26 +87,14 @@ public class PolygonModel extends ShapeModel {
 		}
 	}
 
-	@Override
+	//TODO might not be required
 	public void setObserver(Observer observer){
-		super.setObserver(observer);
 
 		MovablePoint t= polygonPointStart;
 		if (t!=null) {
 			do{
                 t.setObserver(observer);
             }while (t!= polygonPointStart);
-		}
-	}
-
-	@Override
-	public void registerWithTimeline(Timeline timeline) {
-		super.registerWithTimeline(timeline);
-		MovablePoint t= polygonPointStart;
-		if (t!=null) {
-			do{
-				t.setObserver(observer);
-			}while (t!= polygonPointStart);
 		}
 	}
 

@@ -1,67 +1,55 @@
 package com.nikhil.model.pathsystem;
 
-import com.nikhil.keyframe.KeyFramablePoint;
+import com.nikhil.timeline.keyframe.SpatialKeyframe;
 import com.nikhil.model.ModelVisitor;
-import com.nikhil.timeline.ChangeNode;
+import com.nikhil.timeline.change.ChangeNode;
 import com.nikhil.timeline.KeyValue;
-import com.nikhil.timeline.Timeline;
-import com.nikhil.timeline.changehandler.ChangeHandler;
+import com.nikhil.timeline.change.fromto.FromToChangeHandler;
 
 /**
  * Just like a bezier point but the control points are relative to the anchor point
  * @author Nikhil Verma
  *
  */
-public class MovableLinkPoint extends LinkPoint implements ChangeHandler{
+public class MovableLinkPoint extends LinkPoint implements FromToChangeHandler {
 
 
-	private KeyFramablePoint controlPointWithPreviousStart;
+	private SpatialKeyframe controlPointWithPreviousStart;
 
-	private KeyFramablePoint anchorPointStart;
+	private SpatialKeyframe anchorPointStart;
 
-	private KeyFramablePoint controlPointWithNextStart;
+	private SpatialKeyframe controlPointWithNextStart;
 
-	public KeyFramablePoint getControlPointWithPreviousStart() {
+	public SpatialKeyframe getControlPointWithPreviousStart() {
 		return controlPointWithPreviousStart;
 	}
 
-	public void setControlPointWithPreviousStart(KeyFramablePoint controlPointWithPreviousStart) {
+	public void setControlPointWithPreviousStart(SpatialKeyframe controlPointWithPreviousStart) {
 		this.controlPointWithPreviousStart = controlPointWithPreviousStart;
 	}
 
-	public KeyFramablePoint getAnchorPointStart() {
+	public SpatialKeyframe getAnchorPointStart() {
 		return anchorPointStart;
 	}
 
-	public void setAnchorPointStart(KeyFramablePoint anchorPointStart) {
+	public void setAnchorPointStart(SpatialKeyframe anchorPointStart) {
 		this.anchorPointStart = anchorPointStart;
 	}
 
-	public KeyFramablePoint getControlPointWithNextStart() {
+	public SpatialKeyframe getControlPointWithNextStart() {
 		return controlPointWithNextStart;
 	}
 
-	public void setControlPointWithNextStart(KeyFramablePoint controlPointWithNextStart) {
+	public void setControlPointWithNextStart(SpatialKeyframe controlPointWithNextStart) {
 		this.controlPointWithNextStart = controlPointWithNextStart;
 	}
 
 	@Override
-	public void valueAtStart(Timeline timeline, ChangeNode changeNode) {
-		// TODO Auto-generated method stub
-		
-	}
-	@Override
-	public void valueChanged(Timeline timeline, ChangeNode changeNode,
+	public void valueChanged(double currentTime,  ChangeNode changeNode,
 			KeyValue changedValue) {
 		// TODO Auto-generated method stub
 		
 	}
-	@Override
-	public void valueAtEnd(Timeline timeline, ChangeNode changeNode) {
-		// TODO Auto-generated method stub
-		
-	}
-
 	@Override
 	public void acceptVisitor(ModelVisitor visitor) {
 		visitor.visit(this);

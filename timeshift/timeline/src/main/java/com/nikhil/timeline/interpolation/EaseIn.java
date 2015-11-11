@@ -28,11 +28,10 @@ public class EaseIn implements InterpolationCurve{
 	}
 	
 	@Override
-	public double valueFor(float t) {
+	public double valueFor(double t) {
 		return bezierCurve.getPointFor(t).getY();
 	}
 
-	@Override
 	public String getCurveName() {
 		return CURVE_NAME;
 	}

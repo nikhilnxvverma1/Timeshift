@@ -45,7 +45,7 @@ public class KeyframePane extends AnchorPane implements SelectionOverlap{
                 double y = event.getY();
                 collectedKeyAtPress=false;
 				KeyframeTreeView keyframeTable = metadata.getItemViewController().getCompositionViewController().getKeyframeTable();
-                KeyframeImageView keyAtPoint=findKeyAt(x, y);
+                KeyframeView keyAtPoint=findKeyAt(x, y);
                 if(keyAtPoint!=null){
                     if(!keyAtPoint.isSelected()){
                         if(!event.isShiftDown()){
@@ -90,7 +90,7 @@ public class KeyframePane extends AnchorPane implements SelectionOverlap{
 
 	private void selectAllKeys(boolean shouldSelect) {
 		for(Node node: keyContainer.getChildren()){
-			KeyframeImageView key=(KeyframeImageView)node;
+			KeyframeView key=(KeyframeView)node;
 //			key.setSelected(false);
 			selectKey(key, shouldSelect);//fails to work here , possibly because of different thread modification
 		}
@@ -118,7 +118,7 @@ public class KeyframePane extends AnchorPane implements SelectionOverlap{
 		ObservableList<Node> markings=keyContainer.getChildren();
 		for(Node node: markings){
 			
-			KeyframeImageView key=(KeyframeImageView)node;
+			KeyframeView key=(KeyframeView)node;
 			double keyX = getLayoutXFor(key);
 			key.setLayoutX(keyX);
 			
@@ -133,7 +133,7 @@ public class KeyframePane extends AnchorPane implements SelectionOverlap{
 		
 	}
 
-	private double getLayoutXFor(KeyframeImageView key) {
+	private double getLayoutXFor(KeyframeView key) {
 		double timeRatio=key.getTime()/totalTime;
 		double scaledLength=length*currentZoom;
 		return timeRatio*scaledLength;
@@ -153,8 +153,8 @@ public class KeyframePane extends AnchorPane implements SelectionOverlap{
 		//explicitly setting width is not needed
 	}
 
-	public void addKeyAt(double time,KeyValue keyValue){
-		KeyframeImageView newKey=new KeyframeImageView(this);
+	public void addKeyAt(double time,KeyValue keyValue){//TODO replace time, and key value by actual keyframe model
+		KeyframeView newKey=new KeyframeView(this);
 		newKey.setTime(time);
 		newKey.setKeyValue(keyValue);
 		newKey.setLayoutX(getLayoutXFor(newKey));
@@ -162,10 +162,10 @@ public class KeyframePane extends AnchorPane implements SelectionOverlap{
 		//insert in the right spot
 		int index=0;
 		boolean indexFound=false;
-		KeyframeImageView firstKey=null,lastKey=null;
+		KeyframeView firstKey=null,lastKey=null;
 		for (Node node : keyContainer.getChildren()) {
 
-			KeyframeImageView key = (KeyframeImageView) node;
+			KeyframeView key = (KeyframeView) node;
 			if (newKey.getTime() > key.getTime()) {//new key greater than current key
 				indexFound = true;
 			}
@@ -189,8 +189,8 @@ public class KeyframePane extends AnchorPane implements SelectionOverlap{
 
 			@Override
 			public int compare(Node o1, Node o2) {
-				KeyframeImageView first=(KeyframeImageView)o1;
-				KeyframeImageView second=(KeyframeImageView)o2;
+				KeyframeView first=(KeyframeView)o1;
+				KeyframeView second=(KeyframeView)o2;
 				if(first.getTime()==second.getTime()){
 					return 0;
 				}else if(first.getTime()<second.getTime()){
@@ -208,7 +208,7 @@ public class KeyframePane extends AnchorPane implements SelectionOverlap{
 		return ratio*totalTime;
 	}
 	
-	private void selectKey(KeyframeImageView key,boolean shouldSelect){
+	private void selectKey(KeyframeView key,boolean shouldSelect){
 		key.setSelected(shouldSelect);
 		if(shouldSelect){
 //			key.toFront();//causing problems with thread concurrency
@@ -219,9 +219,9 @@ public class KeyframePane extends AnchorPane implements SelectionOverlap{
 	
 	private boolean selectKeyAt(double x,double y,boolean collecting){
 		boolean keyWasSelected=false;
-		KeyframeImageView selectedKey=null;
+		KeyframeView selectedKey=null;
 		for(Node node: keyContainer.getChildren()){
-			KeyframeImageView key=(KeyframeImageView)node;
+			KeyframeView key=(KeyframeView)node;
 			if(key.getBoundsInParent().contains(x, y)){
 				//if this key is already selected and it is in collection mode
 				if(collecting&&key.isSelected()){
@@ -241,10 +241,10 @@ public class KeyframePane extends AnchorPane implements SelectionOverlap{
 		return keyWasSelected;
 	}
 	
-	private KeyframeImageView findKeyAt(double x,double y){
-		KeyframeImageView keyContainingPoint=null;
+	private KeyframeView findKeyAt(double x,double y){
+		KeyframeView keyContainingPoint=null;
 		for(Node node: keyContainer.getChildren()){
-			KeyframeImageView key=(KeyframeImageView)node;
+			KeyframeView key=(KeyframeView)node;
 			if(key.getBoundsInParent().contains(x, y)){
 				keyContainingPoint=key;
 			}
@@ -255,7 +255,7 @@ public class KeyframePane extends AnchorPane implements SelectionOverlap{
 	public void moveSelectedKeysBy(double dl){
 		
 		for(Node node: keyContainer.getChildren()){
-			KeyframeImageView key=(KeyframeImageView)node;
+			KeyframeView key=(KeyframeView)node;
 			if(key.isSelected()){
 				double newLayoutX = key.getLayoutX()+dl;
 				key.setLayoutX(newLayoutX);
@@ -270,7 +270,7 @@ public class KeyframePane extends AnchorPane implements SelectionOverlap{
 	@Override
 	public void selectOverlappingItems(SelectionArea selectionArea, Bounds sceneBounds) {
 		for(Node node: keyContainer.getChildren()){
-			KeyframeImageView key=(KeyframeImageView)node;
+			KeyframeView key=(KeyframeView)node;
 			Bounds keySceneBounds = key.localToScene(key.getBoundsInLocal());
 			if(sceneBounds.intersects(keySceneBounds)){
 				key.setSelected(true);
@@ -294,16 +294,16 @@ public class KeyframePane extends AnchorPane implements SelectionOverlap{
 	 * @return null if currently selected keyframe is last selected keyframe and there is no next
 	 * (or if there are no keyframes),otherwise the next keyframe every other time
 	 */
-	public KeyframeImageView selectNextKeyframe(){
+	public KeyframeView selectNextKeyframe(){
 
 		if(keyContainer.getChildren().size()==0){
 			return null;
 		}
-		KeyframeImageView lastSelectedKeyframe=null;
-		KeyframeImageView firstKeyframe=null;
+		KeyframeView lastSelectedKeyframe=null;
+		KeyframeView firstKeyframe=null;
 		//find the last selected keyframe
 		for(Node node : keyContainer.getChildren()){
-			KeyframeImageView keyframe=(KeyframeImageView)node;
+			KeyframeView keyframe=(KeyframeView)node;
 			if (keyframe.isSelected()&&
 					((lastSelectedKeyframe==null) || (lastSelectedKeyframe.getTime() < keyframe.getTime()))
 					){
@@ -317,13 +317,13 @@ public class KeyframePane extends AnchorPane implements SelectionOverlap{
 			}
 		}
 
-		KeyframeImageView keyframeRightAfter=null;
+		KeyframeView keyframeRightAfter=null;
 		if(lastSelectedKeyframe==null){
 			keyframeRightAfter=firstKeyframe;
 		}else{
 			//find the key frame after this
 			for(Node node : keyContainer.getChildren()){
-				KeyframeImageView keyframe=(KeyframeImageView)node;
+				KeyframeView keyframe=(KeyframeView)node;
 				if((keyframe.getTime()>lastSelectedKeyframe.getTime())&&
 						(keyframeRightAfter==null||keyframe.getTime()<keyframeRightAfter.getTime())){
 					keyframeRightAfter=keyframe;
@@ -348,15 +348,15 @@ public class KeyframePane extends AnchorPane implements SelectionOverlap{
 	 * and there is no previous,(or if there are no keyframes),
 	 * otherwise the previous keyframe every other time
 	 */
-	public KeyframeImageView selectPreviousKeyframe(){
+	public KeyframeView selectPreviousKeyframe(){
 		if(keyContainer.getChildren().size()==0){
 			return null;
 		}
-		KeyframeImageView firstSelectedKeyframe=null;
-		KeyframeImageView lastKeyframe=null;
+		KeyframeView firstSelectedKeyframe=null;
+		KeyframeView lastKeyframe=null;
 		//find the last selected keyframe
 		for(Node node : keyContainer.getChildren()){
-			KeyframeImageView keyframe=(KeyframeImageView)node;
+			KeyframeView keyframe=(KeyframeView)node;
 			if (keyframe.isSelected() &&
 					((firstSelectedKeyframe == null) || (firstSelectedKeyframe.getTime() > keyframe.getTime()))
 					){
@@ -370,13 +370,13 @@ public class KeyframePane extends AnchorPane implements SelectionOverlap{
 			}
 		}
 
-		KeyframeImageView keyframeRightBefore=null;
+		KeyframeView keyframeRightBefore=null;
 		if(firstSelectedKeyframe==null){
 			keyframeRightBefore=lastKeyframe;
 		}else{
 			//find the key frame right before this
 			for(Node node : keyContainer.getChildren()){
-				KeyframeImageView keyframe=(KeyframeImageView)node;
+				KeyframeView keyframe=(KeyframeView)node;
 				if((keyframe.getTime()<firstSelectedKeyframe.getTime())&&
 						(keyframeRightBefore==null||keyframe.getTime()>keyframeRightBefore.getTime())){
 					keyframeRightBefore=keyframe;
@@ -398,11 +398,11 @@ public class KeyframePane extends AnchorPane implements SelectionOverlap{
 	 * @param time the time after which keyframe needs to be found
 	 * @return keyframe right after the specified time, null otherwise
 	 */
-	public KeyframeImageView findKeyframeAfter(double time){
+	public KeyframeView findKeyframeAfter(double time){
 		//find the key frame after this
-		KeyframeImageView keyframeRightAfter=null;
+		KeyframeView keyframeRightAfter=null;
 		for(Node node : keyContainer.getChildren()){
-			KeyframeImageView keyframe=(KeyframeImageView)node;
+			KeyframeView keyframe=(KeyframeView)node;
 			if((keyframe.getTime()>time)&&
 					(keyframeRightAfter==null||keyframe.getTime()<keyframeRightAfter.getTime())){
 				keyframeRightAfter=keyframe;
@@ -417,11 +417,11 @@ public class KeyframePane extends AnchorPane implements SelectionOverlap{
 	 * @return keyframe right before the specified time, null otherwise
 	 */
 
-	public KeyframeImageView findKeyframeBefore(double time){
+	public KeyframeView findKeyframeBefore(double time){
 		//find the key frame after this
-		KeyframeImageView keyframeRightBefore=null;
+		KeyframeView keyframeRightBefore=null;
 		for(Node node : keyContainer.getChildren()){
-			KeyframeImageView keyframe=(KeyframeImageView)node;
+			KeyframeView keyframe=(KeyframeView)node;
 			if((keyframe.getTime()<time)&&
 					(keyframeRightBefore==null||keyframe.getTime()>keyframeRightBefore.getTime())){
 				keyframeRightBefore=keyframe;
@@ -436,15 +436,15 @@ public class KeyframePane extends AnchorPane implements SelectionOverlap{
 	 * @return null if no keyframes are selected or if there are no keyframes,
 	 * otherwise the last selected keyframe every other time
 	 */
-	public KeyframeImageView findLastSelectedKeyframe(){
+	public KeyframeView findLastSelectedKeyframe(){
 
 		if(keyContainer.getChildren().size()==0){
 			return null;
 		}
-		KeyframeImageView lastSelectedKeyframe=null;
+		KeyframeView lastSelectedKeyframe=null;
 		//find the last selected keyframe
 		for(Node node : keyContainer.getChildren()){
-			KeyframeImageView keyframe=(KeyframeImageView)node;
+			KeyframeView keyframe=(KeyframeView)node;
 			if (keyframe.isSelected()&&
 					((lastSelectedKeyframe==null) || (lastSelectedKeyframe.getTime() < keyframe.getTime()))
 					){
@@ -461,15 +461,15 @@ public class KeyframePane extends AnchorPane implements SelectionOverlap{
 	 * @return null if no keyframes are selected or if there are no keyframes,
 	 * otherwise the first selected keyframe every other time
 	 */
-	public KeyframeImageView findFirstSelectedKeyframe(){
+	public KeyframeView findFirstSelectedKeyframe(){
 
 		if(keyContainer.getChildren().size()==0){
 			return null;
 		}
-		KeyframeImageView firstSelectedKeyframe=null;
+		KeyframeView firstSelectedKeyframe=null;
 		//find the first selected keyframe
 		for(Node node : keyContainer.getChildren()){
-			KeyframeImageView keyframe=(KeyframeImageView)node;
+			KeyframeView keyframe=(KeyframeView)node;
 			if (keyframe.isSelected()&&
 					((firstSelectedKeyframe==null) || (firstSelectedKeyframe.getTime() > keyframe.getTime()))
 					){

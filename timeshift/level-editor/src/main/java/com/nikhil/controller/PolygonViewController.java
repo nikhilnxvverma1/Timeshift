@@ -25,7 +25,7 @@ import java.util.List;
 /**
  * Created by NikhilVerma on 19/09/15.
  */
-public class PolygonViewController extends ShapeViewController implements Observer,PolygonViewDelegate {
+public class PolygonViewController extends ShapeViewController implements PolygonViewDelegate {
 
 //    public static final short HEADER_TAG=1;
 //    public static final short SCALE_TAG=2;
@@ -56,7 +56,6 @@ public class PolygonViewController extends ShapeViewController implements Observ
     public PolygonViewController(CompositionViewController compositionViewController,PolygonModelController polygonModelController){
         super(compositionViewController);
         this.polygonModelController=polygonModelController;
-        this.polygonModelController.getPolygonModel().setObserver(this);
         constructViewUsingModelController();
         this.polygonView.setDelegate(this);
         polygonGizmo=new PolygonGizmo(polygonView);
@@ -97,7 +96,7 @@ public class PolygonViewController extends ShapeViewController implements Observ
         this.polygonModelController=new PolygonModelController(polygonModel);
 
         //make this class the listener for all changes on the model
-        polygonModel.setObserver(this);
+//        polygonModel.setObserver(this);
     }
 
     /**
@@ -314,15 +313,6 @@ public class PolygonViewController extends ShapeViewController implements Observ
             Metadata metadata=treeItem.getValue();
 
         }
-    }
-
-    //=============================================================================================
-    //Notifications from model
-    //=============================================================================================
-
-    @Override
-    public void update(Subject subject) {
-
     }
 
     //=============================================================================================

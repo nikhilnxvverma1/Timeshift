@@ -2,14 +2,13 @@ package com.nikhil.controller;
 
 import com.nikhil.Main;
 import com.nikhil.controller.item.ItemModelController;
-import com.nikhil.editor.selection.SelectionArea;
 import com.nikhil.editor.workspace.Workspace;
 import com.nikhil.logging.Logger;
 import com.nikhil.view.custom.*;
 import com.nikhil.view.custom.cells.KeyframeCell;
 import com.nikhil.view.custom.cells.OptionCell;
 import com.nikhil.view.custom.cells.ValueCell;
-import com.nikhil.view.custom.keyframe.KeyframeImageView;
+import com.nikhil.view.custom.keyframe.KeyframeView;
 import com.nikhil.view.custom.keyframe.KeyframeTreeView;
 import com.nikhil.view.item.record.Metadata;
 import com.sun.javafx.scene.control.skin.VirtualFlow;
@@ -17,18 +16,12 @@ import com.sun.javafx.scene.control.skin.VirtualScrollBar;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
-import javafx.event.Event;
-import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Orientation;
-import javafx.geometry.Point2D;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.control.*;
-import javafx.scene.input.MouseEvent;
-import javafx.scene.input.ScrollEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 
@@ -291,7 +284,7 @@ public class CompositionViewController {
 
         //find the last selected keyframe which possibly might be where the thumb is at
         //as a result of a similar last "next" operation
-        KeyframeImageView lastSelectedKeyframe = keyframeTable.findLastSelectedKeyframe();
+        KeyframeView lastSelectedKeyframe = keyframeTable.findLastSelectedKeyframe();
         if (lastSelectedKeyframe != null) {
 
             //if the last selected keyframe from the keyframe table has its time SLIGHTLY greater
@@ -306,7 +299,7 @@ public class CompositionViewController {
         }
 
 
-        KeyframeImageView keyframeAfter = keyframeTable.findKeyframeAfter(currentTime);
+        KeyframeView keyframeAfter = keyframeTable.findKeyframeAfter(currentTime);
         if (keyframeAfter!=null) {
             keyframeTable.resetSelection();
             thumbSeeker.setCurrentValueAcross(keyframeAfter.getTime(), 30);
@@ -321,7 +314,7 @@ public class CompositionViewController {
 
         //find the last selected keyframe which possibly might be where the thumb is at
         //as a result of a similar last "next" operation
-        KeyframeImageView firstSelectedKeyframe = keyframeTable.findFirstSelectedKeyframe();
+        KeyframeView firstSelectedKeyframe = keyframeTable.findFirstSelectedKeyframe();
         if (firstSelectedKeyframe != null) {
 
             //if the first selected keyframe from the keyframe table has its time SLIGHTLY lesser
@@ -336,7 +329,7 @@ public class CompositionViewController {
         }
 
 
-        KeyframeImageView keyframeBefore = keyframeTable.findKeyframeBefore(currentTime);
+        KeyframeView keyframeBefore = keyframeTable.findKeyframeBefore(currentTime);
         if (keyframeBefore!=null) {
             keyframeTable.resetSelection();
             thumbSeeker.setCurrentValueAcross(keyframeBefore.getTime(), 30);
