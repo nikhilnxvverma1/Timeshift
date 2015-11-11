@@ -6,6 +6,7 @@ import com.nikhil.view.item.delegate.ItemViewDelegate;
 import com.nikhil.view.item.record.Metadata;
 import javafx.geometry.Bounds;
 import javafx.scene.control.TreeItem;
+import javafx.scene.shape.Shape;
 
 /**
  * Created by NikhilVerma on 30/08/15.
@@ -59,4 +60,5 @@ public abstract class ItemViewController implements ItemViewDelegate {
     public abstract TreeItem<Metadata> getMetadataTree();
     /** call this method anytime the properties change so as to refresh the metadata*/
     public abstract void refreshMetadata();
+    public abstract Shape getItemView();
 }

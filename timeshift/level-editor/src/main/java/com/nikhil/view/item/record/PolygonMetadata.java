@@ -8,11 +8,9 @@ import com.nikhil.controller.PolygonViewController;
 import com.nikhil.editor.selection.SelectedItems;
 import com.nikhil.editor.workspace.Workspace;
 import com.nikhil.math.MathUtil;
-import com.nikhil.timeline.KeyValue;
 import com.nikhil.view.custom.DraggableTextValue;
 import com.nikhil.view.custom.DraggableTextValueDelegate;
 import com.nikhil.view.custom.keyframe.KeyframePane;
-import com.nikhil.view.item.PolygonView;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.event.ActionEvent;
@@ -54,7 +52,7 @@ public class PolygonMetadata extends Metadata{
         keyframePane.selectNextKeyframe();
     };
 
-    public PolygonMetadata(String name, int tag, PolygonViewController polygonViewController) {
+    public PolygonMetadata(String name, MetadataTag tag, PolygonViewController polygonViewController) {
         super(name, tag);
         this.polygonViewController = polygonViewController;
     }
@@ -66,8 +64,8 @@ public class PolygonMetadata extends Metadata{
 
     @Override
     public boolean isHeader() {
-        if(tag==HEADER_TAG||
-                tag== VERTICES_TAG){
+        if(tag==MetadataTag.HEADER||
+                tag== MetadataTag.POLYGON_VERTEX_HEADER){
             return true;
         }
         return false;
@@ -76,17 +74,17 @@ public class PolygonMetadata extends Metadata{
     @Override
     public Node getValueNode() {
         switch (tag){
-            case HEADER_TAG:
+            case HEADER:
                 return new Button("Reset");//TODO delegation and visual size
-            case SCALE_TAG:
+            case SCALE:
                 return getScaleValueNode();
-            case ROTATION_TAG:
+            case ROTATION:
                 return getRotationValueNode();
-            case TRANSLATION_TAG:
+            case TRANSLATION:
                 return getTranslationValueNode();
-            case ANCHOR_POINT_TAG:
+            case ANCHOR_POINT:
                 return getAnchorPointValueNode();
-            case VERTICES_TAG:
+            case POLYGON_VERTEX_HEADER:
                 return getVertexCountValueNode();
         }
         return null;
@@ -294,7 +292,7 @@ public class PolygonMetadata extends Metadata{
 
     @Override
     public Node getOptionNode() {
-        if(tag==HEADER_TAG){
+        if(tag==MetadataTag.HEADER){
             CheckBox visibility=new CheckBox();
             visibility.setSelected(true);//TODO register listener
             Tooltip.install(visibility,new Tooltip("Visible"));
@@ -305,7 +303,7 @@ public class PolygonMetadata extends Metadata{
             CheckBox lock=new CheckBox();
             Tooltip.install(lock,new Tooltip("Lock"));
             return new HBox(visibility,solo,lock);
-        }else if(tag==VERTICES_TAG){
+        }else if(tag==MetadataTag.POLYGON_VERTEX_HEADER){
             return null;
         }else{
             Button previousKeyframe=new Button("<");
@@ -340,11 +338,5 @@ public class PolygonMetadata extends Metadata{
     @Override
     public KeyframePane getKeyframePane() {
         return keyframePane;
-    }
-
-    @Override
-    public void cleanUp() {
-        //remove all event handlers that may cause this node to leak memory
-
     }
 }

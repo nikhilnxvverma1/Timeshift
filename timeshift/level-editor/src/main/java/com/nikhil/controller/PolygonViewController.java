@@ -14,10 +14,10 @@ import com.nikhil.model.shape.PolygonModel;
 import com.nikhil.util.modal.UtilPoint;
 import com.nikhil.view.item.PolygonView;
 import com.nikhil.view.item.delegate.PolygonViewDelegate;
-import com.nikhil.view.item.record.Metadata;
-import com.nikhil.view.item.record.PolygonMetadata;
+import com.nikhil.view.item.record.*;
 import javafx.geometry.Bounds;
 import javafx.scene.control.TreeItem;
+import javafx.scene.shape.Shape;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -294,13 +294,20 @@ public class PolygonViewController extends ShapeViewController implements Polygo
     @Override
     public TreeItem<Metadata> getMetadataTree() {
         if(metadataTree==null){
+//            TreeItem<Metadata> polygonHeader= new TreeItem<>(
+//                    new PolygonMetadata(polygonModelController.getPolygonModel().getName(), MetadataTag.HEADER,this));
+//            TreeItem<Metadata> polygonScale= new TreeItem<>(new PolygonMetadata("Scale", MetadataTag.SCALE,this));
+//            TreeItem<Metadata> polygonRotation= new TreeItem<>(new PolygonMetadata("Rotation", MetadataTag.ROTATION,this));
+//            TreeItem<Metadata> polygonTranslation= new TreeItem<>(new PolygonMetadata("Translation", MetadataTag.TRANSLATION,this));
+//            TreeItem<Metadata> polygonAnchorPoint= new TreeItem<>(new PolygonMetadata("Anchor Point",  MetadataTag.ANCHOR_POINT, this));
+//            TreeItem<Metadata> polygonVertices= new TreeItem<>(new PolygonMetadata("Vertices",  MetadataTag.POLYGON_VERTEX_HEADER, this));
             TreeItem<Metadata> polygonHeader= new TreeItem<>(
-                    new PolygonMetadata(polygonModelController.getPolygonModel().getName(),PolygonMetadata.HEADER_TAG,this));
-            TreeItem<Metadata> polygonScale= new TreeItem<>(new PolygonMetadata("Scale",PolygonMetadata.SCALE_TAG,this));
-            TreeItem<Metadata> polygonRotation= new TreeItem<>(new PolygonMetadata("Rotation",PolygonMetadata.ROTATION_TAG,this));
-            TreeItem<Metadata> polygonTranslation= new TreeItem<>(new PolygonMetadata("Translation",PolygonMetadata.TRANSLATION_TAG,this));
-            TreeItem<Metadata> polygonAnchorPoint= new TreeItem<>(new PolygonMetadata("Anchor Point", PolygonMetadata.ANCHOR_POINT_TAG, this));
-            TreeItem<Metadata> polygonVertices= new TreeItem<>(new PolygonMetadata("Vertices", PolygonMetadata.VERTICES_TAG, this));
+                    new HeaderMetadata(polygonModelController.getPolygonModel().getName(), MetadataTag.HEADER));
+            TreeItem<Metadata> polygonScale= new TreeItem<>(new TemporalMetadata("Scale", MetadataTag.SCALE,this));
+            TreeItem<Metadata> polygonRotation= new TreeItem<>(new TemporalMetadata("Rotation", MetadataTag.ROTATION,this));
+            TreeItem<Metadata> polygonTranslation= new TreeItem<>(new SpatialMetadata("Translation", MetadataTag.TRANSLATION,this));
+            TreeItem<Metadata> polygonAnchorPoint= new TreeItem<>(new SpatialMetadata("Anchor Point",  MetadataTag.ANCHOR_POINT, this));
+            TreeItem<Metadata> polygonVertices= new TreeItem<>(new PolygonMetadata("Vertices",  MetadataTag.POLYGON_VERTEX_HEADER,this));
             polygonHeader.getChildren().addAll(polygonScale, polygonRotation, polygonTranslation, polygonAnchorPoint, polygonVertices);
             metadataTree=polygonHeader;
         }
@@ -308,11 +315,16 @@ public class PolygonViewController extends ShapeViewController implements Polygo
     }
 
     @Override
-    public void refreshMetadata() {
+    public void refreshMetadata() { //TODO if unused ,get rid of it
         for(TreeItem<Metadata> treeItem: metadataTree.getChildren()){
             Metadata metadata=treeItem.getValue();
 
         }
+    }
+
+    @Override
+    public Shape getItemView() {
+        return polygonView;
     }
 
     //=============================================================================================

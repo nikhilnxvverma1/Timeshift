@@ -10,7 +10,9 @@ import com.nikhil.view.custom.cells.OptionCell;
 import com.nikhil.view.custom.cells.ValueCell;
 import com.nikhil.view.custom.keyframe.KeyframeView;
 import com.nikhil.view.custom.keyframe.KeyframeTreeView;
+import com.nikhil.view.item.record.HeaderMetadata;
 import com.nikhil.view.item.record.Metadata;
+import com.nikhil.view.item.record.MetadataTag;
 import com.sun.javafx.scene.control.skin.VirtualFlow;
 import com.sun.javafx.scene.control.skin.VirtualScrollBar;
 import javafx.beans.property.SimpleObjectProperty;
@@ -207,7 +209,7 @@ public class CompositionViewController {
         thumbSeeker.setPrefHeight(PLAYBACK_FEATURES_HEIGHT);
         thumbSeeker.setMaxHeight(Control.USE_PREF_SIZE);
 
-        rootTreeItem=new TreeItem<>(new Metadata("Root",Metadata.ROOT_TAG));
+        rootTreeItem=new TreeItem<>(new HeaderMetadata("Root", MetadataTag.ROOT));
         itemTable = initItemTable(rootTreeItem);
         keyframeTable =new KeyframeTreeView(rootTreeItem);
 
