@@ -12,10 +12,10 @@ import javafx.scene.image.ImageView;
 /**
  * Created by NikhilVerma on 27/10/15.
  */
-public class KeyframeView extends ImageView {
+public abstract class KeyframeView extends ImageView {
 
     private static final String TIME_PROPERTY_NAME="time";
-    private static final double DEFAULT_WIDTH =12;
+    protected static final double DEFAULT_WIDTH =12;
     private static final Image MIDDLE_KEYFRAME=new Image("art/keyframe.png");
     private static final Image FIRST_KEYFRAME=new Image("art/first_keyframe.png");
     private static final Image LAST_KEYFRAME=new Image("art/last_keyframe.png");
@@ -25,38 +25,20 @@ public class KeyframeView extends ImageView {
     static {
         HIGHLIGHT_COLOR_ADJUST =new ColorAdjust(-0.6,1d,0d,1);
     }
-    private DoubleProperty time;
-    private KeyValue keyValue;
     private boolean selected=false;
-    private KeyframePane keyframePane;
-    private Keyframe keyframe;
 
-    public KeyframeView(KeyframePane keyframePane) {
-        this(keyframePane,DEFAULT_WIDTH);
+    public KeyframeView() {
+        this(DEFAULT_WIDTH);
     }
 
-    public KeyframeView(KeyframePane keyframePane, double width) {
+    public KeyframeView(double width) {
         super(MIDDLE_KEYFRAME);
-        this.keyframePane=keyframePane;
         this.setFitWidth(width);
         this.setFitHeight(width);
-        time=new SimpleDoubleProperty(this, TIME_PROPERTY_NAME);
         DoubleBinding centerAnchorBinding = this.fitWidthProperty().multiply(-0.5);
         translateXProperty().bind(centerAnchorBinding);
     }
 
-    public double getTime() {
-        return time.doubleValue();
-    }
-    public void setTime(double time) {
-        this.time.set(time);
-    }
-    public KeyValue getKeyValue() {
-        return keyValue;
-    }
-    public void setKeyValue(KeyValue keyValue) {
-        this.keyValue = keyValue;
-    }
     public boolean isSelected() {
         return selected;
     }
@@ -72,4 +54,6 @@ public class KeyframeView extends ImageView {
 
         }
     }
+
+    public abstract double getTime();
 }

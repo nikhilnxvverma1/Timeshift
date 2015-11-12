@@ -4,25 +4,47 @@ import com.nikhil.controller.ItemViewController;
 import com.nikhil.view.custom.keyframe.KeyframePane;
 import javafx.beans.property.StringProperty;
 import javafx.scene.Node;
+import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
+import javafx.scene.control.Tooltip;
+import javafx.scene.layout.HBox;
 
 /**
- * Header metadata contains the name of a heading and acts as a parent for leaf metadata
+ * Header metadata contains the name of a heading and acts as a parent for leaf metadata.
  * Created by NikhilVerma on 11/11/15.
  */
 public class HeaderMetadata extends Metadata {
+    private ItemViewController itemViewController;
+
     public HeaderMetadata(String name, MetadataTag tag) {
+        this(name,tag,null);
+    }
+
+    public HeaderMetadata(String name, MetadataTag tag, ItemViewController itemViewController) {
         super(name, tag);
+        this.itemViewController = itemViewController;
     }
 
     public ItemViewController getItemViewController(){
-        return null;//null for root metadata
+        return itemViewController;
     }
 
     public Node getValueNode(){
-        return null;
+        return new Button("Reset");//TODO delegation and visual size
     }
 
-    public Node getOptionNode(){ return null; }
+    public Node getOptionNode(){
+        CheckBox visibility=new CheckBox();
+        visibility.setSelected(true);//TODO register listener
+        Tooltip.install(visibility, new Tooltip("Visible"));
+
+        CheckBox solo=new CheckBox();
+        Tooltip.install(solo,new Tooltip("Solo"));
+
+        CheckBox lock=new CheckBox();
+        Tooltip.install(lock,new Tooltip("Lock"));
+        return new HBox(visibility,solo,lock);
+    }
 
     public boolean isHeader(){
         return true;

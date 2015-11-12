@@ -14,13 +14,13 @@ import javafx.scene.layout.AnchorPane;
 import java.util.Collections;
 import java.util.Comparator;
 
-public class KeyframePane extends AnchorPane implements SelectionOverlap{
+public abstract class KeyframePane extends AnchorPane implements SelectionOverlap{
 	
 	private static final double DEFAULT_HEIGHT=10;
-	private double length;
-	private double totalTime;
+	protected double length;
+	protected double totalTime;
 	private double currentZoom=1;
-	private Metadata metadata;
+//	private Metadata metadata;
 	
 	private AnchorPane keyContainer;
 	private boolean dragMade=false;
@@ -28,9 +28,8 @@ public class KeyframePane extends AnchorPane implements SelectionOverlap{
 	private boolean collectedKeyAtPress=false;
 	private double lastDraggedX;
 	
-	
-	public KeyframePane(Metadata metadata,double totalTime, double length){
-		this.metadata=metadata;
+	public KeyframePane(double totalTime, double length){
+//		this.metadata=metadata;
 		this.length=length;
 		this.totalTime=totalTime;
 //		this.setStyle("-fx-background-color:rgb(0,0,0)");
@@ -44,7 +43,7 @@ public class KeyframePane extends AnchorPane implements SelectionOverlap{
                 double x = event.getX();
                 double y = event.getY();
                 collectedKeyAtPress=false;
-				KeyframeTreeView keyframeTable = metadata.getItemViewController().getCompositionViewController().getKeyframeTable();
+				KeyframeTreeView keyframeTable = getMetadata().getItemViewController().getCompositionViewController().getKeyframeTable();
                 KeyframeView keyAtPoint=findKeyAt(x, y);
                 if(keyAtPoint!=null){
                     if(!keyAtPoint.isSelected()){
@@ -72,7 +71,7 @@ public class KeyframePane extends AnchorPane implements SelectionOverlap{
 		addEventHandler(MouseEvent.MOUSE_DRAGGED, event -> {
             if((event.getButton()==MouseButton.PRIMARY)&&readyToMove){
 //                moveSelectedKeysBy(event.getX()-lastDraggedX);
-				KeyframeTreeView keyframeTable = metadata.getItemViewController().getCompositionViewController().getKeyframeTable();
+				KeyframeTreeView keyframeTable = getMetadata().getItemViewController().getCompositionViewController().getKeyframeTable();
 				keyframeTable.moveSelectedKeysBy(event.getX() - lastDraggedX);
             }
             lastDraggedX=event.getX();
@@ -153,54 +152,33 @@ public class KeyframePane extends AnchorPane implements SelectionOverlap{
 		//explicitly setting width is not needed
 	}
 
-	public void addKeyAt(double time,KeyValue keyValue){//TODO replace time, and key value by actual keyframe model
-		KeyframeView newKey=new KeyframeView(this);
-		newKey.setTime(time);
-		newKey.setKeyValue(keyValue);
-		newKey.setLayoutX(getLayoutXFor(newKey));
-		
-		//insert in the right spot
-		int index=0;
-		boolean indexFound=false;
-		KeyframeView firstKey=null,lastKey=null;
-		for (Node node : keyContainer.getChildren()) {
-
-			KeyframeView key = (KeyframeView) node;
-			if (newKey.getTime() > key.getTime()) {//new key greater than current key
-				indexFound = true;
-			}
-			if (!indexFound) {
-				index++;
-			}
-
-			if (firstKey == null) {
-				firstKey = key;
-			}
-			lastKey = key;
-		}
-		keyContainer.getChildren().add(index, newKey);
-	}
-	
-	/**
-	 * sorts all the timeValue keys on demand
-	 */
-	public void sortKeys(){
-		Collections.sort(keyContainer.getChildren(),new Comparator<Node>() {
-
-			@Override
-			public int compare(Node o1, Node o2) {
-				KeyframeView first=(KeyframeView)o1;
-				KeyframeView second=(KeyframeView)o2;
-				if(first.getTime()==second.getTime()){
-					return 0;
-				}else if(first.getTime()<second.getTime()){
-					return -1;
-				}else{
-					return 1;
-				}
-			}
-		});
-	}
+//	public void addKeyAt(double time,KeyValue keyValue){//TODO this method belongs to the concrete classes
+//		KeyframeView newKey=new KeyframeView(this);
+//		newKey.setTime(time);
+//		newKey.setKeyValue(keyValue);
+//		newKey.setLayoutX(getLayoutXFor(newKey));
+//
+//		//insert in the right spot
+//		int index=0;
+//		boolean indexFound=false;
+//		KeyframeView firstKey=null,lastKey=null;
+//		for (Node node : keyContainer.getChildren()) {
+//
+//			KeyframeView key = (KeyframeView) node;
+//			if (newKey.getTime() > key.getTime()) {//new key greater than current key
+//				indexFound = true;
+//			}
+//			if (!indexFound) {
+//				index++;
+//			}
+//
+//			if (firstKey == null) {
+//				firstKey = key;
+//			}
+//			lastKey = key;
+//		}
+//		keyContainer.getChildren().add(index, newKey);
+//	}
 	
 	public double timeAtX(double x){
 		double scaledLength=currentZoom*length;
@@ -260,7 +238,8 @@ public class KeyframePane extends AnchorPane implements SelectionOverlap{
 				double newLayoutX = key.getLayoutX()+dl;
 				key.setLayoutX(newLayoutX);
 				double time=timeAtX(newLayoutX);
-				key.setTime(time);
+//				key.setTime(time);
+				setKeyframeTime(key,time);
 			}
 		}
 		
@@ -479,4 +458,8 @@ public class KeyframePane extends AnchorPane implements SelectionOverlap{
 
 		return firstSelectedKeyframe;//this can also be null if nothing is selected
 	}
+
+	protected abstract Metadata getMetadata();
+
+	protected abstract void setKeyframeTime(KeyframeView keyframeView, double time);
 }

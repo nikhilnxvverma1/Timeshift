@@ -11,6 +11,7 @@ import com.nikhil.math.MathUtil;
 import com.nikhil.view.custom.DraggableTextValue;
 import com.nikhil.view.custom.DraggableTextValueDelegate;
 import com.nikhil.view.custom.keyframe.KeyframePane;
+import com.nikhil.view.custom.keyframe.TemporalKeyframePane;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.event.ActionEvent;
@@ -29,14 +30,6 @@ import java.util.Set;
  * Created by NikhilVerma on 13/10/15.
  */
 public class PolygonMetadata extends Metadata{
-
-    private static final Random random=new Random();//only experimentation purposes
-    public static final short HEADER_TAG=1;
-    public static final short SCALE_TAG=2;
-    public static final short ROTATION_TAG=3;
-    public static final short TRANSLATION_TAG=4;
-    public static final short ANCHOR_POINT_TAG=5;
-    public static final short VERTICES_TAG=6;
 
     private KeyframePane keyframePane;
     private PolygonViewController polygonViewController;
@@ -321,18 +314,7 @@ public class PolygonMetadata extends Metadata{
     }
 
     public KeyframePane initKeyframePane(double width){
-        if(keyframePane!=null){
-            return keyframePane;
-        }
-        keyframePane = new KeyframePane(this,30, width);//TODO remove hardcode
-        int r=random.nextInt(10);
-        for (int i = 0; i < r; i++) {
-            keyframePane.addKeyAt(random.nextInt(30), null);
-        }
-        keyframePane.layoutXProperty().addListener((observable, oldValue, newValue) -> {
-            ((DoubleProperty)observable).set(0);//downcast to double because we know that layoutx is a double property
-        });
-        return keyframePane;
+        return null;
     }
 
     @Override

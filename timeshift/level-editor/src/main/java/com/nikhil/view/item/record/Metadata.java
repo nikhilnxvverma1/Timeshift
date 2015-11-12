@@ -16,6 +16,7 @@ import java.util.Random;
  */
 public abstract class Metadata { //TODO ideally this should be an abstract class. But just because of "Root" node its not
 
+    protected static final Random random=new Random();//only experimentation purposes
     public static final double CELL_HEIGHT= 25;
     public static final short ROOT_TAG=-1;
     protected StringProperty nameProperty;

@@ -8,6 +8,8 @@ import com.nikhil.math.MathUtil;
 import com.nikhil.view.custom.DraggableTextValue;
 import com.nikhil.view.custom.DraggableTextValueDelegate;
 import com.nikhil.view.custom.keyframe.KeyframePane;
+import com.nikhil.view.custom.keyframe.TemporalKeyframePane;
+import javafx.beans.property.DoubleProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -23,6 +25,8 @@ import javafx.scene.layout.HBox;
 public class TemporalMetadata extends Metadata{
 
     private ItemViewController itemViewController;
+    private TemporalKeyframePane keyframePane;
+
     private ChangeListener<? super Number>[]propertyListeners=null;//hold reference to prevent it from being garbage collected
     //TODO we might not need these, on remove from the scene graph , the buttons will be garbage collected
     private EventHandler<ActionEvent> selectPreviousKeyframe=e->{
@@ -49,8 +53,6 @@ public class TemporalMetadata extends Metadata{
     @Override
     public Node getValueNode() {
         switch (tag){
-            case HEADER:
-                return new Button("Reset");//TODO delegation and visual size
             case SCALE:
                 return getScaleValueNode();
             case ROTATION:
@@ -80,13 +82,24 @@ public class TemporalMetadata extends Metadata{
     }
 
     @Override
-    public KeyframePane initKeyframePane(double width) {
-        return null;
+    public KeyframePane initKeyframePane(double width){
+//        if(keyframePane!=null){
+//            return keyframePane;
+//        }
+//        keyframePane = new TemporalKeyframePane(30, width,this);//TODO remove hardcode
+//        int r=random.nextInt(10);
+//        for (int i = 0; i < r; i++) {
+//            keyframePane.addKeyAt(random.nextInt(30), null);
+//        }
+//        keyframePane.layoutXProperty().addListener((observable, oldValue, newValue) -> {
+//            ((DoubleProperty)observable).set(0);//downcast to double because we know that layoutx is a double property
+//        });
+        return keyframePane;
     }
 
     @Override
     public KeyframePane getKeyframePane() {
-        return null;
+        return keyframePane;
     }
 
     private HBox getScaleValueNode(){

@@ -294,6 +294,7 @@ public class PolygonViewController extends ShapeViewController implements Polygo
     @Override
     public TreeItem<Metadata> getMetadataTree() {
         if(metadataTree==null){
+            //using Polygon metadata everywhere
 //            TreeItem<Metadata> polygonHeader= new TreeItem<>(
 //                    new PolygonMetadata(polygonModelController.getPolygonModel().getName(), MetadataTag.HEADER,this));
 //            TreeItem<Metadata> polygonScale= new TreeItem<>(new PolygonMetadata("Scale", MetadataTag.SCALE,this));
@@ -301,13 +302,16 @@ public class PolygonViewController extends ShapeViewController implements Polygo
 //            TreeItem<Metadata> polygonTranslation= new TreeItem<>(new PolygonMetadata("Translation", MetadataTag.TRANSLATION,this));
 //            TreeItem<Metadata> polygonAnchorPoint= new TreeItem<>(new PolygonMetadata("Anchor Point",  MetadataTag.ANCHOR_POINT, this));
 //            TreeItem<Metadata> polygonVertices= new TreeItem<>(new PolygonMetadata("Vertices",  MetadataTag.POLYGON_VERTEX_HEADER, this));
+
+            //using generic metadata wherever possible
             TreeItem<Metadata> polygonHeader= new TreeItem<>(
-                    new HeaderMetadata(polygonModelController.getPolygonModel().getName(), MetadataTag.HEADER));
+                    new HeaderMetadata(polygonModelController.getPolygonModel().getName(), MetadataTag.HEADER,this));
             TreeItem<Metadata> polygonScale= new TreeItem<>(new TemporalMetadata("Scale", MetadataTag.SCALE,this));
             TreeItem<Metadata> polygonRotation= new TreeItem<>(new TemporalMetadata("Rotation", MetadataTag.ROTATION,this));
             TreeItem<Metadata> polygonTranslation= new TreeItem<>(new SpatialMetadata("Translation", MetadataTag.TRANSLATION,this));
             TreeItem<Metadata> polygonAnchorPoint= new TreeItem<>(new SpatialMetadata("Anchor Point",  MetadataTag.ANCHOR_POINT, this));
             TreeItem<Metadata> polygonVertices= new TreeItem<>(new PolygonMetadata("Vertices",  MetadataTag.POLYGON_VERTEX_HEADER,this));
+
             polygonHeader.getChildren().addAll(polygonScale, polygonRotation, polygonTranslation, polygonAnchorPoint, polygonVertices);
             metadataTree=polygonHeader;
         }
