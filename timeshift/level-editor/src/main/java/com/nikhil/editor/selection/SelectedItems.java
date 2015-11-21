@@ -6,6 +6,8 @@ import com.nikhil.controller.ShapeViewController;
 import com.nikhil.editor.workspace.Workspace;
 import com.nikhil.logging.Logger;
 import com.nikhil.math.MathUtil;
+import com.nikhil.timeline.KeyValue;
+import com.nikhil.view.item.record.MetadataTag;
 import javafx.event.EventHandler;
 import javafx.geometry.BoundingBox;
 import javafx.geometry.Bounds;
@@ -291,14 +293,19 @@ public class SelectedItems extends Group implements EventHandler<MouseEvent>{
             Point2D wrtOutline=rotationHandle.localToParent(x,y);
             double angleWrtCenter = MathUtil.angleOfPoint(0, 0, wrtOutline.getX(), wrtOutline.getY());
             double dRotation=angleWrtCenter-temporaryValue2;//subtract the offset for the rotation handle
-            shapeViewController.rotateBy(dRotation);
-            this.setRotate(this.getRotate()+dRotation);
+            double oldValue=shapeViewController.getRotation();
+            double newValue=shapeViewController.rotateBy(dRotation);
+            shapeViewController.getTemporalMetadata(MetadataTag.ROTATION).
+                    registerContinuousChange(new KeyValue(oldValue), new KeyValue(newValue));
+            this.setRotate(this.getRotate() + dRotation);
         }else{
             //Push the rotation command on the command stack without executing it.
             double initialAngle=temporaryValue1;
             double finalAngle=shapeViewController.getRotation();
             RotateShape rotateShape=new RotateShape(shapeViewController,initialAngle,finalAngle);
-            workspace.pushCommand(rotateShape,false);
+            shapeViewController.getTemporalMetadata(MetadataTag.ROTATION).
+                    pushWithKeyframe(rotateShape,false);
+
             this.updateView();
         }
     }
@@ -326,16 +333,20 @@ public class SelectedItems extends Group implements EventHandler<MouseEvent>{
             double oldWidth=getLayoutBounds().getWidth();
             double expectedSelectionScale=newWidth/oldWidth;
             double dScale= expectedSelectionScale - 1;
-            boolean didScale = shapeViewController.scaleBy(dScale);
-            if(didScale){
+            double oldScale=shapeViewController.getScale();
+            double newScale = shapeViewController.scaleBy(dScale);
+            if(newScale!=oldScale){//if there was a change
                 temporaryValue2+=dScale;
+                shapeViewController.getTemporalMetadata(MetadataTag.SCALE).
+                        registerContinuousChange(new KeyValue(oldScale), new KeyValue(newScale));
             }
             updateView();
         }else{
             double initialScale=temporaryValue1;
             double finalScale=initialScale+temporaryValue2;
             ScaleShape scaleShape =new ScaleShape(shapeViewController,initialScale,finalScale);
-            workspace.pushCommand(scaleShape,false);
+            shapeViewController.getTemporalMetadata(MetadataTag.SCALE).
+                    pushWithKeyframe(scaleShape,false);
         }
 
     }
@@ -386,7 +397,7 @@ public class SelectedItems extends Group implements EventHandler<MouseEvent>{
     }
 
     public Set<ItemViewController> getItemSetForNewCommand(){
-        Command topCommand=workspace.getTopCommandOnCommandStack();
+        Command topCommand=workspace.peekCommandStack();
         if(topCommand instanceof ActionOnItemSet){
 
             //if top command is an action on multiple items

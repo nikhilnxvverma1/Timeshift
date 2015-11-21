@@ -70,4 +70,9 @@ public class HeaderMetadata extends Metadata {
     public void cleanUp(){
 
     }
+
+    @Override
+    public Node getNameNode() {
+        return null;
+    }
 }

@@ -352,9 +352,9 @@ public class Workspace  {
      * and pushes that command on the undo stack
      */
     public void undo() {
-        Logger.log("Undoing");
         try {
             Command command=commandStack.pop();
+            Logger.log("Undoing "+command.getClass().getSimpleName());
             command.unexecute();
             undoStack.push(command);
 
@@ -369,9 +369,9 @@ public class Workspace  {
      * and pushes that command on the command stack
      */
     public void redo() {
-        Logger.log("Redoing");
         try {
             Command command= undoStack.pop();
+            Logger.log("Redoing "+command.getClass().getSimpleName());
             command.execute();
             commandStack.push(command);
         } catch (EmptyStackException e) {
@@ -381,7 +381,7 @@ public class Workspace  {
 
     }
 
-    public Command getTopCommandOnCommandStack(){
+    public Command peekCommandStack(){
         Command topCommand = null;
         try {
             topCommand = commandStack.peek();

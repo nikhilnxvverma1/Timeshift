@@ -50,4 +50,9 @@ public abstract class Metadata { //TODO ideally this should be an abstract class
      */
     public abstract KeyframePane initKeyframePane(double width);
     public abstract KeyframePane getKeyframePane();
+
+    public abstract Node getNameNode();
+    public boolean isKeyframable(){
+        return false;
+    }
 }

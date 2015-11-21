@@ -3,6 +3,7 @@ package com.nikhil.view.custom.keyframe;
 import com.nikhil.editor.selection.SelectionArea;
 import com.nikhil.editor.selection.SelectionOverlap;
 import com.nikhil.timeline.KeyValue;
+import com.nikhil.timeline.keyframe.Keyframe;
 import com.nikhil.view.item.record.Metadata;
 import javafx.collections.ObservableList;
 import javafx.geometry.Bounds;
@@ -14,25 +15,27 @@ import javafx.scene.layout.AnchorPane;
 import java.util.Collections;
 import java.util.Comparator;
 
+/**
+ * An abstract pane that contains all the keys along with other elements.
+ * Handles any keyframe events like selection(individual and combined) and movement.
+ * Note for subclasses: All {@link KeyframeView} nodes go to the "keyContainer" node.
+ */
 public abstract class KeyframePane extends AnchorPane implements SelectionOverlap{
 	
 	private static final double DEFAULT_HEIGHT=10;
 	protected double length;
 	protected double totalTime;
 	private double currentZoom=1;
-//	private Metadata metadata;
-	
-	private AnchorPane keyContainer;
+
+	protected AnchorPane keyContainer;
 	private boolean dragMade=false;
 	private boolean readyToMove=false;
 	private boolean collectedKeyAtPress=false;
 	private double lastDraggedX;
 	
 	public KeyframePane(double totalTime, double length){
-//		this.metadata=metadata;
 		this.length=length;
 		this.totalTime=totalTime;
-//		this.setStyle("-fx-background-color:rgb(0,0,0)");
 		this.setPrefHeight(DEFAULT_HEIGHT);
 		keyContainer=new AnchorPane();
 		keyContainer.setPrefSize(getPrefWidth(), getPrefHeight());
@@ -132,7 +135,7 @@ public abstract class KeyframePane extends AnchorPane implements SelectionOverla
 		
 	}
 
-	private double getLayoutXFor(KeyframeView key) {
+	protected double getLayoutXFor(KeyframeView key) {
 		double timeRatio=key.getTime()/totalTime;
 		double scaledLength=length*currentZoom;
 		return timeRatio*scaledLength;
@@ -152,34 +155,6 @@ public abstract class KeyframePane extends AnchorPane implements SelectionOverla
 		//explicitly setting width is not needed
 	}
 
-//	public void addKeyAt(double time,KeyValue keyValue){//TODO this method belongs to the concrete classes
-//		KeyframeView newKey=new KeyframeView(this);
-//		newKey.setTime(time);
-//		newKey.setKeyValue(keyValue);
-//		newKey.setLayoutX(getLayoutXFor(newKey));
-//
-//		//insert in the right spot
-//		int index=0;
-//		boolean indexFound=false;
-//		KeyframeView firstKey=null,lastKey=null;
-//		for (Node node : keyContainer.getChildren()) {
-//
-//			KeyframeView key = (KeyframeView) node;
-//			if (newKey.getTime() > key.getTime()) {//new key greater than current key
-//				indexFound = true;
-//			}
-//			if (!indexFound) {
-//				index++;
-//			}
-//
-//			if (firstKey == null) {
-//				firstKey = key;
-//			}
-//			lastKey = key;
-//		}
-//		keyContainer.getChildren().add(index, newKey);
-//	}
-	
 	public double timeAtX(double x){
 		double scaledLength=currentZoom*length;
 		double ratio=x/scaledLength;
@@ -245,6 +220,34 @@ public abstract class KeyframePane extends AnchorPane implements SelectionOverla
 		
 		//TODO rebuild keyframes
 	}
+
+//	public void addKeyAt(double time,KeyValue keyValue){//TODO this method belongs to the concrete classes
+//		KeyframeView newKey=new KeyframeView(this);
+//		newKey.setTime(time);
+//		newKey.setKeyValue(keyValue);
+//		newKey.setLayoutX(getLayoutXFor(newKey));
+//
+//		//insert in the right spot
+//		int index=0;
+//		boolean indexFound=false;
+//		KeyframeView firstKey=null,lastKey=null;
+//		for (Node node : keyContainer.getChildren()) {
+//
+//			KeyframeView key = (KeyframeView) node;
+//			if (newKey.getTime() > key.getTime()) {//new key greater than current key
+//				indexFound = true;
+//			}
+//			if (!indexFound) {
+//				index++;
+//			}
+//
+//			if (firstKey == null) {
+//				firstKey = key;
+//			}
+//			lastKey = key;
+//		}
+//		keyContainer.getChildren().add(index, newKey);
+//	}
 
 	@Override
 	public void selectOverlappingItems(SelectionArea selectionArea, Bounds sceneBounds) {
@@ -457,6 +460,32 @@ public abstract class KeyframePane extends AnchorPane implements SelectionOverla
 		}
 
 		return firstSelectedKeyframe;//this can also be null if nothing is selected
+	}
+
+	/**
+	 * removes all keyframes from this keyframe pane
+	 * @return total number of keyframes removed
+	 */
+	public int removeAllKeyframes(){
+		int size = keyContainer.getChildren().size();
+		keyContainer.getChildren().removeAll();
+		return size;
+	}
+
+	/**
+	 * Finds the keyframe view for the given keyframe model, by linearly
+	 * iterating through all the keyframe views
+	 * @param keyframe keyframe model which is held in one of the keyframe views
+	 * @return keyframe view holding that keyframe model, null if it was not found
+	 */
+	public KeyframeView findKeyframeView(Keyframe keyframe){
+		for(Node node: keyContainer.getChildren()){
+			KeyframeView keyframeView=(KeyframeView)node;
+			if(keyframeView.getKeyframeModel()==keyframe){
+				return keyframeView;
+			}
+		}
+		return null;
 	}
 
 	protected abstract Metadata getMetadata();

@@ -16,6 +16,7 @@ public class TemporalKeyframeChangeNode extends ChangeNode {
     private TemporalKeyframe last;//only needed for quickly finding the ending time
     private KeyValue currentValue;
     private TemporalChangeHandler changeHandler;
+    private TemporalKeyframe nearestAccessedKeyframe;//cache to reduce time taken when finding a keyframe at a given time
 
     /**
      * Creates a new TemporalKeyframeChangeNode with no change handler
@@ -55,6 +56,22 @@ public class TemporalKeyframeChangeNode extends ChangeNode {
 
     public KeyValue getCurrentValue() {
         return currentValue;
+    }
+
+    public TemporalKeyframe getStart() {
+        return start;
+    }
+
+    public void setStart(TemporalKeyframe start) {
+        this.start = start;
+    }
+
+    public TemporalKeyframe getLast() {
+        return last;
+    }
+
+    public void setLast(TemporalKeyframe last) {
+        this.last = last;
     }
 
     /**
@@ -143,6 +160,26 @@ public class TemporalKeyframeChangeNode extends ChangeNode {
             keyframe.getPrevious().setNext(keyframe.getNext());
             keyframe.getNext().setPrevious(keyframe.getPrevious());
         }
+
+        //if the removed keyframe is the nearest accessed keyframe, change it
+        if(keyframe==nearestAccessedKeyframe){
+            changeNearestAccessedKeyframe();
+        }
+    }
+
+    /**
+     * Changes the "cached" keyframe to the next keyframe if one exists.
+     * If a next doesn't exist and a previous keyframe exists,cache becomes
+     * that keyframe, otherwise it cache becomes null.
+     */
+    protected void changeNearestAccessedKeyframe(){
+        if(nearestAccessedKeyframe.getNext()!=null){
+            nearestAccessedKeyframe=nearestAccessedKeyframe.getNext();
+        }else if(nearestAccessedKeyframe.getPrevious()!=null){
+            nearestAccessedKeyframe=nearestAccessedKeyframe.getPrevious();
+        }else{
+            nearestAccessedKeyframe=null;
+        }
     }
 
     /**
@@ -208,5 +245,67 @@ public class TemporalKeyframeChangeNode extends ChangeNode {
         if(changeHandler!=null){
             changeHandler.valueChanged(this);
         }
+    }
+
+    /**
+     * Finds a nearby keyframe (if any) for the given time and margin.
+     * Practically, this is an O(1) operation if you are seeking through the timeline
+     * because the nearest keyframe is cached, otherwise its O(n)
+     * @param time time near which a keyframe needs to be found
+     * @param nearByMargin defines a range around a time, between which keyframes are considered acceptable.
+     *                     This must always be >=0.
+     * @return a nearby keyframe if it exists within margin,else null (null, also in case of empty list)
+     */
+    public TemporalKeyframe findNearbyKeyframe(double time,double nearByMargin){
+        if(start==null){
+            return null;
+        }
+        
+        if(nearestAccessedKeyframe==null) {
+            nearestAccessedKeyframe=start;
+        }
+
+        //this is what we will return
+        TemporalKeyframe nearest=null;
+        double currentNearestCloseness = Math.abs(nearestAccessedKeyframe.getTime() - time);
+        if (currentNearestCloseness <= nearByMargin) {
+            nearest = nearestAccessedKeyframe;
+        } else {
+
+            TemporalKeyframe possiblyNearer = null;
+
+            //search in the forward direction
+            if (nearestAccessedKeyframe.getTime() + nearByMargin < time) {
+                TemporalKeyframe t = nearestAccessedKeyframe.getNext();
+                possiblyNearer=nearestAccessedKeyframe.getNext();
+                while (t != null && (t.getTime() < time || t.getTime() - nearByMargin < time)) {
+                    possiblyNearer = t;
+                    t = t.getNext();
+                }
+            }
+            //search in the backward direction
+            else {
+                TemporalKeyframe t = nearestAccessedKeyframe.getPrevious();
+                possiblyNearer=nearestAccessedKeyframe.getPrevious();
+                while (t != null && (t.getTime() > time || t.getTime() - nearByMargin > time)) {
+                    possiblyNearer = t;
+                    t = t.getPrevious();
+                }
+            }
+
+            //update nearestAccessedKeyframe only if it is closer
+            if (possiblyNearer != null) {
+                double closeness = Math.abs(possiblyNearer.getTime() - time);
+                if (closeness < currentNearestCloseness) {
+                    nearestAccessedKeyframe = possiblyNearer;
+
+                    //also if it less than the nearby margin ,this becomes the return value
+                    if (closeness <= nearByMargin) {
+                        nearest = possiblyNearer;
+                    }
+                }
+            }
+        }
+        return nearest;
     }
 }

@@ -87,7 +87,6 @@ public class PolygonView extends Path{
     }
 
     public double getScale() {
-
         return getScaleX();
     }
 

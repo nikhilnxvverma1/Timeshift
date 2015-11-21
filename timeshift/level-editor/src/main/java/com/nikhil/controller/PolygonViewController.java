@@ -1,8 +1,6 @@
 package com.nikhil.controller;
 
 import com.nikhil.command.MovePolygonPoint;
-import com.nikhil.common.Observer;
-import com.nikhil.common.Subject;
 import com.nikhil.controller.item.ItemModelController;
 import com.nikhil.controller.item.PolygonModelController;
 import com.nikhil.editor.gizmo.GizmoVisibilityOption;
@@ -27,12 +25,11 @@ import java.util.List;
  */
 public class PolygonViewController extends ShapeViewController implements PolygonViewDelegate {
 
-//    public static final short HEADER_TAG=1;
-//    public static final short SCALE_TAG=2;
-//    public static final short ROTATION_TAG=3;
-//    public static final short TRANSLATION_TAG=4;
-//    public static final short ANCHOR_POINT_TAG=5;
-//    public static final short VERTICES_TAG=6;
+    public static final int SCALE_INDEX=0;
+    public static final int ROTATION_INDEX=1;
+    public static final int TRANSLATION_INDEX=2;
+    public static final int ANCHOR_POINT_INDEX=3;
+    public static final int VERTEX_HEADER_INDEX=4;
 
     private PolygonModelController polygonModelController;
     private PolygonView polygonView;
@@ -207,13 +204,13 @@ public class PolygonViewController extends ShapeViewController implements Polygo
     }
 
     @Override
-    public boolean scaleBy(double dScale) {
+    public double scaleBy(double dScale) {
 
         //change scale component of the view and gizmo
         double oldScale = polygonView.getScale();
         double newScale=dScale+ oldScale;
         if(newScale<0.1){
-            return false;
+            return polygonView.getScale();
         }
         polygonView.setScale(newScale);
         polygonGizmo.updateView();
@@ -221,7 +218,7 @@ public class PolygonViewController extends ShapeViewController implements Polygo
         //TODO convert to work point scale and update the business model
         double workScale=newScale;
         polygonModelController.getPolygonModel().setScale((float)workScale);//TODO change types
-        return true;
+        return polygonView.getScale();
     }
 
     @Override
@@ -232,7 +229,7 @@ public class PolygonViewController extends ShapeViewController implements Polygo
     }
 
     @Override
-    public boolean rotateBy(double dAngle) {
+    public double rotateBy(double dAngle) {
         //change rotation component of the view and gizmo
         double oldRotation= polygonView.getRotate();
         double newRotation=dAngle+ oldRotation;
@@ -243,7 +240,7 @@ public class PolygonViewController extends ShapeViewController implements Polygo
         //TODO convert to work point scale and update the business model
         double workRotation=newRotation;
         polygonModelController.getPolygonModel().setRotation((float)workRotation);//TODO change types
-        return true;
+        return newRotation;
     }
 
     @Override
@@ -306,29 +303,69 @@ public class PolygonViewController extends ShapeViewController implements Polygo
             //using generic metadata wherever possible
             TreeItem<Metadata> polygonHeader= new TreeItem<>(
                     new HeaderMetadata(polygonModelController.getPolygonModel().getName(), MetadataTag.HEADER,this));
-            TreeItem<Metadata> polygonScale= new TreeItem<>(new TemporalMetadata("Scale", MetadataTag.SCALE,this));
-            TreeItem<Metadata> polygonRotation= new TreeItem<>(new TemporalMetadata("Rotation", MetadataTag.ROTATION,this));
-            TreeItem<Metadata> polygonTranslation= new TreeItem<>(new SpatialMetadata("Translation", MetadataTag.TRANSLATION,this));
-            TreeItem<Metadata> polygonAnchorPoint= new TreeItem<>(new SpatialMetadata("Anchor Point",  MetadataTag.ANCHOR_POINT, this));
+            TreeItem<Metadata> polygonScale= new TreeItem<>(new TemporalMetadata(MetadataTag.SCALE,
+                    polygonModelController.getPolygonModel().scaleChange(),
+                    this));
+            TreeItem<Metadata> polygonRotation= new TreeItem<>(new TemporalMetadata(MetadataTag.ROTATION,
+                    polygonModelController.getPolygonModel().rotationChange(),
+                    this));
+            TreeItem<Metadata> polygonTranslation= new TreeItem<>(new SpatialMetadata(MetadataTag.TRANSLATION,
+                    polygonModelController.getPolygonModel().translationChange(),
+                    this));
+            TreeItem<Metadata> polygonAnchorPoint= new TreeItem<>(new SpatialMetadata(MetadataTag.ANCHOR_POINT,
+                    polygonModelController.getPolygonModel().anchorPointChange(),
+                    this));
             TreeItem<Metadata> polygonVertices= new TreeItem<>(new PolygonMetadata("Vertices",  MetadataTag.POLYGON_VERTEX_HEADER,this));
 
-            polygonHeader.getChildren().addAll(polygonScale, polygonRotation, polygonTranslation, polygonAnchorPoint, polygonVertices);
+            polygonHeader.getChildren().add(SCALE_INDEX,polygonScale);
+            polygonHeader.getChildren().add(ROTATION_INDEX,polygonRotation);
+            polygonHeader.getChildren().add(TRANSLATION_INDEX,polygonTranslation);
+            polygonHeader.getChildren().add(ANCHOR_POINT_INDEX,polygonAnchorPoint);
+            polygonHeader.getChildren().add(VERTEX_HEADER_INDEX,polygonVertices);
             metadataTree=polygonHeader;
         }
         return metadataTree;
     }
 
     @Override
-    public void refreshMetadata() { //TODO if unused ,get rid of it
-        for(TreeItem<Metadata> treeItem: metadataTree.getChildren()){
-            Metadata metadata=treeItem.getValue();
+    public Shape getItemView() {
+        return polygonView;
+    }
 
+    @Override
+    public boolean isKeyframableProperty(MetadataTag tag) {
+        switch (tag){
+            case POLYGON_VERTEX:
+            case POLYGON_VERTEX_HEADER:
+                return metadataTree.getChildren().get(VERTEX_HEADER_INDEX).getValue().isKeyframable();
+            default:
+                return super.isKeyframableProperty(tag);
         }
     }
 
     @Override
-    public Shape getItemView() {
-        return polygonView;
+    public TemporalMetadata getTemporalMetadata(MetadataTag tag) {
+        switch (tag){
+
+            case SCALE:
+                return (TemporalMetadata)metadataTree.getChildren().get(SCALE_INDEX).getValue();
+            case ROTATION:
+                return (TemporalMetadata)metadataTree.getChildren().get(ROTATION_INDEX).getValue();
+            default:
+                return null;
+        }
+    }
+
+    @Override
+    public SpatialMetadata getSpatialMetadata(MetadataTag tag) {
+        switch (tag){
+            case TRANSLATION:
+                return (SpatialMetadata)metadataTree.getChildren().get(TRANSLATION_INDEX).getValue();
+            case ANCHOR_POINT:
+                return (SpatialMetadata)metadataTree.getChildren().get(ANCHOR_POINT_INDEX).getValue();
+            default:
+                return null;
+        }
     }
 
     //=============================================================================================

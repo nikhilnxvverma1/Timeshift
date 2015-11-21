@@ -1,15 +1,12 @@
 package com.nikhil.command;
 
-import com.nikhil.controller.ItemViewController;
 import com.nikhil.controller.ShapeViewController;
-import com.nikhil.editor.selection.SelectedItems;
-
-import java.util.Set;
+import com.nikhil.timeline.KeyValue;
 
 /**
  * Created by NikhilVerma on 21/09/15.
  */
-public class ScaleShape extends ActionOnSingleItem{
+public class ScaleShape extends TemporalActionOnSingleItem {
 
     private double initialScale;
     private double finalScale;
@@ -35,4 +32,13 @@ public class ScaleShape extends ActionOnSingleItem{
         makeSelectionOfThisShape();
     }
 
+    @Override
+    public KeyValue getInitialValue() {
+        return new KeyValue(initialScale);
+    }
+
+    @Override
+    public KeyValue getFinalValue() {
+        return new KeyValue(finalScale);
+    }
 }

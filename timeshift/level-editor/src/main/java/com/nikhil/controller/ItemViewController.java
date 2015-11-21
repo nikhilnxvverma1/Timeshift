@@ -4,6 +4,9 @@ import com.nikhil.controller.item.ItemModelController;
 import com.nikhil.editor.workspace.Workspace;
 import com.nikhil.view.item.delegate.ItemViewDelegate;
 import com.nikhil.view.item.record.Metadata;
+import com.nikhil.view.item.record.MetadataTag;
+import com.nikhil.view.item.record.SpatialMetadata;
+import com.nikhil.view.item.record.TemporalMetadata;
 import javafx.geometry.Bounds;
 import javafx.scene.control.TreeItem;
 import javafx.scene.shape.Shape;
@@ -46,8 +49,20 @@ public abstract class ItemViewController implements ItemViewDelegate {
     public abstract void hoveredOver(boolean isHoveringOver, boolean isSelected);
     public abstract Bounds getLayoutBoundsInWorksheet();
     public abstract void moveBy(double dx, double dy);
-    public abstract boolean rotateBy(double dAngle);
-    public abstract boolean scaleBy(double dScale);
+
+    /**
+     * rotates the item by a specified delta angle
+     * @param dAngle the delta angle by which to rotate (in degrees).This can be negative
+     * @return the new angle of the item
+     */
+    public abstract double rotateBy(double dAngle);
+
+    /**
+     * scales the shape by specified difference
+     * @param dScale the margin by which to scale.This can be negative
+     * @return the new scale of the item
+     */
+    public abstract double scaleBy(double dScale);
     public abstract boolean overlapsWithSceneBounds(Bounds sceneBounds);
     public abstract void hasSelectionFocus(boolean isSelected);
     public abstract void hasSelectionFocus(boolean isSelected,boolean isSelectedInDetail);
@@ -58,7 +73,32 @@ public abstract class ItemViewController implements ItemViewDelegate {
     public abstract ItemViewController clone();
     /**@return returns the metadata that contains all information about the properties of this item(lazily created)*/
     public abstract TreeItem<Metadata> getMetadataTree();
-    /** call this method anytime the properties change so as to refresh the metadata*/
-    public abstract void refreshMetadata();
     public abstract Shape getItemView();
+
+    /**@return true if the property is keyframable based on the associated metadata for that property*/
+    public boolean isKeyframableProperty(MetadataTag tag){
+        TemporalMetadata temporalMetadata = getTemporalMetadata(tag);
+        if(temporalMetadata!=null){
+            return temporalMetadata.isKeyframable();
+        }
+        SpatialMetadata spatialMetadata=getSpatialMetadata(tag);
+        if(spatialMetadata!=null){
+            return spatialMetadata.isKeyframable();
+        }
+        return false;
+    }
+
+    /**
+     * fetches the associated temporal metadata property for the tag.
+     * @param tag tag for which the temporal metadata is required
+     * @return Temporal metadata for the tag, null if this is an irrelevant tag for the item
+     */
+    public abstract TemporalMetadata getTemporalMetadata(MetadataTag tag);
+    /**
+     * fetches the associated spatial metadata property for the tag.
+     * @param tag tag for which the spatial metadata is required
+     * @return Spatial metadata for the tag, null if this is an irrelevant tag for the item
+     */
+    public abstract SpatialMetadata getSpatialMetadata(MetadataTag tag);
+
 }

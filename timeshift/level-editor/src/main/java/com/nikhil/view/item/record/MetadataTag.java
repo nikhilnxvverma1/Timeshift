@@ -15,5 +15,29 @@ public enum MetadataTag {
 
     //Polygon
     POLYGON_VERTEX_HEADER,
-    POLYGON_VERTEX
+    POLYGON_VERTEX;
+
+    @Override
+    public String toString() {
+        switch (this){
+
+            case ROOT:
+                return "Root";
+            case HEADER:
+                return "Header";
+            case SCALE:
+                return "Scale";
+            case ROTATION:
+                return "Rotation";
+            case TRANSLATION:
+                return "Translation";
+            case ANCHOR_POINT:
+                return "Translation";
+            case POLYGON_VERTEX_HEADER:
+                return "Vertices";
+            case POLYGON_VERTEX:
+                return "Vertex";
+        }
+        return null;
+    }
 }

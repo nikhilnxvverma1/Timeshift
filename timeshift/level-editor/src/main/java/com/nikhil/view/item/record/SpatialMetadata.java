@@ -5,6 +5,7 @@ import com.nikhil.controller.ItemViewController;
 import com.nikhil.controller.ShapeViewController;
 import com.nikhil.editor.selection.SelectedItems;
 import com.nikhil.editor.workspace.Workspace;
+import com.nikhil.timeline.change.spatial.SpatialKeyframeChangeNode;
 import com.nikhil.view.custom.DraggableTextValue;
 import com.nikhil.view.custom.DraggableTextValueDelegate;
 import com.nikhil.view.custom.keyframe.KeyframePane;
@@ -24,6 +25,9 @@ import java.util.Set;
 public class SpatialMetadata extends Metadata {
 
     private ItemViewController itemViewController;
+    private SpatialKeyframeChangeNode spatialKeyframeChangeNode;
+
+    private CheckBox keyframable;
 
     //TODO we might not need these, on remove from the scene graph , the buttons will be garbage collected
     private EventHandler<ActionEvent> selectPreviousKeyframe=e->{
@@ -36,11 +40,15 @@ public class SpatialMetadata extends Metadata {
     };
 
     private ChangeListener<? super Number>[]propertyListeners=null;//hold reference to prevent it from being garbage collected
-    public SpatialMetadata(String name, MetadataTag tag,ItemViewController itemViewController) {
-        super(name, tag);
+    public SpatialMetadata(MetadataTag tag,SpatialKeyframeChangeNode spatialKeyframeChangeNode,ItemViewController itemViewController) {
+        super(tag.toString(), tag);
+
         //TODO throw exception if inappropriate tag is given for a controller
         //for example rotation tag for a spatial metadata
         this.itemViewController=itemViewController;
+        this.spatialKeyframeChangeNode=spatialKeyframeChangeNode;
+        this.keyframable=new CheckBox();
+        this.keyframable.setSelected(false);
     }
 
     @Override
@@ -49,10 +57,18 @@ public class SpatialMetadata extends Metadata {
     }
 
     @Override
+    public Node getNameNode() {
+        return keyframable;
+    }
+
+    @Override
+    public boolean isKeyframable(){
+        return keyframable.isSelected();
+    }
+
+    @Override
     public Node getValueNode() {
         switch (tag){
-            case HEADER:
-                return new Button("Reset");//TODO delegation and visual size
             case TRANSLATION:
                 return getTranslationValueNode();
             case ANCHOR_POINT:
@@ -219,5 +235,6 @@ public class SpatialMetadata extends Metadata {
         });
         return new HBox(xValue,new Label(","),yValue);
     }
+
 
 }

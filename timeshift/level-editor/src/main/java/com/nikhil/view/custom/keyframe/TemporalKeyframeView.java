@@ -7,19 +7,24 @@ import com.nikhil.timeline.keyframe.TemporalKeyframe;
  */
 public class TemporalKeyframeView extends KeyframeView{
 
-    private TemporalKeyframe keyframe;
+    private TemporalKeyframe keyframeModel;
 
-    public TemporalKeyframeView(TemporalKeyframe keyframe) {
-        this(keyframe,DEFAULT_WIDTH);
+    public TemporalKeyframeView(TemporalKeyframe keyframeModel) {
+        this(keyframeModel,DEFAULT_WIDTH);
     }
 
-    public TemporalKeyframeView(TemporalKeyframe keyframe, double width) {
+    public TemporalKeyframeView(TemporalKeyframe keyframeModel, double width) {
         super(width);
-        this.keyframe=keyframe;
+        this.keyframeModel = keyframeModel;
     }
 
     @Override
     public double getTime() {
-        return keyframe.getTime();
+        return keyframeModel.getTime();
+    }
+
+    @Override
+    public TemporalKeyframe getKeyframeModel() {
+        return keyframeModel;
     }
 }

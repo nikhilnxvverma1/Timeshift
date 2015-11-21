@@ -36,15 +36,15 @@ public abstract class ShapeViewController extends ItemViewController {
     }
 
     @Override
-    public boolean rotateBy(double dAngle) {
+    public double rotateBy(double dAngle) {
         //TODO change rotation component
-        return false;
+        return getRotation();
     }
 
     @Override
-    public boolean scaleBy(double dScale) {
+    public double scaleBy(double dScale) {
         //TODO change scale component
-        return false;
+        return 0;
     }
 
     public abstract UtilPoint getTranslation();

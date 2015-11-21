@@ -321,4 +321,9 @@ public class PolygonMetadata extends Metadata{
     public KeyframePane getKeyframePane() {
         return keyframePane;
     }
+
+    @Override
+    public Node getNameNode() {
+        return null;
+    }
 }

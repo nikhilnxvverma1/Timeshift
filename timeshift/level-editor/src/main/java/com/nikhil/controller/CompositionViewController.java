@@ -6,6 +6,7 @@ import com.nikhil.editor.workspace.Workspace;
 import com.nikhil.logging.Logger;
 import com.nikhil.view.custom.*;
 import com.nikhil.view.custom.cells.KeyframeCell;
+import com.nikhil.view.custom.cells.NameCell;
 import com.nikhil.view.custom.cells.OptionCell;
 import com.nikhil.view.custom.cells.ValueCell;
 import com.nikhil.view.custom.keyframe.KeyframeView;
@@ -41,7 +42,7 @@ public class CompositionViewController {
     private static final double NAME_COLUMN_WIDTH=175;
     private static final double VALUE_COLUMN_WIDTH=125;
     private static final double OPTION_COLUMN_WIDTH=100;
-    private static final double NEGLIGIBLE_TIME_DIFFERENCE=0.1;
+    public static final double NEGLIGIBLE_TIME_DIFFERENCE=0.1;
 
     private CompositionController compositionController;
     private Tab tab;
@@ -354,18 +355,19 @@ public class CompositionViewController {
 
     private TreeTableView<Metadata> initItemTable(TreeItem<Metadata> root){
 
-        TreeTableColumn<Metadata,String> name=new TreeTableColumn<>("Name");
-        name.setCellValueFactory(param -> param.getValue().getValue().nameProperty());
+        TreeTableColumn<Metadata,Metadata> name=new TreeTableColumn<>("Name");
+        name.setCellFactory(param -> new NameCell());
+        name.setCellValueFactory(param -> new SimpleObjectProperty<>(param.getValue().getValue()));
         name.setPrefWidth(NAME_COLUMN_WIDTH);
 
         TreeTableColumn<Metadata,Metadata> value=new TreeTableColumn<>("Value");
         value.setCellFactory(param -> new ValueCell());
-        value.setCellValueFactory(param -> new SimpleObjectProperty<Metadata>(param.getValue().getValue()));
+        value.setCellValueFactory(param -> new SimpleObjectProperty<>(param.getValue().getValue()));
         value.setPrefWidth(VALUE_COLUMN_WIDTH);
 
         TreeTableColumn<Metadata,Metadata> option=new TreeTableColumn<>("Option");
         option.setCellFactory(param -> new OptionCell());
-        option.setCellValueFactory(param -> new SimpleObjectProperty<Metadata>(param.getValue().getValue()));
+        option.setCellValueFactory(param -> new SimpleObjectProperty<>(param.getValue().getValue()));
         option.setPrefWidth(OPTION_COLUMN_WIDTH);
 
         TreeTableView<Metadata> treeTableView=new TreeTableView<>(root);
@@ -401,4 +403,9 @@ public class CompositionViewController {
         itemTable.getSelectionModel().select(headerTreeItem);
         keyframeTable.getSelectionModel().select(headerTreeItem);
     }
+
+    public double getTime(){
+        return thumbSeeker.getCurrentValueAcross(30);
+    }
+
 }

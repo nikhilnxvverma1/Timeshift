@@ -4,6 +4,7 @@ package com.nikhil.timeline;
  * A value of a property which could be multi-dimensional.
  * Once a dimension is set it cannot be changed,
  * although the values at those dimension can.
+ *
  * For example:
  * <ul>
  *     <li>1D value for rotation</li>
@@ -13,7 +14,7 @@ package com.nikhil.timeline;
  * </ul>
  * etc.
  * Internally it holds a double array which stores all these primitive values.
- *
+ * The term "KeyValue" suggests "Keyframe's Value" and not "Key-Value pairs"
  * @author Nikhil Verma 
  *
  */
@@ -49,7 +50,21 @@ public class KeyValue {
 	public double get(int index){
 		return values[index];
 	}
-	
+
+	/**
+	 * Sets the value of this keyframe from another KeyValue
+	 * @param copyFrom copies of all the values from this KeyValue.
+	 *                 If the dimension of argument KeyValue is lesser
+	 *                 than "this" KeyValue, it only copies up till
+	 *                 argument's dimension.If its greater, it copies
+	 *                 first n values up till "this" KeyValue's dimension.
+	 */
+	public void set(KeyValue copyFrom){
+		for (int i = 0; i < dimension && i < copyFrom.dimension; i++) {
+			values[i]=copyFrom.values[i];
+		}
+	}
+
 	/**
 	 * sets the value at specified index.
 	 * Mind the out of bound exception

@@ -56,4 +56,5 @@ public abstract class KeyframeView extends ImageView {
     }
 
     public abstract double getTime();
+    public abstract Keyframe getKeyframeModel();
 }
