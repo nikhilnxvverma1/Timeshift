@@ -58,6 +58,7 @@ public class Main extends Application {
 		primaryStage.show();//layout containers wont be initialized until primary stage is shown
 		MainWindowController controller = (MainWindowController) fxmlLoader.getController();
 		controller.init(fileToOpen);
+		scene.setOnKeyPressed(controller::keyPressed);
 		Logger.log("Primary stage is now live");
 
 	}

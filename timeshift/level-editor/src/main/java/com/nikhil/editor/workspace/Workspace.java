@@ -1,7 +1,9 @@
 package com.nikhil.editor.workspace;
 
+import com.nikhil.command.ActionOnKeyframes;
 import com.nikhil.command.Command;
 import com.nikhil.command.AddItemSet;
+import com.nikhil.command.DeleteKeyframes;
 import com.nikhil.controller.CompositionController;
 import com.nikhil.controller.CompositionViewController;
 import com.nikhil.controller.ItemViewController;
@@ -11,7 +13,10 @@ import com.nikhil.editor.XMLLoader;
 import com.nikhil.editor.selection.Clipboard;
 import com.nikhil.editor.selection.SelectedItems;
 import com.nikhil.logging.Logger;
+import com.nikhil.timeline.keyframe.Keyframe;
 import com.nikhil.util.modal.UtilPoint;
+import com.nikhil.view.custom.keyframe.KeyframeTreeView;
+import com.nikhil.view.custom.keyframe.KeyframeView;
 import com.nikhil.view.util.AlertBox;
 import com.nikhil.view.zoom.ZoomableScrollPane;
 import com.nikhil.xml.XMLWriter;
@@ -218,6 +223,39 @@ public class Workspace  {
         return totalItemsPasted;
     }
 
+    public void deleteSelectedKeyframes(){
+        pushCommand(new DeleteKeyframes(getReusableListOfKeyframesIfPossible()));
+    }
+
+    /**
+     * If the top command is also a collective action on keyframes, and has
+     * the same keyframes list, it returns that list, else creates a new one
+     * @return Linked list of selected keyframes which might be recycled from
+     * older commands
+     */
+    public LinkedList<KeyframeView> getReusableListOfKeyframesIfPossible(){
+
+        KeyframeTreeView keyframeTable = currentComposition.getKeyframeTable();
+
+        //check if the top command is also a collection action on keyframes
+        Command topCommand = peekCommandStack();
+        if((topCommand != null) && (topCommand instanceof ActionOnKeyframes)){
+            ActionOnKeyframes actionOnKeyframes=(ActionOnKeyframes)topCommand;
+
+            //reuse the same collection if top command is of the same type and contains same keyframes
+            if(actionOnKeyframes.containsSameKeyframesAsCurrentlySelected(keyframeTable)){
+                //return the same list for reuse
+                return actionOnKeyframes.getKeyframeViews();
+            }else{
+                //build a new list of selected keyframes
+                return keyframeTable.getSelectedKeys();
+            }
+        }else{
+            //build a new list of selected keyframes
+            return keyframeTable.getSelectedKeys();
+        }
+    }
+
     //=============================================================================================
     //File I/O
     //=============================================================================================
@@ -276,12 +314,6 @@ public class Workspace  {
     public String getWorkspaceTitle() {
         return file==null? UNTITLED :file.toString();
     }
-
-
-    //this method belongs to the individual compositions now
-//    public List<ItemViewController> getItemViewControllers() {
-//        return currentComposition.getItemViewControllers();
-//    }
 
     public ZoomableScrollPane getZoomableScrollPane() {
         return zoomableScrollPane;
@@ -345,8 +377,6 @@ public class Workspace  {
         }
     }
 
-
-
     /**
      * Pops from the command stack,Unexecutes the command,
      * and pushes that command on the undo stack
@@ -381,6 +411,10 @@ public class Workspace  {
 
     }
 
+    /**
+     * Gives the top of the command stack without popping anything from it
+     * @return the top (which might be null,if stack is empty)
+     */
     public Command peekCommandStack(){
         Command topCommand = null;
         try {

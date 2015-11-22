@@ -15,6 +15,8 @@ import javafx.fxml.FXML;
 import javafx.scene.Cursor;
 
 import javafx.scene.control.*;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
@@ -357,6 +359,15 @@ public class MainWindowController implements WorkspaceListener {
         boolean wasDeleted = workspace.deleteCurrentComposition();
         if(!wasDeleted){
             AlertBox.display("Last composition","At least one composition must exist");
+        }
+    }
+
+    public void keyPressed(KeyEvent keyEvent){
+
+        //delete selected keyframes when just delete is pressed
+        if((keyEvent.getCode()== KeyCode.DELETE||keyEvent.getCode()==KeyCode.BACK_SPACE) &&
+                !keyEvent.isMetaDown()){
+            workspace.deleteSelectedKeyframes();
         }
     }
 }

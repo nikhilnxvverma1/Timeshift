@@ -404,7 +404,7 @@ public class TemporalMetadata extends Metadata{
             }else{
                 //issue a add new keyframe command
                 recentAddKeyframeCommand =new AddTemporalKeyframe(this, currentTime, action.getInitialValue(),
-                        action.getFinalValue(),action);
+                        action, action.getFinalValue());
                 //push and execute
                 workspace.pushCommand(recentAddKeyframeCommand);
             }

@@ -8,14 +8,21 @@ import com.nikhil.timeline.keyframe.SpatialKeyframe;
 public class SpatialKeyframeView extends KeyframeView{
 
     private SpatialKeyframe keyframe;
+    private SpatialKeyframePane keyframePane;
 
-    public SpatialKeyframeView(SpatialKeyframe keyframe) {
-        this(keyframe,DEFAULT_WIDTH);
+    public SpatialKeyframeView(SpatialKeyframe keyframe,SpatialKeyframePane keyframePane) {
+        this(keyframe,keyframePane,DEFAULT_WIDTH);
     }
 
-    public SpatialKeyframeView(SpatialKeyframe keyframe,double width) {
+    public SpatialKeyframeView(SpatialKeyframe keyframe,SpatialKeyframePane keyframePane,double width) {
         super(width);
         this.keyframe = keyframe;
+        this.keyframePane=keyframePane;
+    }
+
+    @Override
+    public KeyframePane getKeyframePane() {
+        return keyframePane;
     }
 
     @Override
@@ -26,5 +33,16 @@ public class SpatialKeyframeView extends KeyframeView{
     @Override
     public SpatialKeyframe getKeyframeModel() {
         return keyframe;
+    }
+
+    @Override
+    public void addToParentKeyframePane() {
+        //TODO
+    }
+
+    @Override
+    public boolean removeFromParentKeyframePane() {
+        //TODO
+        return false;
     }
 }

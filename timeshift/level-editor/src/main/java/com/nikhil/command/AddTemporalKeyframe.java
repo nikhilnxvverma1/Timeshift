@@ -62,7 +62,7 @@ public class AddTemporalKeyframe implements Command{
      * @param initialValue initial value of the temporal keyframe change node
      */
     public AddTemporalKeyframe(TemporalMetadata temporalMetadata, double time,
-                               KeyValue initialValue,KeyValue finalValue,TemporalActionOnSingleItem continuousCommand) {
+                               KeyValue initialValue, TemporalActionOnSingleItem continuousCommand, KeyValue finalValue) {
         this.temporalMetadata = temporalMetadata;
         this.time = time;
         this.initialValue = initialValue;

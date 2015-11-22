@@ -41,12 +41,27 @@ public class TemporalKeyframePane extends KeyframePane{
 
         //create a new keyframe view which houses this keyframe mode, select it
         //and add it to the "keyContainer" node.
-        TemporalKeyframeView keyframeView=new TemporalKeyframeView(keyframeModel);
+        TemporalKeyframeView keyframeView=new TemporalKeyframeView(keyframeModel,this);
         keyframeView.setSelected(true);
         keyframeView.setLayoutX(getLayoutXFor(keyframeView));
         keyContainer.getChildren().add(keyframeView);
 
         return keyframeView;
+    }
+
+    /**
+     * Adds the supplied keyframe view to itself. Along with that the keyframe
+     * model is also pushed to the temporal keyframe change nod
+     * @param keyframeView the keyframe to add to the keyframe pane
+     */
+    public void addKeyframe(TemporalKeyframeView keyframeView){
+        //add the keyframe model to the temporal change node
+        metadata.getTemporalKeyframeChangeNode().addKeyframe(keyframeView.getKeyframeModel());
+
+        //select it and add it to the "keyContainer" node.
+        keyframeView.setSelected(true);
+        keyframeView.setLayoutX(getLayoutXFor(keyframeView));
+        keyContainer.getChildren().add(keyframeView);
     }
 
     /**

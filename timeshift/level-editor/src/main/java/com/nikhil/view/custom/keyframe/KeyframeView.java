@@ -55,6 +55,16 @@ public abstract class KeyframeView extends ImageView {
         }
     }
 
+    public abstract KeyframePane getKeyframePane();
     public abstract double getTime();
     public abstract Keyframe getKeyframeModel();
+
+    /** Adds itself to the parent keyframe pane*/
+    public abstract void addToParentKeyframePane();
+
+    /**
+     * Removes itself from the parent keyframe pane. The reference to parent still exists
+     * @return true if the data structure holding this changed, false otherwise
+     */
+    public abstract boolean removeFromParentKeyframePane();
 }

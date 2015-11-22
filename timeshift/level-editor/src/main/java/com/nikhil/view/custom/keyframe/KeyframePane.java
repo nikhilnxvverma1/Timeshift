@@ -14,6 +14,7 @@ import javafx.scene.layout.AnchorPane;
 
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.List;
 
 /**
  * An abstract pane that contains all the keys along with other elements.
@@ -486,6 +487,47 @@ public abstract class KeyframePane extends AnchorPane implements SelectionOverla
 			}
 		}
 		return null;
+	}
+
+	/**
+	 * Counts the number of selected keyframes
+	 * @return total selected keyframes
+	 */
+	public int countSelectedKeyframes(){
+		int count=0;
+		for(Node node:keyContainer.getChildren()){
+			KeyframeView keyframeView=(KeyframeView)node;
+			if(keyframeView.isSelected()){
+				count++;
+			}
+		}
+		return count;
+	}
+
+	/**
+	 * Checks if this pane contains the supplied keyframe view
+	 * @param keyframeView the keyframe view that needs to be checked for containment
+	 * @return true if the keyframe exists in this keyframe pane,false otherwise
+	 */
+	public boolean contains(KeyframeView keyframeView){
+		return keyContainer.getChildren().contains(keyframeView);
+	}
+
+	/**
+	 * fills the supplied list with the selected keyframes from this pane by appending to it
+	 * @param keyframeViewList the list collection which must be filled with selected keyframes
+	 * @return the number of additions from this pane to the list, or in other words, total selected keyframes
+	 */
+	public int fillWithSelectedKeyframes(List<KeyframeView> keyframeViewList){
+		int totalFilled=0;
+		for(Node node:keyContainer.getChildren()){
+			KeyframeView keyframeView=(KeyframeView)node;
+			if(keyframeView.isSelected()){
+				keyframeViewList.add(keyframeView);
+				totalFilled++;
+			}
+		}
+		return totalFilled;
 	}
 
 	protected abstract Metadata getMetadata();

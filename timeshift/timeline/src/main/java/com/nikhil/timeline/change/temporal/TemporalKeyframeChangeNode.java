@@ -93,6 +93,10 @@ public class TemporalKeyframeChangeNode extends ChangeNode {
                     newKeyframe);
         }
 
+        //new keyframe should never hold any old and/or outdated references
+        newKeyframe.setNext(null);
+        newKeyframe.setPrevious(null);
+
         if(start==null){
             start=newKeyframe;
             last=start;
@@ -150,6 +154,7 @@ public class TemporalKeyframeChangeNode extends ChangeNode {
                 start=null;
                 last=null;
             }else{
+                keyframe.getNext().setPrevious(null);
                 start=keyframe.getNext();
             }
         }else if(keyframe.getNext()==null){//last node

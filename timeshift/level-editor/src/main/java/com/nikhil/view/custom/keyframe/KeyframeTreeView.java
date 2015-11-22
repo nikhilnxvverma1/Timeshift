@@ -1,5 +1,6 @@
 package com.nikhil.view.custom.keyframe;
 
+import apple.laf.JRSUIUtils;
 import com.nikhil.editor.selection.SelectionArea;
 import com.nikhil.editor.selection.SelectionOverlap;
 import com.nikhil.view.custom.cells.KeyframeCell;
@@ -15,6 +16,8 @@ import javafx.scene.control.IndexedCell;
 import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeView;
 import javafx.scene.input.MouseEvent;
+
+import java.util.LinkedList;
 
 /**
  * Custom TreeView for Keyframe table that encapsulates and handles all events.
@@ -392,4 +395,70 @@ public class KeyframeTreeView extends TreeView<Metadata> implements SelectionOve
             }
         }
     }
+
+    /**
+     * Counts the number of selected keyframes from each keyframe pane
+     * @return total selected keyframes
+     */
+    public int countSelectedKeyframe(){
+        return countSelectedKeyframe(getRoot());
+    }
+
+    private int countSelectedKeyframe(TreeItem<Metadata>treeItem){
+        if(treeItem.getValue().isHeader()){
+            int total=0;
+            for(TreeItem<Metadata> child:treeItem.getChildren()){
+                total+=child.getValue().getKeyframePane().countSelectedKeyframes();
+            }
+            return total;
+        }else{
+            return treeItem.getValue().getKeyframePane().countSelectedKeyframes();
+        }
+    }
+
+    /**
+     * Checks if this tree view contains the supplied keyframe view
+     * @param keyframeView the keyframe view that needs to be checked for containment
+     * @return true if the keyframe exists in this keyframe pane,false otherwise
+     */
+    public boolean contains(KeyframeView keyframeView){
+        return contains(getRoot(),keyframeView);
+    }
+
+    private boolean contains(TreeItem<Metadata> treeItem,KeyframeView keyframeView){
+        if(treeItem.getValue().isHeader()){
+            for(TreeItem<Metadata> child:treeItem.getChildren()){
+                if (child.getValue().getKeyframePane().contains(keyframeView)) {
+                    return true;
+                }
+            }
+            return false;
+        }else{
+            return treeItem.getValue().getKeyframePane().contains(keyframeView);
+        }
+    }
+
+    /**
+     * Builds a linked list of selected keys by recursively visiting each keyframe pane
+     * @return Linked list of selected keys
+     */
+    public LinkedList<KeyframeView> getSelectedKeys(){
+        LinkedList<KeyframeView> selectedKeyframes=new LinkedList<>();
+        populateWithSelectedKeys(getRoot(),selectedKeyframes);
+        return selectedKeyframes;
+    }
+
+    private void populateWithSelectedKeys(TreeItem<Metadata> treeItem, LinkedList<KeyframeView> keyframeViewList){
+        if(treeItem.getValue().isHeader()){
+            for(TreeItem<Metadata> child:treeItem.getChildren()){
+                populateWithSelectedKeys(child,keyframeViewList);
+            }
+        }else {
+            KeyframePane keyframePane = treeItem.getValue().getKeyframePane();
+            if (keyframePane!=null) {
+                keyframePane.fillWithSelectedKeyframes(keyframeViewList);
+            }
+        }
+    }
+
 }
