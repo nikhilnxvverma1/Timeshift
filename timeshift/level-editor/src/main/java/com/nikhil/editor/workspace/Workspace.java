@@ -229,7 +229,8 @@ public class Workspace  {
 
     /**
      * If the top command is also a collective action on keyframes, and has
-     * the same keyframes list, it returns that list, else creates a new one
+     * the same keyframes list, it returns that list, else creates a new lise of
+     * selected keyframes from the <b>current</b> composition
      * @return Linked list of selected keyframes which might be recycled from
      * older commands
      */
@@ -372,6 +373,7 @@ public class Workspace  {
                 command.execute();
             }
             commandStack.push(command);
+            Logger.log(command.getClass().getSimpleName()+" Pushed");
             undoStack.removeAllElements();
             fileModified(true);
         }

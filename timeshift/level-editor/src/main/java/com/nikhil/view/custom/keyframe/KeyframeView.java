@@ -56,7 +56,25 @@ public abstract class KeyframeView extends ImageView {
     }
 
     public abstract KeyframePane getKeyframePane();
-    public abstract double getTime();
+
+    public double getTime(){
+        return getKeyframeModel().getTime();
+    }
+
+    /**
+     * Sets the time of the keyframe model and makes the view itself,
+     * in effect, adjusts in the keyframe pane
+     * @param time the new time of the keyframe
+     */
+    public void setTime(double time){
+
+        //move the keyframe view
+        double newLayoutX = getKeyframePane().getLayoutXFor(time);
+        this.setLayoutX(newLayoutX);
+
+        //set the time on the keyframe model
+        getKeyframeModel().setTime(time);
+    }
     public abstract Keyframe getKeyframeModel();
 
     /** Adds itself to the parent keyframe pane*/

@@ -21,13 +21,8 @@ public class TemporalKeyframeView extends KeyframeView{
     }
 
     @Override
-    public KeyframePane getKeyframePane() {
+    public TemporalKeyframePane getKeyframePane() {
         return keyframePane;
-    }
-
-    @Override
-    public double getTime() {
-        return keyframeModel.getTime();
     }
 
     @Override

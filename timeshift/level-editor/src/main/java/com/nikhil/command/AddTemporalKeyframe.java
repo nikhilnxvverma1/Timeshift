@@ -1,6 +1,7 @@
 package com.nikhil.command;
 
 import com.nikhil.timeline.KeyValue;
+import com.nikhil.timeline.keyframe.TemporalKeyframe;
 import com.nikhil.view.custom.keyframe.TemporalKeyframeView;
 import com.nikhil.view.item.record.TemporalMetadata;
 
@@ -26,55 +27,42 @@ import com.nikhil.view.item.record.TemporalMetadata;
  * Created by NikhilVerma on 13/11/15.
  */
 public class AddTemporalKeyframe implements Command{
-    private TemporalMetadata temporalMetadata;
-    private double time;
-    private KeyValue initialValue;
-    private KeyValue finalValue;
-    private boolean manual;
 
+    private boolean manual;
     private TemporalKeyframeView keyframeCreated;
     private TemporalActionOnSingleItem continuousCommand;
 
     /**
      * Creates a add temporal keyframe command
-     * @param temporalMetadata metadata invoking this constructor
-     * @param time current time of the composition
-     * @param initialValue initial value of the temporal keyframe change node
+     * @param keyframeCreated the keyframe view just created that needs to be added
      * @param manual false, if there is some continuous command that is allowed to follow this command.
      *                       For example: rotation command will happen after a rotation keyframe has been added.
      *                       If this keyframe is created through a manually(lets say through a add keyframe button),
      *                       this value should be true.
      */
-    public AddTemporalKeyframe(TemporalMetadata temporalMetadata, double time, KeyValue initialValue, boolean manual) {
-        this.temporalMetadata = temporalMetadata;
-        this.time = time;
-        this.initialValue = initialValue;
-        this.manual = manual;
-
-        //for non manual keyframes,the final value should will get set at the end of a continuous change
-        this.finalValue=initialValue;
+    public AddTemporalKeyframe(TemporalKeyframeView keyframeCreated, boolean manual) {
+        this.keyframeCreated=keyframeCreated;
+        this.manual = manual;//TODO this will always be false, if this constructor is invoked
     }
 
     /**
      * Creates a continuous add temporal keyframe command with final values known
-     * @param temporalMetadata metadata invoking this constructor
-     * @param time current time of the composition
-     * @param initialValue initial value of the temporal keyframe change node
+     * @param keyframeCreated the keyframe view just created that needs to be added
+     * @param continuousCommand the command that will be executed along with this add keyframe command
      */
-    public AddTemporalKeyframe(TemporalMetadata temporalMetadata, double time,
-                               KeyValue initialValue, TemporalActionOnSingleItem continuousCommand, KeyValue finalValue) {
-        this.temporalMetadata = temporalMetadata;
-        this.time = time;
-        this.initialValue = initialValue;
-        this.finalValue=finalValue;
+    public AddTemporalKeyframe(TemporalKeyframeView keyframeCreated, TemporalActionOnSingleItem continuousCommand) {
+        this.keyframeCreated=keyframeCreated;
         this.continuousCommand=continuousCommand;
         this.manual = true;
     }
 
     @Override
     public void execute() {
-        temporalMetadata.getItemViewController().getCompositionViewController().getKeyframeTable().resetSelection();
-        keyframeCreated=temporalMetadata.getKeyframePane().addKeyframe(time, finalValue);
+
+        //reset the selection of keyframes
+        keyframeCreated.getKeyframePane().getMetadata().getItemViewController().
+                getCompositionViewController().getKeyframeTable().resetSelection();
+        keyframeCreated.addToParentKeyframePane();
         if(continuousCommand!=null){
             continuousCommand.execute();
         }
@@ -85,7 +73,7 @@ public class AddTemporalKeyframe implements Command{
         if(continuousCommand!=null){
             continuousCommand.unexecute();//this will take care of reverting back to initial value
         }
-        temporalMetadata.getKeyframePane().removeKeyframe(keyframeCreated);
+        keyframeCreated.removeFromParentKeyframePane();
     }
 
     public TemporalActionOnSingleItem getContinuousCommand() {
@@ -105,6 +93,12 @@ public class AddTemporalKeyframe implements Command{
         this.continuousCommand = continuousCommand;
     }
 
+    /**
+     * Returns false, if this add command is continuous and is going to be followed by an end.
+     * For example: rotation command will happen after a rotation keyframe has been added.
+     * If this keyframe is created manually(lets say through a add keyframe button),
+     * this method will return true.
+     */
     public boolean isManual() {
         return manual;
     }
@@ -119,7 +113,7 @@ public class AddTemporalKeyframe implements Command{
      * @param finalValue the final value of the keyframe when a continuous change ends
      */
     public void setFinalValue(KeyValue finalValue) {
-        this.finalValue = finalValue;
+        keyframeCreated.getKeyframeModel().setKeyValue(finalValue);
     }
 
     /**

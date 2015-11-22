@@ -26,11 +26,6 @@ public class SpatialKeyframeView extends KeyframeView{
     }
 
     @Override
-    public double getTime() {
-        return keyframe.getTime();
-    }
-
-    @Override
     public SpatialKeyframe getKeyframeModel() {
         return keyframe;
     }

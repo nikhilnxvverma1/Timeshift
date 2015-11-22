@@ -23,7 +23,7 @@ public class TemporalKeyframePane extends KeyframePane{
     }
 
     @Override
-    protected void setKeyframeTime(KeyframeView keyframeView, double time) {
+    public void setKeyframeTime(KeyframeView keyframeView, double time) {
         //TODO shift keys and notify change
     }
 

@@ -408,11 +408,17 @@ public class KeyframeTreeView extends TreeView<Metadata> implements SelectionOve
         if(treeItem.getValue().isHeader()){
             int total=0;
             for(TreeItem<Metadata> child:treeItem.getChildren()){
-                total+=child.getValue().getKeyframePane().countSelectedKeyframes();
+                total+=countSelectedKeyframe(child);
             }
             return total;
         }else{
-            return treeItem.getValue().getKeyframePane().countSelectedKeyframes();
+
+            KeyframePane keyframePane = treeItem.getValue().getKeyframePane();
+            if (keyframePane!=null) {
+                return keyframePane.countSelectedKeyframes();
+            }else{
+                return 0;
+            }
         }
     }
 
@@ -428,13 +434,18 @@ public class KeyframeTreeView extends TreeView<Metadata> implements SelectionOve
     private boolean contains(TreeItem<Metadata> treeItem,KeyframeView keyframeView){
         if(treeItem.getValue().isHeader()){
             for(TreeItem<Metadata> child:treeItem.getChildren()){
-                if (child.getValue().getKeyframePane().contains(keyframeView)) {
+                if(contains(child,keyframeView)){
                     return true;
                 }
             }
             return false;
         }else{
-            return treeItem.getValue().getKeyframePane().contains(keyframeView);
+            KeyframePane keyframePane = treeItem.getValue().getKeyframePane();
+            if (keyframePane!=null) {
+                return keyframePane.contains(keyframeView);
+            }else{
+                return false;
+            }
         }
     }
 

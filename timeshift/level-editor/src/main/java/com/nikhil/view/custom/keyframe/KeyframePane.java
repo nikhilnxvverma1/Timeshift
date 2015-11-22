@@ -1,7 +1,10 @@
 package com.nikhil.view.custom.keyframe;
 
+import com.nikhil.command.MoveKeyframes;
+import com.nikhil.controller.CompositionViewController;
 import com.nikhil.editor.selection.SelectionArea;
 import com.nikhil.editor.selection.SelectionOverlap;
+import com.nikhil.editor.workspace.Workspace;
 import com.nikhil.timeline.KeyValue;
 import com.nikhil.timeline.keyframe.Keyframe;
 import com.nikhil.view.item.record.Metadata;
@@ -14,6 +17,7 @@ import javafx.scene.layout.AnchorPane;
 
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -29,11 +33,19 @@ public abstract class KeyframePane extends AnchorPane implements SelectionOverla
 	private double currentZoom=1;
 
 	protected AnchorPane keyContainer;
+
+	//used internally TODO make these static as well (if possible)
 	private boolean dragMade=false;
 	private boolean readyToMove=false;
 	private boolean collectedKeyAtPress=false;
-	private double lastDraggedX;
-	
+	/*
+	 * The following variables are used internally for handling the press-drag-release events.
+	 * These variables are static because only one keyframe pane will be handling this sequence of events
+	 * at any given time.So no point wasting memory keeping multiple copies of this variable
+	 */
+	private static double initialX;
+	private static double lastDraggedX;
+
 	public KeyframePane(double totalTime, double length){
 		this.length=length;
 		this.totalTime=totalTime;
@@ -41,7 +53,7 @@ public abstract class KeyframePane extends AnchorPane implements SelectionOverla
 		keyContainer=new AnchorPane();
 		keyContainer.setPrefSize(getPrefWidth(), getPrefHeight());
 		getChildren().add(keyContainer);
-		
+
 		addEventHandler(MouseEvent.MOUSE_PRESSED, event -> {
             if((event.getButton()==MouseButton.PRIMARY)){
                 double x = event.getX();
@@ -52,10 +64,8 @@ public abstract class KeyframePane extends AnchorPane implements SelectionOverla
                 if(keyAtPoint!=null){
                     if(!keyAtPoint.isSelected()){
                         if(!event.isShiftDown()){
-//                            resetSelection();
 							keyframeTable.resetSelection();
                         }
-//							keyAtPoint.setSelected(true);
                         selectKey(keyAtPoint, true);
                         collectedKeyAtPress=true;
                     }
@@ -63,18 +73,17 @@ public abstract class KeyframePane extends AnchorPane implements SelectionOverla
                 }else{
                     readyToMove=false;
                     if(!event.isShiftDown()){
-//                        resetSelection();
 						keyframeTable.resetSelection();
                     }
                 }
                 lastDraggedX=x;
+				initialX=x;
 
             }
         });
-		
+
 		addEventHandler(MouseEvent.MOUSE_DRAGGED, event -> {
             if((event.getButton()==MouseButton.PRIMARY)&&readyToMove){
-//                moveSelectedKeysBy(event.getX()-lastDraggedX);
 				KeyframeTreeView keyframeTable = getMetadata().getItemViewController().getCompositionViewController().getKeyframeTable();
 				keyframeTable.moveSelectedKeysBy(event.getX() - lastDraggedX);
             }
@@ -82,11 +91,24 @@ public abstract class KeyframePane extends AnchorPane implements SelectionOverla
             dragMade=true;
         });
 		addEventHandler(MouseEvent.MOUSE_RELEASED, event -> {
+
             if((event.getButton()==MouseButton.PRIMARY)&&!dragMade&&!collectedKeyAtPress){
-//				KeyframeTreeView keyframeTable = metadata.getItemViewController().getCompositionViewController().getKeyframeTable();
-//				keyframeTable.resetSelectionOfEachExcept(this);
                 selectKeyAt(event.getX(), event.getY(), event.isShiftDown());
-            }
+            }else if(readyToMove && dragMade){
+
+				//get reference to composition and workspace
+				CompositionViewController compositionViewController = getMetadata().getItemViewController().getCompositionViewController();
+				Workspace workspace=compositionViewController.getWorkspace();
+
+				//build a list of keyframes(reuse if possible)
+				LinkedList<KeyframeView> selectedKeyframes = workspace.getReusableListOfKeyframesIfPossible();
+
+				//create the move command
+				double dTime=timeAtX(lastDraggedX-initialX);
+				MoveKeyframes moveKeyframes=new MoveKeyframes(selectedKeyframes,dTime);
+				workspace.pushCommand(moveKeyframes,false);
+
+			}
             dragMade=false;
         });
 	}
@@ -136,8 +158,12 @@ public abstract class KeyframePane extends AnchorPane implements SelectionOverla
 		
 	}
 
-	protected double getLayoutXFor(KeyframeView key) {
-		double timeRatio=key.getTime()/totalTime;
+	public double getLayoutXFor(KeyframeView key) {
+		return getLayoutXFor(key.getTime());
+	}
+
+	public double getLayoutXFor(double time) {
+		double timeRatio=time/totalTime;
 		double scaledLength=length*currentZoom;
 		return timeRatio*scaledLength;
 	}
@@ -212,43 +238,11 @@ public abstract class KeyframePane extends AnchorPane implements SelectionOverla
 			KeyframeView key=(KeyframeView)node;
 			if(key.isSelected()){
 				double newLayoutX = key.getLayoutX()+dl;
-				key.setLayoutX(newLayoutX);
-				double time=timeAtX(newLayoutX);
-//				key.setTime(time);
-				setKeyframeTime(key,time);
+				double time = timeAtX(newLayoutX);
+				key.setTime(time);
 			}
 		}
-		
-		//TODO rebuild keyframes
 	}
-
-//	public void addKeyAt(double time,KeyValue keyValue){//TODO this method belongs to the concrete classes
-//		KeyframeView newKey=new KeyframeView(this);
-//		newKey.setTime(time);
-//		newKey.setKeyValue(keyValue);
-//		newKey.setLayoutX(getLayoutXFor(newKey));
-//
-//		//insert in the right spot
-//		int index=0;
-//		boolean indexFound=false;
-//		KeyframeView firstKey=null,lastKey=null;
-//		for (Node node : keyContainer.getChildren()) {
-//
-//			KeyframeView key = (KeyframeView) node;
-//			if (newKey.getTime() > key.getTime()) {//new key greater than current key
-//				indexFound = true;
-//			}
-//			if (!indexFound) {
-//				index++;
-//			}
-//
-//			if (firstKey == null) {
-//				firstKey = key;
-//			}
-//			lastKey = key;
-//		}
-//		keyContainer.getChildren().add(index, newKey);
-//	}
 
 	@Override
 	public void selectOverlappingItems(SelectionArea selectionArea, Bounds sceneBounds) {
@@ -532,5 +526,5 @@ public abstract class KeyframePane extends AnchorPane implements SelectionOverla
 
 	protected abstract Metadata getMetadata();
 
-	protected abstract void setKeyframeTime(KeyframeView keyframeView, double time);
+	public abstract void setKeyframeTime(KeyframeView keyframeView, double time);
 }

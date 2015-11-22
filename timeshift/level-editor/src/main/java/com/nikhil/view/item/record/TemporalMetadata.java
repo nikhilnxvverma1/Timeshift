@@ -60,8 +60,8 @@ public class TemporalMetadata extends Metadata{
 
             //create a command to add a manual keyframe at this time
             if(nearbyKeyframe==null){
-                recentAddKeyframeCommand = new AddTemporalKeyframe(this, currentTime,
-                        temporalKeyframeChangeNode.getCurrentValue(),true);
+                TemporalKeyframeView newKeyframe = createNewKeyframe(temporalKeyframeChangeNode.getCurrentValue(), currentTime);
+                recentAddKeyframeCommand = new AddTemporalKeyframe(newKeyframe,true);
                 itemViewController.getCompositionViewController().getWorkspace().pushCommand(recentAddKeyframeCommand);
             }
             //else ignore if a nearby keyframe already exists
@@ -310,13 +310,26 @@ public class TemporalMetadata extends Metadata{
             //if no nearby keyframes exists , we need to create a new one
             else{
                 //reset any selection made and add a keyframe at this change
-                recentAddKeyframeCommand = new AddTemporalKeyframe(this, currentTime, oldKeyValue,false);
+                TemporalKeyframeView newKeyframe = createNewKeyframe(oldKeyValue, currentTime);
+                recentAddKeyframeCommand = new AddTemporalKeyframe(newKeyframe,false);
                 workspace.pushCommand(recentAddKeyframeCommand);
 
             }
 
         }
     }
+
+    /**
+     * Creates and returns a new keyframe view
+     * @param keyValue the value of the keyframe
+     * @param time the time of the keyframe
+     * @return a temporal keyframe view
+     */
+    protected TemporalKeyframeView createNewKeyframe(KeyValue keyValue, double time) {
+        TemporalKeyframe keyframeModel = new TemporalKeyframe(time, keyValue);
+        return new TemporalKeyframeView(keyframeModel,temporalKeyframePane);
+    }
+
 
     /**
      * Pushes the supplied command to the command stack by composing it in an existing
@@ -403,8 +416,8 @@ public class TemporalMetadata extends Metadata{
 
             }else{
                 //issue a add new keyframe command
-                recentAddKeyframeCommand =new AddTemporalKeyframe(this, currentTime, action.getInitialValue(),
-                        action, action.getFinalValue());
+                TemporalKeyframeView newKeyframe = createNewKeyframe(action.getFinalValue(), currentTime);
+                recentAddKeyframeCommand =new AddTemporalKeyframe(newKeyframe, action);
                 //push and execute
                 workspace.pushCommand(recentAddKeyframeCommand);
             }
