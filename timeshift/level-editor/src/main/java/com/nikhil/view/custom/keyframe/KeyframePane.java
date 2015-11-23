@@ -34,10 +34,6 @@ public abstract class KeyframePane extends AnchorPane implements SelectionOverla
 
 	protected AnchorPane keyContainer;
 
-	//used internally TODO make these static as well (if possible)
-	private boolean dragMade=false;
-	private boolean readyToMove=false;
-	private boolean collectedKeyAtPress=false;
 	/*
 	 * The following variables are used internally for handling the press-drag-release events.
 	 * These variables are static because only one keyframe pane will be handling this sequence of events
@@ -45,6 +41,9 @@ public abstract class KeyframePane extends AnchorPane implements SelectionOverla
 	 */
 	private static double initialX;
 	private static double lastDraggedX;
+	private static boolean dragMade=false;
+	private static boolean readyToMove=false;
+	private static boolean collectedKeyAtPress=false;
 
 	public KeyframePane(double totalTime, double length){
 		this.length=length;
@@ -524,7 +523,19 @@ public abstract class KeyframePane extends AnchorPane implements SelectionOverla
 		return totalFilled;
 	}
 
-	protected abstract Metadata getMetadata();
+	public abstract Metadata getMetadata();
 
 	public abstract void setKeyframeTime(KeyframeView keyframeView, double time);
+
+	/**
+	 * Builds a linked list of keyframes.
+	 * @return Linked list containing all keyframes.
+	 */
+	public LinkedList<KeyframeView> getKeyframes(){
+		LinkedList<KeyframeView> keyframeViews=new LinkedList<>();
+		for(Node node: keyContainer.getChildren()){
+			keyframeViews.add((KeyframeView)node);
+		}
+		return keyframeViews;
+	}
 }

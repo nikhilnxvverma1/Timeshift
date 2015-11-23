@@ -14,7 +14,7 @@ import java.util.Random;
  * will be from a subclass .
  * Created by NikhilVerma on 13/10/15.
  */
-public abstract class Metadata { //TODO ideally this should be an abstract class. But just because of "Root" node its not
+public abstract class Metadata { //TODO Property Metadata required
 
     protected static final Random random=new Random();//only experimentation purposes
     public static final double CELL_HEIGHT= 25;
@@ -55,4 +55,6 @@ public abstract class Metadata { //TODO ideally this should be an abstract class
     public boolean isKeyframable(){
         return false;
     }
+
+    public abstract void setKeyframable(boolean keyframable);
 }

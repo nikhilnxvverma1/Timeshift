@@ -78,9 +78,15 @@ public class TemporalMetadata extends Metadata{
         this.keyframable=new CheckBox();
         this.keyframable.setSelected(false);
         this.keyframable.setOnAction(event -> {
-            //toggle keyframes
-            ToggleTemporalMetadataKeyframes toggleCommand=new ToggleTemporalMetadataKeyframes(this,keyframable.isSelected());
-            itemViewController.getCompositionViewController().getWorkspace().pushCommand(toggleCommand);
+            if(keyframable.isSelected()){
+                double currentTime=itemViewController.getCompositionViewController().getTime();
+                TemporalKeyframeView newKeyframe = createNewKeyframe(temporalKeyframeChangeNode.getCurrentValue(), currentTime);
+                EnableStopWatch enableStopWatch = new EnableStopWatch(newKeyframe);
+                itemViewController.getCompositionViewController().getWorkspace().pushCommand(enableStopWatch);
+            }else{
+                DisableStopWatch disableStopWatch=new DisableStopWatch(this);
+                itemViewController.getCompositionViewController().getWorkspace().pushCommand(disableStopWatch);
+            }
         });
     }
 
@@ -101,6 +107,11 @@ public class TemporalMetadata extends Metadata{
     @Override
     public boolean isKeyframable(){
         return keyframable.isSelected();
+    }
+
+    @Override
+    public void setKeyframable(boolean keyframable) {
+        this.keyframable.setSelected(keyframable);
     }
 
     @Override

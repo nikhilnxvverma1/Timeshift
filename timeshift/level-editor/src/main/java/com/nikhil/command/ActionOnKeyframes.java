@@ -35,6 +35,13 @@ public abstract class ActionOnKeyframes implements Command{
     }
 
     /**
+     * This protected constructor is reserved for subclasses only.
+     * Subclasses should take the responsibility of populating the linked list of keyframes
+     */
+    protected ActionOnKeyframes() {
+    }
+
+    /**
      * Checks if this command contains the same keyframes as the ones that are selected in the
      * supplied keyframe tree view
      * @param keyframeTreeView  the keyframe tree view which contains selected keyframes views

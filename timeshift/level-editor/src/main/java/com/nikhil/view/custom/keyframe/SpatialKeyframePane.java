@@ -16,7 +16,7 @@ public class SpatialKeyframePane extends KeyframePane{
     }
 
     @Override
-    protected SpatialMetadata getMetadata() {
+    public SpatialMetadata getMetadata() {
         return metadata;
     }
 

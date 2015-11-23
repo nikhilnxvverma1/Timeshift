@@ -75,4 +75,9 @@ public class HeaderMetadata extends Metadata {
     public Node getNameNode() {
         return null;
     }
+
+    @Override
+    public void setKeyframable(boolean keyframable) {
+        //do nothing,
+    }
 }

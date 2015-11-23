@@ -67,6 +67,11 @@ public class SpatialMetadata extends Metadata {
     }
 
     @Override
+    public void setKeyframable(boolean keyframable) {
+        this.keyframable.setSelected(keyframable);
+    }
+
+    @Override
     public Node getValueNode() {
         switch (tag){
             case TRANSLATION:
