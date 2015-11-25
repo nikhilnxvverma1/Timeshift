@@ -40,5 +40,9 @@ public class TemporalKeyframeView extends KeyframeView{
         return keyframePane.removeKeyframe(this);
     }
 
-
+    @Override
+    public void setTime(double time) {
+        super.setTime(time);
+        getKeyframePane().getMetadata().getTemporalKeyframeChangeNode().shiftKeyframe(keyframeModel,time);
+    }
 }

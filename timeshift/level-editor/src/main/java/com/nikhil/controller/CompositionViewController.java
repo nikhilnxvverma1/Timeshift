@@ -37,6 +37,7 @@ import java.util.List;
  */
 public class CompositionViewController {
 
+    public static final double DEFAULT_DURATION =30;
     public static final double PLAYBACK_FEATURES_HEIGHT = 40d;
     public static int TOTAL_COMPOSITIONS_SO_FAR =0;
     private static final double NAME_COLUMN_WIDTH=175;
@@ -45,6 +46,7 @@ public class CompositionViewController {
     public static final double NEGLIGIBLE_TIME_DIFFERENCE=0.1;
 
     private CompositionController compositionController;
+    private double duration= DEFAULT_DURATION;
     private Tab tab;
     private Workspace workspace;
     private List<ItemViewController> itemViewControllers = new LinkedList<ItemViewController>();
@@ -84,9 +86,9 @@ public class CompositionViewController {
         itemViewControllers.add(itemViewController);
         TreeItem<Metadata> metadataTree = itemViewController.getMetadataTree();
         rootTreeItem.getChildren().add(metadataTree);
-//        int totalNewRecords = countExpandedChildren(metadataTree);
-//        commonScrollBar.setMax(commonScrollBar.getMax()+totalNewRecords);
-        //TODO add to the timeline
+
+        //add to the timeline
+        compositionController.getTimeline().add(itemViewController.getItemModel().changeNodeIterator());
     }
 
     public boolean removeItemViewController(ItemViewController itemViewController){
@@ -94,9 +96,9 @@ public class CompositionViewController {
         if(removed){
             TreeItem<Metadata> metadataTree = itemViewController.getMetadataTree();
             rootTreeItem.getChildren().remove(metadataTree);
-//            int totalRecordsDeleted = countExpandedChildren(metadataTree);
-//            commonScrollBar.setMax(commonScrollBar.getMax()-totalRecordsDeleted);
-            //TODO remove from timeline
+
+            //remove from timeline
+            compositionController.getTimeline().remove(itemViewController.getItemModel().changeNodeIterator());
         }
         return removed;
     }
@@ -206,7 +208,7 @@ public class CompositionViewController {
 
         SelectionBar selectionBar=new SelectionBar(RIGHT_COMPONENT_WIDTH,null);
         Ruler ruler=new Ruler(30, RIGHT_COMPONENT_WIDTH);
-        thumbSeeker = new ThumbSeeker(RIGHT_COMPONENT_WIDTH);
+        thumbSeeker = new ThumbSeeker(RIGHT_COMPONENT_WIDTH,new Playback(this));
         thumbSeeker.setPrefHeight(PLAYBACK_FEATURES_HEIGHT);
         thumbSeeker.setMaxHeight(Control.USE_PREF_SIZE);
 
@@ -279,11 +281,10 @@ public class CompositionViewController {
         return outerHBox;
     }
 
-
     private void jumpTimeToNextKeyframe(){
         //seek the current value from the value of the thumb
         double currentTime;//in seconds
-        currentTime=thumbSeeker.getCurrentValueAcross(30);
+        currentTime=thumbSeeker.getCurrentValueAcross(duration);
 
         //find the last selected keyframe which possibly might be where the thumb is at
         //as a result of a similar last "next" operation
@@ -305,7 +306,7 @@ public class CompositionViewController {
         KeyframeView keyframeAfter = keyframeTable.findKeyframeAfter(currentTime);
         if (keyframeAfter!=null) {
             keyframeTable.resetSelection();
-            thumbSeeker.setCurrentValueAcross(keyframeAfter.getTime(), 30);
+            thumbSeeker.setCurrentValueAcross(keyframeAfter.getTime(), duration);
             keyframeAfter.setSelected(true);
         }
     }
@@ -313,7 +314,7 @@ public class CompositionViewController {
     private void jumpTimeToPreviousKeyframe(){
         //seek the current value from the value of the thumb
         double currentTime;//in seconds
-        currentTime=thumbSeeker.getCurrentValueAcross(30);
+        currentTime=thumbSeeker.getCurrentValueAcross(duration);
 
         //find the last selected keyframe which possibly might be where the thumb is at
         //as a result of a similar last "next" operation
@@ -335,7 +336,7 @@ public class CompositionViewController {
         KeyframeView keyframeBefore = keyframeTable.findKeyframeBefore(currentTime);
         if (keyframeBefore!=null) {
             keyframeTable.resetSelection();
-            thumbSeeker.setCurrentValueAcross(keyframeBefore.getTime(), 30);
+            thumbSeeker.setCurrentValueAcross(keyframeBefore.getTime(), duration);
             keyframeBefore.setSelected(true);
         }
     }
@@ -405,7 +406,7 @@ public class CompositionViewController {
     }
 
     public double getTime(){
-        return thumbSeeker.getCurrentValueAcross(30);
+        return thumbSeeker.getCurrentValueAcross(duration);
     }
 
 }

@@ -3,14 +3,21 @@ package com.nikhil.controller;
 import com.nikhil.editor.selection.SelectedItems;
 import com.nikhil.editor.workspace.Workspace;
 import com.nikhil.logging.Logger;
+import com.nikhil.model.shape.PolygonModel;
+import com.nikhil.model.shape.ShapeModel;
+import com.nikhil.timeline.change.spatial.SpatialChangeHandler;
+import com.nikhil.timeline.change.spatial.SpatialKeyframeChangeNode;
+import com.nikhil.timeline.change.temporal.TemporalChangeHandler;
+import com.nikhil.timeline.change.temporal.TemporalKeyframeChangeNode;
 import com.nikhil.util.modal.UtilPoint;
 import javafx.geometry.Bounds;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.shape.Shape;
 
 /**
  * Created by NikhilVerma on 30/08/15.
  */
-public abstract class ShapeViewController extends ItemViewController {
+public abstract class ShapeViewController extends ItemViewController implements TemporalChangeHandler,SpatialChangeHandler {
 
     public ShapeViewController(CompositionViewController compositionViewController) {
         super(compositionViewController);
@@ -47,6 +54,27 @@ public abstract class ShapeViewController extends ItemViewController {
         return 0;
     }
 
+    /**
+     * Sets this controller as the change handler for the model.
+     * This class should be called by the subclass controller a the end after
+     * initialization. <b>Subclassing Note</b>: make sure to call super.setSelfAsChangeHandler()
+     * first so as to set change handlers for basic shape properties (S.R.T etc)
+     */
+    protected void setSelfAsChangeHandler(){
+        ShapeModel shapeModel = getShapeModel();
+        shapeModel.anchorPointChange().setChangeHandler(this);
+        shapeModel.translationChange().setChangeHandler(this);
+        shapeModel.scaleChange().setChangeHandler(this);
+        shapeModel.rotationChange().setChangeHandler(this);
+    }
+
+    /**
+     * Each subclass of shape view controller is supposed to return the shape model
+     * associated with the shape view controller
+     * @return the model shape that the subclass controller represents
+     */
+    protected abstract ShapeModel getShapeModel();
+
     public abstract UtilPoint getTranslation();
 
     public abstract double getScale();
@@ -79,8 +107,6 @@ public abstract class ShapeViewController extends ItemViewController {
         UtilPoint normalized=getNormalizedPoint(mouseEvent.getX(),mouseEvent.getY());
         double dx = normalized.getX()-selectedItems.getTemporaryValue1();
         double dy = normalized.getY()-selectedItems.getTemporaryValue2();
-//        double dx = mouseEvent.getX()-selectedItems.getTemporaryValue1();
-//        double dy = mouseEvent.getY()-selectedItems.getTemporaryValue2();
         selectedItems.moveSelectionBy(dx, dy);
         mouseEvent.consume();
 
@@ -109,5 +135,29 @@ public abstract class ShapeViewController extends ItemViewController {
     @Override
     public void propertyCurrentlyGettingTweaked() {
         compositionViewController.getWorkspace().getSelectedItems().updateView();
+    }
+
+    @Override
+    public void valueChanged(SpatialKeyframeChangeNode changeNode) {
+        ShapeModel shapeModel = getShapeModel();
+        Shape shapeView = getItemView();
+        if(changeNode==shapeModel.translationChange()){
+            shapeView.setLayoutX(changeNode.getCurrentPoint().getX());
+            shapeView.setLayoutY(changeNode.getCurrentPoint().getY());
+        }else if(changeNode==shapeModel.anchorPointChange()){
+            shapeView.setTranslateX(changeNode.getCurrentPoint().getX());
+            shapeView.setTranslateY(changeNode.getCurrentPoint().getY());
+        }
+    }
+
+    @Override
+    public void valueChanged(TemporalKeyframeChangeNode changeNode) {
+        ShapeModel shapeModel = getShapeModel();
+        Shape shapeView = getItemView();
+        if(changeNode==shapeModel.scaleChange()){
+            shapeView.setScaleX(changeNode.getCurrentValue().get(0));// for all shapes, scale y is bind to scale x
+        }else if(changeNode==shapeModel.rotationChange()){
+            shapeView.setRotate(changeNode.getCurrentValue().get(0));
+        }
     }
 }

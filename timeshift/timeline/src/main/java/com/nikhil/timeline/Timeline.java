@@ -1,6 +1,7 @@
 package com.nikhil.timeline;
 
 import com.nikhil.timeline.change.ChangeNode;
+import com.nikhil.timeline.change.ChangeNodeIterator;
 
 /**
  * Timeline class holds all the nodes for value changes in a double linked list.
@@ -18,7 +19,7 @@ public class Timeline {
 	
 	private ChangeNode head;
 	private ChangeNode tail;
-	private double currentTime;
+	private double time;
 	private boolean timeMovingForward=true;
 	private TimelineReachedTerminal timelineReachedTerminal;
 	
@@ -41,19 +42,19 @@ public class Timeline {
 		this.timelineReachedTerminal = timelineReachedTerminal;
 	}
 
-	public double getCurrentTime() {
-		return currentTime;
+	public double getTime() {
+		return time;
 	}
 
 	/**
 	 * sets the current time on the timeline. 
-	 * This will instantly jump the current time to the specified value thereby
-	 * affecting the changes in the keyvalues.
-	 * Note the side effect : change handlers wont fire "atBegin" and "atEnd" callbacks 
-	 * @param currentTime the time to seek to on timeline
+	 * This will instantly affect all the associated change nodes and
+	 * fire off their respective change handlers.
+	 * @param time the time to seek to on timeline
 	 */
-	public void setCurrentTime(float currentTime) {
-		this.currentTime = currentTime;
+	public void setTime(float time) {
+
+		this.time = time;
 	}
 
 	public boolean isTimeMovingForward() {
@@ -77,15 +78,35 @@ public class Timeline {
 	}
 	
 	/**
-	 * Simply adds the argument change node(possibly list) to the its list 
-	 * @param changeNode a single change node or a list of change nodes
+	 * Simply appends the argument change node(possibly list) to the its list
+	 * @param changeNode a single change node or a linked list of change nodes
 	 */
-	public void appendChangeNodeToList(ChangeNode changeNode){
+	public void add(ChangeNode changeNode){
 		if(head==null&&tail==null){
 			head=changeNode;
 			tail=changeNode.getLastNode();
 		}else{
 			tail=tail.insertAfterMe(changeNode);
+		}
+	}
+
+	/**
+	 * Appends all the change nodes from the supplied iterator.
+	 * This method also does not check for containment of any nodes in the list.
+	 * For each change node, the next and previous will be nullified.
+	 * @param iterator iterator that allows iterating through all the change nodes
+	 */
+	public void add(ChangeNodeIterator iterator){
+		if(iterator==null){
+			return;
+		}
+
+		//iterate through and add all the change nodes at the end
+		while(iterator.hasNext()){
+			ChangeNode changeNode = iterator.next();
+			changeNode.setPrevious(null);
+			changeNode.setNext(null);
+			add(changeNode);
 		}
 	}
 
@@ -97,9 +118,9 @@ public class Timeline {
 	public boolean step(double delta){//TODO make the argument in double
 		//step the current time forward or backward depending on flag value
 		if(timeMovingForward){
-			currentTime+=delta;
+			time +=delta;
 		}else{
-			currentTime-=delta;
+			time -=delta;
 		}
 
 		//flag that keeps track of any node still pending completion
@@ -108,7 +129,7 @@ public class Timeline {
 		ChangeNode t=head;
 		while(t!=null){
 			//update all nodes
-			boolean nodePendingCompletion=t.step(delta,currentTime);
+			boolean nodePendingCompletion=t.step(delta, time);
 			if(nodePendingCompletion){
 				pendingCompletion=true;
 			}
@@ -126,9 +147,9 @@ public class Timeline {
 	/**
 	 * Removes the change node from the list of change nodes linked list.
 	 * This does not check if the node already exists in the list
-	 * @param changeNode change node to remove
+	 * @param changeNode Single change node to remove.
 	 */
-	public void removeChangeNodeFromList(ChangeNode changeNode){
+	public void remove(ChangeNode changeNode){
 		if(changeNode==head){
 			if(changeNode==tail){
 				head=null;
@@ -150,7 +171,19 @@ public class Timeline {
 			changeNode.removeFromList();
 		}
 	}
-	
+
+	/**
+	 * Removes the change node from the list of change nodes linked list
+	 * using the supplied iterator. This does not check if any nodes were already
+	 * present in the list
+	 * @param iterator iterator that allows iterating through change nodes to remove
+	 */
+	public void remove(ChangeNodeIterator iterator){
+		while(iterator.hasNext()){
+			remove(iterator.next());
+		}
+	}
+
 	/**
 	 * Computes the ending time for this timeline
 	 * @return the ending time at which the timeline finishes

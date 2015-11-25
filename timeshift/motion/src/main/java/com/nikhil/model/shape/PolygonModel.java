@@ -5,6 +5,8 @@ import com.nikhil.math.MathUtil;
 import com.nikhil.model.ModelVisitor;
 import com.nikhil.model.freeform.MovablePoint;
 import com.nikhil.timeline.Timeline;
+import com.nikhil.timeline.change.ChangeNode;
+import com.nikhil.timeline.change.ChangeNodeIterator;
 
 /**
  * Polygon model which can have any number of vertices.
@@ -85,6 +87,26 @@ public class PolygonModel extends ShapeModel {
 				t=t.getNext();
 			}while(t!= polygonPointStart);
 		}
+	}
+
+	@Override
+	public ChangeNodeIterator changeNodeIterator() {
+		ChangeNode[] changeNodes=new ChangeNode[4+countTotalPoints()];
+		changeNodes[0]=scaleChange;
+		changeNodes[1]=rotationChange;
+		changeNodes[2]=translationChange;
+		changeNodes[3]=anchorPointChange;
+		//add all the movable points
+		if (polygonPointStart != null) {
+			int index=4;
+			MovablePoint t= polygonPointStart;
+			do{
+				changeNodes[index++]=t.positionChange();
+				t=t.getNext();
+			}while(t!= polygonPointStart);
+		}
+		return new ChangeNodeIterator(changeNodes);
+
 	}
 
 	//TODO might not be required

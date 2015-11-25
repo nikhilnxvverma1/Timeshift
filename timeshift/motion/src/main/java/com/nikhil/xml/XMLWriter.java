@@ -158,7 +158,7 @@ public class XMLWriter implements ModelVisitor {
         position.appendChild(getX(movablePoint.getPoint()));
         position.appendChild(getY(movablePoint.getPoint()));
 
-        //append this to the whatever the container is(this method doesn't know where it will get added to)
+        //add this to the whatever the container is(this method doesn't know where it will get added to)
         movablePointContainer.appendChild(header);
 
         Logger.log("Added movable point");
@@ -191,7 +191,7 @@ public class XMLWriter implements ModelVisitor {
         anchorPoint.appendChild(getX(shapeModel.getAnchorPoint()));
         anchorPoint.appendChild(getY(shapeModel.getAnchorPoint()));
 
-        //append all properties to shape element
+        //add all properties to shape element
         shape.appendChild(scale);
         shape.appendChild(rotation);
         shape.appendChild(translation);

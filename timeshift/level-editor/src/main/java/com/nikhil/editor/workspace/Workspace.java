@@ -299,7 +299,7 @@ public class Workspace  {
             return;
         }
 
-        //append a star to the title of the window
+        //add a star to the title of the window
         String title = getWorkspaceTitle() ;
         if(justModifiedNow){
             title+="*";

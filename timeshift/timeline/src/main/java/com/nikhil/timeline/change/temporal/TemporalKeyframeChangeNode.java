@@ -1,7 +1,10 @@
 package com.nikhil.timeline.change.temporal;
 
+import com.nikhil.logging.Logger;
 import com.nikhil.timeline.KeyValue;
 import com.nikhil.timeline.change.ChangeNode;
+import com.nikhil.timeline.change.KeyframeChangeNode;
+import com.nikhil.timeline.interpolation.InterpolationCurve;
 import com.nikhil.timeline.keyframe.TemporalKeyframe;
 
 /**
@@ -10,7 +13,7 @@ import com.nikhil.timeline.keyframe.TemporalKeyframe;
  * Supplying a {@link TemporalChangeHandler} is optional
  * Created by NikhilVerma on 10/11/15.
  */
-public class TemporalKeyframeChangeNode extends ChangeNode {
+public class TemporalKeyframeChangeNode extends KeyframeChangeNode {
 
     private TemporalKeyframe start;
     private TemporalKeyframe last;//only needed for quickly finding the ending time
@@ -188,19 +191,19 @@ public class TemporalKeyframeChangeNode extends ChangeNode {
     }
 
     /**
-     * shifts specified keyframe by delta time, rearranging
+     * shifts specified keyframe to a new time, rearranging
      * if required to maintain the order of the keyframe list
      * @param keyframe keyframe to shift
-     * @param dt delta time, which can be negative or positive
-     * @return true implies that a rearrangement was required, false implies rearranging keys was not required
+     * @param newTime new time of the keyframe
+     * @return true implies that a rearrangement was required (which is a linear operation),
+     * false implies rearranging keys was not required (which is a constant operation)
      */
-    public boolean shiftKeyframe(TemporalKeyframe keyframe,double dt){
+    public boolean shiftKeyframe(TemporalKeyframe keyframe,double newTime){
         if(keyframe==null){
             return false;
         }
 
         //only rearrange if required
-        double newTime = keyframe.getTime() + dt;
         keyframe.setTime(newTime);
         if (
                 ((keyframe.getNext() != null) && (newTime > keyframe.getNext().getTime())) ||
@@ -214,7 +217,6 @@ public class TemporalKeyframeChangeNode extends ChangeNode {
         }else{
             return false;
         }
-
     }
 
     public TemporalChangeHandler getChangeHandler() {
@@ -227,23 +229,95 @@ public class TemporalKeyframeChangeNode extends ChangeNode {
 
     @Override
     public boolean step(double delta, double time) {
-        //TODO
-        throw new RuntimeException("Unsupported");
-    }
 
-    @Override
-    public boolean jump(double time) {
-        //TODO
-        throw new RuntimeException("Unsupported");
-    }
+        //get to the keyframe just before the current time
+        TemporalKeyframe keyframeBefore = findKeyframeBefore(time);
+        if(keyframeBefore!=null){
 
-    @Override
-    public double findEndingTime() {
-        if(last==null){
-            return 0;
-        }else{
-            return last.getTime();
+            //time is between two keyframes
+            if(keyframeBefore.getNext()!=null){
+                Logger.log("b/w 2 keyframes");
+
+                TemporalKeyframe keyframeAfter = keyframeBefore.getNext();
+
+                //find out how much time has progressed from the keyframe before (this will be between 0.0 to 1.0)
+                double progressTillNext=(time-keyframeBefore.getTime())/
+                        (keyframeAfter.getTime()-keyframeBefore.getTime());
+
+                //get the interpolated progress for the above progress using the interpolation curve
+                InterpolationCurve interpolation= keyframeBefore.getInterpolationWithNext();
+                double interpolatedProgress= interpolation.valueFor(progressTillNext);
+
+                //find and then set the interpolated value using the interpolated progress
+                KeyValue interpolatedValue = getInterpolatedValue(keyframeBefore.getKeyValue(),
+                        keyframeAfter.getKeyValue(),
+                        interpolatedProgress);
+                currentValue.set(interpolatedValue);
+
+            }
+            //time is beyond the last keyframe
+            else{
+                //the current value is the value of the last keyframe
+                currentValue.set(keyframeBefore.getKeyValue());
+            }
         }
+        //time is before even the first keyframe
+        else if(!isEmpty()){
+            //the value is the value of the first keyframe
+            currentValue.set(start.getKeyValue());
+        }//else there are no keyframes in which case , the model remains unaffected
+
+        notifyAnyChangeHandler();
+
+        return true;
+    }
+
+    /**
+     * Finds the keyframe exactly before the specified time (using cache)
+     * @param time the time exactly after the keyframe that needs to be found
+     * @return temporal keyframe ,which might be null in case there are no keyframes
+     * or time is before start
+     */
+    protected TemporalKeyframe findKeyframeBefore(double time){
+        if(isEmpty()){
+            return null;
+        }else if(nearestAccessedKeyframe==null){
+            nearestAccessedKeyframe=last;
+        }
+
+        TemporalKeyframe keyframeBeforeTime=null;
+
+        //the keyframe could lie after the time
+        if(nearestAccessedKeyframe.getTime()>time){
+
+            //keep going back until we reach exactly the keyframe where its time is before the supplied time
+            while((nearestAccessedKeyframe.getPrevious() != null) &&
+                    (nearestAccessedKeyframe.getPrevious().getTime() > time)){
+                nearestAccessedKeyframe=nearestAccessedKeyframe.getPrevious();
+            }
+
+            //its possible that we reach the starting keyframe and the supplied time is before that
+            if(nearestAccessedKeyframe.getTime()<time){
+                keyframeBeforeTime=nearestAccessedKeyframe;
+            }
+
+        }
+        //or the keyframe can lie before the time
+        else{
+            //keep going forward until we reach exactly the keyframe where its time is after the supplied time
+            while((nearestAccessedKeyframe.getNext() != null) &&
+                    (nearestAccessedKeyframe.getNext().getTime() < time)){
+                nearestAccessedKeyframe=nearestAccessedKeyframe.getNext();
+            }
+            keyframeBeforeTime=nearestAccessedKeyframe;
+        }
+        return keyframeBeforeTime;
+    }
+
+    @Override
+    public boolean setTime(double time) {
+        //TODO
+        throw new RuntimeException("Unsupported");
     }
 
     public void notifyAnyChangeHandler(){

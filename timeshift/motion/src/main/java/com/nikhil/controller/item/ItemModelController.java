@@ -2,6 +2,7 @@ package com.nikhil.controller.item;
 
 import com.nikhil.common.Observer;
 import com.nikhil.controller.CompositionController;
+import com.nikhil.model.ItemModel;
 import com.nikhil.model.ModelElement;
 import com.nikhil.model.pathsystem.TravelPath;
 import com.nikhil.timeline.Timeline;
@@ -41,4 +42,6 @@ public abstract class ItemModelController implements ModelElement,Observer{
      */
     public abstract void step(double delta,double totalTime,CompositionController parent);
 
+
+    public abstract ItemModel getItemModel();
 }

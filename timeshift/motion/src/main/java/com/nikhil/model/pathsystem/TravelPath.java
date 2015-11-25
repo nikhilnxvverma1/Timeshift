@@ -1,13 +1,15 @@
 package com.nikhil.model.pathsystem;
 
+import com.nikhil.model.ItemModel;
 import com.nikhil.model.ModelElement;
 import com.nikhil.model.ModelVisitor;
 import com.nikhil.model.pathsystem.rupture.PathValidityNode;
 import com.nikhil.model.pathsystem.transition.Transition;
 import com.nikhil.space.Parametric;
+import com.nikhil.timeline.change.ChangeNodeIterator;
 import com.nikhil.util.modal.UtilPoint;
 
-public class TravelPath implements Parametric,ModelElement {
+public class TravelPath extends ItemModel implements Parametric,ModelElement {
 
 	private float duration;
 	private PathValidityNode validityStart,validityLast;
@@ -104,5 +106,10 @@ public class TravelPath implements Parametric,ModelElement {
 	@Override
 	public UtilPoint getPointFor(double t) {
 		return null;
+	}
+
+	@Override
+	public ChangeNodeIterator changeNodeIterator() {
+		return new ChangeNodeIterator(null);//TODO change nodes of linked points
 	}
 }

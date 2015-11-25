@@ -1,6 +1,8 @@
 package com.nikhil.model.shape;
 
 import com.nikhil.common.Subject;
+import com.nikhil.timeline.change.ChangeNode;
+import com.nikhil.timeline.change.ChangeNodeIterator;
 import com.nikhil.timeline.change.spatial.SpatialKeyframeChangeNode;
 import com.nikhil.timeline.change.temporal.TemporalKeyframeChangeNode;
 import com.nikhil.model.ItemModel;
@@ -74,5 +76,15 @@ public abstract class ShapeModel extends ItemModel implements Subject,ModelEleme
 	@Override
 	public void notifyModelChangeListener() {
 		//TODO get rid of this interface if possible, this interface is not required
+	}
+
+	@Override
+	public ChangeNodeIterator changeNodeIterator() {
+		ChangeNode[] changeNodes=new ChangeNode[4];
+		changeNodes[0]=scaleChange;
+		changeNodes[1]=rotationChange;
+		changeNodes[2]=translationChange;
+		changeNodes[3]=anchorPointChange;
+		return new ChangeNodeIterator(changeNodes);
 	}
 }

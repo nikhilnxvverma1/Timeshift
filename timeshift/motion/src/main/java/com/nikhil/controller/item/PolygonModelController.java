@@ -2,6 +2,7 @@ package com.nikhil.controller.item;
 
 import com.nikhil.common.Subject;
 import com.nikhil.controller.CompositionController;
+import com.nikhil.model.ItemModel;
 import com.nikhil.model.ModelVisitor;
 import com.nikhil.model.shape.PolygonModel;
 import com.nikhil.timeline.Timeline;
@@ -39,5 +40,10 @@ public class PolygonModelController extends ItemModelController {
     @Override
     public void update(Subject subject) {
         //expected to be overridden in subclasses
+    }
+
+    @Override
+    public ItemModel getItemModel() {
+        return polygonModel;
     }
 }

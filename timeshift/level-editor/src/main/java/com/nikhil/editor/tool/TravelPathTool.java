@@ -40,7 +40,7 @@ public class TravelPathTool extends BaseTool {
             viewAltList.setHead(linkPointView);
         }
 
-//        viewAltList.append(linkPointView);//TODO fix this and use this one
+//        viewAltList.add(linkPointView);//TODO fix this and use this one
         if(viewAltList.getTail()!=null){
             viewAltList.getTail().append(linkPointView);
         }

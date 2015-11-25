@@ -73,6 +73,7 @@ public class SpatialKeyframe extends Keyframe implements Parametric{
 		this.controlPointWithNext = controlPointWithNext;
 	}
 
+	@Override
 	public SpatialKeyframe getPrevious() {
 		return previous;
 	}
@@ -81,6 +82,7 @@ public class SpatialKeyframe extends Keyframe implements Parametric{
 		this.previous = previous;
 	}
 
+	@Override
 	public SpatialKeyframe getNext() {
 		return next;
 	}

@@ -160,13 +160,13 @@ public class SpatialKeyframeChangeNode extends ChangeNode {
     @Override
     public boolean step(double delta, double time) {
         //TODO
-        throw new RuntimeException("Unsupported");
+        return false;
     }
 
     @Override
-    public boolean jump(double time) {
+    public boolean setTime(double time) {
         //TODO
-        throw new RuntimeException("Unsupported");
+        return false;
     }
 
     @Override

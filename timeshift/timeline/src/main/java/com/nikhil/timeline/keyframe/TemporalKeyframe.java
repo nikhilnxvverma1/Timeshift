@@ -65,6 +65,7 @@ public class TemporalKeyframe extends Keyframe {
 		this.keyValue = keyValue;
 	}
 
+	@Override
 	public TemporalKeyframe getNext() {
 		return next;
 	}
@@ -73,6 +74,7 @@ public class TemporalKeyframe extends Keyframe {
 		this.next = next;
 	}
 
+	@Override
 	public TemporalKeyframe getPrevious() {
 		return previous;
 	}

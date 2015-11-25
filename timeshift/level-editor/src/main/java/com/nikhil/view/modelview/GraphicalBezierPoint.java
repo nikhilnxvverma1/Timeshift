@@ -175,7 +175,7 @@ public class GraphicalBezierPoint extends BezierPoint {
         if(cubicCurve!=null){
             parent.getChildren().add(0,cubicCurve);
         }
-        //append the points
+        //add the points
         parent.getChildren().add(previousControlPointCircle);
         parent.getChildren().add(nextControlPointCircle);
         parent.getChildren().add(anchorPointRect);

@@ -9,6 +9,11 @@ import com.nikhil.editor.workspace.Workspace;
 import com.nikhil.math.MathUtil;
 import com.nikhil.model.freeform.MovablePoint;
 import com.nikhil.model.shape.PolygonModel;
+import com.nikhil.model.shape.ShapeModel;
+import com.nikhil.timeline.change.spatial.SpatialChangeHandler;
+import com.nikhil.timeline.change.spatial.SpatialKeyframeChangeNode;
+import com.nikhil.timeline.change.temporal.TemporalChangeHandler;
+import com.nikhil.timeline.change.temporal.TemporalKeyframeChangeNode;
 import com.nikhil.util.modal.UtilPoint;
 import com.nikhil.view.item.PolygonView;
 import com.nikhil.view.item.delegate.PolygonViewDelegate;
@@ -23,7 +28,7 @@ import java.util.List;
 /**
  * Created by NikhilVerma on 19/09/15.
  */
-public class PolygonViewController extends ShapeViewController implements PolygonViewDelegate {
+public class PolygonViewController extends ShapeViewController implements PolygonViewDelegate{
 
     public static final int SCALE_INDEX=0;
     public static final int ROTATION_INDEX=1;
@@ -34,7 +39,6 @@ public class PolygonViewController extends ShapeViewController implements Polygo
     private PolygonModelController polygonModelController;
     private PolygonView polygonView;
     private PolygonGizmo polygonGizmo;
-
 
     public PolygonViewController(PolygonViewController polygonViewController){
         this(polygonViewController.compositionViewController,new PolygonView(polygonViewController.polygonView));
@@ -48,6 +52,7 @@ public class PolygonViewController extends ShapeViewController implements Polygo
         polygonGizmo=new PolygonGizmo(polygonView);
         polygonGizmo.initializeView();
         compositionViewController.getWorkspace().getSelectedItems().requestFocus(this,false);//TODO objectionable,what if the context doesn't need this to be highlighted
+        setSelfAsChangeHandler();
     }
 
     public PolygonViewController(CompositionViewController compositionViewController,PolygonModelController polygonModelController){
@@ -57,6 +62,8 @@ public class PolygonViewController extends ShapeViewController implements Polygo
         this.polygonView.setDelegate(this);
         polygonGizmo=new PolygonGizmo(polygonView);
         polygonGizmo.initializeView();
+        setSelfAsChangeHandler();
+
     }
 
     /**
@@ -368,6 +375,27 @@ public class PolygonViewController extends ShapeViewController implements Polygo
         }
     }
 
+    @Override
+    protected ShapeModel getShapeModel() {
+        return polygonModelController.getPolygonModel();
+    }
+
+    @Override
+    protected void setSelfAsChangeHandler() {
+        super.setSelfAsChangeHandler();
+        //TODO set change handler for each vertex
+    }
+
+    @Override
+    public void valueChanged(SpatialKeyframeChangeNode changeNode) {
+        super.valueChanged(changeNode);
+    }
+
+    @Override
+    public void valueChanged(TemporalKeyframeChangeNode changeNode) {
+        super.valueChanged(changeNode);
+    }
+
     //=============================================================================================
     //Polygon events coming from view
     //=============================================================================================
@@ -383,5 +411,9 @@ public class PolygonViewController extends ShapeViewController implements Polygo
                 finalPosition);
         getCompositionViewController().getWorkspace().pushCommand(movePolygonPoint, false);
     }
+
+    //=============================================================================================
+    //Change Handlers
+    //=============================================================================================
 
 }

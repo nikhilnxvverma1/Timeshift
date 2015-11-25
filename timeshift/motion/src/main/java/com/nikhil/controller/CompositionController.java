@@ -22,6 +22,7 @@ public class CompositionController implements PulseListener,TimelineReachedTermi
     private TravellerRegistrarController travellerRegistrarController;
 
     public CompositionController() {
+        this(new Timeline(null),new SimpleTimelinePlayer());
     }
 
     public CompositionController(Timeline timeline) {
@@ -48,23 +49,23 @@ public class CompositionController implements PulseListener,TimelineReachedTermi
 
     @Override
     public void step(double delta, double totalTime){
-        if(!timelinePlayer.shouldRecieveTimestep(delta,totalTime )){
+        if(!timelinePlayer.shouldReceiveTimestep(delta, totalTime)){
             return;
         }
         //revise timestep
         double revisedDelta=timelinePlayer.getRevisedDeltaTimestep(delta);
 
-        timeline.step((float)revisedDelta);
+        timeline.step(revisedDelta);
 
         //step children item controller
         ItemModelController t= itemModelControllerStart;
         while (t != null) {
-            t.step(revisedDelta,timeline.getCurrentTime(),this);
+            t.step(revisedDelta,timeline.getTime(),this);
             t=t.getNext();
         }
 
         //step the travellers
-        travellerRegistrarController.step(revisedDelta,timeline.getCurrentTime(),this);
+        travellerRegistrarController.step(revisedDelta,timeline.getTime(),this);
     }
 
     public TimelinePlayer getTimelinePlayer() {

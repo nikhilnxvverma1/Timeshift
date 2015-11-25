@@ -8,7 +8,7 @@ package com.nikhil.playback;
 public class SimpleTimelinePlayer implements TimelinePlayer{
 
     @Override
-    public boolean shouldRecieveTimestep(double delta, double totalTime) {
+    public boolean shouldReceiveTimestep(double delta, double totalTime) {
         return true;
     }
 

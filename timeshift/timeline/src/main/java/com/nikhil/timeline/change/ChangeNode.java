@@ -1,5 +1,7 @@
 package com.nikhil.timeline.change;
 
+import com.nikhil.timeline.KeyValue;
+
 /**
  * ChangeNode defines the changes in the values occurring in the timeline.
  * These changes in values from start to end can be handled by a change handler
@@ -15,6 +17,22 @@ public abstract class ChangeNode {
 
     protected ChangeNode next;
     protected ChangeNode previous;
+
+    /**
+     * gets the interpolated value between the starting and the ending values
+     * @param startValue the starting value
+     * @param endValue the ending value
+     * @param progression between 0.0 to 1.0
+     * @return interpolated value which will have the same dimension
+     */
+    public static KeyValue getInterpolatedValue(KeyValue startValue,KeyValue endValue,double progression){
+        KeyValue interpolatedValue=new KeyValue(startValue);
+        for(int i=0;i<interpolatedValue.getDimension();i++){
+            double progressedValue=startValue.get(i)+progression*(endValue.get(i)-startValue.get(i));
+            interpolatedValue.set(i, progressedValue);
+        }
+        return interpolatedValue;
+    }
 
     public ChangeNode getNext() {
         return next;
@@ -94,7 +112,7 @@ public abstract class ChangeNode {
      * Removes this node from the list
      * by simply taking care of its next and previous references.
      * This does not check the head and tail references in a timeline.
-     * Use {@code Timeline.removeChangeNodeFromList(ChangeNode)} for those checks
+     * Use {@code Timeline.remove(ChangeNode)} for those checks
      */
     final public void removeFromList(){
         if(previous!=null){
@@ -115,22 +133,17 @@ public abstract class ChangeNode {
      *
      * @param delta timestep that was used to increment timeline forward
      * @param time the time in the timeline (inclusive of the delta timestep)
-     * @return true if this change node is still pending (as in it changed during this step)
-     * in the process of completing itself,false otherwise
+     * @return true if this change node is changed during this step,false otherwise
      */
     public abstract boolean step(double delta,double time);
 
     /**
      * Jumps the change node to the exact time supplied.
-     * Use this method only when you need to jump to a specific time at an "infrequent event".
-     * Because of the linear time complexity in jumping(for certain ChangeNodes),
-     * using this method during simulation is not recommended.
-     * For that, use {@code ChangeNode.step(delta,time) } method instead.
      *
-     * @param time the time jump needs to be made
+     * @param time the time setTime needs to be made
      * @return true if a change was made, false otherwise
      */
-    public abstract boolean jump(double time);
+    public abstract boolean setTime(double time);
 
     /**
      * computes and finds the ending time of this ChangeNode

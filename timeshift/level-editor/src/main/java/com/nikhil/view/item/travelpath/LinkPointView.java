@@ -295,7 +295,7 @@ public class LinkPointView extends Group implements EventHandler<MouseEvent>{
      * appends a link point after this link point to the alt list
      * by inserting a travel path view between the this
      * link point and the one that needs to be appended
-     * @param linkPointView the link point to append after this
+     * @param linkPointView the link point to add after this
      */
     public void append(LinkPointView linkPointView){
         ViewAltList.buildAndInsertTravelPathViewBetween(this, linkPointView);

@@ -1,9 +1,11 @@
 package com.nikhil.model;
 
+import com.nikhil.timeline.change.ChangeNodeIterator;
+
 /**
  * Created by NikhilVerma on 18/10/15.
  */
-public class ItemModel {
+public abstract class ItemModel {
     private String name;
 
     public String getName() {
@@ -13,4 +15,6 @@ public class ItemModel {
     public void setName(String name) {
         this.name = name;
     }
+
+    public abstract ChangeNodeIterator changeNodeIterator();
 }

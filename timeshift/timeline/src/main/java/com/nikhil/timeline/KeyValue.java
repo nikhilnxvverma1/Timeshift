@@ -52,7 +52,7 @@ public class KeyValue {
 	}
 
 	/**
-	 * Sets the value of this keyframe from another KeyValue
+	 * Sets(copies) the value of this keyframe from another KeyValue
 	 * @param copyFrom copies of all the values from this KeyValue.
 	 *                 If the dimension of argument KeyValue is lesser
 	 *                 than "this" KeyValue, it only copies up till

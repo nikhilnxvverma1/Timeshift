@@ -169,7 +169,7 @@ public class FromToChangeNode extends ChangeNode {
 			double timeElapsed=time-start;
 			double fractionOfDuration=timeElapsed/duration;//this will be between 0.0 to 1.0
 			double progression= curve.valueFor(fractionOfDuration);//TODO casting :change all types to double
-			KeyValue currentValue=getInterpolatedValue(progression);
+			KeyValue currentValue= getInterpolatedValue(startValue, endValue, progression);
 			changeHandler.valueChanged( time, this, currentValue);
 
 			return true;//indicates change happened
@@ -177,23 +177,9 @@ public class FromToChangeNode extends ChangeNode {
 			return false;//indicates change did not happen
 		}
 	}
-	
-	/**
-	 * gets the interpolated value between the starting and the ending values
-	 * @param progression between 0.0 to 1.0
-	 * @return interpolated value of the same dimension
-	 */
-	public KeyValue getInterpolatedValue(double progression){
-		KeyValue interpolatedValue=new KeyValue(startValue);
-		for(int i=0;i<interpolatedValue.getDimension();i++){
-			double progressedValue=startValue.get(i)+progression*(endValue.get(i)-startValue.get(i));
-			interpolatedValue.set(i, progressedValue);
-		}
-		return interpolatedValue;
-	}
 
 	@Override
-	public boolean jump(double time) {
+	public boolean setTime(double time) {
 		//TODO unsupported
 		throw new RuntimeException("Unsupported");
 	}
@@ -201,5 +187,9 @@ public class FromToChangeNode extends ChangeNode {
 	@Override
 	public double findEndingTime() {
 		return start+duration;
+	}
+
+	public void setChangeHandler(FromToChangeHandler changeHandler) {
+
 	}
 }

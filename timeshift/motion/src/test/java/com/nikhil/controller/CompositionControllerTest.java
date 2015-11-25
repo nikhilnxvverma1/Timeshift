@@ -40,12 +40,12 @@ public class CompositionControllerTest {
     @Test
     public void testStep(){
 
-        when(mockedTimelinePlayer.shouldRecieveTimestep(0.016,0 )).thenReturn(false);
+        when(mockedTimelinePlayer.shouldReceiveTimestep(0.016, 0)).thenReturn(false);
         compositionController.step(0.016, 0);
 
         verify(compositionController.getItemModelControllerStart(),times(0)).step(0.016, 0,compositionController);
 
-        when(mockedTimelinePlayer.shouldRecieveTimestep(0.016,0 )).thenReturn(true);
+        when(mockedTimelinePlayer.shouldReceiveTimestep(0.016, 0)).thenReturn(true);
         when(mockedTimelinePlayer.getRevisedDeltaTimestep(0.016)).thenReturn(0.016);
         compositionController.step(0.016, 0);
 

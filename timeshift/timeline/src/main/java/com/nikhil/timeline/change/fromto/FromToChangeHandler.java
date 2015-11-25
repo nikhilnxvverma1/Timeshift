@@ -2,7 +2,6 @@ package com.nikhil.timeline.change.fromto;
 
 import com.nikhil.timeline.change.ChangeNode;
 import com.nikhil.timeline.KeyValue;
-import com.nikhil.timeline.Timeline;
 
 /**
  * Delegate for handling changes in the current value of a change node.  

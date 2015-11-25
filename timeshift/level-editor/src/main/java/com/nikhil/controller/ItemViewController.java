@@ -2,6 +2,7 @@ package com.nikhil.controller;
 
 import com.nikhil.controller.item.ItemModelController;
 import com.nikhil.editor.workspace.Workspace;
+import com.nikhil.model.ItemModel;
 import com.nikhil.view.item.delegate.ItemViewDelegate;
 import com.nikhil.view.item.record.Metadata;
 import com.nikhil.view.item.record.MetadataTag;
@@ -101,4 +102,7 @@ public abstract class ItemViewController implements ItemViewDelegate {
      */
     public abstract SpatialMetadata getSpatialMetadata(MetadataTag tag);
 
+    public ItemModel getItemModel(){
+        return getModelController().getItemModel();
+    }
 }
