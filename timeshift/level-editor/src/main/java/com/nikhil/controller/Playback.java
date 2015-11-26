@@ -20,6 +20,7 @@ public class Playback implements ThumbSeekerDelegate {
         double step = newValue - oldValue;
 //        Logger.log(step +" seeked");
         double currentTime = compositionViewController.getTime();
-        compositionViewController.getCompositionController().step(step, currentTime);
+        compositionViewController.getCompositionController().getTimeline().setTime(currentTime);
+        compositionViewController.getWorkspace().getSelectedItems().updateView();
     }
 }

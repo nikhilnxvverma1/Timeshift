@@ -153,18 +153,16 @@ public class FromToChangeNode extends ChangeNode {
 		this.curve = curve;
 	}
 
-	public boolean isActive(double time){
-		if((time>=start)&&(time<=start+duration)){
-			return true;
-		}else{
-			return false;
-		}
-	}
-	
 	@Override
 	public boolean step(double delta,double time){
 
-		if(isActive(time)){
+		boolean result;
+		if((time >=start)&&(time <=start+duration)){
+			result = true;
+		}else{
+			result = false;
+		}
+		if(result){
 			//during change, compute the interpolated value and trigger value change callback 
 			double timeElapsed=time-start;
 			double fractionOfDuration=timeElapsed/duration;//this will be between 0.0 to 1.0
@@ -179,9 +177,25 @@ public class FromToChangeNode extends ChangeNode {
 	}
 
 	@Override
-	public boolean setTime(double time) {
-		//TODO unsupported
-		throw new RuntimeException("Unsupported");
+	public void setTime(double time) {
+		//during change,
+		if((time >=start)&&(time <=start+duration)){
+			//compute the interpolated value and trigger value change callback
+			double timeElapsed=time-start;
+			double fractionOfDuration=timeElapsed/duration;//this will be between 0.0 to 1.0
+			double progression= curve.valueFor(fractionOfDuration);
+			KeyValue currentValue= getInterpolatedValue(startValue, endValue, progression);
+			changeHandler.valueChanged( time, this, currentValue);
+		}
+		//unnecessary callbacks but what if ther was a jump in time?
+		//before change
+		else if(time<start){
+			changeHandler.valueChanged( time, this, startValue);
+		}
+		//after change
+		else if(time>start+duration){
+			changeHandler.valueChanged( time, this, endValue);
+		}
 	}
 
 	@Override

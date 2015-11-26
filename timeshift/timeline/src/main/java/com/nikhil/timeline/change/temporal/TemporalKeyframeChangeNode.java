@@ -2,7 +2,6 @@ package com.nikhil.timeline.change.temporal;
 
 import com.nikhil.logging.Logger;
 import com.nikhil.timeline.KeyValue;
-import com.nikhil.timeline.change.ChangeNode;
 import com.nikhil.timeline.change.KeyframeChangeNode;
 import com.nikhil.timeline.interpolation.InterpolationCurve;
 import com.nikhil.timeline.keyframe.TemporalKeyframe;
@@ -228,15 +227,65 @@ public class TemporalKeyframeChangeNode extends KeyframeChangeNode {
     }
 
     @Override
-    public boolean step(double delta, double time) {
+    public boolean step(double delta, double time) {//TODO get rid of this method
 
+        return true;
+    }
+
+    /**
+     * Finds the keyframe exactly before the specified time (using cache)
+     * @param time the time exactly after the keyframe that needs to be found
+     * @return temporal keyframe ,which might be null in case there are no keyframes
+     * or time is before start
+     */
+    protected TemporalKeyframe findKeyframeBefore(double time){
+        if(isEmpty()){
+            return null;
+        }else if(nearestAccessedKeyframe==null){
+            nearestAccessedKeyframe=last;
+        }
+
+        TemporalKeyframe keyframeBeforeTime=null;
+
+        //the keyframe could lie after the time
+        if(nearestAccessedKeyframe.getTime()>time){
+
+            //keep going back until we reach exactly the keyframe where its time is before the supplied time
+            while((nearestAccessedKeyframe!= null) &&
+                    (nearestAccessedKeyframe.getTime() > time)){
+                nearestAccessedKeyframe=nearestAccessedKeyframe.getPrevious();
+            }
+
+            //its possible that we reach the starting keyframe and the supplied time is before that
+            if(nearestAccessedKeyframe!=null){
+                //but in case we don't, just go to the next node, (because this node is the failing node)
+
+//                nearestAccessedKeyframe=nearestAccessedKeyframe.getNext();
+                keyframeBeforeTime=nearestAccessedKeyframe;
+            }
+
+        }
+        //or the keyframe can lie before the time
+        else{
+            //keep going forward until we reach exactly the keyframe
+            //where its time is after the supplied time or till we reach the last keyframe
+            while((nearestAccessedKeyframe.getNext() != null) &&
+                    (nearestAccessedKeyframe.getNext().getTime() < time)){
+                nearestAccessedKeyframe=nearestAccessedKeyframe.getNext();
+            }
+            keyframeBeforeTime=nearestAccessedKeyframe;
+        }
+        return keyframeBeforeTime;
+    }
+
+    @Override
+    public void setTime(double time) {
         //get to the keyframe just before the current time
         TemporalKeyframe keyframeBefore = findKeyframeBefore(time);
         if(keyframeBefore!=null){
 
             //time is between two keyframes
             if(keyframeBefore.getNext()!=null){
-                Logger.log("b/w 2 keyframes");
 
                 TemporalKeyframe keyframeAfter = keyframeBefore.getNext();
 
@@ -268,56 +317,6 @@ public class TemporalKeyframeChangeNode extends KeyframeChangeNode {
         }//else there are no keyframes in which case , the model remains unaffected
 
         notifyAnyChangeHandler();
-
-        return true;
-    }
-
-    /**
-     * Finds the keyframe exactly before the specified time (using cache)
-     * @param time the time exactly after the keyframe that needs to be found
-     * @return temporal keyframe ,which might be null in case there are no keyframes
-     * or time is before start
-     */
-    protected TemporalKeyframe findKeyframeBefore(double time){
-        if(isEmpty()){
-            return null;
-        }else if(nearestAccessedKeyframe==null){
-            nearestAccessedKeyframe=last;
-        }
-
-        TemporalKeyframe keyframeBeforeTime=null;
-
-        //the keyframe could lie after the time
-        if(nearestAccessedKeyframe.getTime()>time){
-
-            //keep going back until we reach exactly the keyframe where its time is before the supplied time
-            while((nearestAccessedKeyframe.getPrevious() != null) &&
-                    (nearestAccessedKeyframe.getPrevious().getTime() > time)){
-                nearestAccessedKeyframe=nearestAccessedKeyframe.getPrevious();
-            }
-
-            //its possible that we reach the starting keyframe and the supplied time is before that
-            if(nearestAccessedKeyframe.getTime()<time){
-                keyframeBeforeTime=nearestAccessedKeyframe;
-            }
-
-        }
-        //or the keyframe can lie before the time
-        else{
-            //keep going forward until we reach exactly the keyframe where its time is after the supplied time
-            while((nearestAccessedKeyframe.getNext() != null) &&
-                    (nearestAccessedKeyframe.getNext().getTime() < time)){
-                nearestAccessedKeyframe=nearestAccessedKeyframe.getNext();
-            }
-            keyframeBeforeTime=nearestAccessedKeyframe;
-        }
-        return keyframeBeforeTime;
-    }
-
-    @Override
-    public boolean setTime(double time) {
-        //TODO
-        throw new RuntimeException("Unsupported");
     }
 
     public void notifyAnyChangeHandler(){

@@ -5,78 +5,19 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="fbabe40c-a25f-4f81-a178-f8a94da87cbf" name="Default" comment="Worked on ruler which auto lays out markings on resizing">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/timeline/src/main/java/com/nikhil/timeline/change/ChangeNodeIterator.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/timeline/src/main/java/com/nikhil/timeline/change/KeyframeChangeNode.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/level-editor/src/main/java/com/nikhil/controller/Playback.java" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/level-editor/build/classes/main/com/nikhil/command/ToggleTemporalMetadataKeyframes.class" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/motion/build/classes/main/com/nikhil/controller/item/CircleModelController.class" afterPath="$PROJECT_DIR$/motion/build/classes/main/com/nikhil/controller/item/CircleModelController.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/motion/build/classes/main/com/nikhil/controller/CompositionController.class" afterPath="$PROJECT_DIR$/motion/build/classes/main/com/nikhil/controller/CompositionController.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/motion/build/classes/test/com/nikhil/controller/CompositionControllerTest.class" afterPath="$PROJECT_DIR$/motion/build/classes/test/com/nikhil/controller/CompositionControllerTest.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/level-editor/build/classes/main/com/nikhil/controller/CompositionViewController$1.class" afterPath="$PROJECT_DIR$/level-editor/build/classes/main/com/nikhil/controller/CompositionViewController$1.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/level-editor/build/classes/main/com/nikhil/controller/CompositionViewController.class" afterPath="$PROJECT_DIR$/level-editor/build/classes/main/com/nikhil/controller/CompositionViewController.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/timeline/build/classes/main/com/nikhil/timeline/change/fromto/FromToChangeNode.class" afterPath="$PROJECT_DIR$/timeline/build/classes/main/com/nikhil/timeline/change/fromto/FromToChangeNode.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/motion/build/classes/main/com/nikhil/controller/item/IsoscelesTriangleModelController.class" afterPath="$PROJECT_DIR$/motion/build/classes/main/com/nikhil/controller/item/IsoscelesTriangleModelController.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/motion/build/classes/main/com/nikhil/model/ItemModel.class" afterPath="$PROJECT_DIR$/motion/build/classes/main/com/nikhil/model/ItemModel.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/motion/build/classes/main/com/nikhil/controller/item/ItemModelController.class" afterPath="$PROJECT_DIR$/motion/build/classes/main/com/nikhil/controller/item/ItemModelController.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/level-editor/build/classes/main/com/nikhil/controller/ItemViewController.class" afterPath="$PROJECT_DIR$/level-editor/build/classes/main/com/nikhil/controller/ItemViewController.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/timeline/build/classes/main/com/nikhil/timeline/keyframe/Keyframe.class" afterPath="$PROJECT_DIR$/timeline/build/classes/main/com/nikhil/timeline/keyframe/Keyframe.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/level-editor/build/classes/main/com/nikhil/view/custom/keyframe/KeyframeView.class" afterPath="$PROJECT_DIR$/level-editor/build/classes/main/com/nikhil/view/custom/keyframe/KeyframeView.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/motion/build/classes/main/com/nikhil/controller/item/ParallelogramModelController.class" afterPath="$PROJECT_DIR$/motion/build/classes/main/com/nikhil/controller/item/ParallelogramModelController.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/motion/build/classes/main/com/nikhil/model/shape/PolygonModel.class" afterPath="$PROJECT_DIR$/motion/build/classes/main/com/nikhil/model/shape/PolygonModel.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/motion/build/classes/main/com/nikhil/controller/item/PolygonModelController.class" afterPath="$PROJECT_DIR$/motion/build/classes/main/com/nikhil/controller/item/PolygonModelController.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/level-editor/build/classes/main/com/nikhil/controller/PolygonViewController$1.class" afterPath="$PROJECT_DIR$/level-editor/build/classes/main/com/nikhil/controller/PolygonViewController$1.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/level-editor/build/classes/main/com/nikhil/controller/PolygonViewController.class" afterPath="$PROJECT_DIR$/level-editor/build/classes/main/com/nikhil/controller/PolygonViewController.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/motion/build/classes/main/com/nikhil/model/shape/ShapeModel.class" afterPath="$PROJECT_DIR$/motion/build/classes/main/com/nikhil/model/shape/ShapeModel.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/level-editor/build/classes/main/com/nikhil/controller/ShapeViewController.class" afterPath="$PROJECT_DIR$/level-editor/build/classes/main/com/nikhil/controller/ShapeViewController.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/motion/build/classes/main/com/nikhil/playback/SimpleTimelinePlayer.class" afterPath="$PROJECT_DIR$/motion/build/classes/main/com/nikhil/playback/SimpleTimelinePlayer.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/timeline/build/classes/main/com/nikhil/timeline/change/spatial/SpatialKeyframeChangeNode.class" afterPath="$PROJECT_DIR$/timeline/build/classes/main/com/nikhil/timeline/change/spatial/SpatialKeyframeChangeNode.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/timeline/build/classes/main/com/nikhil/timeline/change/temporal/TemporalKeyframeChangeNode.class" afterPath="$PROJECT_DIR$/timeline/build/classes/main/com/nikhil/timeline/change/temporal/TemporalKeyframeChangeNode.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/level-editor/build/classes/main/com/nikhil/view/custom/keyframe/TemporalKeyframeView.class" afterPath="$PROJECT_DIR$/level-editor/build/classes/main/com/nikhil/view/custom/keyframe/TemporalKeyframeView.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/level-editor/build/classes/main/com/nikhil/view/item/record/TemporalMetadata$1.class" afterPath="$PROJECT_DIR$/level-editor/build/classes/main/com/nikhil/view/item/record/TemporalMetadata$1.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/level-editor/build/classes/main/com/nikhil/view/item/record/TemporalMetadata$2.class" afterPath="$PROJECT_DIR$/level-editor/build/classes/main/com/nikhil/view/item/record/TemporalMetadata$2.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/level-editor/build/classes/main/com/nikhil/view/item/record/TemporalMetadata$3.class" afterPath="$PROJECT_DIR$/level-editor/build/classes/main/com/nikhil/view/item/record/TemporalMetadata$3.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/level-editor/build/classes/main/com/nikhil/view/item/record/TemporalMetadata.class" afterPath="$PROJECT_DIR$/level-editor/build/classes/main/com/nikhil/view/item/record/TemporalMetadata.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/timeline/build/classes/main/com/nikhil/timeline/Timeline.class" afterPath="$PROJECT_DIR$/timeline/build/classes/main/com/nikhil/timeline/Timeline.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/motion/build/classes/main/com/nikhil/playback/TimelinePlayer.class" afterPath="$PROJECT_DIR$/motion/build/classes/main/com/nikhil/playback/TimelinePlayer.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/motion/build/classes/main/com/nikhil/model/pathsystem/TravelPath.class" afterPath="$PROJECT_DIR$/motion/build/classes/main/com/nikhil/model/pathsystem/TravelPath.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/motion/build/classes/main/com/nikhil/controller/item/TravelPathModelController.class" afterPath="$PROJECT_DIR$/motion/build/classes/main/com/nikhil/controller/item/TravelPathModelController.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/level-editor/build/classes/main/com/nikhil/editor/workspace/Workspace.class" afterPath="$PROJECT_DIR$/level-editor/build/classes/main/com/nikhil/editor/workspace/Workspace.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/timeline/src/main/java/com/nikhil/timeline/change/ChangeNode.java" afterPath="$PROJECT_DIR$/timeline/src/main/java/com/nikhil/timeline/change/ChangeNode.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/motion/src/main/java/com/nikhil/controller/item/CircleModelController.java" afterPath="$PROJECT_DIR$/motion/src/main/java/com/nikhil/controller/item/CircleModelController.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/motion/src/main/java/com/nikhil/controller/CompositionController.java" afterPath="$PROJECT_DIR$/motion/src/main/java/com/nikhil/controller/CompositionController.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/motion/src/test/java/com/nikhil/controller/CompositionControllerTest.java" afterPath="$PROJECT_DIR$/motion/src/test/java/com/nikhil/controller/CompositionControllerTest.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/level-editor/src/main/java/com/nikhil/controller/CompositionViewController.java" afterPath="$PROJECT_DIR$/level-editor/src/main/java/com/nikhil/controller/CompositionViewController.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/timeline/src/main/java/com/nikhil/timeline/change/fromto/FromToChangeHandler.java" afterPath="$PROJECT_DIR$/timeline/src/main/java/com/nikhil/timeline/change/fromto/FromToChangeHandler.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/timeline/src/main/java/com/nikhil/timeline/change/fromto/FromToChangeNode.java" afterPath="$PROJECT_DIR$/timeline/src/main/java/com/nikhil/timeline/change/fromto/FromToChangeNode.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/level-editor/src/main/java/com/nikhil/view/modelview/GraphicalBezierPoint.java" afterPath="$PROJECT_DIR$/level-editor/src/main/java/com/nikhil/view/modelview/GraphicalBezierPoint.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/motion/src/main/java/com/nikhil/controller/item/IsoscelesTriangleModelController.java" afterPath="$PROJECT_DIR$/motion/src/main/java/com/nikhil/controller/item/IsoscelesTriangleModelController.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/motion/src/main/java/com/nikhil/model/ItemModel.java" afterPath="$PROJECT_DIR$/motion/src/main/java/com/nikhil/model/ItemModel.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/motion/src/main/java/com/nikhil/controller/item/ItemModelController.java" afterPath="$PROJECT_DIR$/motion/src/main/java/com/nikhil/controller/item/ItemModelController.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/level-editor/src/main/java/com/nikhil/controller/ItemViewController.java" afterPath="$PROJECT_DIR$/level-editor/src/main/java/com/nikhil/controller/ItemViewController.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/timeline/src/main/java/com/nikhil/timeline/KeyValue.java" afterPath="$PROJECT_DIR$/timeline/src/main/java/com/nikhil/timeline/KeyValue.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/timeline/src/main/java/com/nikhil/timeline/keyframe/Keyframe.java" afterPath="$PROJECT_DIR$/timeline/src/main/java/com/nikhil/timeline/keyframe/Keyframe.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/level-editor/src/main/java/com/nikhil/view/custom/keyframe/KeyframeView.java" afterPath="$PROJECT_DIR$/level-editor/src/main/java/com/nikhil/view/custom/keyframe/KeyframeView.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/level-editor/src/main/java/com/nikhil/view/item/travelpath/LinkPointView.java" afterPath="$PROJECT_DIR$/level-editor/src/main/java/com/nikhil/view/item/travelpath/LinkPointView.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/motion/src/main/java/com/nikhil/controller/item/ParallelogramModelController.java" afterPath="$PROJECT_DIR$/motion/src/main/java/com/nikhil/controller/item/ParallelogramModelController.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/motion/src/main/java/com/nikhil/model/shape/PolygonModel.java" afterPath="$PROJECT_DIR$/motion/src/main/java/com/nikhil/model/shape/PolygonModel.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/motion/src/main/java/com/nikhil/controller/item/PolygonModelController.java" afterPath="$PROJECT_DIR$/motion/src/main/java/com/nikhil/controller/item/PolygonModelController.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/level-editor/src/main/java/com/nikhil/view/custom/keyframe/KeyframePane.java" afterPath="$PROJECT_DIR$/level-editor/src/main/java/com/nikhil/view/custom/keyframe/KeyframePane.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/level-editor/src/main/java/com/nikhil/view/custom/keyframe/KeyframeTreeView.java" afterPath="$PROJECT_DIR$/level-editor/src/main/java/com/nikhil/view/custom/keyframe/KeyframeTreeView.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/level-editor/src/main/java/com/nikhil/controller/Playback.java" afterPath="$PROJECT_DIR$/level-editor/src/main/java/com/nikhil/controller/Playback.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/level-editor/src/main/java/com/nikhil/controller/PolygonViewController.java" afterPath="$PROJECT_DIR$/level-editor/src/main/java/com/nikhil/controller/PolygonViewController.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/motion/src/main/java/com/nikhil/model/shape/ShapeModel.java" afterPath="$PROJECT_DIR$/motion/src/main/java/com/nikhil/model/shape/ShapeModel.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/level-editor/src/main/java/com/nikhil/controller/ShapeViewController.java" afterPath="$PROJECT_DIR$/level-editor/src/main/java/com/nikhil/controller/ShapeViewController.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/motion/src/main/java/com/nikhil/playback/SimpleTimelinePlayer.java" afterPath="$PROJECT_DIR$/motion/src/main/java/com/nikhil/playback/SimpleTimelinePlayer.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/timeline/src/main/java/com/nikhil/timeline/keyframe/SpatialKeyframe.java" afterPath="$PROJECT_DIR$/timeline/src/main/java/com/nikhil/timeline/keyframe/SpatialKeyframe.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/timeline/src/main/java/com/nikhil/timeline/change/spatial/SpatialKeyframeChangeNode.java" afterPath="$PROJECT_DIR$/timeline/src/main/java/com/nikhil/timeline/change/spatial/SpatialKeyframeChangeNode.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/level-editor/src/main/java/com/nikhil/view/custom/keyframe/SpatialKeyframePane.java" afterPath="$PROJECT_DIR$/level-editor/src/main/java/com/nikhil/view/custom/keyframe/SpatialKeyframePane.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/timeline/src/main/java/com/nikhil/timeline/keyframe/TemporalKeyframe.java" afterPath="$PROJECT_DIR$/timeline/src/main/java/com/nikhil/timeline/keyframe/TemporalKeyframe.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/timeline/src/main/java/com/nikhil/timeline/change/temporal/TemporalKeyframeChangeNode.java" afterPath="$PROJECT_DIR$/timeline/src/main/java/com/nikhil/timeline/change/temporal/TemporalKeyframeChangeNode.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/level-editor/src/main/java/com/nikhil/view/custom/keyframe/TemporalKeyframeView.java" afterPath="$PROJECT_DIR$/level-editor/src/main/java/com/nikhil/view/custom/keyframe/TemporalKeyframeView.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/level-editor/src/main/java/com/nikhil/view/custom/keyframe/TemporalKeyframePane.java" afterPath="$PROJECT_DIR$/level-editor/src/main/java/com/nikhil/view/custom/keyframe/TemporalKeyframePane.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/timeline/src/main/java/com/nikhil/timeline/Timeline.java" afterPath="$PROJECT_DIR$/timeline/src/main/java/com/nikhil/timeline/Timeline.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/motion/src/main/java/com/nikhil/playback/TimelinePlayer.java" afterPath="$PROJECT_DIR$/motion/src/main/java/com/nikhil/playback/TimelinePlayer.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/motion/src/main/java/com/nikhil/model/pathsystem/TravelPath.java" afterPath="$PROJECT_DIR$/motion/src/main/java/com/nikhil/model/pathsystem/TravelPath.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/motion/src/main/java/com/nikhil/controller/item/TravelPathModelController.java" afterPath="$PROJECT_DIR$/motion/src/main/java/com/nikhil/controller/item/TravelPathModelController.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/level-editor/src/main/java/com/nikhil/editor/tool/TravelPathTool.java" afterPath="$PROJECT_DIR$/level-editor/src/main/java/com/nikhil/editor/tool/TravelPathTool.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/level-editor/src/main/java/com/nikhil/editor/workspace/Workspace.java" afterPath="$PROJECT_DIR$/level-editor/src/main/java/com/nikhil/editor/workspace/Workspace.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/motion/src/main/java/com/nikhil/xml/XMLWriter.java" afterPath="$PROJECT_DIR$/motion/src/main/java/com/nikhil/xml/XMLWriter.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="timeshift.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -132,33 +73,193 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="TemporalKeyframeView.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/level-editor/src/main/java/com/nikhil/view/custom/keyframe/TemporalKeyframeView.java">
+      <file leaf-file-name="KeyframePane.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/level-editor/src/main/java/com/nikhil/view/custom/keyframe/KeyframePane.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="45" column="85" selection-start-line="45" selection-start-column="85" selection-end-line="45" selection-end-column="85" />
+            <state vertical-scroll-proportion="-8.814815">
+              <caret line="245" column="35" selection-start-line="245" selection-start-column="35" selection-end-line="245" selection-end-column="35" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Playback.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/level-editor/src/main/java/com/nikhil/controller/Playback.java">
+      <file leaf-file-name="TemporalKeyframePane.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/level-editor/src/main/java/com/nikhil/view/custom/keyframe/TemporalKeyframePane.java">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="22" column="0" selection-start-line="22" selection-start-column="0" selection-end-line="22" selection-end-column="0" />
+              <caret line="94" column="5" selection-start-line="94" selection-start-column="5" selection-end-line="94" selection-end-column="5" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="TemporalMetadata.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/level-editor/src/main/java/com/nikhil/view/item/record/TemporalMetadata.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="58" column="66" selection-start-line="58" selection-start-column="66" selection-end-line="58" selection-end-column="66" />
               <folding>
-                <element signature="imports" expanded="true" />
+                <element signature="docComment;class#TemporalMetadata#0" expanded="false" />
+                <element signature="e#3500#3569#0" expanded="false" />
+                <element signature="method#getValueNode#0;class#TemporalMetadata#0" expanded="false" />
+                <element signature="e#6084#6085#0" expanded="true" />
+                <element signature="e#6112#6113#0" expanded="true" />
+                <element signature="method#initKeyframePane#0;class#TemporalMetadata#0" expanded="false" />
+                <element signature="method#getScaleValueNode#0;class#TemporalMetadata#0" expanded="false" />
+                <element signature="class#7024:8159" expanded="false" />
+                <element signature="method#valueBeingDragged#0;class#7024:8159" expanded="false" />
+                <element signature="method#valueFinishedChanging#0;class#7024:8159" expanded="false" />
+                <element signature="method#valueBeingDragged#0;class#9154:10531" expanded="false" />
+                <element signature="method#saveKeyframeConfiguration#0;class#TemporalMetadata#0" expanded="false" />
+                <element signature="method#removeAllKeyframes#0;class#TemporalMetadata#0" expanded="false" />
+                <element signature="method#restoreKeyframeConfiguration#0;class#TemporalMetadata#0" expanded="false" />
+                <element signature="docComment;method#registerContinuousChange#0;class#TemporalMetadata#0" expanded="false" />
+                <element signature="docComment;method#createNewKeyframe#0;class#TemporalMetadata#0" expanded="false" />
+                <element signature="docComment;method#pushWithKeyframe#0;class#TemporalMetadata#0" expanded="false" />
+                <element signature="e#17207#17259#0" expanded="false" />
+                <element signature="e#18285#18344#0" expanded="false" />
+                <element signature="e#18556#18623#0" expanded="false" />
+                <element signature="docComment;method#pushDirectChangeWithKeyframe#0;class#TemporalMetadata#0" expanded="false" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="TemporalKeyframeChangeNode.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/timeline/src/main/java/com/nikhil/timeline/change/temporal/TemporalKeyframeChangeNode.java">
+      <file leaf-file-name="TemporalKeyframe.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/timeline/src/main/java/com/nikhil/timeline/keyframe/TemporalKeyframe.java">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="290" column="0" selection-start-line="290" selection-start-column="0" selection-end-line="290" selection-end-column="0" />
+              <caret line="45" column="7" selection-start-line="45" selection-start-column="7" selection-end-line="45" selection-end-column="7" />
+              <folding>
+                <element signature="e#2145#2146#0" expanded="true" />
+                <element signature="e#2176#2177#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="SpatialKeyframePane.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/level-editor/src/main/java/com/nikhil/view/custom/keyframe/SpatialKeyframePane.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="32" column="67" selection-start-line="32" selection-start-column="67" selection-end-line="32" selection-end-column="67" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="KeyValue.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/timeline/src/main/java/com/nikhil/timeline/KeyValue.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="73" column="45" selection-start-line="73" selection-start-column="45" selection-end-line="73" selection-end-column="45" />
+              <folding>
+                <element signature="e#2252#2253#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="CompositionViewController.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/level-editor/src/main/java/com/nikhil/controller/CompositionViewController.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="198" column="17" selection-start-line="198" selection-start-column="17" selection-end-line="198" selection-end-column="17" />
+              <folding>
+                <element signature="docComment;class#CompositionViewController#0" expanded="false" />
+                <element signature="method#CompositionViewController#0;class#CompositionViewController#0" expanded="false" />
+                <element signature="method#getNewTabName#0;class#CompositionViewController#0" expanded="false" />
+                <element signature="method#addItemViewController#0;class#CompositionViewController#0" expanded="false" />
+                <element signature="method#removeItemViewController#0;class#CompositionViewController#0" expanded="false" />
+                <element signature="docComment;method#countExpandedChildren#0;class#CompositionViewController#0" expanded="false" />
+                <element signature="method#countExpandedChildren#0;class#CompositionViewController#0" expanded="false" />
+                <element signature="method#addToTimelineSystem#0;class#CompositionViewController#0" expanded="false" />
+                <element signature="docComment;method#findVirtualFlow#0;class#CompositionViewController#0" expanded="false" />
+                <element signature="method#findVirtualFlow#0;class#CompositionViewController#0" expanded="false" />
+                <element signature="docComment;method#findVirtualScrollBar#0;class#CompositionViewController#0" expanded="false" />
+                <element signature="method#findVirtualScrollBar#0;class#CompositionViewController#0" expanded="false" />
+                <element signature="method#initSearchAndPlayback#0;class#CompositionViewController#0" expanded="false" />
+                <element signature="class#10376:10772" expanded="false" />
+                <element signature="method#valueBeingDragged#0;class#10376:10772" expanded="false" />
+                <element signature="method#valueFinishedChanging#0;class#10376:10772" expanded="false" />
+                <element signature="method#jumpTimeToNextKeyframe#0;class#CompositionViewController#0" expanded="false" />
+                <element signature="e#11788#11867#0" expanded="false" />
+                <element signature="e#12068#12153#0" expanded="false" />
+                <element signature="method#jumpTimeToPreviousKeyframe#0;class#CompositionViewController#0" expanded="false" />
+                <element signature="e#13312#13391#0" expanded="false" />
+                <element signature="e#13595#13680#0" expanded="false" />
+                <element signature="docComment;method#initKeyframeTable#0;class#CompositionViewController#0" expanded="false" />
+                <element signature="method#initKeyframeTable#0;class#CompositionViewController#0" expanded="false" />
+                <element signature="method#initItemTable#0;class#CompositionViewController#0" expanded="false" />
+                <element signature="docComment;method#removeFromTimelineSystem#0;class#CompositionViewController#0" expanded="false" />
+                <element signature="method#removeFromTimelineSystem#0;class#CompositionViewController#0" expanded="false" />
+                <element signature="docComment;method#selectRecordFromItemTable#0;class#CompositionViewController#0" expanded="false" />
+                <element signature="method#selectRecordFromItemTable#0;class#CompositionViewController#0" expanded="false" />
+                <element signature="e#17606#17607#0" expanded="true" />
+                <element signature="e#17672#17673#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="KeyframeTreeView.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/level-editor/src/main/java/com/nikhil/view/custom/keyframe/KeyframeTreeView.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="263" column="84" selection-start-line="263" selection-start-column="84" selection-end-line="263" selection-end-column="84" />
+              <folding>
+                <element signature="docComment;class#KeyframeTreeView#0" expanded="false" />
+                <element signature="e#2499#2538#0" expanded="false" />
+                <element signature="e#3854#3893#0" expanded="false" />
+                <element signature="e#5074#5113#0" expanded="false" />
+                <element signature="docComment;method#findVirtualFlow#0;class#KeyframeTreeView#0" expanded="false" />
+                <element signature="docComment;method#findVirtualFlow#1;class#KeyframeTreeView#0" expanded="false" />
+                <element signature="method#findVirtualFlow#1;class#KeyframeTreeView#0" expanded="false" />
+                <element signature="docComment;method#findVirtualScrollBar#0;class#KeyframeTreeView#0" expanded="false" />
+                <element signature="method#findVirtualScrollBar#0;class#KeyframeTreeView#0" expanded="false" />
+                <element signature="method#selectOverlappingItems#0;class#KeyframeTreeView#0" expanded="false" />
+                <element signature="docComment;method#resetSelectionOfEachChild#0;class#KeyframeTreeView#0" expanded="false" />
+                <element signature="method#resetSelectionOfEachChild#0;class#KeyframeTreeView#0" expanded="false" />
+                <element signature="docComment;method#resetSelectionOfEachExcept#0;class#KeyframeTreeView#0" expanded="false" />
+                <element signature="method#resetSelectionOfEachExcept#0;class#KeyframeTreeView#0" expanded="false" />
+                <element signature="docComment;method#resetSelectionOfEachChildExcept#0;class#KeyframeTreeView#0" expanded="false" />
+                <element signature="method#resetSelectionOfEachChildExcept#0;class#KeyframeTreeView#0" expanded="false" />
+                <element signature="docComment;method#moveSelectedKeysBy#0;class#KeyframeTreeView#0" expanded="false" />
+                <element signature="docComment;method#moveSelectedKeysOfEachChild#0;class#KeyframeTreeView#0" expanded="false" />
+                <element signature="method#bestNextKeyframeAfter#0;class#KeyframeTreeView#0" expanded="false" />
+                <element signature="method#findKeyframeBefore#0;class#KeyframeTreeView#0" expanded="false" />
+                <element signature="method#bestPreviousKeyframeBefore#0;class#KeyframeTreeView#0" expanded="false" />
+                <element signature="method#bestLastKeyframe#0;class#KeyframeTreeView#0" expanded="false" />
+                <element signature="method#bestFirstKeyframe#0;class#KeyframeTreeView#0" expanded="false" />
+                <element signature="docComment;method#countSelectedKeyframe#0;class#KeyframeTreeView#0" expanded="false" />
+                <element signature="method#countSelectedKeyframe#1;class#KeyframeTreeView#0" expanded="false" />
+                <element signature="docComment;method#contains#0;class#KeyframeTreeView#0" expanded="false" />
+                <element signature="method#contains#1;class#KeyframeTreeView#0" expanded="false" />
+                <element signature="docComment;method#getSelectedKeys#0;class#KeyframeTreeView#0" expanded="false" />
+                <element signature="method#getSelectedKeys#0;class#KeyframeTreeView#0" expanded="false" />
+                <element signature="method#populateWithSelectedKeys#0;class#KeyframeTreeView#0" expanded="false" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="ShapeModel.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/motion/src/main/java/com/nikhil/model/shape/ShapeModel.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="34" column="0" selection-start-line="34" selection-start-column="0" selection-end-line="34" selection-end-column="0" />
+              <folding>
+                <element signature="e#1509#1510#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="TemporalKeyframeChangeNode.java" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/timeline/src/main/java/com/nikhil/timeline/change/temporal/TemporalKeyframeChangeNode.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="1.7183099">
+              <caret line="313" column="28" selection-start-line="313" selection-start-column="28" selection-end-line="313" selection-end-column="28" />
               <folding>
                 <element signature="docComment;class#TemporalKeyframeChangeNode#0" expanded="false" />
                 <element signature="docComment;method#TemporalKeyframeChangeNode#0;class#TemporalKeyframeChangeNode#0" expanded="false" />
@@ -172,162 +273,20 @@
                 <element signature="docComment;method#addKeyframe#1;class#TemporalKeyframeChangeNode#0" expanded="false" />
                 <element signature="method#addKeyframe#1;class#TemporalKeyframeChangeNode#0" expanded="false" />
                 <element signature="docComment;method#removeKeyframe#0;class#TemporalKeyframeChangeNode#0" expanded="false" />
-                <element signature="e#6104#6115#0" expanded="false" />
+                <element signature="method#removeKeyframe#0;class#TemporalKeyframeChangeNode#0" expanded="false" />
+                <element signature="e#6058#6069#0" expanded="false" />
                 <element signature="docComment;method#changeNearestAccessedKeyframe#0;class#TemporalKeyframeChangeNode#0" expanded="false" />
                 <element signature="method#changeNearestAccessedKeyframe#0;class#TemporalKeyframeChangeNode#0" expanded="false" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Timeline.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/timeline/src/main/java/com/nikhil/timeline/Timeline.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="55" column="0" selection-start-line="55" selection-start-column="0" selection-end-line="55" selection-end-column="0" />
-              <folding>
-                <element signature="imports" expanded="true" />
-                <element signature="docComment;class#Timeline#0" expanded="false" />
-                <element signature="docComment;field#tag#0;class#Timeline#0" expanded="false" />
-                <element signature="docComment;method#Timeline#0;class#Timeline#0" expanded="false" />
-                <element signature="docComment;method#Timeline#1;class#Timeline#0" expanded="false" />
-                <element signature="method#Timeline#1;class#Timeline#0" expanded="false" />
-                <element signature="docComment;method#setTimeMovingForward#0;class#Timeline#0" expanded="false" />
-                <element signature="method#setTimelineReachedTerminal#0;class#Timeline#0" expanded="false" />
-                <element signature="e#3650#3684#0" expanded="false" />
-                <element signature="e#4153#4193#0" expanded="false" />
-                <element signature="method#findEndingTime#0;class#Timeline#0" expanded="false" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="CompositionController.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/motion/src/main/java/com/nikhil/controller/CompositionController.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="57" column="0" selection-start-line="57" selection-start-column="0" selection-end-line="57" selection-end-column="0" />
-              <folding>
-                <element signature="docComment;class#CompositionController#0" expanded="false" />
-                <element signature="method#CompositionController#2;class#CompositionController#0" expanded="false" />
-                <element signature="method#addItemController#0;class#CompositionController#0" expanded="false" />
-                <element signature="docComment;method#removeItemController#0;class#CompositionController#0" expanded="false" />
-                <element signature="method#removeItemController#0;class#CompositionController#0" expanded="false" />
-                <element signature="e#3463#3475#0" expanded="false" />
-                <element signature="method#getLast#0;class#CompositionController#0" expanded="false" />
-                <element signature="method#timelineReachedTerminal#0;class#CompositionController#0" expanded="false" />
-                <element signature="method#setItemModelControllerStart#0;class#CompositionController#0" expanded="false" />
-                <element signature="docComment;method#getTravellerRegistrarController#0;class#CompositionController#0" expanded="false" />
-                <element signature="method#traverseEachModel#0;class#CompositionController#0" expanded="false" />
-                <element signature="method#acceptVisitor#0;class#CompositionController#0" expanded="false" />
-                <element signature="docComment;method#contains#0;class#CompositionController#0" expanded="false" />
-                <element signature="method#contains#0;class#CompositionController#0" expanded="false" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="CompositionViewController.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/level-editor/src/main/java/com/nikhil/controller/CompositionViewController.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="408" column="25" selection-start-line="408" selection-start-column="25" selection-end-line="408" selection-end-column="25" />
-              <folding>
-                <element signature="docComment;class#CompositionViewController#0" expanded="false" />
-                <element signature="method#CompositionViewController#0;class#CompositionViewController#0" expanded="false" />
-                <element signature="method#getNewTabName#0;class#CompositionViewController#0" expanded="false" />
-                <element signature="docComment;method#countExpandedChildren#0;class#CompositionViewController#0" expanded="false" />
-                <element signature="method#countExpandedChildren#0;class#CompositionViewController#0" expanded="false" />
-                <element signature="method#addToTimelineSystem#0;class#CompositionViewController#0" expanded="false" />
-                <element signature="docComment;method#findVirtualFlow#0;class#CompositionViewController#0" expanded="false" />
-                <element signature="method#findVirtualFlow#0;class#CompositionViewController#0" expanded="false" />
-                <element signature="docComment;method#findVirtualScrollBar#0;class#CompositionViewController#0" expanded="false" />
-                <element signature="method#findVirtualScrollBar#0;class#CompositionViewController#0" expanded="false" />
-                <element signature="method#initView#0;class#CompositionViewController#0" expanded="false" />
-                <element signature="method#initSearchAndPlayback#0;class#CompositionViewController#0" expanded="false" />
-                <element signature="class#10370:10766" expanded="false" />
-                <element signature="method#valueBeingDragged#0;class#10370:10766" expanded="false" />
-                <element signature="method#valueFinishedChanging#0;class#10370:10766" expanded="false" />
-                <element signature="method#jumpTimeToNextKeyframe#0;class#CompositionViewController#0" expanded="false" />
-                <element signature="e#11782#11861#0" expanded="false" />
-                <element signature="e#12062#12147#0" expanded="false" />
-                <element signature="method#jumpTimeToPreviousKeyframe#0;class#CompositionViewController#0" expanded="false" />
-                <element signature="e#13306#13385#0" expanded="false" />
-                <element signature="e#13589#13674#0" expanded="false" />
-                <element signature="docComment;method#initKeyframeTable#0;class#CompositionViewController#0" expanded="false" />
-                <element signature="method#initKeyframeTable#0;class#CompositionViewController#0" expanded="false" />
-                <element signature="method#initItemTable#0;class#CompositionViewController#0" expanded="false" />
-                <element signature="docComment;method#removeFromTimelineSystem#0;class#CompositionViewController#0" expanded="false" />
-                <element signature="method#removeFromTimelineSystem#0;class#CompositionViewController#0" expanded="false" />
-                <element signature="docComment;method#selectRecordFromItemTable#0;class#CompositionViewController#0" expanded="false" />
-                <element signature="method#selectRecordFromItemTable#0;class#CompositionViewController#0" expanded="false" />
-                <element signature="e#17600#17601#0" expanded="true" />
-                <element signature="e#17666#17667#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="SimpleTimelinePlayer.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/motion/src/main/java/com/nikhil/playback/SimpleTimelinePlayer.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="15" column="18" selection-start-line="15" selection-start-column="18" selection-end-line="15" selection-end-column="18" />
-              <folding>
-                <element signature="e#452#453#0" expanded="true" />
-                <element signature="e#480#481#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="FromToChangeNode.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/timeline/src/main/java/com/nikhil/timeline/change/fromto/FromToChangeNode.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-8.703704">
-              <caret line="171" column="37" selection-start-line="171" selection-start-column="37" selection-end-line="171" selection-end-column="37" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="ChangeNode.java" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/timeline/src/main/java/com/nikhil/timeline/change/ChangeNode.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.6454948">
-              <caret line="141" column="6" selection-start-line="141" selection-start-column="6" selection-end-line="141" selection-end-column="6" />
-              <folding>
-                <element signature="docComment;class#ChangeNode#0" expanded="false" />
-                <element signature="docComment;field#tag#0;class#ChangeNode#0" expanded="false" />
-                <element signature="docComment;method#getInterpolatedValue#0;class#ChangeNode#0" expanded="false" />
-                <element signature="method#getInterpolatedValue#0;class#ChangeNode#0" expanded="false" />
-                <element signature="e#1626#1627#0" expanded="true" />
-                <element signature="e#1657#1658#0" expanded="true" />
-                <element signature="docComment;method#getLastNode#0;class#ChangeNode#0" expanded="false" />
-                <element signature="method#getLastNode#0;class#ChangeNode#0" expanded="false" />
-                <element signature="docComment;method#getFirstNode#0;class#ChangeNode#0" expanded="false" />
-                <element signature="method#getFirstNode#0;class#ChangeNode#0" expanded="false" />
-                <element signature="docComment;method#insertAfterMe#0;class#ChangeNode#0" expanded="false" />
-                <element signature="method#insertAfterMe#0;class#ChangeNode#0" expanded="false" />
-                <element signature="docComment;method#removeFromList#0;class#ChangeNode#0" expanded="false" />
-                <element signature="docComment;method#step#0;class#ChangeNode#0" expanded="false" />
-                <element signature="docComment;method#findEndingTime#0;class#ChangeNode#0" expanded="false" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="KeyframeChangeNode.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/timeline/src/main/java/com/nikhil/timeline/change/KeyframeChangeNode.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="16" column="75" selection-start-line="16" selection-start-column="75" selection-end-line="16" selection-end-column="75" />
-              <folding>
-                <element signature="imports" expanded="true" />
-                <element signature="e#296#297#0" expanded="true" />
-                <element signature="e#364#365#0" expanded="true" />
-                <element signature="e#487#488#0" expanded="true" />
-                <element signature="e#553#554#0" expanded="true" />
+                <element signature="docComment;method#shiftKeyframe#0;class#TemporalKeyframeChangeNode#0" expanded="false" />
+                <element signature="method#shiftKeyframe#0;class#TemporalKeyframeChangeNode#0" expanded="false" />
+                <element signature="method#step#0;class#TemporalKeyframeChangeNode#0" expanded="false" />
+                <element signature="docComment;method#findKeyframeBefore#0;class#TemporalKeyframeChangeNode#0" expanded="false" />
+                <element signature="method#findKeyframeBefore#0;class#TemporalKeyframeChangeNode#0" expanded="false" />
+                <element signature="e#9751#9840#0" expanded="false" />
+                <element signature="e#10080#10136#0" expanded="false" />
+                <element signature="method#notifyAnyChangeHandler#0;class#TemporalKeyframeChangeNode#0" expanded="false" />
+                <element signature="docComment;method#findNearbyKeyframe#0;class#TemporalKeyframeChangeNode#0" expanded="false" />
+                <element signature="method#findNearbyKeyframe#0;class#TemporalKeyframeChangeNode#0" expanded="false" />
               </folding>
             </state>
           </provider>
@@ -1356,27 +1315,22 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/level-editor/src/main/java/com/nikhil/view/custom/keyframe/TemporalKeyframePane.java" />
         <option value="$PROJECT_DIR$/level-editor/src/main/java/com/nikhil/view/custom/keyframe/SpatialKeyframeView.java" />
         <option value="$PROJECT_DIR$/level-editor/src/main/java/com/nikhil/command/MoveKeyframes.java" />
-        <option value="$PROJECT_DIR$/level-editor/src/main/java/com/nikhil/view/custom/keyframe/KeyframeTreeView.java" />
         <option value="$PROJECT_DIR$/level-editor/src/main/java/com/nikhil/editor/workspace/Workspace.java" />
         <option value="$PROJECT_DIR$/level-editor/src/main/java/com/nikhil/command/AddTemporalKeyframe.java" />
         <option value="$PROJECT_DIR$/level-editor/src/main/java/com/nikhil/command/AddKeyframe.java" />
         <option value="$PROJECT_DIR$/level-editor/src/main/java/com/nikhil/command/EnableStopWatch.java" />
         <option value="$PROJECT_DIR$/level-editor/src/main/java/com/nikhil/command/ActionOnKeyframes.java" />
-        <option value="$PROJECT_DIR$/level-editor/src/main/java/com/nikhil/view/custom/keyframe/KeyframePane.java" />
         <option value="$PROJECT_DIR$/level-editor/src/main/java/com/nikhil/command/DisableStopWatch.java" />
         <option value="$PROJECT_DIR$/level-editor/src/main/java/com/nikhil/view/item/record/HeaderMetadata.java" />
         <option value="$PROJECT_DIR$/level-editor/src/main/java/com/nikhil/view/item/record/Metadata.java" />
-        <option value="$PROJECT_DIR$/level-editor/src/main/java/com/nikhil/view/custom/keyframe/SpatialKeyframePane.java" />
         <option value="$PROJECT_DIR$/level-editor/src/main/java/com/nikhil/view/item/record/PolygonMetadata.java" />
         <option value="$PROJECT_DIR$/level-editor/src/main/java/com/nikhil/view/item/record/SpatialMetadata.java" />
         <option value="$PROJECT_DIR$/level-editor/src/main/java/com/nikhil/view/item/record/TemporalMetadata.java" />
         <option value="$PROJECT_DIR$/motion/src/main/java/com/nikhil/playback/TimelinePlayer.java" />
         <option value="$PROJECT_DIR$/level-editor/src/main/java/com/nikhil/controller/ShapeViewController.java" />
         <option value="$PROJECT_DIR$/motion/src/main/java/com/nikhil/controller/CompositionController.java" />
-        <option value="$PROJECT_DIR$/level-editor/src/main/java/com/nikhil/controller/PolygonViewController.java" />
         <option value="$PROJECT_DIR$/motion/src/main/java/com/nikhil/model/ItemModel.java" />
         <option value="$PROJECT_DIR$/motion/src/main/java/com/nikhil/model/shape/ShapeModel.java" />
         <option value="$PROJECT_DIR$/motion/src/main/java/com/nikhil/model/shape/PolygonModel.java" />
@@ -1394,19 +1348,24 @@
         <option value="$PROJECT_DIR$/level-editor/src/main/java/com/nikhil/controller/ItemViewController.java" />
         <option value="$PROJECT_DIR$/timeline/src/main/java/com/nikhil/timeline/change/ChangeNodeIterator.java" />
         <option value="$PROJECT_DIR$/level-editor/src/main/java/com/nikhil/controller/CompositionViewController.java" />
-        <option value="$PROJECT_DIR$/timeline/src/main/java/com/nikhil/timeline/change/spatial/SpatialKeyframeChangeNode.java" />
         <option value="$PROJECT_DIR$/level-editor/src/main/java/com/nikhil/view/custom/keyframe/TemporalKeyframeView.java" />
         <option value="$PROJECT_DIR$/level-editor/src/main/java/com/nikhil/view/custom/keyframe/KeyframeView.java" />
         <option value="$PROJECT_DIR$/timeline/src/main/java/com/nikhil/timeline/keyframe/Keyframe.java" />
-        <option value="$PROJECT_DIR$/timeline/src/main/java/com/nikhil/timeline/keyframe/TemporalKeyframe.java" />
         <option value="$PROJECT_DIR$/timeline/src/main/java/com/nikhil/timeline/keyframe/SpatialKeyframe.java" />
         <option value="$PROJECT_DIR$/timeline/src/main/java/com/nikhil/timeline/change/KeyframeChangeNode.java" />
-        <option value="$PROJECT_DIR$/timeline/src/main/java/com/nikhil/timeline/change/fromto/FromToChangeNode.java" />
         <option value="$PROJECT_DIR$/timeline/src/main/java/com/nikhil/timeline/KeyValue.java" />
-        <option value="$PROJECT_DIR$/timeline/src/main/java/com/nikhil/timeline/change/temporal/TemporalKeyframeChangeNode.java" />
-        <option value="$PROJECT_DIR$/level-editor/src/main/java/com/nikhil/controller/Playback.java" />
-        <option value="$PROJECT_DIR$/timeline/src/main/java/com/nikhil/timeline/Timeline.java" />
         <option value="$PROJECT_DIR$/timeline/src/main/java/com/nikhil/timeline/change/ChangeNode.java" />
+        <option value="$PROJECT_DIR$/timeline/src/main/java/com/nikhil/timeline/Timeline.java" />
+        <option value="$PROJECT_DIR$/timeline/src/main/java/com/nikhil/timeline/change/spatial/SpatialKeyframeChangeNode.java" />
+        <option value="$PROJECT_DIR$/level-editor/src/main/java/com/nikhil/controller/Playback.java" />
+        <option value="$PROJECT_DIR$/level-editor/src/main/java/com/nikhil/controller/PolygonViewController.java" />
+        <option value="$PROJECT_DIR$/timeline/src/main/java/com/nikhil/timeline/change/fromto/FromToChangeNode.java" />
+        <option value="$PROJECT_DIR$/timeline/src/main/java/com/nikhil/timeline/keyframe/TemporalKeyframe.java" />
+        <option value="$PROJECT_DIR$/level-editor/src/main/java/com/nikhil/view/custom/keyframe/KeyframePane.java" />
+        <option value="$PROJECT_DIR$/level-editor/src/main/java/com/nikhil/view/custom/keyframe/TemporalKeyframePane.java" />
+        <option value="$PROJECT_DIR$/level-editor/src/main/java/com/nikhil/view/custom/keyframe/SpatialKeyframePane.java" />
+        <option value="$PROJECT_DIR$/level-editor/src/main/java/com/nikhil/view/custom/keyframe/KeyframeTreeView.java" />
+        <option value="$PROJECT_DIR$/timeline/src/main/java/com/nikhil/timeline/change/temporal/TemporalKeyframeChangeNode.java" />
       </list>
     </option>
   </component>
@@ -2278,10 +2237,10 @@
       <window_info id="Designer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32765958" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4283688" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4283688" sideWeight="0.49713877" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.24964234" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.45673758" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32907802" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.45673758" sideWeight="0.49713877" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.45673758" sideWeight="0.5028612" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25751072" sideWeight="0.5048193" order="3" side_tool="true" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32765958" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32340425" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
@@ -2323,132 +2282,23 @@
           <properties class="java.lang.NullPointerException" package="java.lang" />
           <option name="timeStamp" value="131" />
         </breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/timeline/src/main/java/com/nikhil/timeline/change/temporal/TemporalKeyframeChangeNode.java</url>
-          <line>290</line>
-          <properties />
-          <option name="timeStamp" value="209" />
-        </line-breakpoint>
       </breakpoints>
       <breakpoints-dialog>
         <breakpoints-dialog />
       </breakpoints-dialog>
-      <option name="time" value="210" />
+      <option name="time" value="223" />
     </breakpoint-manager>
-    <watches-manager />
+    <watches-manager>
+      <configuration name="Application">
+        <watch expression="temporalKeyframeView.keyframeModel.previous.keyValue" />
+      </configuration>
+    </watches-manager>
   </component>
   <component name="antWorkspaceConfiguration">
     <option name="IS_AUTOSCROLL_TO_SOURCE" value="false" />
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/level-editor/src/main/java/com/nikhil/view/item/record/Metadata.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.047267355">
-          <caret line="19" column="47" selection-start-line="19" selection-start-column="47" selection-end-line="19" selection-end-column="47" />
-          <folding>
-            <element signature="e#1693#1694#0" expanded="false" />
-            <element signature="e#1721#1722#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/level-editor/src/main/java/com/nikhil/view/custom/keyframe/SpatialKeyframePane.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.37666175">
-          <caret line="18" column="11" selection-start-line="18" selection-start-column="11" selection-end-line="18" selection-end-column="11" />
-          <folding>
-            <element signature="e#501#502#0" expanded="false" />
-            <element signature="e#532#533#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/level-editor/src/main/java/com/nikhil/view/item/record/PolygonMetadata.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.71196455">
-          <caret line="325" column="20" selection-start-line="325" selection-start-column="20" selection-end-line="325" selection-end-column="20" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/level-editor/src/main/java/com/nikhil/view/item/record/SpatialMetadata.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="70" column="48" selection-start-line="70" selection-start-column="48" selection-end-line="70" selection-end-column="48" />
-          <folding>
-            <element signature="e#2491#2492#0" expanded="false" />
-            <element signature="e#2538#2539#0" expanded="false" />
-            <element signature="e#2607#2608#0" expanded="false" />
-            <element signature="e#2664#2665#0" expanded="false" />
-            <element signature="e#3784#3785#0" expanded="false" />
-            <element signature="e#3811#3812#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/level-editor/src/main/java/com/nikhil/view/item/record/TemporalMetadata.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.3323486">
-          <caret line="144" column="19" selection-start-line="144" selection-start-column="19" selection-end-line="144" selection-end-column="19" />
-          <folding>
-            <element signature="docComment;class#TemporalMetadata#0" expanded="false" />
-            <element signature="e#3500#3569#0" expanded="false" />
-            <element signature="method#getValueNode#0;class#TemporalMetadata#0" expanded="false" />
-            <element signature="e#6084#6085#0" expanded="false" />
-            <element signature="e#6112#6113#0" expanded="false" />
-            <element signature="method#initKeyframePane#0;class#TemporalMetadata#0" expanded="false" />
-            <element signature="method#getScaleValueNode#0;class#TemporalMetadata#0" expanded="false" />
-            <element signature="class#7024:8159" expanded="false" />
-            <element signature="method#valueBeingDragged#0;class#7024:8159" expanded="false" />
-            <element signature="method#valueFinishedChanging#0;class#7024:8159" expanded="false" />
-            <element signature="method#getRotationValueNode#0;class#TemporalMetadata#0" expanded="false" />
-            <element signature="class#9154:10531" expanded="false" />
-            <element signature="method#valueBeingDragged#0;class#9154:10531" expanded="false" />
-            <element signature="method#valueFinishedChanging#0;class#9154:10531" expanded="false" />
-            <element signature="method#saveKeyframeConfiguration#0;class#TemporalMetadata#0" expanded="false" />
-            <element signature="method#removeAllKeyframes#0;class#TemporalMetadata#0" expanded="false" />
-            <element signature="method#restoreKeyframeConfiguration#0;class#TemporalMetadata#0" expanded="false" />
-            <element signature="docComment;method#registerContinuousChange#0;class#TemporalMetadata#0" expanded="false" />
-            <element signature="docComment;method#createNewKeyframe#0;class#TemporalMetadata#0" expanded="false" />
-            <element signature="method#createNewKeyframe#0;class#TemporalMetadata#0" expanded="false" />
-            <element signature="docComment;method#pushWithKeyframe#0;class#TemporalMetadata#0" expanded="false" />
-            <element signature="method#pushWithKeyframe#0;class#TemporalMetadata#0" expanded="false" />
-            <element signature="e#17207#17259#0" expanded="false" />
-            <element signature="e#18285#18344#0" expanded="false" />
-            <element signature="e#18556#18623#0" expanded="false" />
-            <element signature="docComment;method#pushDirectChangeWithKeyframe#0;class#TemporalMetadata#0" expanded="false" />
-            <element signature="method#pushDirectChangeWithKeyframe#0;class#TemporalMetadata#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/level-editor/src/main/java/com/nikhil/command/DisableStopWatch.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.17725259">
-          <caret line="8" column="3" selection-start-line="8" selection-start-column="3" selection-end-line="8" selection-end-column="3" />
-          <folding>
-            <element signature="imports" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/level-editor/src/main/java/com/nikhil/command/ActionOnKeyframes.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.22156574">
-          <caret line="15" column="22" selection-start-line="15" selection-start-column="22" selection-end-line="15" selection-end-column="22" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/motion/src/main/java/com/nikhil/playback/TimelinePlayer.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="6" column="23" selection-start-line="6" selection-start-column="23" selection-end-line="6" selection-end-column="23" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/level-editor/src/main/java/com/nikhil/view/custom/Ruler.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.5731463">
@@ -2533,48 +2383,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/level-editor/src/main/java/com/nikhil/controller/PolygonViewController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="40" column="38" selection-start-line="40" selection-start-column="38" selection-end-line="40" selection-end-column="38" />
-          <folding>
-            <element signature="docComment;class#PolygonViewController#0" expanded="false" />
-            <element signature="method#PolygonViewController#0;class#PolygonViewController#0" expanded="false" />
-            <element signature="docComment;method#constructModelControllerUsingView#0;class#PolygonViewController#0" expanded="false" />
-            <element signature="method#constructModelControllerUsingView#0;class#PolygonViewController#0" expanded="false" />
-            <element signature="e#4248#4307#0" expanded="false" />
-            <element signature="docComment;method#constructViewUsingModelController#0;class#PolygonViewController#0" expanded="false" />
-            <element signature="method#constructViewUsingModelController#0;class#PolygonViewController#0" expanded="false" />
-            <element signature="e#4787#4898#0" expanded="false" />
-            <element signature="e#6316#6411#0" expanded="false" />
-            <element signature="method#getLayoutBoundsInWorksheet#0;class#PolygonViewController#0" expanded="false" />
-            <element signature="method#addViewsToWorksheet#0;class#PolygonViewController#0" expanded="false" />
-            <element signature="method#removeViewsFromWorksheet#0;class#PolygonViewController#0" expanded="false" />
-            <element signature="method#moveBy#0;class#PolygonViewController#0" expanded="false" />
-            <element signature="method#scaleBy#0;class#PolygonViewController#0" expanded="false" />
-            <element signature="method#setCompositionViewController#0;class#PolygonViewController#0" expanded="false" />
-            <element signature="method#rotateBy#0;class#PolygonViewController#0" expanded="false" />
-            <element signature="method#overlapsWithSceneBounds#0;class#PolygonViewController#0" expanded="false" />
-            <element signature="method#hasSelectionFocus#1;class#PolygonViewController#0" expanded="false" />
-            <element signature="method#hoveredOver#0;class#PolygonViewController#0" expanded="false" />
-            <element signature="method#getMetadataTree#0;class#PolygonViewController#0" expanded="false" />
-            <element signature="e#11203#11238#0" expanded="false" />
-            <element signature="method#isKeyframableProperty#0;class#PolygonViewController#0" expanded="false" />
-            <element signature="method#getTemporalMetadata#0;class#PolygonViewController#0" expanded="false" />
-            <element signature="method#getSpatialMetadata#0;class#PolygonViewController#0" expanded="false" />
-            <element signature="e#15157#15158#0" expanded="false" />
-            <element signature="e#15220#15221#0" expanded="false" />
-            <element signature="e#15461#15462#0" expanded="false" />
-            <element signature="e#15507#15508#0" expanded="false" />
-            <element signature="e#15592#15593#0" expanded="false" />
-            <element signature="e#15638#15639#0" expanded="false" />
-            <element signature="e#15645#15740#0" expanded="false" />
-            <element signature="method#finishedTweakingPolygonPoint#0;class#PolygonViewController#0" expanded="false" />
-            <element signature="e#16436#16531#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/timeline/src/main/java/com/nikhil/timeline/interpolation/InterpolationCurve.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.33239436">
@@ -2640,14 +2448,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/motion/src/main/java/com/nikhil/model/shape/ShapeModel.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="20" column="40" selection-start-line="20" selection-start-column="40" selection-end-line="20" selection-end-column="40" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/motion/src/main/java/com/nikhil/controller/item/PolygonModelController.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -2679,14 +2479,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="45" column="45" selection-start-line="45" selection-start-column="45" selection-end-line="45" selection-end-column="45" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/timeline/src/main/java/com/nikhil/timeline/change/fromto/FromToChangeHandler.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="10" column="17" selection-start-line="10" selection-start-column="17" selection-end-line="10" selection-end-column="17" />
           <folding />
         </state>
       </provider>
@@ -2765,8 +2557,8 @@
             <element signature="method#isKeyframableProperty#0;class#ItemViewController#0" expanded="false" />
             <element signature="docComment;method#getTemporalMetadata#0;class#ItemViewController#0" expanded="false" />
             <element signature="docComment;method#getSpatialMetadata#0;class#ItemViewController#0" expanded="false" />
-            <element signature="e#4232#4233#0" expanded="true" />
-            <element signature="e#4290#4291#0" expanded="true" />
+            <element signature="e#4232#4233#0" expanded="false" />
+            <element signature="e#4290#4291#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -2776,8 +2568,8 @@
         <state vertical-scroll-proportion="0.7183099">
           <caret line="23" column="5" selection-start-line="23" selection-start-column="5" selection-end-line="23" selection-end-column="5" />
           <folding>
-            <element signature="e#600#601#0" expanded="true" />
-            <element signature="e#661#662#0" expanded="true" />
+            <element signature="e#600#601#0" expanded="false" />
+            <element signature="e#661#662#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -2793,26 +2585,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/timeline/src/main/java/com/nikhil/timeline/change/spatial/SpatialKeyframeChangeNode.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.45915493">
-          <caret line="165" column="13" selection-start-line="165" selection-start-column="13" selection-end-line="165" selection-end-column="13" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/level-editor/src/main/java/com/nikhil/view/custom/keyframe/KeyframeView.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="70" column="0" selection-start-line="70" selection-start-column="0" selection-end-line="70" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/level-editor/src/main/java/com/nikhil/view/custom/keyframe/TemporalKeyframeView.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="45" column="85" selection-start-line="45" selection-start-column="85" selection-end-line="45" selection-end-column="85" />
           <folding />
         </state>
       </provider>
@@ -2822,17 +2598,6 @@
         <state vertical-scroll-proportion="0.80792683">
           <caret line="84" column="13" selection-start-line="84" selection-start-column="13" selection-end-line="84" selection-end-column="13" />
           <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/timeline/src/main/java/com/nikhil/timeline/keyframe/TemporalKeyframe.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.7971831">
-          <caret line="80" column="0" selection-start-line="80" selection-start-column="0" selection-end-line="80" selection-end-column="0" />
-          <folding>
-            <element signature="e#2096#2097#0" expanded="false" />
-            <element signature="e#2114#2115#0" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -2849,111 +2614,46 @@
         <state vertical-scroll-proportion="0.0">
           <caret line="16" column="75" selection-start-line="16" selection-start-column="75" selection-end-line="16" selection-end-column="75" />
           <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#296#297#0" expanded="true" />
-            <element signature="e#364#365#0" expanded="true" />
-            <element signature="e#487#488#0" expanded="true" />
-            <element signature="e#553#554#0" expanded="true" />
+            <element signature="imports" expanded="false" />
+            <element signature="e#296#297#0" expanded="false" />
+            <element signature="e#364#365#0" expanded="false" />
+            <element signature="e#487#488#0" expanded="false" />
+            <element signature="e#553#554#0" expanded="false" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/timeline/src/main/java/com/nikhil/timeline/KeyValue.java">
+    <entry file="file://$PROJECT_DIR$/timeline/src/main/java/com/nikhil/timeline/change/ChangeNode.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.122">
-          <caret line="54" column="13" selection-start-line="54" selection-start-column="13" selection-end-line="54" selection-end-column="13" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/timeline/src/main/java/com/nikhil/timeline/change/fromto/FromToChangeNode.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-8.703704">
-          <caret line="171" column="37" selection-start-line="171" selection-start-column="37" selection-end-line="171" selection-end-column="37" />
-          <folding />
+        <state vertical-scroll-proportion="0.0">
+          <caret line="144" column="46" selection-start-line="144" selection-start-column="46" selection-end-line="144" selection-end-column="46" />
+          <folding>
+            <element signature="docComment;class#ChangeNode#0" expanded="false" />
+            <element signature="docComment;field#tag#0;class#ChangeNode#0" expanded="false" />
+            <element signature="docComment;method#getInterpolatedValue#0;class#ChangeNode#0" expanded="false" />
+            <element signature="method#getInterpolatedValue#0;class#ChangeNode#0" expanded="false" />
+            <element signature="e#1626#1627#0" expanded="false" />
+            <element signature="e#1657#1658#0" expanded="false" />
+            <element signature="docComment;method#getLastNode#0;class#ChangeNode#0" expanded="false" />
+            <element signature="method#getLastNode#0;class#ChangeNode#0" expanded="false" />
+            <element signature="docComment;method#getFirstNode#0;class#ChangeNode#0" expanded="false" />
+            <element signature="method#getFirstNode#0;class#ChangeNode#0" expanded="false" />
+            <element signature="docComment;method#insertAfterMe#0;class#ChangeNode#0" expanded="false" />
+            <element signature="method#insertAfterMe#0;class#ChangeNode#0" expanded="false" />
+            <element signature="docComment;method#removeFromList#0;class#ChangeNode#0" expanded="false" />
+            <element signature="docComment;method#step#0;class#ChangeNode#0" expanded="false" />
+            <element signature="docComment;method#findEndingTime#0;class#ChangeNode#0" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/motion/src/main/java/com/nikhil/playback/SimpleTimelinePlayer.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
+        <state vertical-scroll-proportion="0.45070422">
           <caret line="15" column="18" selection-start-line="15" selection-start-column="18" selection-end-line="15" selection-end-column="18" />
           <folding>
-            <element signature="e#452#453#0" expanded="true" />
-            <element signature="e#480#481#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/level-editor/src/main/java/com/nikhil/controller/CompositionViewController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="408" column="25" selection-start-line="408" selection-start-column="25" selection-end-line="408" selection-end-column="25" />
-          <folding>
-            <element signature="docComment;class#CompositionViewController#0" expanded="false" />
-            <element signature="method#CompositionViewController#0;class#CompositionViewController#0" expanded="false" />
-            <element signature="method#getNewTabName#0;class#CompositionViewController#0" expanded="false" />
-            <element signature="docComment;method#countExpandedChildren#0;class#CompositionViewController#0" expanded="false" />
-            <element signature="method#countExpandedChildren#0;class#CompositionViewController#0" expanded="false" />
-            <element signature="method#addToTimelineSystem#0;class#CompositionViewController#0" expanded="false" />
-            <element signature="docComment;method#findVirtualFlow#0;class#CompositionViewController#0" expanded="false" />
-            <element signature="method#findVirtualFlow#0;class#CompositionViewController#0" expanded="false" />
-            <element signature="docComment;method#findVirtualScrollBar#0;class#CompositionViewController#0" expanded="false" />
-            <element signature="method#findVirtualScrollBar#0;class#CompositionViewController#0" expanded="false" />
-            <element signature="method#initView#0;class#CompositionViewController#0" expanded="false" />
-            <element signature="method#initSearchAndPlayback#0;class#CompositionViewController#0" expanded="false" />
-            <element signature="class#10370:10766" expanded="false" />
-            <element signature="method#valueBeingDragged#0;class#10370:10766" expanded="false" />
-            <element signature="method#valueFinishedChanging#0;class#10370:10766" expanded="false" />
-            <element signature="method#jumpTimeToNextKeyframe#0;class#CompositionViewController#0" expanded="false" />
-            <element signature="e#11782#11861#0" expanded="false" />
-            <element signature="e#12062#12147#0" expanded="false" />
-            <element signature="method#jumpTimeToPreviousKeyframe#0;class#CompositionViewController#0" expanded="false" />
-            <element signature="e#13306#13385#0" expanded="false" />
-            <element signature="e#13589#13674#0" expanded="false" />
-            <element signature="docComment;method#initKeyframeTable#0;class#CompositionViewController#0" expanded="false" />
-            <element signature="method#initKeyframeTable#0;class#CompositionViewController#0" expanded="false" />
-            <element signature="method#initItemTable#0;class#CompositionViewController#0" expanded="false" />
-            <element signature="docComment;method#removeFromTimelineSystem#0;class#CompositionViewController#0" expanded="false" />
-            <element signature="method#removeFromTimelineSystem#0;class#CompositionViewController#0" expanded="false" />
-            <element signature="docComment;method#selectRecordFromItemTable#0;class#CompositionViewController#0" expanded="false" />
-            <element signature="method#selectRecordFromItemTable#0;class#CompositionViewController#0" expanded="false" />
-            <element signature="e#17600#17601#0" expanded="true" />
-            <element signature="e#17666#17667#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/timeline/src/main/java/com/nikhil/timeline/change/temporal/TemporalKeyframeChangeNode.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="290" column="0" selection-start-line="290" selection-start-column="0" selection-end-line="290" selection-end-column="0" />
-          <folding>
-            <element signature="docComment;class#TemporalKeyframeChangeNode#0" expanded="false" />
-            <element signature="docComment;method#TemporalKeyframeChangeNode#0;class#TemporalKeyframeChangeNode#0" expanded="false" />
-            <element signature="docComment;method#TemporalKeyframeChangeNode#1;class#TemporalKeyframeChangeNode#0" expanded="false" />
-            <element signature="docComment;method#TemporalKeyframeChangeNode#2;class#TemporalKeyframeChangeNode#0" expanded="false" />
-            <element signature="method#TemporalKeyframeChangeNode#2;class#TemporalKeyframeChangeNode#0" expanded="false" />
-            <element signature="docComment;method#TemporalKeyframeChangeNode#3;class#TemporalKeyframeChangeNode#0" expanded="false" />
-            <element signature="method#TemporalKeyframeChangeNode#3;class#TemporalKeyframeChangeNode#0" expanded="false" />
-            <element signature="docComment;method#addKeyframe#0;class#TemporalKeyframeChangeNode#0" expanded="false" />
-            <element signature="method#addKeyframe#0;class#TemporalKeyframeChangeNode#0" expanded="false" />
-            <element signature="docComment;method#addKeyframe#1;class#TemporalKeyframeChangeNode#0" expanded="false" />
-            <element signature="method#addKeyframe#1;class#TemporalKeyframeChangeNode#0" expanded="false" />
-            <element signature="docComment;method#removeKeyframe#0;class#TemporalKeyframeChangeNode#0" expanded="false" />
-            <element signature="e#6104#6115#0" expanded="false" />
-            <element signature="docComment;method#changeNearestAccessedKeyframe#0;class#TemporalKeyframeChangeNode#0" expanded="false" />
-            <element signature="method#changeNearestAccessedKeyframe#0;class#TemporalKeyframeChangeNode#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/level-editor/src/main/java/com/nikhil/controller/Playback.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="22" column="0" selection-start-line="22" selection-start-column="0" selection-end-line="22" selection-end-column="0" />
-          <folding>
-            <element signature="imports" expanded="true" />
+            <element signature="e#452#453#0" expanded="false" />
+            <element signature="e#480#481#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -2961,7 +2661,7 @@
     <entry file="file://$PROJECT_DIR$/motion/src/main/java/com/nikhil/controller/CompositionController.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="57" column="0" selection-start-line="57" selection-start-column="0" selection-end-line="57" selection-end-column="0" />
+          <caret line="48" column="0" selection-start-line="48" selection-start-column="0" selection-end-line="48" selection-end-column="0" />
           <folding>
             <element signature="docComment;class#CompositionController#0" expanded="false" />
             <element signature="method#CompositionController#2;class#CompositionController#0" expanded="false" />
@@ -2984,9 +2684,8 @@
     <entry file="file://$PROJECT_DIR$/timeline/src/main/java/com/nikhil/timeline/Timeline.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="55" column="0" selection-start-line="55" selection-start-column="0" selection-end-line="55" selection-end-column="0" />
+          <caret line="59" column="28" selection-start-line="59" selection-start-column="28" selection-end-line="59" selection-end-column="28" />
           <folding>
-            <element signature="imports" expanded="true" />
             <element signature="docComment;class#Timeline#0" expanded="false" />
             <element signature="docComment;field#tag#0;class#Timeline#0" expanded="false" />
             <element signature="docComment;method#Timeline#0;class#Timeline#0" expanded="false" />
@@ -2994,33 +2693,321 @@
             <element signature="method#Timeline#1;class#Timeline#0" expanded="false" />
             <element signature="docComment;method#setTimeMovingForward#0;class#Timeline#0" expanded="false" />
             <element signature="method#setTimelineReachedTerminal#0;class#Timeline#0" expanded="false" />
-            <element signature="e#3650#3684#0" expanded="false" />
-            <element signature="e#4153#4193#0" expanded="false" />
+            <element signature="docComment;method#add#0;class#Timeline#0" expanded="false" />
+            <element signature="method#add#0;class#Timeline#0" expanded="false" />
+            <element signature="docComment;method#add#1;class#Timeline#0" expanded="false" />
+            <element signature="method#add#1;class#Timeline#0" expanded="false" />
+            <element signature="docComment;method#step#0;class#Timeline#0" expanded="false" />
+            <element signature="e#3775#3809#0" expanded="false" />
+            <element signature="e#4278#4318#0" expanded="false" />
+            <element signature="docComment;method#remove#0;class#Timeline#0" expanded="false" />
+            <element signature="method#remove#0;class#Timeline#0" expanded="false" />
+            <element signature="docComment;method#remove#1;class#Timeline#0" expanded="false" />
+            <element signature="method#remove#1;class#Timeline#0" expanded="false" />
+            <element signature="docComment;method#findEndingTime#0;class#Timeline#0" expanded="false" />
             <element signature="method#findEndingTime#0;class#Timeline#0" expanded="false" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/timeline/src/main/java/com/nikhil/timeline/change/ChangeNode.java">
+    <entry file="file://$PROJECT_DIR$/timeline/src/main/java/com/nikhil/timeline/change/spatial/SpatialKeyframeChangeNode.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.6454948">
-          <caret line="141" column="6" selection-start-line="141" selection-start-column="6" selection-end-line="141" selection-end-column="6" />
+        <state vertical-scroll-proportion="0.0">
+          <caret line="149" column="0" selection-start-line="149" selection-start-column="0" selection-end-line="149" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/timeline/src/main/java/com/nikhil/timeline/change/fromto/FromToChangeHandler.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.28169015">
+          <caret line="10" column="17" selection-start-line="10" selection-start-column="17" selection-end-line="10" selection-end-column="17" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/timeline/src/main/java/com/nikhil/timeline/change/fromto/FromToChangeNode.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="187" column="66" selection-start-line="187" selection-start-column="66" selection-end-line="187" selection-end-column="66" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/level-editor/src/main/java/com/nikhil/controller/Playback.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="13" column="74" selection-start-line="13" selection-start-column="74" selection-end-line="13" selection-end-column="74" />
           <folding>
-            <element signature="docComment;class#ChangeNode#0" expanded="false" />
-            <element signature="docComment;field#tag#0;class#ChangeNode#0" expanded="false" />
-            <element signature="docComment;method#getInterpolatedValue#0;class#ChangeNode#0" expanded="false" />
-            <element signature="method#getInterpolatedValue#0;class#ChangeNode#0" expanded="false" />
-            <element signature="e#1626#1627#0" expanded="true" />
-            <element signature="e#1657#1658#0" expanded="true" />
-            <element signature="docComment;method#getLastNode#0;class#ChangeNode#0" expanded="false" />
-            <element signature="method#getLastNode#0;class#ChangeNode#0" expanded="false" />
-            <element signature="docComment;method#getFirstNode#0;class#ChangeNode#0" expanded="false" />
-            <element signature="method#getFirstNode#0;class#ChangeNode#0" expanded="false" />
-            <element signature="docComment;method#insertAfterMe#0;class#ChangeNode#0" expanded="false" />
-            <element signature="method#insertAfterMe#0;class#ChangeNode#0" expanded="false" />
-            <element signature="docComment;method#removeFromList#0;class#ChangeNode#0" expanded="false" />
-            <element signature="docComment;method#step#0;class#ChangeNode#0" expanded="false" />
-            <element signature="docComment;method#findEndingTime#0;class#ChangeNode#0" expanded="false" />
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/level-editor/src/main/java/com/nikhil/view/custom/keyframe/TemporalKeyframeView.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="1.5633802">
+          <caret line="45" column="85" selection-start-line="45" selection-start-column="85" selection-end-line="45" selection-end-column="85" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/level-editor/src/main/java/com/nikhil/editor/workspace/Workspace.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="359" column="0" selection-start-line="359" selection-start-column="0" selection-end-line="359" selection-end-column="0" />
+          <folding>
+            <element signature="e#13918#13919#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/level-editor/src/main/java/com/nikhil/view/custom/DraggableTextValue.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="133" column="0" selection-start-line="133" selection-start-column="0" selection-end-line="133" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/level-editor/src/main/java/com/nikhil/command/ModifyTemporalKeyframe.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="29" column="0" selection-start-line="29" selection-start-column="0" selection-end-line="29" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/level-editor/src/main/java/com/nikhil/controller/PolygonViewController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="248" column="0" selection-start-line="248" selection-start-column="0" selection-end-line="248" selection-end-column="0" />
+          <folding>
+            <element signature="docComment;class#PolygonViewController#0" expanded="false" />
+            <element signature="method#PolygonViewController#0;class#PolygonViewController#0" expanded="false" />
+            <element signature="docComment;method#constructModelControllerUsingView#0;class#PolygonViewController#0" expanded="false" />
+            <element signature="method#constructModelControllerUsingView#0;class#PolygonViewController#0" expanded="false" />
+            <element signature="e#4248#4307#0" expanded="false" />
+            <element signature="docComment;method#constructViewUsingModelController#0;class#PolygonViewController#0" expanded="false" />
+            <element signature="method#constructViewUsingModelController#0;class#PolygonViewController#0" expanded="false" />
+            <element signature="e#4787#4898#0" expanded="false" />
+            <element signature="e#6316#6411#0" expanded="false" />
+            <element signature="method#getLayoutBoundsInWorksheet#0;class#PolygonViewController#0" expanded="false" />
+            <element signature="method#addViewsToWorksheet#0;class#PolygonViewController#0" expanded="false" />
+            <element signature="method#removeViewsFromWorksheet#0;class#PolygonViewController#0" expanded="false" />
+            <element signature="method#moveBy#0;class#PolygonViewController#0" expanded="false" />
+            <element signature="method#scaleBy#0;class#PolygonViewController#0" expanded="false" />
+            <element signature="method#setCompositionViewController#0;class#PolygonViewController#0" expanded="false" />
+            <element signature="method#overlapsWithSceneBounds#0;class#PolygonViewController#0" expanded="false" />
+            <element signature="method#hasSelectionFocus#1;class#PolygonViewController#0" expanded="false" />
+            <element signature="method#hoveredOver#0;class#PolygonViewController#0" expanded="false" />
+            <element signature="method#getMetadataTree#0;class#PolygonViewController#0" expanded="false" />
+            <element signature="e#11203#11238#0" expanded="false" />
+            <element signature="method#isKeyframableProperty#0;class#PolygonViewController#0" expanded="false" />
+            <element signature="method#getTemporalMetadata#0;class#PolygonViewController#0" expanded="false" />
+            <element signature="method#getSpatialMetadata#0;class#PolygonViewController#0" expanded="false" />
+            <element signature="e#15715#15810#0" expanded="false" />
+            <element signature="method#finishedTweakingPolygonPoint#0;class#PolygonViewController#0" expanded="false" />
+            <element signature="e#16506#16601#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/motion/src/main/java/com/nikhil/model/shape/ShapeModel.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="34" column="0" selection-start-line="34" selection-start-column="0" selection-end-line="34" selection-end-column="0" />
+          <folding>
+            <element signature="e#1509#1510#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/level-editor/src/main/java/com/nikhil/view/item/record/TemporalMetadata.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="58" column="66" selection-start-line="58" selection-start-column="66" selection-end-line="58" selection-end-column="66" />
+          <folding>
+            <element signature="docComment;class#TemporalMetadata#0" expanded="false" />
+            <element signature="e#3500#3569#0" expanded="false" />
+            <element signature="method#getValueNode#0;class#TemporalMetadata#0" expanded="false" />
+            <element signature="e#6084#6085#0" expanded="true" />
+            <element signature="e#6112#6113#0" expanded="true" />
+            <element signature="method#initKeyframePane#0;class#TemporalMetadata#0" expanded="false" />
+            <element signature="method#getScaleValueNode#0;class#TemporalMetadata#0" expanded="false" />
+            <element signature="class#7024:8159" expanded="false" />
+            <element signature="method#valueBeingDragged#0;class#7024:8159" expanded="false" />
+            <element signature="method#valueFinishedChanging#0;class#7024:8159" expanded="false" />
+            <element signature="method#valueBeingDragged#0;class#9154:10531" expanded="false" />
+            <element signature="method#saveKeyframeConfiguration#0;class#TemporalMetadata#0" expanded="false" />
+            <element signature="method#removeAllKeyframes#0;class#TemporalMetadata#0" expanded="false" />
+            <element signature="method#restoreKeyframeConfiguration#0;class#TemporalMetadata#0" expanded="false" />
+            <element signature="docComment;method#registerContinuousChange#0;class#TemporalMetadata#0" expanded="false" />
+            <element signature="docComment;method#createNewKeyframe#0;class#TemporalMetadata#0" expanded="false" />
+            <element signature="docComment;method#pushWithKeyframe#0;class#TemporalMetadata#0" expanded="false" />
+            <element signature="e#17207#17259#0" expanded="false" />
+            <element signature="e#18285#18344#0" expanded="false" />
+            <element signature="e#18556#18623#0" expanded="false" />
+            <element signature="docComment;method#pushDirectChangeWithKeyframe#0;class#TemporalMetadata#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/timeline/src/main/java/com/nikhil/timeline/keyframe/TemporalKeyframe.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="45" column="7" selection-start-line="45" selection-start-column="7" selection-end-line="45" selection-end-column="7" />
+          <folding>
+            <element signature="e#2145#2146#0" expanded="true" />
+            <element signature="e#2176#2177#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/timeline/src/main/java/com/nikhil/timeline/KeyValue.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="73" column="45" selection-start-line="73" selection-start-column="45" selection-end-line="73" selection-end-column="45" />
+          <folding>
+            <element signature="e#2252#2253#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/level-editor/src/main/java/com/nikhil/view/custom/keyframe/KeyframePane.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-8.814815">
+          <caret line="245" column="35" selection-start-line="245" selection-start-column="35" selection-end-line="245" selection-end-column="35" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/level-editor/src/main/java/com/nikhil/view/custom/keyframe/TemporalKeyframePane.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="94" column="5" selection-start-line="94" selection-start-column="5" selection-end-line="94" selection-end-column="5" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/level-editor/src/main/java/com/nikhil/view/custom/keyframe/SpatialKeyframePane.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="32" column="67" selection-start-line="32" selection-start-column="67" selection-end-line="32" selection-end-column="67" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/level-editor/src/main/java/com/nikhil/controller/CompositionViewController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="198" column="17" selection-start-line="198" selection-start-column="17" selection-end-line="198" selection-end-column="17" />
+          <folding>
+            <element signature="docComment;class#CompositionViewController#0" expanded="false" />
+            <element signature="method#CompositionViewController#0;class#CompositionViewController#0" expanded="false" />
+            <element signature="method#getNewTabName#0;class#CompositionViewController#0" expanded="false" />
+            <element signature="method#addItemViewController#0;class#CompositionViewController#0" expanded="false" />
+            <element signature="method#removeItemViewController#0;class#CompositionViewController#0" expanded="false" />
+            <element signature="docComment;method#countExpandedChildren#0;class#CompositionViewController#0" expanded="false" />
+            <element signature="method#countExpandedChildren#0;class#CompositionViewController#0" expanded="false" />
+            <element signature="method#addToTimelineSystem#0;class#CompositionViewController#0" expanded="false" />
+            <element signature="docComment;method#findVirtualFlow#0;class#CompositionViewController#0" expanded="false" />
+            <element signature="method#findVirtualFlow#0;class#CompositionViewController#0" expanded="false" />
+            <element signature="docComment;method#findVirtualScrollBar#0;class#CompositionViewController#0" expanded="false" />
+            <element signature="method#findVirtualScrollBar#0;class#CompositionViewController#0" expanded="false" />
+            <element signature="method#initSearchAndPlayback#0;class#CompositionViewController#0" expanded="false" />
+            <element signature="class#10376:10772" expanded="false" />
+            <element signature="method#valueBeingDragged#0;class#10376:10772" expanded="false" />
+            <element signature="method#valueFinishedChanging#0;class#10376:10772" expanded="false" />
+            <element signature="method#jumpTimeToNextKeyframe#0;class#CompositionViewController#0" expanded="false" />
+            <element signature="e#11788#11867#0" expanded="false" />
+            <element signature="e#12068#12153#0" expanded="false" />
+            <element signature="method#jumpTimeToPreviousKeyframe#0;class#CompositionViewController#0" expanded="false" />
+            <element signature="e#13312#13391#0" expanded="false" />
+            <element signature="e#13595#13680#0" expanded="false" />
+            <element signature="docComment;method#initKeyframeTable#0;class#CompositionViewController#0" expanded="false" />
+            <element signature="method#initKeyframeTable#0;class#CompositionViewController#0" expanded="false" />
+            <element signature="method#initItemTable#0;class#CompositionViewController#0" expanded="false" />
+            <element signature="docComment;method#removeFromTimelineSystem#0;class#CompositionViewController#0" expanded="false" />
+            <element signature="method#removeFromTimelineSystem#0;class#CompositionViewController#0" expanded="false" />
+            <element signature="docComment;method#selectRecordFromItemTable#0;class#CompositionViewController#0" expanded="false" />
+            <element signature="method#selectRecordFromItemTable#0;class#CompositionViewController#0" expanded="false" />
+            <element signature="e#17606#17607#0" expanded="true" />
+            <element signature="e#17672#17673#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/level-editor/src/main/java/com/nikhil/view/custom/keyframe/KeyframeTreeView.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="263" column="84" selection-start-line="263" selection-start-column="84" selection-end-line="263" selection-end-column="84" />
+          <folding>
+            <element signature="docComment;class#KeyframeTreeView#0" expanded="false" />
+            <element signature="e#2499#2538#0" expanded="false" />
+            <element signature="e#3854#3893#0" expanded="false" />
+            <element signature="e#5074#5113#0" expanded="false" />
+            <element signature="docComment;method#findVirtualFlow#0;class#KeyframeTreeView#0" expanded="false" />
+            <element signature="docComment;method#findVirtualFlow#1;class#KeyframeTreeView#0" expanded="false" />
+            <element signature="method#findVirtualFlow#1;class#KeyframeTreeView#0" expanded="false" />
+            <element signature="docComment;method#findVirtualScrollBar#0;class#KeyframeTreeView#0" expanded="false" />
+            <element signature="method#findVirtualScrollBar#0;class#KeyframeTreeView#0" expanded="false" />
+            <element signature="method#selectOverlappingItems#0;class#KeyframeTreeView#0" expanded="false" />
+            <element signature="docComment;method#resetSelectionOfEachChild#0;class#KeyframeTreeView#0" expanded="false" />
+            <element signature="method#resetSelectionOfEachChild#0;class#KeyframeTreeView#0" expanded="false" />
+            <element signature="docComment;method#resetSelectionOfEachExcept#0;class#KeyframeTreeView#0" expanded="false" />
+            <element signature="method#resetSelectionOfEachExcept#0;class#KeyframeTreeView#0" expanded="false" />
+            <element signature="docComment;method#resetSelectionOfEachChildExcept#0;class#KeyframeTreeView#0" expanded="false" />
+            <element signature="method#resetSelectionOfEachChildExcept#0;class#KeyframeTreeView#0" expanded="false" />
+            <element signature="docComment;method#moveSelectedKeysBy#0;class#KeyframeTreeView#0" expanded="false" />
+            <element signature="docComment;method#moveSelectedKeysOfEachChild#0;class#KeyframeTreeView#0" expanded="false" />
+            <element signature="method#bestNextKeyframeAfter#0;class#KeyframeTreeView#0" expanded="false" />
+            <element signature="method#findKeyframeBefore#0;class#KeyframeTreeView#0" expanded="false" />
+            <element signature="method#bestPreviousKeyframeBefore#0;class#KeyframeTreeView#0" expanded="false" />
+            <element signature="method#bestLastKeyframe#0;class#KeyframeTreeView#0" expanded="false" />
+            <element signature="method#bestFirstKeyframe#0;class#KeyframeTreeView#0" expanded="false" />
+            <element signature="docComment;method#countSelectedKeyframe#0;class#KeyframeTreeView#0" expanded="false" />
+            <element signature="method#countSelectedKeyframe#1;class#KeyframeTreeView#0" expanded="false" />
+            <element signature="docComment;method#contains#0;class#KeyframeTreeView#0" expanded="false" />
+            <element signature="method#contains#1;class#KeyframeTreeView#0" expanded="false" />
+            <element signature="docComment;method#getSelectedKeys#0;class#KeyframeTreeView#0" expanded="false" />
+            <element signature="method#getSelectedKeys#0;class#KeyframeTreeView#0" expanded="false" />
+            <element signature="method#populateWithSelectedKeys#0;class#KeyframeTreeView#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/timeline/src/main/java/com/nikhil/timeline/change/temporal/TemporalKeyframeChangeNode.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="1.7183099">
+          <caret line="313" column="28" selection-start-line="313" selection-start-column="28" selection-end-line="313" selection-end-column="28" />
+          <folding>
+            <element signature="docComment;class#TemporalKeyframeChangeNode#0" expanded="false" />
+            <element signature="docComment;method#TemporalKeyframeChangeNode#0;class#TemporalKeyframeChangeNode#0" expanded="false" />
+            <element signature="docComment;method#TemporalKeyframeChangeNode#1;class#TemporalKeyframeChangeNode#0" expanded="false" />
+            <element signature="docComment;method#TemporalKeyframeChangeNode#2;class#TemporalKeyframeChangeNode#0" expanded="false" />
+            <element signature="method#TemporalKeyframeChangeNode#2;class#TemporalKeyframeChangeNode#0" expanded="false" />
+            <element signature="docComment;method#TemporalKeyframeChangeNode#3;class#TemporalKeyframeChangeNode#0" expanded="false" />
+            <element signature="method#TemporalKeyframeChangeNode#3;class#TemporalKeyframeChangeNode#0" expanded="false" />
+            <element signature="docComment;method#addKeyframe#0;class#TemporalKeyframeChangeNode#0" expanded="false" />
+            <element signature="method#addKeyframe#0;class#TemporalKeyframeChangeNode#0" expanded="false" />
+            <element signature="docComment;method#addKeyframe#1;class#TemporalKeyframeChangeNode#0" expanded="false" />
+            <element signature="method#addKeyframe#1;class#TemporalKeyframeChangeNode#0" expanded="false" />
+            <element signature="docComment;method#removeKeyframe#0;class#TemporalKeyframeChangeNode#0" expanded="false" />
+            <element signature="method#removeKeyframe#0;class#TemporalKeyframeChangeNode#0" expanded="false" />
+            <element signature="e#6058#6069#0" expanded="false" />
+            <element signature="docComment;method#changeNearestAccessedKeyframe#0;class#TemporalKeyframeChangeNode#0" expanded="false" />
+            <element signature="method#changeNearestAccessedKeyframe#0;class#TemporalKeyframeChangeNode#0" expanded="false" />
+            <element signature="docComment;method#shiftKeyframe#0;class#TemporalKeyframeChangeNode#0" expanded="false" />
+            <element signature="method#shiftKeyframe#0;class#TemporalKeyframeChangeNode#0" expanded="false" />
+            <element signature="method#step#0;class#TemporalKeyframeChangeNode#0" expanded="false" />
+            <element signature="docComment;method#findKeyframeBefore#0;class#TemporalKeyframeChangeNode#0" expanded="false" />
+            <element signature="method#findKeyframeBefore#0;class#TemporalKeyframeChangeNode#0" expanded="false" />
+            <element signature="e#9751#9840#0" expanded="false" />
+            <element signature="e#10080#10136#0" expanded="false" />
+            <element signature="method#notifyAnyChangeHandler#0;class#TemporalKeyframeChangeNode#0" expanded="false" />
+            <element signature="docComment;method#findNearbyKeyframe#0;class#TemporalKeyframeChangeNode#0" expanded="false" />
+            <element signature="method#findNearbyKeyframe#0;class#TemporalKeyframeChangeNode#0" expanded="false" />
           </folding>
         </state>
       </provider>

@@ -1,7 +1,6 @@
 package com.nikhil.timeline.change.spatial;
 
 import com.nikhil.timeline.change.ChangeNode;
-import com.nikhil.timeline.change.temporal.MismatchingKeyframeDimensionException;
 import com.nikhil.timeline.keyframe.SpatialKeyframe;
 import com.nikhil.util.modal.UtilPoint;
 
@@ -164,9 +163,8 @@ public class SpatialKeyframeChangeNode extends ChangeNode {
     }
 
     @Override
-    public boolean setTime(double time) {
+    public void setTime(double time) {
         //TODO
-        return false;
     }
 
     @Override

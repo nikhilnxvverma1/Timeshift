@@ -52,9 +52,15 @@ public class Timeline {
 	 * fire off their respective change handlers.
 	 * @param time the time to seek to on timeline
 	 */
-	public void setTime(float time) {
-
+	public void setTime(double time) {
 		this.time = time;
+		//traverse the list
+		ChangeNode t=head;
+		while(t!=null){
+			//update all nodes
+			t.setTime(time);
+			t=t.getNext();
+		}
 	}
 
 	public boolean isTimeMovingForward() {

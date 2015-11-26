@@ -1,6 +1,7 @@
 package com.nikhil.view.custom.keyframe;
 
 import apple.laf.JRSUIUtils;
+import com.nikhil.controller.CompositionViewController;
 import com.nikhil.editor.selection.SelectionArea;
 import com.nikhil.editor.selection.SelectionOverlap;
 import com.nikhil.view.custom.cells.KeyframeCell;
@@ -26,6 +27,7 @@ import java.util.LinkedList;
 public class KeyframeTreeView extends TreeView<Metadata> implements SelectionOverlap {
 
     private final SelectionArea selectionArea=new SelectionArea(this);
+    private CompositionViewController compositionViewController;
 
     //=============================================================================================
     //Event handlers that will need to be unhooked later
@@ -132,8 +134,9 @@ public class KeyframeTreeView extends TreeView<Metadata> implements SelectionOve
     };
 
 
-    public KeyframeTreeView(TreeItem<Metadata> root) {
+    public KeyframeTreeView(CompositionViewController compositionViewController, TreeItem<Metadata> root) {
         super(root);
+        this.compositionViewController=compositionViewController;
         this.setCellFactory(param -> new KeyframeCell());
         this.setShowRoot(false);
         this.setFixedCellSize(Metadata.CELL_HEIGHT);
@@ -249,6 +252,8 @@ public class KeyframeTreeView extends TreeView<Metadata> implements SelectionOve
      */
     public void moveSelectedKeysBy(double dl){
         moveSelectedKeysOfEachChild(this.getRoot(),dl);
+        //update the outline of the selected items
+        compositionViewController.getWorkspace().getSelectedItems().updateView();
     }
 
     /**

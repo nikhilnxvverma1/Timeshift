@@ -53,7 +53,8 @@ public class TemporalKeyframe extends Keyframe {
 	public TemporalKeyframe(double time,TemporalKeyframe previous, KeyValue keyValue, TemporalKeyframe next) {
 		super(time);
 		this.previous = previous;
-		this.keyValue = keyValue;
+		//very important to instantiate a new key value object, otherwise changing value of this will affect other nodes
+		this.keyValue = new KeyValue(keyValue);
 		this.next = next;
 	}
 

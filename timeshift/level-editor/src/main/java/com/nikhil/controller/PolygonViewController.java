@@ -389,11 +389,13 @@ public class PolygonViewController extends ShapeViewController implements Polygo
     @Override
     public void valueChanged(SpatialKeyframeChangeNode changeNode) {
         super.valueChanged(changeNode);
+        polygonGizmo.updateView();
     }
 
     @Override
     public void valueChanged(TemporalKeyframeChangeNode changeNode) {
         super.valueChanged(changeNode);
+        polygonGizmo.updateView();
     }
 
     //=============================================================================================

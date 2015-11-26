@@ -230,17 +230,25 @@ public abstract class KeyframePane extends AnchorPane implements SelectionOverla
 		}
 		return keyContainingPoint;
 	}
-	
-	public void moveSelectedKeysBy(double dl){
-		
+
+	/**
+	 * Moves the selected keys by some distance
+	 * @param dl distance to move by
+	 * @return number of (selected)keys moved
+	 */
+	public int moveSelectedKeysBy(double dl){
+
+		int keysMoved=0;
 		for(Node node: keyContainer.getChildren()){
 			KeyframeView key=(KeyframeView)node;
 			if(key.isSelected()){
 				double newLayoutX = key.getLayoutX()+dl;
 				double time = timeAtX(newLayoutX);
 				key.setTime(time);
+				keysMoved++;
 			}
 		}
+		return keysMoved;
 	}
 
 	@Override

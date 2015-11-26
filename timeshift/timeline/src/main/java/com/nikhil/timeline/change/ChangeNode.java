@@ -140,10 +140,9 @@ public abstract class ChangeNode {
     /**
      * Jumps the change node to the exact time supplied.
      *
-     * @param time the time setTime needs to be made
-     * @return true if a change was made, false otherwise
+     * @param time the time jump needs to be made
      */
-    public abstract boolean setTime(double time);
+    public abstract void setTime(double time);
 
     /**
      * computes and finds the ending time of this ChangeNode

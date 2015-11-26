@@ -24,4 +24,14 @@ public class SpatialKeyframePane extends KeyframePane{
     public void setKeyframeTime(KeyframeView keyframeView, double time) {
         //TODO shift keys and notify change
     }
+
+    @Override
+    public int moveSelectedKeysBy(double dl) {
+        int keysMoved = super.moveSelectedKeysBy(dl);
+        if(keysMoved>0){
+            double currentTime = getMetadata().getItemViewController().getCompositionViewController().getTime();
+            //TODO set the time of the spatial keyframe change node
+        }
+        return keysMoved;
+    }
 }

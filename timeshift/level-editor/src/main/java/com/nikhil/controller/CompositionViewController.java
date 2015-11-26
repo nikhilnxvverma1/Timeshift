@@ -214,7 +214,7 @@ public class CompositionViewController {
 
         rootTreeItem=new TreeItem<>(new HeaderMetadata("Root", MetadataTag.ROOT));
         itemTable = initItemTable(rootTreeItem);
-        keyframeTable =new KeyframeTreeView(rootTreeItem);
+        keyframeTable =new KeyframeTreeView(this, rootTreeItem);
 
         //bind the scrollbars of the two tables TODO unhook these listeners later
 

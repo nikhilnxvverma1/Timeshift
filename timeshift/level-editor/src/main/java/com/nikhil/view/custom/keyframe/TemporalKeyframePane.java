@@ -83,4 +83,14 @@ public class TemporalKeyframePane extends KeyframePane{
     public TemporalKeyframeView findKeyframeView(Keyframe keyframe) {
         return (TemporalKeyframeView)super.findKeyframeView(keyframe);
     }
+
+    @Override
+    public int moveSelectedKeysBy(double dl) {
+        int keysMoved = super.moveSelectedKeysBy(dl);
+        if(keysMoved>0){
+            double currentTime = getMetadata().getItemViewController().getCompositionViewController().getTime();
+            getMetadata().getTemporalKeyframeChangeNode().setTime(currentTime);
+        }
+        return keysMoved;
+    }
 }
