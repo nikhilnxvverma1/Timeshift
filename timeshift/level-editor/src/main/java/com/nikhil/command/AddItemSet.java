@@ -15,8 +15,8 @@ public class AddItemSet extends ActionOnItemSet {
 
     private CompositionViewController compositionViewController;
 
-    public AddItemSet(Set<ItemViewController> itemSet, SelectedItems selectedItems, CompositionViewController compositionViewController) {
-        super(itemSet, selectedItems);
+    public AddItemSet(Set<ItemViewController> itemSet, CompositionViewController compositionViewController) {
+        super(itemSet);
         this.compositionViewController=compositionViewController;
     }
 
@@ -26,9 +26,7 @@ public class AddItemSet extends ActionOnItemSet {
             itemViewController.setCompositionViewController(compositionViewController);
             itemViewController.addViewsToWorksheet();
             compositionViewController.addItemViewController(itemViewController);
-//            compositionViewController.addToTimelineSystem(itemViewController);
         }
-        makeSelectionOfItemSet();
     }
 
     @Override
@@ -37,8 +35,11 @@ public class AddItemSet extends ActionOnItemSet {
             itemViewController.setCompositionViewController(compositionViewController);
             itemViewController.removeViewsFromWorksheet();
             compositionViewController.removeItemViewController(itemViewController);
-//            compositionViewController.removeFromTimelineSystem(itemViewController);
         }
-        selectedItems.clearSelection();
+    }
+
+    @Override
+    public void unexecutedByWorkspace(Workspace workspace) {
+        workspace.getSelectedItems().clearSelection();
     }
 }

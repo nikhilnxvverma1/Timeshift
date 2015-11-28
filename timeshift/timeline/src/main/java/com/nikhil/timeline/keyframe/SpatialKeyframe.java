@@ -1,6 +1,7 @@
 package com.nikhil.timeline.keyframe;
 
 import com.nikhil.space.Parametric;
+import com.nikhil.space.bezier.path.BezierPoint;
 import com.nikhil.util.modal.UtilPoint;
 
 /**
@@ -9,8 +10,7 @@ import com.nikhil.util.modal.UtilPoint;
  */
 public class SpatialKeyframe extends Keyframe implements Parametric{
 
-	private UtilPoint anchorPoint;
-	private UtilPoint controlPointWithNext;
+	private BezierPoint bezierPoint;
 	private SpatialKeyframe previous;
 	private SpatialKeyframe next;
 
@@ -53,24 +53,8 @@ public class SpatialKeyframe extends Keyframe implements Parametric{
 	public SpatialKeyframe(double time,SpatialKeyframe previous, UtilPoint anchorPoint, SpatialKeyframe next) {
 		super(time);
 		this.previous = previous;
-		this.anchorPoint = anchorPoint;
+		this.bezierPoint = new BezierPoint(anchorPoint);
 		this.next = next;
-	}
-
-	public UtilPoint getAnchorPoint() {
-		return anchorPoint;
-	}
-
-	public void setAnchorPoint(UtilPoint anchorPoint) {
-		this.anchorPoint = anchorPoint;
-	}
-
-	public UtilPoint getControlPointWithNext() {
-		return controlPointWithNext;
-	}
-
-	public void setControlPointWithNext(UtilPoint controlPointWithNext) {
-		this.controlPointWithNext = controlPointWithNext;
 	}
 
 	@Override
@@ -95,5 +79,13 @@ public class SpatialKeyframe extends Keyframe implements Parametric{
 	public UtilPoint getPointFor(double t) {
 		//TODO work with dependency on next
 		return null;
+	}
+
+	public BezierPoint getBezierPoint() {
+		return bezierPoint;
+	}
+
+	public void setBezierPoint(BezierPoint bezierPoint) {
+		this.bezierPoint.set(bezierPoint);
 	}
 }

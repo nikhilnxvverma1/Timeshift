@@ -2,10 +2,8 @@ package com.nikhil.command;
 
 import com.nikhil.controller.ItemViewController;
 import com.nikhil.editor.selection.SelectedItems;
-import com.nikhil.util.modal.UtilPoint;
 import javafx.geometry.Point2D;
 
-import javax.rmi.CORBA.Util;
 import java.util.Set;
 
 /**
@@ -16,8 +14,8 @@ public class MoveItemSet extends ActionOnItemSet {
     private Point2D from;
     private Point2D to;
 
-    public MoveItemSet(Set<ItemViewController> itemSet,SelectedItems selectedItems,Point2D from,Point2D to) {
-        super(itemSet,selectedItems);
+    public MoveItemSet(Set<ItemViewController> itemSet, Point2D from, Point2D to) {
+        super(itemSet);
         this.from=from;
         this.to=to;
     }
@@ -29,8 +27,6 @@ public class MoveItemSet extends ActionOnItemSet {
         for (ItemViewController itemViewController : itemSet) {
             itemViewController.moveBy(dx, dy);
         }
-        makeSelectionOfItemSet();
-
     }
 
     @Override
@@ -41,7 +37,5 @@ public class MoveItemSet extends ActionOnItemSet {
         for (ItemViewController itemViewController : itemSet) {
             itemViewController.moveBy(dx, dy);
         }
-        makeSelectionOfItemSet();
-
     }
 }

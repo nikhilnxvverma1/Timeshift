@@ -8,7 +8,7 @@ import com.nikhil.view.item.record.Metadata;
  * (A manual keyframe is one that doesn't bring any change).
  * Created by NikhilVerma on 22/11/15.
  */
-public class EnableStopWatch implements Command{
+public class EnableStopWatch extends Command{
 
     private KeyframeView manualKeyframe;
 

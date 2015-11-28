@@ -385,7 +385,7 @@ public class SelectedItems extends Group implements EventHandler<MouseEvent>{
             Point2D initialPoint=new Point2D(initialX,initialY);
 
             Set<ItemViewController> itemSetForNewCommand = getItemSetForNewCommand();
-            MoveItemSet moveItemSet=new MoveItemSet(itemSetForNewCommand,this,initialPoint,finalPoint);
+            MoveItemSet moveItemSet=new MoveItemSet(itemSetForNewCommand, initialPoint,finalPoint);
             workspace.pushCommand(moveItemSet,false);
 
             moveCommandWasIssued=true;
@@ -451,7 +451,7 @@ public class SelectedItems extends Group implements EventHandler<MouseEvent>{
     public void deleteSelection(){
         Logger.log("Deleting selected items");
         Set<ItemViewController> itemSetForNewCommand = getItemSetForNewCommand();
-        DeleteItemSet deleteItemSet=new DeleteItemSet(itemSetForNewCommand,this);
+        DeleteItemSet deleteItemSet=new DeleteItemSet(itemSetForNewCommand);
         workspace.pushCommand(deleteItemSet);
     }
 

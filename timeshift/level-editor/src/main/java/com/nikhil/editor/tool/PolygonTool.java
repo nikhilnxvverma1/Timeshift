@@ -7,7 +7,7 @@ import com.nikhil.controller.PolygonViewController;
 import com.nikhil.editor.workspace.Workspace;
 import com.nikhil.util.modal.UtilPoint;
 import com.nikhil.view.item.PolygonView;
-import com.nikhil.view.modelview.GraphicalPolygonPoint;
+import com.nikhil.view.bezier.GraphicalPolygonPoint;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.shape.Line;

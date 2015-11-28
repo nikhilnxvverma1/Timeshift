@@ -21,14 +21,12 @@ public class RotateShape extends TemporalActionOnSingleItem {
     public void execute() {
         double dRotation=finalAngle-initialAngle;
         shapeViewController.rotateBy(dRotation);
-        makeSelectionOfThisShape();
     }
 
     @Override
     public void unexecute() {
         double dRotation= initialAngle - finalAngle;
         shapeViewController.rotateBy(dRotation);
-        makeSelectionOfThisShape();
     }
 
     @Override

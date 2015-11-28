@@ -8,12 +8,10 @@ import com.nikhil.controller.CompositionController;
 import com.nikhil.controller.CompositionViewController;
 import com.nikhil.controller.ItemViewController;
 import com.nikhil.controller.RootController;
-import com.nikhil.controller.item.ItemModelController;
 import com.nikhil.editor.XMLLoader;
 import com.nikhil.editor.selection.Clipboard;
 import com.nikhil.editor.selection.SelectedItems;
 import com.nikhil.logging.Logger;
-import com.nikhil.timeline.keyframe.Keyframe;
 import com.nikhil.util.modal.UtilPoint;
 import com.nikhil.view.custom.keyframe.KeyframeTreeView;
 import com.nikhil.view.custom.keyframe.KeyframeView;
@@ -21,7 +19,6 @@ import com.nikhil.view.util.AlertBox;
 import com.nikhil.view.zoom.ZoomableScrollPane;
 import com.nikhil.xml.XMLWriter;
 import javafx.geometry.Point2D;
-import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.input.ScrollEvent;
@@ -217,7 +214,7 @@ public class Workspace  {
         Set<ItemViewController> itemsToPaste= Clipboard.getSharedInstance().getDeepCopyOfItems(offsetX,offsetY);
         if(itemsToPaste!=null){
             totalItemsPasted=itemsToPaste.size();
-            AddItemSet addItemSet =new AddItemSet(itemsToPaste,selectedItems,currentComposition);
+            AddItemSet addItemSet =new AddItemSet(itemsToPaste, currentComposition);
             pushCommand(addItemSet);
         }
         return totalItemsPasted;
@@ -371,6 +368,7 @@ public class Workspace  {
         if(command!=null){
             if(executeBeforePushing){
                 command.execute();
+                command.executedByWorkspace(this);
             }
             commandStack.push(command);
             Logger.log(command.getClass().getSimpleName()+" Pushed");
@@ -388,6 +386,7 @@ public class Workspace  {
             Command command=commandStack.pop();
             Logger.log("Undoing "+command.getClass().getSimpleName());
             command.unexecute();
+            command.unexecutedByWorkspace(this);
             undoStack.push(command);
 
         } catch (EmptyStackException e) {
@@ -405,6 +404,7 @@ public class Workspace  {
             Command command= undoStack.pop();
             Logger.log("Redoing "+command.getClass().getSimpleName());
             command.execute();
+            command.executedByWorkspace(this);
             commandStack.push(command);
         } catch (EmptyStackException e) {
             //do nothing if stack is empty

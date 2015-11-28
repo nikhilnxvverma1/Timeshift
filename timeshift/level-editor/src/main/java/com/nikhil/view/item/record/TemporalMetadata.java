@@ -262,6 +262,17 @@ public class TemporalMetadata extends Metadata{
     }
 
     /**
+     * Creates and returns a new keyframe view
+     * @param keyValue the value of the keyframe
+     * @param time the time of the keyframe
+     * @return a temporal keyframe view
+     */
+    protected TemporalKeyframeView createNewKeyframe(KeyValue keyValue, double time) {
+        TemporalKeyframe keyframeModel = new TemporalKeyframe(time, keyValue);
+        return new TemporalKeyframeView(keyframeModel,temporalKeyframePane);
+    }
+
+    /**
      * For any change on the observed property, calling this method will
      * add or modify a keyframe command (if the property is keyframabale).
      * This method <b>must</b> be called for every continuous change. Ex: like the
@@ -328,17 +339,6 @@ public class TemporalMetadata extends Metadata{
             }
 
         }
-    }
-
-    /**
-     * Creates and returns a new keyframe view
-     * @param keyValue the value of the keyframe
-     * @param time the time of the keyframe
-     * @return a temporal keyframe view
-     */
-    protected TemporalKeyframeView createNewKeyframe(KeyValue keyValue, double time) {
-        TemporalKeyframe keyframeModel = new TemporalKeyframe(time, keyValue);
-        return new TemporalKeyframeView(keyframeModel,temporalKeyframePane);
     }
 
 

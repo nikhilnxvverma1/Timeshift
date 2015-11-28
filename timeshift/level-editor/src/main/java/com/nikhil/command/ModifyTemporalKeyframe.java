@@ -8,7 +8,7 @@ import com.nikhil.view.custom.keyframe.TemporalKeyframeView;
  *
  * Created by NikhilVerma on 13/11/15.
  */
-public class ModifyTemporalKeyframe implements Command{
+public class ModifyTemporalKeyframe extends Command{
     private TemporalKeyframeView temporalKeyframeView;
     private KeyValue initialValue;
     private KeyValue finalValue;

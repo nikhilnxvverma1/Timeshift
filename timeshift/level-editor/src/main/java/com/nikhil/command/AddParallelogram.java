@@ -6,7 +6,7 @@ import javafx.scene.shape.Rectangle;
 /**
  * Created by NikhilVerma on 23/08/15.
  */
-public class AddParallelogram implements Command{
+public class AddParallelogram extends Command{
     private Rectangle rectangle;
     private Pane pane;
 

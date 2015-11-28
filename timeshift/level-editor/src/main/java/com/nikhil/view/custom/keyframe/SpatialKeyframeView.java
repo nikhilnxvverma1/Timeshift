@@ -1,14 +1,24 @@
 package com.nikhil.view.custom.keyframe;
 
+import com.nikhil.command.AddTemporalKeyframe;
+import com.nikhil.command.ModifyTemporalKeyframe;
+import com.nikhil.command.RotateShape;
+import com.nikhil.command.TemporalActionOnSingleItem;
+import com.nikhil.controller.CompositionViewController;
+import com.nikhil.controller.ItemViewController;
+import com.nikhil.editor.workspace.Workspace;
+import com.nikhil.timeline.KeyValue;
 import com.nikhil.timeline.keyframe.SpatialKeyframe;
+import com.nikhil.timeline.keyframe.TemporalKeyframe;
+import com.nikhil.view.bezier.InteractiveBezierPoint;
 
 /**
  * Created by NikhilVerma on 11/11/15.
  */
 public class SpatialKeyframeView extends KeyframeView{
-
     private SpatialKeyframe keyframe;
     private SpatialKeyframePane keyframePane;
+    private InteractiveBezierPoint interactiveBezierPoint;
 
     public SpatialKeyframeView(SpatialKeyframe keyframe,SpatialKeyframePane keyframePane) {
         this(keyframe,keyframePane,DEFAULT_WIDTH);
@@ -40,4 +50,6 @@ public class SpatialKeyframeView extends KeyframeView{
         //TODO
         return false;
     }
+
+
 }

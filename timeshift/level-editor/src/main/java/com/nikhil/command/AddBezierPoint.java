@@ -1,6 +1,6 @@
 package com.nikhil.command;
 
-import com.nikhil.view.modelview.GraphicalBezierPoint;
+import com.nikhil.view.bezier.GraphicalBezierPoint;
 import javafx.scene.layout.Pane;
 
 import java.util.ArrayList;
@@ -8,7 +8,7 @@ import java.util.ArrayList;
 /**
  * Created by NikhilVerma on 24/08/15.
  */
-public class AddBezierPoint implements Command{
+public class AddBezierPoint extends Command{
 
     private Pane pane;
     private GraphicalBezierPoint graphicalBezierPoint;

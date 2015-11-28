@@ -22,14 +22,12 @@ public class ScaleShape extends TemporalActionOnSingleItem {
     public void execute() {
         double dScale = finalScale - initialScale;
         shapeViewController.scaleBy(dScale);
-        makeSelectionOfThisShape();
     }
 
     @Override
     public void unexecute() {
         double dScale = initialScale - finalScale;
         shapeViewController.scaleBy(dScale);
-        makeSelectionOfThisShape();
     }
 
     @Override

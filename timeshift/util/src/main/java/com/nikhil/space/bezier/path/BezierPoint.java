@@ -38,5 +38,14 @@ public class BezierPoint {
 	public void setControlPointWithNext(UtilPoint controlPointWithNext) {
 		this.controlPointWithNext = controlPointWithNext;
 	}
-	
+
+	/**
+	 * Copies the content of another bezier point into this bezier point
+	 * @param copyFrom the point to copy from
+	 */
+	public void set(BezierPoint copyFrom){
+		anchorPoint.set(copyFrom.anchorPoint);
+		controlPointWithNext.set(copyFrom.controlPointWithNext);
+		controlPointWithPrevious.set(copyFrom.controlPointWithPrevious);
+	}
 }

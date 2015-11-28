@@ -1,4 +1,4 @@
-package com.nikhil.view.modelview;
+package com.nikhil.view.bezier;
 
 import com.nikhil.space.bezier.path.BezierPoint;
 import com.nikhil.util.modal.UtilPoint;
@@ -10,6 +10,8 @@ import javafx.scene.shape.CubicCurve;
 import javafx.scene.shape.Line;
 import javafx.scene.shape.Rectangle;
 
+import javax.rmi.CORBA.Util;
+
 /**
  * Created by NikhilVerma on 24/08/15.
  */
@@ -20,12 +22,16 @@ public class GraphicalBezierPoint extends BezierPoint {
     private static final Double CONTROL_LINK_DASHES=5d;
     private static final Double CURVE_DASHES=2d;
 
-    private CubicCurve cubicCurve;
-    private Rectangle anchorPointRect;
-    private Circle previousControlPointCircle;
-    private Line previousControlLine;
-    private Circle nextControlPointCircle;
-    private Line nextControlLine;
+    protected CubicCurve cubicCurve;
+    protected Rectangle anchorPointRect;
+    protected Circle previousControlPointCircle;
+    protected Line previousControlLine;
+    protected Circle nextControlPointCircle;
+    protected Line nextControlLine;
+
+    protected GraphicalBezierPoint(UtilPoint anchorPoint){
+        this(anchorPoint,null);
+    }
 
     public GraphicalBezierPoint(UtilPoint anchorPoint, CubicCurve cubicCurve) {
         super(anchorPoint);

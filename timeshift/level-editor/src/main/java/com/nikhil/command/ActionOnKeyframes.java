@@ -13,7 +13,7 @@ import java.util.LinkedList;
  * several collective actions all of which have same keys.
  * Created by NikhilVerma on 21/11/15.
  */
-public abstract class ActionOnKeyframes implements Command{
+public abstract class ActionOnKeyframes extends Command{
     protected LinkedList<KeyframeView> keyframeViews;
 
     /**

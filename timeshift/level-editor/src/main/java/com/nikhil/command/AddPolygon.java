@@ -5,7 +5,7 @@ import com.nikhil.controller.PolygonViewController;
 import com.nikhil.editor.workspace.Workspace;
 import com.nikhil.util.modal.UtilPoint;
 import com.nikhil.view.item.PolygonView;
-import com.nikhil.view.modelview.GraphicalPolygonPoint;
+import com.nikhil.view.bezier.GraphicalPolygonPoint;
 //import javafx.geometry.Point2D;
 
 import java.util.ArrayList;
@@ -14,7 +14,7 @@ import java.util.List;
 /**
  * Created by NikhilVerma on 19/09/15.
  */
-public class AddPolygon implements Command{
+public class AddPolygon extends Command{
 
     private PolygonViewController polygonViewController;
     private List<GraphicalPolygonPoint> graphicalPolygonPointArrayList;

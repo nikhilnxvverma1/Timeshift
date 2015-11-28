@@ -6,7 +6,7 @@ import javafx.scene.shape.Circle;
 /**
  * Created by NikhilVerma on 23/08/15.
  */
-public class AddCircle implements Command {
+public class AddCircle extends Command {
     private Circle circle;
     private Pane pane;
 

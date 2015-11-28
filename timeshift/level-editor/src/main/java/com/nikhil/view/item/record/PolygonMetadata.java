@@ -11,8 +11,6 @@ import com.nikhil.math.MathUtil;
 import com.nikhil.view.custom.DraggableTextValue;
 import com.nikhil.view.custom.DraggableTextValueDelegate;
 import com.nikhil.view.custom.keyframe.KeyframePane;
-import com.nikhil.view.custom.keyframe.TemporalKeyframePane;
-import javafx.beans.property.DoubleProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -21,7 +19,6 @@ import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
 
-import java.util.Random;
 import java.util.Set;
 
 /**
@@ -179,7 +176,7 @@ public class PolygonMetadata extends Metadata{
                 Point2D finalPoint=new Point2D(finalValue,polygonViewController.getTranslation().getY());
 
                 //push the move command for shifting horizontally,without executing it
-                MoveItemSet shiftHorizontally=new MoveItemSet(itemSetForNewCommand,selectedItems,initialPoint,finalPoint);
+                MoveItemSet shiftHorizontally=new MoveItemSet(itemSetForNewCommand, initialPoint,finalPoint);
                 workspace.pushCommand(shiftHorizontally, !dragged);
             }
         });
@@ -223,7 +220,7 @@ public class PolygonMetadata extends Metadata{
                 Point2D finalPoint=new Point2D(polygonViewController.getTranslation().getX(),finalValue);
 
                 //push the move command for shifting vertically,without executing it
-                MoveItemSet shiftVertically=new MoveItemSet(itemSetForNewCommand,selectedItems,initialPoint,finalPoint);
+                MoveItemSet shiftVertically=new MoveItemSet(itemSetForNewCommand, initialPoint,finalPoint);
                 workspace.pushCommand(shiftVertically, !dragged);
             }
         });

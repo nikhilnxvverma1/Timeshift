@@ -5,21 +5,26 @@ import com.nikhil.controller.ShapeViewController;
 import com.nikhil.editor.selection.SelectedItems;
 import com.nikhil.timeline.KeyValue;
 
+import java.util.LinkedList;
+import java.util.List;
+
 /**
  * Created by NikhilVerma on 21/09/15.
  */
-public abstract class TemporalActionOnSingleItem implements Command{//TODO dedicate this class only for temporal actions?
+public abstract class TemporalActionOnSingleItem extends ItemCommand{
     protected ShapeViewController shapeViewController;
 
     public TemporalActionOnSingleItem(ShapeViewController shapeViewController) {
         this.shapeViewController = shapeViewController;
     }
 
-    protected void makeSelectionOfThisShape(){
-        SelectedItems selectedItems = shapeViewController.getCompositionViewController().getWorkspace().getSelectedItems();
-        selectedItems.clearSelection();
-        selectedItems.addToSelection(shapeViewController);
+    @Override
+    public List<ItemViewController> getItemList() {
+        LinkedList<ItemViewController> list=new LinkedList<>();
+        list.add(shapeViewController);
+        return list;
     }
+
     public abstract KeyValue getInitialValue();
     public abstract KeyValue getFinalValue();
 

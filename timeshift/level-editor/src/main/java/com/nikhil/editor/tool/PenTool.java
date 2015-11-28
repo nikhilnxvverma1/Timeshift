@@ -5,7 +5,7 @@ import com.nikhil.command.Command;
 import com.nikhil.logging.Logger;
 import com.nikhil.util.modal.UtilPoint;
 import com.nikhil.view.item.travelpath.LinkPointView;
-import com.nikhil.view.modelview.GraphicalBezierPoint;
+import com.nikhil.view.bezier.GraphicalBezierPoint;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;

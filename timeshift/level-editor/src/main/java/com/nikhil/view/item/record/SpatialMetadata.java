@@ -1,10 +1,13 @@
 package com.nikhil.view.item.record;
 
 import com.nikhil.command.MoveItemSet;
+import com.nikhil.command.RotateShape;
+import com.nikhil.command.TemporalActionOnSingleItem;
 import com.nikhil.controller.ItemViewController;
 import com.nikhil.controller.ShapeViewController;
 import com.nikhil.editor.selection.SelectedItems;
 import com.nikhil.editor.workspace.Workspace;
+import com.nikhil.timeline.KeyValue;
 import com.nikhil.timeline.change.spatial.SpatialKeyframeChangeNode;
 import com.nikhil.view.custom.DraggableTextValue;
 import com.nikhil.view.custom.DraggableTextValueDelegate;
@@ -143,7 +146,7 @@ public class SpatialMetadata extends Metadata {
                 Point2D finalPoint=new Point2D(finalValue,((ShapeViewController)itemViewController).getTranslation().getY());
 
                 //push the move command for shifting horizontally,without executing it
-                MoveItemSet shiftHorizontally=new MoveItemSet(itemSetForNewCommand,selectedItems,initialPoint,finalPoint);
+                MoveItemSet shiftHorizontally=new MoveItemSet(itemSetForNewCommand, initialPoint,finalPoint);
                 workspace.pushCommand(shiftHorizontally, !dragged);
             }
         });
@@ -187,7 +190,7 @@ public class SpatialMetadata extends Metadata {
                 Point2D finalPoint=new Point2D(((ShapeViewController)itemViewController).getTranslation().getX(),finalValue);
 
                 //push the move command for shifting vertically,without executing it
-                MoveItemSet shiftVertically=new MoveItemSet(itemSetForNewCommand,selectedItems,initialPoint,finalPoint);
+                MoveItemSet shiftVertically=new MoveItemSet(itemSetForNewCommand, initialPoint,finalPoint);
                 workspace.pushCommand(shiftVertically, !dragged);
             }
         });
@@ -241,5 +244,26 @@ public class SpatialMetadata extends Metadata {
         return new HBox(xValue,new Label(","),yValue);
     }
 
+    /**
+     * For any change on the observed property, calling this method will
+     * add or modify a keyframe command (if the property is keyframabale).
+     * This method <b>must</b> be called for every continuous change. Ex: like the
+     * ones that happen inside a mouse drag event
+     * @param oldKeyValue the last value of this property
+     * @param newKeyValue the value for the keyframe to set (or modify)
+     */
+    public void registerContinuousChange(KeyValue oldKeyValue, KeyValue newKeyValue){
+
+    }
+
+    /**
+     * Pushes the supplied command to the command stack by composing it in an existing
+     * keyframe command.
+     * @param action a temporal action that just occurred on a single item(for example: {@link RotateShape})
+     * @param actionPending The action itself will be executed only if this flag is true
+     */
+    public void pushWithKeyframe(TemporalActionOnSingleItem action,boolean actionPending){
+
+    }
 
 }

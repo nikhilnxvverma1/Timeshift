@@ -8,7 +8,7 @@ import com.nikhil.view.item.PolygonView;
 /**
  * Created by NikhilVerma on 19/09/15.
  */
-public class MovePolygonPoint implements Command {
+public class MovePolygonPoint extends Command {
 
     private PolygonViewController polygonViewController;
     private int index;

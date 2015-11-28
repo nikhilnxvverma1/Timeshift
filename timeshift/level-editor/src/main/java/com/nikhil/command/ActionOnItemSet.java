@@ -3,18 +3,18 @@ package com.nikhil.command;
 import com.nikhil.controller.ItemViewController;
 import com.nikhil.editor.selection.SelectedItems;
 
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Set;
 
 /**
  * Created by NikhilVerma on 20/09/15.
  */
-public abstract class ActionOnItemSet implements Command{
+public abstract class ActionOnItemSet extends ItemCommand{
     protected Set<ItemViewController> itemSet;
-    protected SelectedItems selectedItems;
 
-    public ActionOnItemSet(Set<ItemViewController> itemSet, SelectedItems selectedItems) {
+    public ActionOnItemSet(Set<ItemViewController> itemSet) {
         this.itemSet = itemSet;
-        this.selectedItems = selectedItems;
     }
 
     public Set<ItemViewController> getItemSet() {
@@ -35,13 +35,6 @@ public abstract class ActionOnItemSet implements Command{
         return true;
     }
 
-    protected void makeSelectionOfItemSet(){
-        selectedItems.clearSelection();
-        for(ItemViewController itemViewController:itemSet){
-            selectedItems.addToSelection(itemViewController);
-        }
-    }
-
     protected final ItemViewController getFirstItemViewController() {
         ItemViewController firstItemViewController=null;
         for (ItemViewController itemViewController:itemSet){
@@ -49,5 +42,10 @@ public abstract class ActionOnItemSet implements Command{
             break;
         }
         return firstItemViewController;
+    }
+
+    @Override
+    public List<ItemViewController> getItemList() {
+        return new LinkedList<>(itemSet);
     }
 }

@@ -25,7 +25,7 @@ import com.nikhil.view.custom.keyframe.KeyframeView;
  *
  * Created by NikhilVerma on 22/11/15.
  */
-public abstract class AddKeyframe implements Command{
+public abstract class AddKeyframe extends Command{
     protected boolean manual;
     protected Command continuousCommand;
 

@@ -7,7 +7,7 @@ import javafx.scene.layout.Pane;
 /**
  * Created by NikhilVerma on 12/09/15.
  */
-public class AddLinkPoint implements Command {
+public class AddLinkPoint extends Command {
 
     private Pane pane;
     private LinkPointView linkPointView;

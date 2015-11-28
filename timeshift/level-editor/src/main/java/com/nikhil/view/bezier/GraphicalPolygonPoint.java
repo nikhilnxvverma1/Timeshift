@@ -1,4 +1,4 @@
-package com.nikhil.view.modelview;
+package com.nikhil.view.bezier;
 
 import com.nikhil.math.MathUtil;
 import javafx.scene.layout.Pane;
