@@ -42,13 +42,12 @@ public class SpatialKeyframeView extends KeyframeView{
 
     @Override
     public void addToParentKeyframePane() {
-        //TODO
+        keyframePane.addKeyframe(this);
     }
 
     @Override
     public boolean removeFromParentKeyframePane() {
-        //TODO
-        return false;
+        return keyframePane.removeKeyframe(this);
     }
 
 

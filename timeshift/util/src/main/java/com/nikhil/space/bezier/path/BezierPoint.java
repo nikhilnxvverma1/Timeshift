@@ -19,7 +19,16 @@ public class BezierPoint {
 		this.controlPointWithPrevious = controlPointWithPrevious;
 		this.controlPointWithNext = controlPointWithNext;
 	}
-	
+
+	/**
+	 * Copy constructor
+	 * @param bezierPoint the bezier point to copy values from
+	 */
+	public BezierPoint(BezierPoint bezierPoint) {
+		this(new UtilPoint(0,0));//call the other constructor so that points are instantiated
+		this.set(bezierPoint);
+	}
+
 	public UtilPoint getControlPointWithPrevious() {
 		return controlPointWithPrevious;
 	}

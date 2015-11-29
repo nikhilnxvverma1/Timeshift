@@ -1,21 +1,20 @@
 package com.nikhil.view.item.record;
 
-import com.nikhil.command.MoveItemSet;
-import com.nikhil.command.RotateShape;
-import com.nikhil.command.TemporalActionOnSingleItem;
+import com.nikhil.command.*;
+import com.nikhil.controller.CompositionViewController;
 import com.nikhil.controller.ItemViewController;
-import com.nikhil.controller.ShapeViewController;
-import com.nikhil.editor.selection.SelectedItems;
 import com.nikhil.editor.workspace.Workspace;
-import com.nikhil.timeline.KeyValue;
 import com.nikhil.timeline.change.spatial.SpatialKeyframeChangeNode;
+import com.nikhil.timeline.keyframe.SpatialKeyframe;
+import com.nikhil.timeline.keyframe.TemporalKeyframe;
+import com.nikhil.util.modal.UtilPoint;
 import com.nikhil.view.custom.DraggableTextValue;
 import com.nikhil.view.custom.DraggableTextValueDelegate;
-import com.nikhil.view.custom.keyframe.KeyframePane;
+import com.nikhil.view.custom.keyframe.*;
+import javafx.beans.property.DoubleProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
-import javafx.geometry.Point2D;
 import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
@@ -28,10 +27,13 @@ import java.util.Set;
 public class SpatialMetadata extends Metadata {
 
     private ItemViewController itemViewController;
+    private SpatialKeyframePane spatialKeyframePane;
     private SpatialKeyframeChangeNode spatialKeyframeChangeNode;
 
     private CheckBox keyframable;
-
+    private AddSpatialKeyframe recentAddKeyframeCommand;
+    private ModifySpatialKeyframe recentModifyKeyframeCommand;
+    
     //TODO we might not need these, on remove from the scene graph , the buttons will be garbage collected
     private EventHandler<ActionEvent> selectPreviousKeyframe=e->{
         itemViewController.getCompositionViewController().getKeyframeTable().resetSelectionOfEachExcept(getKeyframePane());
@@ -40,6 +42,25 @@ public class SpatialMetadata extends Metadata {
     private EventHandler<ActionEvent> selectNextKeyframe=e->{
         itemViewController.getCompositionViewController().getKeyframeTable().resetSelectionOfEachExcept(getKeyframePane());
         getKeyframePane().selectNextKeyframe();
+    };
+    private EventHandler<ActionEvent> addManualKeyframe=e->{
+        if (isKeyframable()) {
+
+            //get the current time of the composition
+            double currentTime=itemViewController.getCompositionViewController().getTime();
+            //find a keyframe near that time
+            SpatialKeyframe nearbyKeyframe = spatialKeyframeChangeNode.findNearbyKeyframe(currentTime,
+                    CompositionViewController.NEGLIGIBLE_TIME_DIFFERENCE);
+
+            //create a command to add a manual keyframe at this time
+            if(nearbyKeyframe==null){
+                SpatialKeyframeView newKeyframe = createNewKeyframe(spatialKeyframeChangeNode.getCurrentPoint(), currentTime);
+                recentAddKeyframeCommand = new AddSpatialKeyframe(newKeyframe,true);
+                itemViewController.getCompositionViewController().getWorkspace().pushCommand(recentAddKeyframeCommand);
+            }
+            //else ignore if a nearby keyframe already exists
+
+        }
     };
 
     private ChangeListener<? super Number>[]propertyListeners=null;//hold reference to prevent it from being garbage collected
@@ -52,6 +73,17 @@ public class SpatialMetadata extends Metadata {
         this.spatialKeyframeChangeNode=spatialKeyframeChangeNode;
         this.keyframable=new CheckBox();
         this.keyframable.setSelected(false);
+        this.keyframable.setOnAction(event -> {
+            if(keyframable.isSelected()){
+                double currentTime=itemViewController.getCompositionViewController().getTime();
+                SpatialKeyframeView newKeyframe = createNewKeyframe(spatialKeyframeChangeNode.getCurrentPoint(), currentTime);
+                EnableStopWatch enableStopWatch = new EnableStopWatch(newKeyframe);
+                itemViewController.getCompositionViewController().getWorkspace().pushCommand(enableStopWatch);
+            }else{
+                DisableStopWatch disableStopWatch=new DisableStopWatch(this);
+                itemViewController.getCompositionViewController().getWorkspace().pushCommand(disableStopWatch);
+            }
+        });
     }
 
     @Override
@@ -93,6 +125,7 @@ public class SpatialMetadata extends Metadata {
         Tooltip.install(previousKeyframe, new Tooltip("Previous Keyframe"));
 
         ToggleButton toggleButton = new ToggleButton("*");
+        toggleButton.setOnAction(addManualKeyframe);
         Tooltip.install(toggleButton, new Tooltip("Toggle Keyframe"));
 
         Button nextKeyframe = new Button(">");
@@ -107,24 +140,40 @@ public class SpatialMetadata extends Metadata {
     }
 
     @Override
-    public KeyframePane initKeyframePane(double width) {
-        return null;
+    public KeyframePane initKeyframePane(double width){
+        if(spatialKeyframePane!=null){
+            return spatialKeyframePane;
+        }
+        spatialKeyframePane = new SpatialKeyframePane(30, width,this);//TODO remove hardcode
+        spatialKeyframePane.layoutXProperty().addListener((observable, oldValue, newValue) -> {
+            ((DoubleProperty)observable).set(0);//downcast to double because we know that layoutx is a double property
+        });
+        return spatialKeyframePane;
     }
 
     @Override
     public KeyframePane getKeyframePane() {
-        return null;
+        return spatialKeyframePane;
+    }
+
+    public SpatialKeyframeChangeNode getSpatialKeyframeChangeNode() {
+        return spatialKeyframeChangeNode;
     }
 
     private HBox getTranslationValueNode(){
-        if(!(itemViewController instanceof ShapeViewController)){
-            throw new RuntimeException("Translation for a complete entity is only applicable for shapes");
-        }
+
         DraggableTextValue xValue=new DraggableTextValue(new DraggableTextValueDelegate() {
 
             @Override
             public void valueBeingDragged(DraggableTextValue draggableTextValue, double initialValue, double oldValue, double newValue) {
+
+                UtilPoint oldTranslation = new UtilPoint(itemViewController.getTranslation());
+                oldTranslation.setX(oldValue);
+                UtilPoint newTranslation = new UtilPoint(itemViewController.getTranslation());
+                newTranslation.setX(newValue);
+
                 itemViewController.moveBy(newValue-oldValue,0);
+                registerContinuousChange(oldTranslation,newTranslation,null);
                 //update the outline
                 itemViewController.getCompositionViewController().getWorkspace().getSelectedItems().updateView();
             }
@@ -132,22 +181,13 @@ public class SpatialMetadata extends Metadata {
             @Override
             public void valueFinishedChanging(DraggableTextValue draggableTextValue, double initialValue, double finalValue, boolean dragged) {
 
-                //get the reference to the workspace
-                Workspace workspace = itemViewController.getCompositionViewController().getWorkspace();
-
-                //get the reference to the selected items
-                SelectedItems selectedItems = workspace.getSelectedItems();
-
-                //create a new item set from the SelectedItems (uses old if it exists)
-                Set<ItemViewController> itemSetForNewCommand = selectedItems.getItemSetForNewCommand();
-
                 //create the initial and final points by supplying the same y across both points
-                Point2D initialPoint=new Point2D(initialValue,((ShapeViewController)itemViewController).getTranslation().getY());
-                Point2D finalPoint=new Point2D(finalValue,((ShapeViewController)itemViewController).getTranslation().getY());
+                UtilPoint initialPoint=new UtilPoint(initialValue,itemViewController.getTranslation().getY());
+                UtilPoint finalPoint=new UtilPoint(finalValue,itemViewController.getTranslation().getY());
 
                 //push the move command for shifting horizontally,without executing it
-                MoveItemSet shiftHorizontally=new MoveItemSet(itemSetForNewCommand, initialPoint,finalPoint);
-                workspace.pushCommand(shiftHorizontally, !dragged);
+                MoveItem shiftHorizontally=new MoveItem(itemViewController, initialPoint,finalPoint);
+                endContinuousChange(shiftHorizontally,!dragged,null);
             }
         });
         xValue.setStep(1);
@@ -168,30 +208,28 @@ public class SpatialMetadata extends Metadata {
 
             @Override
             public void valueBeingDragged(DraggableTextValue draggableTextValue, double initialValue, double oldValue, double newValue) {
-                itemViewController.moveBy(0,newValue-oldValue);
+                UtilPoint oldTranslation = new UtilPoint(itemViewController.getTranslation());
+                oldTranslation.setY(oldValue);
+                UtilPoint newTranslation = new UtilPoint(itemViewController.getTranslation());
+                newTranslation.setY(newValue);
 
+                itemViewController.moveBy(0,newValue-oldValue);
+                registerContinuousChange(oldTranslation,newTranslation,null);
+                
                 //update the outline
                 itemViewController.getCompositionViewController().getWorkspace().getSelectedItems().updateView();
             }
 
             @Override
             public void valueFinishedChanging(DraggableTextValue draggableTextValue, double initialValue, double finalValue, boolean dragged) {
-                //get the reference to the workspace
-                Workspace workspace = itemViewController.getCompositionViewController().getWorkspace();
-
-                //get the reference to the selected items
-                SelectedItems selectedItems = workspace.getSelectedItems();
-
-                //create a new item set from the SelectedItems (uses old if it exists)
-                Set<ItemViewController> itemSetForNewCommand = selectedItems.getItemSetForNewCommand();
 
                 //create the initial and final points by supplying the same x across both points
-                Point2D initialPoint=new Point2D(((ShapeViewController)itemViewController).getTranslation().getX(),initialValue);
-                Point2D finalPoint=new Point2D(((ShapeViewController)itemViewController).getTranslation().getX(),finalValue);
+                UtilPoint initialPoint=new UtilPoint(itemViewController.getTranslation().getX(),initialValue);
+                UtilPoint finalPoint=new UtilPoint(itemViewController.getTranslation().getX(),finalValue);
 
                 //push the move command for shifting vertically,without executing it
-                MoveItemSet shiftVertically=new MoveItemSet(itemSetForNewCommand, initialPoint,finalPoint);
-                workspace.pushCommand(shiftVertically, !dragged);
+                MoveItem shiftVertically=new MoveItem(itemViewController, initialPoint,finalPoint);
+                endContinuousChange(shiftVertically,!dragged,null);
             }
         });
         yValue.setStep(1);
@@ -245,25 +283,218 @@ public class SpatialMetadata extends Metadata {
     }
 
     /**
+     * Creates and returns a new keyframe view
+     * @param anchorPoint the anchorPoint of the bezier point of the keyframe
+     * @param time the time of the keyframe
+     * @return a temporal keyframe view
+     */
+    protected SpatialKeyframeView createNewKeyframe(UtilPoint anchorPoint, double time) {
+        SpatialKeyframe keyframeModel = new SpatialKeyframe(time, anchorPoint);
+        return new SpatialKeyframeView(keyframeModel,spatialKeyframePane);
+    }
+
+    /**
+     * Reports if the command being supplied just got executed as a result of a previous command operation.
+     * This works by checking it it is added to a composite command, (if its not null)
+     * @param command the command to check against.
+     * @param compositeCommand the composite command that may contain the command just executed.If this is null,
+     *                         the command will be checked against the top of the workspace's command stack.
+     * @return true if the command was just executed, false otherwise.
+     */
+    private boolean wasPreviouslyExecuted(ItemCommand command, ItemCompositeCommand compositeCommand){
+        if(compositeCommand!=null){
+            return compositeCommand.contains(command);
+        }else{
+            Workspace workspace = itemViewController.getCompositionViewController().getWorkspace();
+            return workspace.peekCommandStack()==command;
+        }
+    }
+
+    /**
+     * Pushes the supplied command as part of a composite command(if needed) or to the workspace itself.
+     * @param command the command that needs to be pushed
+     * @param actionPending weather this command will be executed on being pushed or not
+     * @param compositeCommand the composite command to which this command will be added. If this is null,
+     *                         the command will be added to the workspace itself.
+     */
+    private void push(ItemCommand command,boolean actionPending,ItemCompositeCommand compositeCommand){
+        if(compositeCommand!=null){
+            compositeCommand.addItemCommand(command,actionPending);
+        }else{
+            Workspace workspace = itemViewController.getCompositionViewController().getWorkspace();
+            workspace.pushCommand(command,actionPending);
+        }
+    }
+    /**
      * For any change on the observed property, calling this method will
      * add or modify a keyframe command (if the property is keyframabale).
      * This method <b>must</b> be called for every continuous change. Ex: like the
      * ones that happen inside a mouse drag event
-     * @param oldKeyValue the last value of this property
-     * @param newKeyValue the value for the keyframe to set (or modify)
+     * @param oldPoint the last position of the continuous change
+     * @param newPoint the new position of the continuous change
+     * @param compositeCommand the composite command that will contain the resulting command.This can also be null.
+     *                             If its null, the resulting command will be pushed to the workspace instead.
      */
-    public void registerContinuousChange(KeyValue oldKeyValue, KeyValue newKeyValue){
+    public void registerContinuousChange(UtilPoint oldPoint, UtilPoint newPoint, ItemCompositeCommand compositeCommand){
+        if(isKeyframable()){
 
+            //get the current time of the composition
+            double currentTime=itemViewController.getCompositionViewController().getTime();
+
+            //find a keyframe near that time
+            SpatialKeyframe nearbyKeyframe = spatialKeyframeChangeNode.findNearbyKeyframe(currentTime,
+                    CompositionViewController.NEGLIGIBLE_TIME_DIFFERENCE);
+
+            //if a keyframe does exists, modify it
+            if (nearbyKeyframe!=null) {
+
+                nearbyKeyframe.getBezierPoint().setAnchorPoint(newPoint);//besides this, we also need to maintain keyframe commands
+
+                //if the last action was to add a keyframe
+                if(wasPreviouslyExecuted(recentAddKeyframeCommand,compositeCommand)){
+
+                    //create a modify keyframe command if the add keyframe command is complete
+                    if (recentAddKeyframeCommand.isComplete()) {
+                        SpatialKeyframeView keyframeView = spatialKeyframePane.findKeyframeView(nearbyKeyframe);
+                        recentModifyKeyframeCommand=new ModifySpatialKeyframe(keyframeView,oldPoint);
+
+                        //push command ,but don't execute, because this change has already been done
+                        push(recentModifyKeyframeCommand,false,compositeCommand);
+//                        workspace.pushCommand(recentModifyKeyframeCommand, false);
+                    }
+                }
+                //last action was to modify a keyframe's view
+                else if(wasPreviouslyExecuted(recentModifyKeyframeCommand,compositeCommand)){
+
+                    //create a new modify keyframe command if the current modify command is complete
+                    if (recentModifyKeyframeCommand.isComplete()) {
+                        SpatialKeyframeView keyframeView = spatialKeyframePane.findKeyframeView(nearbyKeyframe);
+                        recentModifyKeyframeCommand=new ModifySpatialKeyframe(keyframeView,oldPoint);
+
+                        //push command ,but don't execute, because this change has already been done
+                        push(recentModifyKeyframeCommand,false,compositeCommand);
+//                        workspace.pushCommand(recentModifyKeyframeCommand, false);
+                    }
+
+                }else{
+                    //create a modify keyframe command and push it
+                    SpatialKeyframeView keyframeView = spatialKeyframePane.findKeyframeView(nearbyKeyframe);
+                    recentModifyKeyframeCommand=new ModifySpatialKeyframe(keyframeView,oldPoint);
+
+                    //push command ,but don't execute, because this change has already been done
+                    push(recentModifyKeyframeCommand,false,compositeCommand);
+//                    workspace.pushCommand(recentModifyKeyframeCommand, false);
+                }
+            }
+            //if no nearby keyframes exists , we need to create a new one
+            else{
+                //reset any selection made and add a keyframe at this change
+                SpatialKeyframeView newKeyframe = createNewKeyframe(oldPoint, currentTime);
+                recentAddKeyframeCommand = new AddSpatialKeyframe(newKeyframe,false);
+                push(recentAddKeyframeCommand,true,compositeCommand);
+//                workspace.pushCommand(recentAddKeyframeCommand);
+
+            }
+        }
     }
 
     /**
-     * Pushes the supplied command to the command stack by composing it in an existing
-     * keyframe command.
-     * @param action a temporal action that just occurred on a single item(for example: {@link RotateShape})
+     * Pushes the supplied command as a "continuous command" of an existing keyframe command.
+     * The Keyframe command itself is added to the composite command
+     * This method works on the single item that this metadata represents.If the command
+     * is an {@link ActionOnItemSet} (ex: {@link MoveItemSet}, then this method should not be called for items
+     * in the "item set".
+     * @param action a spatial action that just occurred on a single item(for example: {@link MoveItem})
      * @param actionPending The action itself will be executed only if this flag is true
+     * @param compositeCommand the composite command that will contain the resulting command.This can also be null.
+     *                             If its null, the resulting command will be pushed to the workspace instead.
+     * @return true if the keyframe command is pending and needs execution.False otherwise
      */
-    public void pushWithKeyframe(TemporalActionOnSingleItem action,boolean actionPending){
+    public void endContinuousChange(SpatialActionOnSingleItem action,boolean actionPending,ItemCompositeCommand compositeCommand){
+        if(isKeyframable()){
 
+            //this can happen if, lets say, the user directly enters a value in the textfield
+            if(actionPending){
+                pushDirectChangeWithKeyframe(action,compositeCommand);
+            }
+            //if the action is not pending it implies the "end" of a continuous change
+            else{
+                //check if the top most command is an add keyframe operation
+                if(wasPreviouslyExecuted(recentAddKeyframeCommand,compositeCommand)){
+
+                    //manual keyframes don't introduce any change ,they just add new keyframe
+                    if (recentAddKeyframeCommand.isManual()) {
+                        //create a new "recently modified keyframe" command,
+                        //use the keyframe view from the recently added keyframe command
+                        recentModifyKeyframeCommand=new ModifySpatialKeyframe(
+                                recentAddKeyframeCommand.getKeyframeCreated(),
+                                action.getInitialPoint(),
+                                action.getFinalPoint(),
+                                action);
+                        push(recentModifyKeyframeCommand,false,compositeCommand);
+//                        workspace.pushCommand(recentModifyKeyframeCommand,false);
+                    } else {
+                        //update the "end" of the continuous change
+                        recentAddKeyframeCommand.setContinuousCommand(action);
+                        recentAddKeyframeCommand.setFinal(action.getFinalPoint());
+                    }
+                }else if(wasPreviouslyExecuted(recentModifyKeyframeCommand,compositeCommand)){
+                    //modify the "recently modified keyframe" command,
+                    recentModifyKeyframeCommand.setContinuousCommand(action);
+                    //keep in mind that the initial value has already been set,
+                    //here we set the final value for the modify keyframe command
+                    recentModifyKeyframeCommand.setFinal(action.getFinalPoint());
+                }else{
+                    //most unlikely case, this implies that a continuous change was not
+                    //registered with this metadata or that something is wrong with the register method
+                    throw new RuntimeException("Previously executed command is not compatible with the " +
+                            "end of this continuous change. Make sure the changes are " +
+                            "'REGISTERED' to the spatial metadata and that the composite command is the same in both calls");
+                }
+            }
+        }else{
+            push(action,actionPending,compositeCommand);
+        }
     }
 
+
+    /**
+     * Takes care of a direct change where the initial and final point of the change are known
+     * in one go.It is understood the the action is pending.
+     * @param action the action for that change which has not been pushed to the command stack yet.
+     * @param compositeCommand if its not null, action will be a part of the composite command, else it
+     *                         will be added to the workspace.
+     *
+     */
+    public void pushDirectChangeWithKeyframe(SpatialActionOnSingleItem action,ItemCompositeCommand compositeCommand){
+
+        if (!isKeyframable()) {
+            //just push the command, and execute it
+            push(action,true,compositeCommand);
+        }else{
+            //get the current time of the composition
+            double currentTime=itemViewController.getCompositionViewController().getTime();
+
+            //find a keyframe near that time
+            SpatialKeyframe nearbyKeyframe = spatialKeyframeChangeNode.findNearbyKeyframe(currentTime,
+                    CompositionViewController.NEGLIGIBLE_TIME_DIFFERENCE);
+
+            if(nearbyKeyframe!=null){
+                //issue modify existing keyframe command
+                SpatialKeyframeView keyframeView = spatialKeyframePane.findKeyframeView(nearbyKeyframe);
+                recentModifyKeyframeCommand=new ModifySpatialKeyframe(keyframeView,action.getInitialPoint(),
+                        action.getFinalPoint(),action);
+
+                //push and execute
+                push(recentModifyKeyframeCommand,true,compositeCommand);
+
+            }else{
+                //issue a add new keyframe command
+                SpatialKeyframeView newKeyframe = createNewKeyframe(action.getFinalPoint(), currentTime);
+                recentAddKeyframeCommand =new AddSpatialKeyframe(newKeyframe, action);
+                //push and execute
+                push(recentAddKeyframeCommand,true,compositeCommand);
+            }
+        }
+    }
 }

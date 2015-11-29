@@ -3,6 +3,7 @@ package com.nikhil.controller;
 import com.nikhil.controller.item.ItemModelController;
 import com.nikhil.editor.workspace.Workspace;
 import com.nikhil.model.ItemModel;
+import com.nikhil.util.modal.UtilPoint;
 import com.nikhil.view.item.delegate.ItemViewDelegate;
 import com.nikhil.view.item.record.Metadata;
 import com.nikhil.view.item.record.MetadataTag;
@@ -50,6 +51,7 @@ public abstract class ItemViewController implements ItemViewDelegate {
     public abstract void hoveredOver(boolean isHoveringOver, boolean isSelected);
     public abstract Bounds getLayoutBoundsInWorksheet();
     public abstract void moveBy(double dx, double dy);
+    public abstract UtilPoint getTranslation();
 
     /**
      * rotates the item by a specified delta angle

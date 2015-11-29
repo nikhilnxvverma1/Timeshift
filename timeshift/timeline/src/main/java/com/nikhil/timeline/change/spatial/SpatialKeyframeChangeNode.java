@@ -1,7 +1,11 @@
 package com.nikhil.timeline.change.spatial;
 
 import com.nikhil.timeline.change.ChangeNode;
+import com.nikhil.timeline.change.KeyframeChangeNode;
+import com.nikhil.timeline.change.temporal.MismatchingKeyframeDimensionException;
+import com.nikhil.timeline.keyframe.Keyframe;
 import com.nikhil.timeline.keyframe.SpatialKeyframe;
+import com.nikhil.timeline.keyframe.TemporalKeyframe;
 import com.nikhil.util.modal.UtilPoint;
 
 /**
@@ -10,13 +14,14 @@ import com.nikhil.util.modal.UtilPoint;
  * Supplying a change handler is optional
  * Created by NikhilVerma on 10/11/15.
  */
-public class SpatialKeyframeChangeNode extends ChangeNode {
+public class SpatialKeyframeChangeNode extends KeyframeChangeNode {
 
     private SpatialKeyframe start;
     private SpatialKeyframe last;//only needed for quickly finding the ending time
     private UtilPoint currentPoint=new UtilPoint();
     private SpatialChangeHandler changeHandler;
-
+    /**cache to reduce time taken when finding a keyframe at a given time*/
+    private SpatialKeyframe nearestAccessedKeyframe;
     /**
      * Creates a SpatialKeyframeChangeNode with no change handler
      */
@@ -51,6 +56,10 @@ public class SpatialKeyframeChangeNode extends ChangeNode {
         if(newKeyframe==null){
             return null;
         }
+
+        //new keyframe should never hold any old and/or outdated references
+        newKeyframe.setNext(null);
+        newKeyframe.setPrevious(null);
 
         if(start==null){
             start=newKeyframe;
@@ -107,6 +116,7 @@ public class SpatialKeyframeChangeNode extends ChangeNode {
                 start=null;
                 last=null;
             }else{
+                keyframe.getNext().setPrevious(null);
                 start=keyframe.getNext();
             }
         }else if(keyframe.getNext()==null){//last node
@@ -117,22 +127,44 @@ public class SpatialKeyframeChangeNode extends ChangeNode {
             keyframe.getPrevious().setNext(keyframe.getNext());
             keyframe.getNext().setPrevious(keyframe.getPrevious());
         }
+
+        //if the removed keyframe is the nearest accessed keyframe, change it
+        if(keyframe==nearestAccessedKeyframe){
+            changeNearestAccessedKeyframe();
+        }
     }
 
     /**
-     * shifts specified keyframe by delta time, rearranging
+     * Changes the "cached" keyframe to the next keyframe if one exists.
+     * If a next doesn't exist and a previous keyframe exists,cache becomes
+     * that keyframe, otherwise it cache becomes null.
+     */
+    protected void changeNearestAccessedKeyframe(){
+        if(nearestAccessedKeyframe.getNext()!=null){
+            nearestAccessedKeyframe=nearestAccessedKeyframe.getNext();
+        }else if(nearestAccessedKeyframe.getPrevious()!=null){
+            nearestAccessedKeyframe=nearestAccessedKeyframe.getPrevious();
+        }else{
+            nearestAccessedKeyframe=null;
+        }
+    }
+
+
+    /**
+     * shifts specified keyframe to a new time, rearranging
      * if required to maintain the order of the keyframe list
      * @param keyframe keyframe to shift
-     * @param dt delta time, which can be negative or positive
-     * @return true implies that a rearrangement was required, false implies rearranging keys was not required
+     * @param newTime new time of the keyframe
+     * @return true implies that a rearrangement was required (which is a linear operation),
+     * false implies rearranging keys was not required (which is a constant operation)
      */
-    public boolean shiftKeyframe(SpatialKeyframe keyframe,double dt){
+    public boolean shiftKeyframe(SpatialKeyframe keyframe,double newTime){
         if(keyframe==null){
             return false;
         }
 
         //only rearrange if required
-        double newTime = keyframe.getTime() + dt;
+        keyframe.setTime(newTime);
         if (
                 ((keyframe.getNext() != null) && (newTime > keyframe.getNext().getTime())) ||
                         ((keyframe.getPrevious() != null) && (newTime < keyframe.getPrevious().getTime()))
@@ -145,7 +177,6 @@ public class SpatialKeyframeChangeNode extends ChangeNode {
         }else{
             return false;
         }
-
     }
 
     public SpatialChangeHandler getChangeHandler() {
@@ -168,13 +199,69 @@ public class SpatialKeyframeChangeNode extends ChangeNode {
     }
 
     @Override
-    public double findEndingTime() {
-        if(last==null){
-            return 0;
-        }else{
-            return last.getTime();
-        }
+    public Keyframe getStart() {
+        return start;
     }
+
+    @Override
+    public Keyframe getLast() {
+        return last;
+    }
+
+    @Override
+    public SpatialKeyframe findNearbyKeyframe(double time, double nearByMargin) {
+        if(start==null){
+            return null;
+        }
+
+        if(nearestAccessedKeyframe==null) {
+            nearestAccessedKeyframe=start;
+        }
+
+        //this is what we will return
+        SpatialKeyframe nearest=null;
+        double currentNearestCloseness = Math.abs(nearestAccessedKeyframe.getTime() - time);
+        if (currentNearestCloseness <= nearByMargin) {
+            nearest = nearestAccessedKeyframe;
+        } else {
+
+            SpatialKeyframe possiblyNearer = null;
+
+            //search in the forward direction
+            if (nearestAccessedKeyframe.getTime() + nearByMargin < time) {
+                SpatialKeyframe t = nearestAccessedKeyframe.getNext();
+                possiblyNearer=nearestAccessedKeyframe.getNext();
+                while (t != null && (t.getTime() < time || t.getTime() - nearByMargin < time)) {
+                    possiblyNearer = t;
+                    t = t.getNext();
+                }
+            }
+            //search in the backward direction
+            else {
+                SpatialKeyframe t = nearestAccessedKeyframe.getPrevious();
+                possiblyNearer=nearestAccessedKeyframe.getPrevious();
+                while (t != null && (t.getTime() > time || t.getTime() - nearByMargin > time)) {
+                    possiblyNearer = t;
+                    t = t.getPrevious();
+                }
+            }
+
+            //update nearestAccessedKeyframe only if it is closer
+            if (possiblyNearer != null) {
+                double closeness = Math.abs(possiblyNearer.getTime() - time);
+                if (closeness < currentNearestCloseness) {
+                    nearestAccessedKeyframe = possiblyNearer;
+
+                    //also if it less than the nearby margin ,this becomes the return value
+                    if (closeness <= nearByMargin) {
+                        nearest = possiblyNearer;
+                    }
+                }
+            }
+        }
+        return nearest;
+    }
+
     public void notifyAnyChangeHandler(){
         if(changeHandler!=null){
             changeHandler.valueChanged(this);

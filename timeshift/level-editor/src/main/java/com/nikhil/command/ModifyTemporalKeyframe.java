@@ -1,14 +1,18 @@
 package com.nikhil.command;
 
 
+import com.nikhil.controller.ItemViewController;
 import com.nikhil.timeline.KeyValue;
 import com.nikhil.view.custom.keyframe.TemporalKeyframeView;
+
+import java.util.LinkedList;
+import java.util.List;
 
 /**
  *
  * Created by NikhilVerma on 13/11/15.
  */
-public class ModifyTemporalKeyframe extends Command{
+public class ModifyTemporalKeyframe extends ItemCommand{
     private TemporalKeyframeView temporalKeyframeView;
     private KeyValue initialValue;
     private KeyValue finalValue;
@@ -79,5 +83,12 @@ public class ModifyTemporalKeyframe extends Command{
      */
     public boolean isComplete(){
         return continuousCommand!=null;
+    }
+
+    @Override
+    public List<ItemViewController> getItemList() {
+        LinkedList<ItemViewController> list=new LinkedList<>();
+        list.add(temporalKeyframeView.getKeyframePane().getMetadata().getItemViewController());
+        return list;
     }
 }

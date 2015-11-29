@@ -75,7 +75,11 @@ public abstract class ShapeViewController extends ItemViewController implements 
      */
     protected abstract ShapeModel getShapeModel();
 
-    public abstract UtilPoint getTranslation();
+    @Override
+    public UtilPoint getTranslation(){
+        Shape itemView = getItemView();
+        return new UtilPoint(itemView.getLayoutX(),itemView.getLayoutY());
+    }
 
     public abstract double getScale();
 

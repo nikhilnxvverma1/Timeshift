@@ -11,7 +11,7 @@ import java.util.List;
  * Holds a bunch of item commands that would be executed in one go.
  * Created by NikhilVerma on 27/11/15.
  */
-public class CompositeItemCommand extends Command{
+public class ItemCompositeCommand extends CompositeCommand{
     List<ItemCommand> itemCommands=new LinkedList<>();
 
     public void addItemCommand(ItemCommand itemCommand,boolean executeWhileAdding){
@@ -27,12 +27,16 @@ public class CompositeItemCommand extends Command{
 
     @Override
     public void execute() {
-
+        for(ItemCommand itemCommand:itemCommands){
+            itemCommand.execute();
+        }
     }
 
     @Override
     public void unexecute() {
-
+        for(ItemCommand itemCommand:itemCommands){
+            itemCommand.unexecute();
+        }
     }
 
     @Override
@@ -54,5 +58,10 @@ public class CompositeItemCommand extends Command{
                 selectedItems.addToSelection(itemViewController);
             }
         }
+    }
+
+    @Override
+    public List<? extends Command> getCommands() {
+        return itemCommands;
     }
 }

@@ -1,4 +1,4 @@
-package com.nikhil.editor.workspace;
+package com.nikhil.editor.selection;
 
 import com.nikhil.command.Command;
 

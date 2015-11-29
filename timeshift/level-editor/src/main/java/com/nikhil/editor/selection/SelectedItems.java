@@ -7,7 +7,9 @@ import com.nikhil.editor.workspace.Workspace;
 import com.nikhil.logging.Logger;
 import com.nikhil.math.MathUtil;
 import com.nikhil.timeline.KeyValue;
+import com.nikhil.util.modal.UtilPoint;
 import com.nikhil.view.item.record.MetadataTag;
+import com.nikhil.view.item.record.SpatialMetadata;
 import javafx.event.EventHandler;
 import javafx.geometry.BoundingBox;
 import javafx.geometry.Bounds;
@@ -20,10 +22,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
-import java.util.HashSet;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 
 /**
@@ -51,6 +50,7 @@ public class SelectedItems extends Group implements EventHandler<MouseEvent>{
 
     private double temporaryValue1;
     private double temporaryValue2;
+    private ItemCompositeCommand temporaryCompositeCommand;
 
     public SelectedItems(Workspace workspace) {
         this.workspace=workspace;
@@ -366,8 +366,15 @@ public class SelectedItems extends Group implements EventHandler<MouseEvent>{
     }
 
     public void moveSelectionBy(double dx, double dy){
+        if(temporaryCompositeCommand==null){
+            temporaryCompositeCommand=new ItemCompositeCommand();
+        }
         for(ItemViewController itemViewController:managedItems){
-            itemViewController.moveBy(dx,dy);
+            UtilPoint oldPoint = itemViewController.getTranslation();
+            itemViewController.moveBy(dx, dy);
+            UtilPoint newPoint = itemViewController.getTranslation();
+            SpatialMetadata spatialMetadata = itemViewController.getSpatialMetadata(MetadataTag.TRANSLATION);
+            spatialMetadata.registerContinuousChange(oldPoint,newPoint,temporaryCompositeCommand);
         }
         this.setLayoutX(getLayoutX()+dx);
         this.setLayoutY(getLayoutY()+dy);
@@ -385,9 +392,7 @@ public class SelectedItems extends Group implements EventHandler<MouseEvent>{
             Point2D initialPoint=new Point2D(initialX,initialY);
 
             Set<ItemViewController> itemSetForNewCommand = getItemSetForNewCommand();
-            MoveItemSet moveItemSet=new MoveItemSet(itemSetForNewCommand, initialPoint,finalPoint);
-            workspace.pushCommand(moveItemSet,false);
-
+            pushMoveCommand(itemSetForNewCommand, initialPoint, finalPoint);
             moveCommandWasIssued=true;
         }
         //update initialX,initialY to current position in worksheet points
@@ -396,6 +401,61 @@ public class SelectedItems extends Group implements EventHandler<MouseEvent>{
         return moveCommandWasIssued;
     }
 
+    /**
+     * Pushes a cummalative move item command for a bunch of items.
+     * if needed, this set will be broken into several pieces and grouped in a composite command.
+     * @param itemSet the set of items that just moved
+     * @param initialPoint initial point before movement
+     * @param finalPoint final point after movement
+     */
+    private void pushMoveCommand(Set<ItemViewController> itemSet, Point2D initialPoint, Point2D finalPoint) {
+
+        //if any item in set is keyframable,a composite command will be used
+        boolean atLeastOneItemKeyframable = false;
+
+        //all non keyframable items are collected in this set
+        Set<ItemViewController> nonKeyframableItems = new HashSet<>();
+
+        UtilPoint distanceMoved=new UtilPoint(finalPoint.getX()-initialPoint.getX(),finalPoint.getY()-initialPoint.getY());
+
+        for (ItemViewController itemViewController : itemSet) {
+
+            //check up with the translation metadata
+            SpatialMetadata spatialMetadata = itemViewController.getSpatialMetadata(MetadataTag.TRANSLATION);
+            if (spatialMetadata.isKeyframable()) {
+                atLeastOneItemKeyframable=true;
+
+                //create a dedicated move item command for this item, and send to metadata for adding
+                //it to a keyframing command by "ending" this continious change
+                UtilPoint finalPointForThisItem = itemViewController.getTranslation();
+                UtilPoint initialPointForThisItem=finalPointForThisItem.subtract(distanceMoved);
+                MoveItem moveItem=new MoveItem(itemViewController,initialPointForThisItem,finalPointForThisItem);
+                spatialMetadata.endContinuousChange(moveItem,false,temporaryCompositeCommand);
+            } else {
+                nonKeyframableItems.add(itemViewController);
+            }
+        }
+
+        if (atLeastOneItemKeyframable) {
+            //issue a common move item set command for remaining non keyframable items
+            MoveItemSet moveItemSet = new MoveItemSet(nonKeyframableItems, initialPoint, finalPoint);
+            workspace.pushCommand(temporaryCompositeCommand,false);
+
+            //very important to set it to null, so that for the next drag this thing is reset
+            temporaryCompositeCommand=null;
+        } else {
+            //disregard the composite item command, and just push a common move item set command for all items
+            //Note: since we want to reuse the set in the command stack, we use "itemSet" and not "nonKeyframableItems"
+            MoveItemSet moveItemSet = new MoveItemSet(itemSet, initialPoint, finalPoint);
+            workspace.pushCommand(moveItemSet, false);
+        }
+    }
+
+    /**
+     * Builds a set of items in current selection and if possible, reuses an existing set
+     * if the current top command also uses the same set.
+     * @return set containing the items in current selection
+     */
     public Set<ItemViewController> getItemSetForNewCommand(){
         Command topCommand=workspace.peekCommandStack();
         if(topCommand instanceof ActionOnItemSet){
@@ -414,6 +474,9 @@ public class SelectedItems extends Group implements EventHandler<MouseEvent>{
         }
     }
 
+    /**
+     * @return a new set containing the items in current selection
+     */
     public Set<ItemViewController> getManagedItemsInNewSet(){
         HashSet<ItemViewController> copy=new HashSet<>(managedItems.size());
         for(ItemViewController itemViewController:managedItems){

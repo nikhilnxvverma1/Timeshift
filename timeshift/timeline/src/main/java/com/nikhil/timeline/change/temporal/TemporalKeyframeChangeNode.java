@@ -18,7 +18,8 @@ public class TemporalKeyframeChangeNode extends KeyframeChangeNode {
     private TemporalKeyframe last;//only needed for quickly finding the ending time
     private KeyValue currentValue;
     private TemporalChangeHandler changeHandler;
-    private TemporalKeyframe nearestAccessedKeyframe;//cache to reduce time taken when finding a keyframe at a given time
+    /**cache to reduce time taken when finding a keyframe at a given time*/
+    private TemporalKeyframe nearestAccessedKeyframe;
 
     /**
      * Creates a new TemporalKeyframeChangeNode with no change handler

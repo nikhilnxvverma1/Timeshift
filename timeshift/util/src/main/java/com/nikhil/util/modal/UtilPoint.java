@@ -56,7 +56,7 @@ public class UtilPoint {
 	}
 
 	/**
-	 * subtract from this point without making and changes to this object
+	 * subtract from this point without making any changes to this object
 	 * @param subtractThis point to subtract
 	 * @return the difference
 	 */

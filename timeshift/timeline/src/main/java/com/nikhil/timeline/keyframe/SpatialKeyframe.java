@@ -53,7 +53,9 @@ public class SpatialKeyframe extends Keyframe implements Parametric{
 	public SpatialKeyframe(double time,SpatialKeyframe previous, UtilPoint anchorPoint, SpatialKeyframe next) {
 		super(time);
 		this.previous = previous;
-		this.bezierPoint = new BezierPoint(anchorPoint);
+		//very important to create a new copy of the util point,otherwise, shared points across several sections causes
+		//erratic behaviour
+		this.bezierPoint = new BezierPoint(new UtilPoint(anchorPoint));
 		this.next = next;
 	}
 

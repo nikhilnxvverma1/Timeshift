@@ -244,23 +244,6 @@ public class TemporalMetadata extends Metadata{
         return new HBox(draggableTextValue);
     }
 
-    public void saveKeyframeConfiguration(){
-        savedStart=temporalKeyframeChangeNode.getStart();
-        savedLast=temporalKeyframeChangeNode.getLast();
-    }
-    public void removeAllKeyframes(){
-        temporalKeyframeChangeNode.setStart(null);
-        temporalKeyframeChangeNode.setLast(null);
-        temporalKeyframePane.removeAllKeyframes();
-    }
-    public void restoreKeyframeConfiguration(){
-        temporalKeyframeChangeNode.setStart(savedStart);
-        temporalKeyframeChangeNode.setLast(savedLast);
-        savedStart=null;
-        savedLast=null;
-        //TODO rebuild keyframe views
-    }
-
     /**
      * Creates and returns a new keyframe view
      * @param keyValue the value of the keyframe

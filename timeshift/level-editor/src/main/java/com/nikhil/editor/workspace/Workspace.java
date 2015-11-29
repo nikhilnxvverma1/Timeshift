@@ -1,9 +1,6 @@
 package com.nikhil.editor.workspace;
 
-import com.nikhil.command.ActionOnKeyframes;
-import com.nikhil.command.Command;
-import com.nikhil.command.AddItemSet;
-import com.nikhil.command.DeleteKeyframes;
+import com.nikhil.command.*;
 import com.nikhil.controller.CompositionController;
 import com.nikhil.controller.CompositionViewController;
 import com.nikhil.controller.ItemViewController;
@@ -372,6 +369,32 @@ public class Workspace  {
             }
             commandStack.push(command);
             Logger.log(command.getClass().getSimpleName()+" Pushed");
+            undoStack.removeAllElements();
+            fileModified(true);
+        }
+    }
+
+    /**
+     * Pushes a composite command on the command stack where only selected commands are executed before pushing
+     * @param compositeCommand composite command that will be pushed on the command stack. This "whole" command
+     *                         will not be executed.
+     * @param selectiveExecutionBeforePushing a map that tells which of the commands from the composite command
+     *                                        will be executed before pushing the "whole" composite command.
+     */
+    public void pushCommand(CompositeCommand compositeCommand,Map<? extends Command,Boolean> selectiveExecutionBeforePushing){
+        if(compositeCommand!=null){
+
+            //execute only selective commands as governed by the map
+            List<? extends Command> commands=compositeCommand.getCommands();
+            for(Command command: commands){
+                if(selectiveExecutionBeforePushing.get(command)){
+                    command.execute();
+                    //no execute by workspace method will be called here,because its meant for the composite command
+                }
+            }
+            //we don't execute the composite command, we just push it on the command stack
+            commandStack.push(compositeCommand);
+            Logger.log(compositeCommand.getClass().getSimpleName()+" Pushed");
             undoStack.removeAllElements();
             fileModified(true);
         }
