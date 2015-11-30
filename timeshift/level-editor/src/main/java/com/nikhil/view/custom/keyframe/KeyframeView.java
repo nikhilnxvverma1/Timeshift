@@ -64,7 +64,8 @@ public abstract class KeyframeView extends ImageView {
     /**
      * Sets the time of the keyframe model and makes the view itself,
      * in effect, adjusts in the keyframe pane.
-     * <b>Note: </b>Subclasses must take responsibility of shifting the model keyframes.
+     * <b>Note: </b>Subclasses must take override and implement {@code shiftTimeInChangeNode(time)} to
+     * shift modal keyframes
      * @param time the new time of the keyframe
      */
     public void setTime(double time){
@@ -72,7 +73,11 @@ public abstract class KeyframeView extends ImageView {
         //move the keyframe view
         double newLayoutX = getKeyframePane().getLayoutXFor(time);
         this.setLayoutX(newLayoutX);
+
+        shiftTimeInChangeNode(time);
     }
+
+    protected abstract void shiftTimeInChangeNode(double time);
 
     public abstract Keyframe getKeyframeModel();
 

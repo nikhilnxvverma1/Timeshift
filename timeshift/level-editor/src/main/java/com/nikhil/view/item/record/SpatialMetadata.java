@@ -4,6 +4,8 @@ import com.nikhil.command.*;
 import com.nikhil.controller.CompositionViewController;
 import com.nikhil.controller.ItemViewController;
 import com.nikhil.editor.workspace.Workspace;
+import com.nikhil.logging.Logger;
+import com.nikhil.space.bezier.path.BezierPoint;
 import com.nikhil.timeline.change.spatial.SpatialKeyframeChangeNode;
 import com.nikhil.timeline.keyframe.SpatialKeyframe;
 import com.nikhil.timeline.keyframe.TemporalKeyframe;
@@ -152,7 +154,7 @@ public class SpatialMetadata extends Metadata {
     }
 
     @Override
-    public KeyframePane getKeyframePane() {
+    public SpatialKeyframePane getKeyframePane() {
         return spatialKeyframePane;
     }
 
@@ -348,6 +350,8 @@ public class SpatialMetadata extends Metadata {
             //if a keyframe does exists, modify it
             if (nearbyKeyframe!=null) {
 
+                //save the last bezier point in a new instance, we will use this in our modify command
+                BezierPoint lastBezierPoint= new BezierPoint(nearbyKeyframe.getBezierPoint());
                 nearbyKeyframe.getBezierPoint().setAnchorPoint(newPoint);//besides this, we also need to maintain keyframe commands
 
                 //if the last action was to add a keyframe
@@ -356,11 +360,17 @@ public class SpatialMetadata extends Metadata {
                     //create a modify keyframe command if the add keyframe command is complete
                     if (recentAddKeyframeCommand.isComplete()) {
                         SpatialKeyframeView keyframeView = spatialKeyframePane.findKeyframeView(nearbyKeyframe);
-                        recentModifyKeyframeCommand=new ModifySpatialKeyframe(keyframeView,oldPoint);
+                        recentModifyKeyframeCommand=new ModifySpatialKeyframe(keyframeView,lastBezierPoint);
 
                         //push command ,but don't execute, because this change has already been done
                         push(recentModifyKeyframeCommand,false,compositeCommand);
-//                        workspace.pushCommand(recentModifyKeyframeCommand, false);
+                    }else{
+                        //update the motion path of the affected keyframe
+                        if(nearbyKeyframe==recentAddKeyframeCommand.getKeyframeCreated().getKeyframeModel()){
+                            recentAddKeyframeCommand.getKeyframeCreated().updateMotionPath();
+                        }else{
+                            spatialKeyframePane.findKeyframeView(nearbyKeyframe).updateMotionPath();
+                        }
                     }
                 }
                 //last action was to modify a keyframe's view
@@ -369,21 +379,26 @@ public class SpatialMetadata extends Metadata {
                     //create a new modify keyframe command if the current modify command is complete
                     if (recentModifyKeyframeCommand.isComplete()) {
                         SpatialKeyframeView keyframeView = spatialKeyframePane.findKeyframeView(nearbyKeyframe);
-                        recentModifyKeyframeCommand=new ModifySpatialKeyframe(keyframeView,oldPoint);
+                        recentModifyKeyframeCommand=new ModifySpatialKeyframe(keyframeView,lastBezierPoint);
 
                         //push command ,but don't execute, because this change has already been done
                         push(recentModifyKeyframeCommand,false,compositeCommand);
-//                        workspace.pushCommand(recentModifyKeyframeCommand, false);
+                    }else{
+                        //update the motion path of the affected keyframe
+                        if(nearbyKeyframe==recentModifyKeyframeCommand.getSpatialKeyframeView().getKeyframeModel()){
+                            recentModifyKeyframeCommand.getSpatialKeyframeView().updateMotionPath();
+                        }else{
+                            spatialKeyframePane.findKeyframeView(nearbyKeyframe).updateMotionPath();
+                        }
                     }
 
                 }else{
                     //create a modify keyframe command and push it
                     SpatialKeyframeView keyframeView = spatialKeyframePane.findKeyframeView(nearbyKeyframe);
-                    recentModifyKeyframeCommand=new ModifySpatialKeyframe(keyframeView,oldPoint);
+                    recentModifyKeyframeCommand=new ModifySpatialKeyframe(keyframeView,lastBezierPoint);
 
                     //push command ,but don't execute, because this change has already been done
                     push(recentModifyKeyframeCommand,false,compositeCommand);
-//                    workspace.pushCommand(recentModifyKeyframeCommand, false);
                 }
             }
             //if no nearby keyframes exists , we need to create a new one
@@ -392,8 +407,6 @@ public class SpatialMetadata extends Metadata {
                 SpatialKeyframeView newKeyframe = createNewKeyframe(oldPoint, currentTime);
                 recentAddKeyframeCommand = new AddSpatialKeyframe(newKeyframe,false);
                 push(recentAddKeyframeCommand,true,compositeCommand);
-//                workspace.pushCommand(recentAddKeyframeCommand);
-
             }
         }
     }

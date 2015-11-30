@@ -4,9 +4,9 @@ import com.nikhil.util.modal.UtilPoint;
 
 public class BezierPoint {
 
-	private UtilPoint anchorPoint;
-	private UtilPoint controlPointWithPrevious;
-	private UtilPoint controlPointWithNext;
+	protected UtilPoint anchorPoint;
+	protected UtilPoint controlPointWithPrevious;
+	protected UtilPoint controlPointWithNext;
 
 	public BezierPoint(UtilPoint anchorPoint){
 		this(anchorPoint,new UtilPoint(0,0),new UtilPoint(0,0));
@@ -49,7 +49,7 @@ public class BezierPoint {
 	}
 
 	/**
-	 * Copies the content of another bezier point into this bezier point
+	 * Deep copies the content of another bezier point into this bezier point
 	 * @param copyFrom the point to copy from
 	 */
 	public void set(BezierPoint copyFrom){

@@ -361,6 +361,9 @@ public class TemporalKeyframeChangeNode extends KeyframeChangeNode {
                     possiblyNearer = t;
                     t = t.getNext();
                 }
+                if(t!=null){
+                    possiblyNearer=t;
+                }
             }
             //search in the backward direction
             else {
@@ -369,6 +372,9 @@ public class TemporalKeyframeChangeNode extends KeyframeChangeNode {
                 while (t != null && (t.getTime() > time || t.getTime() - nearByMargin > time)) {
                     possiblyNearer = t;
                     t = t.getPrevious();
+                }
+                if(t!=null){
+                    possiblyNearer=t;
                 }
             }
 

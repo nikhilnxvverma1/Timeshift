@@ -167,10 +167,16 @@ public class GraphicalBezierPoint extends BezierPoint {
 
     }
 
-    public void extendControlPointsUsing(double x,double y){
+    public void extendPreviousControlPoint(double x, double y){
         this.setControlPointWithPrevious(new UtilPoint(x, y));
         //inverted coordinates will be set on the control point with next
         this.setControlPointWithNext(new UtilPoint(-x, -y));
+    }
+
+    public void extendNextControlPoint(double x, double y){
+        this.setControlPointWithNext(new UtilPoint(x, y));
+        //inverted coordinates will be set on the control point with previous
+        this.setControlPointWithPrevious(new UtilPoint(-x, -y));
     }
 
     public void addAsChildrenTo(Pane parent){
@@ -202,5 +208,50 @@ public class GraphicalBezierPoint extends BezierPoint {
     }
 
 
+    /**
+     * Updates the cubic curve of this bezier point
+     * @param next the next bezier point after this point in the bezier path
+     */
+    public void updateView(BezierPoint next){
+
+        //by resetting these values, the setters update the nodes too
+        setAnchorPoint(anchorPoint);
+        setControlPointWithPrevious(controlPointWithPrevious);
+        setControlPointWithNext(controlPointWithNext);
+
+        //update the cubic curve
+        updateCubicCurve(next);
+    }
+
+    private void updateCubicCurve(BezierPoint next) {
+        cubicCurve.setLayoutX(anchorPoint.getX());
+        cubicCurve.setLayoutY(anchorPoint.getY());
+        cubicCurve.setStartX(0);
+        cubicCurve.setStartY(0);
+        cubicCurve.setControlX1(controlPointWithNext.getX());
+        cubicCurve.setControlY1(controlPointWithNext.getY());
+
+        if (next != null) {
+            cubicCurve.setEndX(next.getAnchorPoint().getX()-anchorPoint.getX());
+            cubicCurve.setEndY(next.getAnchorPoint().getY()-anchorPoint.getY());
+            final UtilPoint absoluteControlPointWithPrevious = next.getAnchorPoint().add(next.getControlPointWithPrevious());
+            cubicCurve.setControlX2(absoluteControlPointWithPrevious.getX()-anchorPoint.getX());
+            cubicCurve.setControlY2(absoluteControlPointWithPrevious.getY()-anchorPoint.getY());
+        }else{
+            cubicCurve.setEndX(0);
+            cubicCurve.setEndY(0);
+            cubicCurve.setControlX2(0);
+            cubicCurve.setControlY2(0);
+        }
+    }
+
+    public void setVisible(boolean visible){
+        cubicCurve.setVisible(visible);
+        anchorPointRect.setVisible(visible);
+        previousControlPointCircle.setVisible(visible);
+        previousControlLine.setVisible(visible);
+        nextControlPointCircle.setVisible(visible);
+        nextControlLine.setVisible(visible);
+    }
 
 }

@@ -19,6 +19,7 @@ import com.nikhil.view.item.PolygonView;
 import com.nikhil.view.item.delegate.PolygonViewDelegate;
 import com.nikhil.view.item.record.*;
 import javafx.geometry.Bounds;
+import javafx.scene.Group;
 import javafx.scene.control.TreeItem;
 import javafx.scene.shape.Shape;
 
@@ -378,6 +379,11 @@ public class PolygonViewController extends ShapeViewController implements Polygo
     @Override
     protected ShapeModel getShapeModel() {
         return polygonModelController.getPolygonModel();
+    }
+
+    @Override
+    public Group getGizmo() {
+        return polygonGizmo;
     }
 
     @Override

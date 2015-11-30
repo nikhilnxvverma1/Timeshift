@@ -49,6 +49,13 @@ public abstract class Metadata { //TODO Property Metadata required
      * @return keyframe pane or null (if not relevant to this metadata)
      */
     public abstract KeyframePane initKeyframePane(double width);
+
+    /**
+     * Keyframe pane associated with this metadata which may be null because
+     * it never got initialized.If caller does not know this metdata's keyframing scenario,
+     * it should always check for nulls
+     * @return Keyframe pane associated with this metadata.
+     */
     public abstract KeyframePane getKeyframePane();
 
     public abstract Node getNameNode();

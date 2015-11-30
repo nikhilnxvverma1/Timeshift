@@ -83,7 +83,7 @@ public class PenTool extends BaseTool{
         double x=lastGraphicalBezierPoint.getAnchorPoint().getX()-mouseEvent.getX();
         double y=lastGraphicalBezierPoint.getAnchorPoint().getY()-mouseEvent.getY();
         Logger.log("dragged at "+x+","+y);
-        lastGraphicalBezierPoint.extendControlPointsUsing(x, y);
+        lastGraphicalBezierPoint.extendPreviousControlPoint(x, y);
 
     }
 

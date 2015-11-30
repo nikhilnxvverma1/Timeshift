@@ -46,6 +46,7 @@ public class ModifySpatialKeyframe extends ItemCommand{
     @Override
     public void execute() {
         spatialKeyframeView.getKeyframeModel().setBezierPoint(finalBezierPoint);
+        spatialKeyframeView.updateMotionPath();
         if(continuousCommand!=null){
             continuousCommand.execute();
         }
@@ -57,6 +58,7 @@ public class ModifySpatialKeyframe extends ItemCommand{
             continuousCommand.unexecute();//this will take care of reverting back to initial value
         }
         spatialKeyframeView.getKeyframeModel().setBezierPoint(initialBezierPoint);
+        spatialKeyframeView.updateMotionPath();
     }
 
     public SpatialKeyframeView getSpatialKeyframeView() {

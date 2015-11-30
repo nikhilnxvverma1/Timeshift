@@ -1,9 +1,12 @@
 package com.nikhil.command;
 
+import com.nikhil.view.custom.keyframe.KeyframePane;
 import com.nikhil.view.custom.keyframe.KeyframeTreeView;
 import com.nikhil.view.custom.keyframe.KeyframeView;
 
+import java.util.HashMap;
 import java.util.LinkedList;
+import java.util.Map;
 
 /**
  * Created by NikhilVerma on 22/11/15.
@@ -34,17 +37,38 @@ public class MoveKeyframes extends ActionOnKeyframes{
 
     @Override
     public void execute() {
-        for(KeyframeView keyframeView: keyframeViews){
-            double newTime = keyframeView.getTime() + dTime;
-            keyframeView.setTime(newTime);
-        }
+        shiftKeyframesBy(dTime);
     }
 
     @Override
     public void unexecute() {
+        shiftKeyframesBy(-dTime);
+    }
+
+    private void shiftKeyframesBy(double dTime) {
+        //maintain a map that keeps track of all keyframes panes that are affected by this movement
+        Map<KeyframePane,Integer> affectedKeyframePanes=new HashMap<>();
+
+        //set time for each keyframe
         for(KeyframeView keyframeView: keyframeViews){
-            double oldTime = keyframeView.getTime() - dTime;
-            keyframeView.setTime(oldTime);
+            double newTime = keyframeView.getTime() + dTime;
+            keyframeView.setTime(newTime);
+
+            //keep track of how many keyframes exist in each keyframe pane
+            final KeyframePane keyframePane = keyframeView.getKeyframePane();
+            Integer keyframesMoved = affectedKeyframePanes.get(keyframePane);
+            if(keyframesMoved==null){
+                affectedKeyframePanes.put(keyframePane, 1);
+            }else{
+                affectedKeyframePanes.put(keyframePane, keyframesMoved + 1);
+            }
+        }
+
+        //finally notify the keyframe pane by iterating over the map
+        for(Map.Entry<KeyframePane,Integer> entry:affectedKeyframePanes.entrySet()){
+            final KeyframePane keyframePane = entry.getKey();
+            final Integer totalKeyframeMoved= entry.getValue();
+            keyframePane.keyframesMoved(totalKeyframeMoved);
         }
     }
 }

@@ -248,6 +248,9 @@ public abstract class KeyframePane extends AnchorPane implements SelectionOverla
 				keysMoved++;
 			}
 		}
+		if(keysMoved>0){
+			keyframesMoved(keysMoved);
+		}
 		return keysMoved;
 	}
 
@@ -533,8 +536,6 @@ public abstract class KeyframePane extends AnchorPane implements SelectionOverla
 
 	public abstract Metadata getMetadata();
 
-	public abstract void setKeyframeTime(KeyframeView keyframeView, double time);
-
 	/**
 	 * Builds a linked list of keyframes.
 	 * @return Linked list containing all keyframes.
@@ -546,4 +547,10 @@ public abstract class KeyframePane extends AnchorPane implements SelectionOverla
 		}
 		return keyframeViews;
 	}
+
+	/**
+	 * Callback by super class which suggests that at least one keyframe moved
+	 * @param totalKeysMoved the total keys whose time was changed. This will always be >0
+	 */
+	public abstract void keyframesMoved(int totalKeysMoved);
 }

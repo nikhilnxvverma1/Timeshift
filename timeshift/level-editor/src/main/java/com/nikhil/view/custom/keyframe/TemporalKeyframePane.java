@@ -22,11 +22,6 @@ public class TemporalKeyframePane extends KeyframePane{
         return metadata;
     }
 
-    @Override
-    public void setKeyframeTime(KeyframeView keyframeView, double time) {
-        //TODO shift keys and notify change
-    }
-
     /**
      * Adds a new keyframe at the specified time and selects it.
      * Internally it also adds a keyframe model to the associated change node
@@ -85,12 +80,8 @@ public class TemporalKeyframePane extends KeyframePane{
     }
 
     @Override
-    public int moveSelectedKeysBy(double dl) {
-        int keysMoved = super.moveSelectedKeysBy(dl);
-        if(keysMoved>0){
-            double currentTime = getMetadata().getItemViewController().getCompositionViewController().getTime();
-            getMetadata().getTemporalKeyframeChangeNode().setTime(currentTime);
-        }
-        return keysMoved;
+    public void keyframesMoved(int totalKeysMoved) {
+        double currentTime = getMetadata().getItemViewController().getCompositionViewController().getTime();
+        getMetadata().getTemporalKeyframeChangeNode().setTime(currentTime);
     }
 }

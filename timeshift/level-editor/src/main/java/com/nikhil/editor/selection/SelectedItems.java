@@ -8,6 +8,7 @@ import com.nikhil.logging.Logger;
 import com.nikhil.math.MathUtil;
 import com.nikhil.timeline.KeyValue;
 import com.nikhil.util.modal.UtilPoint;
+import com.nikhil.view.custom.keyframe.SpatialKeyframePane;
 import com.nikhil.view.item.record.MetadataTag;
 import com.nikhil.view.item.record.SpatialMetadata;
 import javafx.event.EventHandler;
@@ -179,6 +180,7 @@ public class SelectedItems extends Group implements EventHandler<MouseEvent>{
     public void clearSelection(){
         for(ItemViewController itemViewController:managedItems){
             itemViewController.hasSelectionFocus(false);
+            showMotionPathFor(itemViewController, false);
         }
         managedItems=null;//if no reference is held to this hash set,it should be garbage collected
         managedItems=new HashSet<>();
@@ -194,6 +196,7 @@ public class SelectedItems extends Group implements EventHandler<MouseEvent>{
         boolean wasNewlyAdded = managedItems.add(itemViewController);
         if(wasNewlyAdded){
             itemViewController.hasSelectionFocus(true);
+            showMotionPathFor(itemViewController,true);
             if((selectRecordFromItemTable)&&(managedItems.size()==1)){
                 itemViewController.selectFromItemTable();
             }
@@ -207,10 +210,22 @@ public class SelectedItems extends Group implements EventHandler<MouseEvent>{
         boolean wasRemoved = managedItems.remove(itemViewController);
         if(wasRemoved){
             itemViewController.hasSelectionFocus(false);
+            showMotionPathFor(itemViewController, true);
             updateView();
         }
         singleItemSelectedInDetail =false;
         return wasRemoved;
+    }
+
+    private void showMotionPathFor(ItemViewController itemViewController, boolean visible) {
+        SpatialMetadata translationMetadata = itemViewController.getSpatialMetadata(MetadataTag.TRANSLATION);
+        if(translationMetadata!=null){
+            SpatialKeyframePane spatialKeyframePane = translationMetadata.getKeyframePane();
+            //there is a chance that the keyframe pane didn't get initialized
+            if(spatialKeyframePane!=null){
+                spatialKeyframePane.showMotionPath(visible);
+            }
+        }
     }
 
     public void selectOnly(ItemViewController itemViewController){
@@ -249,6 +264,7 @@ public class SelectedItems extends Group implements EventHandler<MouseEvent>{
         showHandles(false);
         outlineRect.setOpacity(DETAIL_SELECTION_OUTLINE_OPACITY);
         itemViewController.hasSelectionFocus(true,true);
+        showMotionPathFor(itemViewController, true);
     }
 
     private void showHandles(boolean visible){

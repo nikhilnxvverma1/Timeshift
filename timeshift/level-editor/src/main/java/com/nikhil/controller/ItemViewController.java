@@ -10,8 +10,10 @@ import com.nikhil.view.item.record.MetadataTag;
 import com.nikhil.view.item.record.SpatialMetadata;
 import com.nikhil.view.item.record.TemporalMetadata;
 import javafx.geometry.Bounds;
+import javafx.scene.Group;
 import javafx.scene.control.TreeItem;
 import javafx.scene.shape.Shape;
+
 
 /**
  * Created by NikhilVerma on 30/08/15.
@@ -107,4 +109,6 @@ public abstract class ItemViewController implements ItemViewDelegate {
     public ItemModel getItemModel(){
         return getModelController().getItemModel();
     }
+
+    public abstract Group getGizmo();
 }
