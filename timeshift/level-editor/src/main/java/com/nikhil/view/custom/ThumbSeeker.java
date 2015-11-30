@@ -149,4 +149,8 @@ public class ThumbSeeker extends Pane {
         double newCurrent=start+ratio*(end - start);
         setThumbAt(newCurrent);
     }
+
+    public void setDelegate(ThumbSeekerDelegate delegate) {
+        this.delegate = delegate;
+    }
 }

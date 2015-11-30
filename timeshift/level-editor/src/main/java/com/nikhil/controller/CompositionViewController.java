@@ -53,7 +53,8 @@ public class CompositionViewController {
     private TreeItem<Metadata> rootTreeItem;
     private TreeTableView<Metadata> itemTable;
     private KeyframeTreeView keyframeTable;
-    private ThumbSeeker thumbSeeker;
+//    private ThumbSeeker thumbSeeker;
+    private Playback playback;
 
     public CompositionViewController(CompositionController compositionController,Workspace workspace) {
         this.compositionController=compositionController;
@@ -203,12 +204,16 @@ public class CompositionViewController {
         AnchorPane anchorPane = new AnchorPane();
         tab.setContent(anchorPane);
 
+        //thumb seeker and playback have a bi directional relationship
+        ThumbSeeker thumbSeeker = new ThumbSeeker(RIGHT_COMPONENT_WIDTH);
+        playback=new Playback(this,thumbSeeker);
+        thumbSeeker.setDelegate(playback);
+
         HBox outerHBox = initSearchAndPlayback();
         outerHBox.setSpacing(5);
 
         SelectionBar selectionBar=new SelectionBar(RIGHT_COMPONENT_WIDTH,null);
         Ruler ruler=new Ruler(30, RIGHT_COMPONENT_WIDTH);
-        thumbSeeker = new ThumbSeeker(RIGHT_COMPONENT_WIDTH,new Playback(this));
         thumbSeeker.setPrefHeight(PLAYBACK_FEATURES_HEIGHT);
         thumbSeeker.setMaxHeight(Control.USE_PREF_SIZE);
 
@@ -269,7 +274,8 @@ public class CompositionViewController {
         Button gotoBeginning=new Button("|<");
         Button previousKeyframe=new Button("<|");
         previousKeyframe.setOnAction(event -> this.jumpTimeToPreviousKeyframe());
-        Button playPause=new Button(">");
+        ToggleButton playPause=new ToggleButton(">");
+        playPause.setOnAction(e->{playback.togglePlayback(e,playPause);});
         Button nextKeyframe=new Button("|>");
         nextKeyframe.setOnAction(event -> this.jumpTimeToNextKeyframe());
         Button gotoEnd=new Button(">|");
@@ -284,7 +290,7 @@ public class CompositionViewController {
     private void jumpTimeToNextKeyframe(){
         //seek the current value from the value of the thumb
         double currentTime;//in seconds
-        currentTime=thumbSeeker.getCurrentValueAcross(duration);
+        currentTime=getTime();
 
         //find the last selected keyframe which possibly might be where the thumb is at
         //as a result of a similar last "next" operation
@@ -306,7 +312,7 @@ public class CompositionViewController {
         KeyframeView keyframeAfter = keyframeTable.findKeyframeAfter(currentTime);
         if (keyframeAfter!=null) {
             keyframeTable.resetSelection();
-            thumbSeeker.setCurrentValueAcross(keyframeAfter.getTime(), duration);
+            playback.getThumbSeeker().setCurrentValueAcross(keyframeAfter.getTime(), duration);
             keyframeAfter.setSelected(true);
         }
     }
@@ -314,7 +320,7 @@ public class CompositionViewController {
     private void jumpTimeToPreviousKeyframe(){
         //seek the current value from the value of the thumb
         double currentTime;//in seconds
-        currentTime=thumbSeeker.getCurrentValueAcross(duration);
+        currentTime=getTime();
 
         //find the last selected keyframe which possibly might be where the thumb is at
         //as a result of a similar last "next" operation
@@ -336,7 +342,7 @@ public class CompositionViewController {
         KeyframeView keyframeBefore = keyframeTable.findKeyframeBefore(currentTime);
         if (keyframeBefore!=null) {
             keyframeTable.resetSelection();
-            thumbSeeker.setCurrentValueAcross(keyframeBefore.getTime(), duration);
+            playback.getThumbSeeker().setCurrentValueAcross(keyframeBefore.getTime(), duration);
             keyframeBefore.setSelected(true);
         }
     }
@@ -406,7 +412,14 @@ public class CompositionViewController {
     }
 
     public double getTime(){
-        return thumbSeeker.getCurrentValueAcross(duration);
+        return playback.getThumbSeeker().getCurrentValueAcross(duration);
     }
 
+    public double getDuration() {
+        return duration;
+    }
+
+    public Playback getPlayback() {
+        return playback;
+    }
 }

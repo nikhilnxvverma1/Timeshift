@@ -1,8 +1,11 @@
 package com.nikhil.timeline.change.spatial;
 
+import com.nikhil.space.bezier.path.BezierPoint;
+import com.nikhil.timeline.KeyValue;
 import com.nikhil.timeline.change.ChangeNode;
 import com.nikhil.timeline.change.KeyframeChangeNode;
 import com.nikhil.timeline.change.temporal.MismatchingKeyframeDimensionException;
+import com.nikhil.timeline.interpolation.InterpolationCurve;
 import com.nikhil.timeline.keyframe.Keyframe;
 import com.nikhil.timeline.keyframe.SpatialKeyframe;
 import com.nikhil.timeline.keyframe.TemporalKeyframe;
@@ -18,7 +21,7 @@ public class SpatialKeyframeChangeNode extends KeyframeChangeNode {
 
     private SpatialKeyframe start;
     private SpatialKeyframe last;//only needed for quickly finding the ending time
-    private UtilPoint currentPoint=new UtilPoint();
+    private final UtilPoint currentPoint=new UtilPoint();
     private SpatialChangeHandler changeHandler;
     /**cache to reduce time taken when finding a keyframe at a given time*/
     private SpatialKeyframe nearestAccessedKeyframe;
@@ -195,7 +198,90 @@ public class SpatialKeyframeChangeNode extends KeyframeChangeNode {
 
     @Override
     public void setTime(double time) {
-        //TODO
+        //get to the keyframe just before the current time
+        SpatialKeyframe keyframeBefore = findKeyframeBefore(time);
+        if(keyframeBefore!=null){
+
+            //time is between two keyframes
+            if(keyframeBefore.getNext()!=null){
+
+                SpatialKeyframe keyframeAfter = keyframeBefore.getNext();
+
+                //find out how much time has progressed from the keyframe before (this will be between 0.0 to 1.0)
+                double progressTillNext=(time-keyframeBefore.getTime())/
+                        (keyframeAfter.getTime()-keyframeBefore.getTime());
+
+                //get the interpolated progress for the above progress using the interpolation curve
+                InterpolationCurve interpolation= keyframeBefore.getInterpolationWithNext();
+                double interpolatedProgress= interpolation.valueFor(progressTillNext);
+
+                //find and then set the interpolated point b/w the two keyframes using the interpolated progress
+                final UtilPoint interpolatedPointBetween = BezierPoint.getInterpolatedPointBetween(
+                        keyframeBefore.getBezierPoint(),
+                        keyframeAfter.getBezierPoint(),
+                        interpolatedProgress);
+                currentPoint.set(interpolatedPointBetween);
+
+            }
+            //time is beyond the last keyframe
+            else{
+                //the current value is the value of the last keyframe
+                currentPoint.set(keyframeBefore.getBezierPoint().getAnchorPoint());
+            }
+        }
+        //time is before even the first keyframe
+        else if(!isEmpty()){
+            //the value is the value of the first keyframe
+            currentPoint.set(start.getBezierPoint().getAnchorPoint());
+        }//else there are no keyframes in which case , the model remains unaffected
+
+        notifyAnyChangeHandler();
+    }
+
+    /**
+     * Finds the keyframe exactly before the specified time (using cache)
+     * @param time the time exactly after the keyframe that needs to be found
+     * @return spatial keyframe ,which might be null in case there are no keyframes
+     * or time is before start
+     */
+    protected SpatialKeyframe findKeyframeBefore(double time){
+        if(isEmpty()){
+            return null;
+        }else if(nearestAccessedKeyframe==null){
+            nearestAccessedKeyframe=last;
+        }
+
+        SpatialKeyframe keyframeBeforeTime=null;
+
+        //the keyframe could lie after the time
+        if(nearestAccessedKeyframe.getTime()>time){
+
+            //keep going back until we reach exactly the keyframe where its time is before the supplied time
+            while((nearestAccessedKeyframe!= null) &&
+                    (nearestAccessedKeyframe.getTime() > time)){
+                nearestAccessedKeyframe=nearestAccessedKeyframe.getPrevious();
+            }
+
+            //its possible that we reach the starting keyframe and the supplied time is before that
+            if(nearestAccessedKeyframe!=null){
+                //but in case we don't, just go to the next node, (because this node is the failing node)
+
+//                nearestAccessedKeyframe=nearestAccessedKeyframe.getNext();
+                keyframeBeforeTime=nearestAccessedKeyframe;
+            }
+
+        }
+        //or the keyframe can lie before the time
+        else{
+            //keep going forward until we reach exactly the keyframe
+            //where its time is after the supplied time or till we reach the last keyframe
+            while((nearestAccessedKeyframe.getNext() != null) &&
+                    (nearestAccessedKeyframe.getNext().getTime() < time)){
+                nearestAccessedKeyframe=nearestAccessedKeyframe.getNext();
+            }
+            keyframeBeforeTime=nearestAccessedKeyframe;
+        }
+        return keyframeBeforeTime;
     }
 
     @Override
