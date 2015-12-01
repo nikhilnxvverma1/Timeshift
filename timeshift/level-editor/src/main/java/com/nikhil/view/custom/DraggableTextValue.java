@@ -127,11 +127,21 @@ public class DraggableTextValue extends HBox{ //TODO textfield listeners may lea
 	}
 	
 	private void doneEditingValueInTextfield(){
-		value=Double.parseDouble(textfield.getText());
+		try {
+			value=Double.parseDouble(textfield.getText());
+		} catch (NumberFormatException e) {
+			//revert back to original and return to disregard invalid input
+			textfield.setText(value+"");
+			textfield.setVisible(false);
+			refreshLabelText();
+			label.setFocusTraversable(true);
+			return;
+		}
 		textfield.setVisible(false);
 		refreshLabelText();
 		label.setFocusTraversable(true);
-		delegate.valueFinishedChanging(this,valueBeforeChange , value, false);
+		delegate.valueFinishedChanging(this, valueBeforeChange, value, false);
+
 	}
 
 	private void labelPressed(MouseEvent mousePressEvent){

@@ -2,12 +2,7 @@ package com.nikhil.view.item.record;
 
 import com.nikhil.controller.ItemViewController;
 import com.nikhil.view.custom.keyframe.KeyframePane;
-import javafx.beans.property.DoubleProperty;
-import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.property.StringProperty;
 import javafx.scene.Node;
-
-import java.util.Random;
 
 /**
  * Metadata stores information about the properties of the model. Except the root, every other instantiation
@@ -16,22 +11,20 @@ import java.util.Random;
  */
 public abstract class Metadata { //TODO Property Metadata required
 
-    protected static final Random random=new Random();//only experimentation purposes
     public static final double CELL_HEIGHT= 25;
-    public static final short ROOT_TAG=-1;
-    protected StringProperty nameProperty;
+    protected String name;
     protected MetadataTag tag;
 
     public Metadata(String name, MetadataTag tag) {
-        this.nameProperty=new SimpleStringProperty(name);
+        this.name=name;
         this.tag = tag;
     }
 
-    public abstract ItemViewController getItemViewController();
-
-    public StringProperty nameProperty() {
-        return nameProperty;
+    public String getName(){
+        return name;
     }
+
+    public abstract ItemViewController getItemViewController();
 
     public MetadataTag getTag() {
         return tag;
@@ -42,6 +35,13 @@ public abstract class Metadata { //TODO Property Metadata required
     public abstract Node getOptionNode();
 
     public abstract boolean isHeader();
+
+    /**
+     * @return true if this metadata is the main header that displays item's name
+     */
+    public boolean isItemNameHeader(){
+        return false;
+    }
 
     /**
      * lazily builds and returns the keyframe pane

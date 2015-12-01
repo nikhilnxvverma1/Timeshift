@@ -16,6 +16,7 @@ import com.nikhil.view.item.record.Metadata;
 import com.nikhil.view.item.record.MetadataTag;
 import com.sun.javafx.scene.control.skin.VirtualFlow;
 import com.sun.javafx.scene.control.skin.VirtualScrollBar;
+import javafx.beans.binding.Bindings;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
@@ -27,10 +28,13 @@ import javafx.scene.Parent;
 import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
+import org.eclipse.fx.FilterableTreeItem;
+import org.eclipse.fx.TreeItemPredicate;
 
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.function.Predicate;
 
 /**
  * Created by NikhilVerma on 26/09/15.
@@ -50,11 +54,11 @@ public class CompositionViewController {
     private Tab tab;
     private Workspace workspace;
     private List<ItemViewController> itemViewControllers = new LinkedList<ItemViewController>();
-    private TreeItem<Metadata> rootTreeItem;
+    private FilterableTreeItem<Metadata> rootTreeItem;
     private TreeTableView<Metadata> itemTable;
     private KeyframeTreeView keyframeTable;
-//    private ThumbSeeker thumbSeeker;
     private Playback playback;
+    private TextField filterField=new TextField();;
 
     public CompositionViewController(CompositionController compositionController,Workspace workspace) {
         this.compositionController=compositionController;
@@ -86,7 +90,8 @@ public class CompositionViewController {
     public void addItemViewController(ItemViewController itemViewController){
         itemViewControllers.add(itemViewController);
         TreeItem<Metadata> metadataTree = itemViewController.getMetadataTree();
-        rootTreeItem.getChildren().add(metadataTree);
+//        rootTreeItem.getChildren().add(metadataTree);
+        rootTreeItem.getInternalChildren().add(metadataTree);
 
         //add to the timeline
         compositionController.getTimeline().add(itemViewController.getItemModel().changeNodeIterator());
@@ -96,7 +101,8 @@ public class CompositionViewController {
         boolean removed = itemViewControllers.remove(itemViewController);
         if(removed){
             TreeItem<Metadata> metadataTree = itemViewController.getMetadataTree();
-            rootTreeItem.getChildren().remove(metadataTree);
+//            rootTreeItem.getChildren().remove(metadataTree);
+            rootTreeItem.getInternalChildren().remove(metadataTree);
 
             //remove from timeline
             compositionController.getTimeline().remove(itemViewController.getItemModel().changeNodeIterator());
@@ -208,16 +214,17 @@ public class CompositionViewController {
         ThumbSeeker thumbSeeker = new ThumbSeeker(RIGHT_COMPONENT_WIDTH);
         playback=new Playback(this,thumbSeeker);
         thumbSeeker.setDelegate(playback);
-
-        HBox outerHBox = initSearchAndPlayback();
-        outerHBox.setSpacing(5);
-
-        SelectionBar selectionBar=new SelectionBar(RIGHT_COMPONENT_WIDTH,null);
-        Ruler ruler=new Ruler(30, RIGHT_COMPONENT_WIDTH);
         thumbSeeker.setPrefHeight(PLAYBACK_FEATURES_HEIGHT);
         thumbSeeker.setMaxHeight(Control.USE_PREF_SIZE);
 
-        rootTreeItem=new TreeItem<>(new HeaderMetadata("Root", MetadataTag.ROOT));
+        //after initializing search and playback, we init root which will use the filter field
+        HBox outerHBox = initSearchAndPlayback();
+        outerHBox.setSpacing(5);
+        initRoot();
+
+        SelectionBar selectionBar=new SelectionBar(RIGHT_COMPONENT_WIDTH,null);
+        Ruler ruler=new Ruler((int) duration, RIGHT_COMPONENT_WIDTH);
+
         itemTable = initItemTable(rootTreeItem);
         keyframeTable =new KeyframeTreeView(this, rootTreeItem);
 
@@ -258,19 +265,24 @@ public class CompositionViewController {
 
     }
 
+    private void initRoot() {
+        rootTreeItem=new FilterableTreeItem<>(new HeaderMetadata("Root", MetadataTag.ROOT, false,null));
+        rootTreeItem.predicateProperty().bind(Bindings.createObjectBinding(() -> {
+//            if (filterField.getText() == null || filterField.getText().isEmpty())
+//                return null;
+            return TreeItemPredicate.create(new Predicate<Metadata>() {
+                @Override
+                public boolean test(Metadata actor) {
+                    return actor.getName().contains(filterField.getText());
+                }
+            });
+        }, filterField.textProperty()));
+    }
+
     private HBox initSearchAndPlayback() {
-        DraggableTextValue draggableTextValue=new DraggableTextValue(new DraggableTextValueDelegate() {
-            @Override
-            public void valueBeingDragged(DraggableTextValue draggableTextValue, double initialValue, double oldValue, double newValue) {
-
-            }
-            @Override
-            public void valueFinishedChanging(DraggableTextValue draggableTextValue, double initialValue, double finalValue, boolean dragged) {
-
-            }
-        });
-        TextField searchField=new TextField();
-        searchField.setPromptText("Search");
+        DraggableTextValue timeDragger=playback.getTimeDragger();
+        //filter field should already be initialized
+        filterField.setPromptText("Search");
         Button gotoBeginning=new Button("|<");
         Button previousKeyframe=new Button("<|");
         previousKeyframe.setOnAction(event -> this.jumpTimeToPreviousKeyframe());
@@ -281,7 +293,7 @@ public class CompositionViewController {
         Button gotoEnd=new Button(">|");
 
         ToolBar playerControls=new ToolBar(gotoBeginning,previousKeyframe,playPause,nextKeyframe,gotoEnd);
-        HBox outerHBox=new HBox(draggableTextValue,searchField,playerControls);
+        HBox outerHBox=new HBox(timeDragger, filterField,playerControls);
         outerHBox.setAlignment(Pos.CENTER_LEFT);
         outerHBox.setPadding(new Insets(0,2,0,2));
         return outerHBox;
@@ -289,8 +301,7 @@ public class CompositionViewController {
 
     private void jumpTimeToNextKeyframe(){
         //seek the current value from the value of the thumb
-        double currentTime;//in seconds
-        currentTime=getTime();
+        double currentTime = getTime();//in seconds
 
         //find the last selected keyframe which possibly might be where the thumb is at
         //as a result of a similar last "next" operation
@@ -312,7 +323,7 @@ public class CompositionViewController {
         KeyframeView keyframeAfter = keyframeTable.findKeyframeAfter(currentTime);
         if (keyframeAfter!=null) {
             keyframeTable.resetSelection();
-            playback.getThumbSeeker().setCurrentValueAcross(keyframeAfter.getTime(), duration);
+            playback.seekTo(keyframeAfter.getTime());
             keyframeAfter.setSelected(true);
         }
     }
@@ -342,7 +353,7 @@ public class CompositionViewController {
         KeyframeView keyframeBefore = keyframeTable.findKeyframeBefore(currentTime);
         if (keyframeBefore!=null) {
             keyframeTable.resetSelection();
-            playback.getThumbSeeker().setCurrentValueAcross(keyframeBefore.getTime(), duration);
+            playback.seekTo(keyframeBefore.getTime());
             keyframeBefore.setSelected(true);
         }
     }
@@ -363,6 +374,7 @@ public class CompositionViewController {
     private TreeTableView<Metadata> initItemTable(TreeItem<Metadata> root){
 
         TreeTableColumn<Metadata,Metadata> name=new TreeTableColumn<>("Name");
+        name.setEditable(true);
         name.setCellFactory(param -> new NameCell());
         name.setCellValueFactory(param -> new SimpleObjectProperty<>(param.getValue().getValue()));
         name.setPrefWidth(NAME_COLUMN_WIDTH);
@@ -380,6 +392,7 @@ public class CompositionViewController {
         TreeTableView<Metadata> treeTableView=new TreeTableView<>(root);
         treeTableView.getColumns().addAll(name,value,option);
         treeTableView.setShowRoot(false);
+        treeTableView.setEditable(true);
         treeTableView.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
             if(newValue!=null){//TODO NPE occurs during copy paste
                 workspace.getSelectedItems().selectOnly(newValue.getValue().getItemViewController());
@@ -412,7 +425,7 @@ public class CompositionViewController {
     }
 
     public double getTime(){
-        return playback.getThumbSeeker().getCurrentValueAcross(duration);
+        return playback.getTime();
     }
 
     public double getDuration() {
@@ -421,5 +434,12 @@ public class CompositionViewController {
 
     public Playback getPlayback() {
         return playback;
+    }
+
+    /**
+     * @return main item table that contains all items.
+     */
+    public TreeTableView<Metadata> getItemTable() {
+        return itemTable;
     }
 }

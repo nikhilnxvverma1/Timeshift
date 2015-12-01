@@ -39,11 +39,17 @@ public class SpatialMetadata extends Metadata {
     //TODO we might not need these, on remove from the scene graph , the buttons will be garbage collected
     private EventHandler<ActionEvent> selectPreviousKeyframe=e->{
         itemViewController.getCompositionViewController().getKeyframeTable().resetSelectionOfEachExcept(getKeyframePane());
-        getKeyframePane().selectPreviousKeyframe();
+        final KeyframeView previousKeyframe = getKeyframePane().selectPreviousKeyframe();
+        if(previousKeyframe!=null){
+            itemViewController.getCompositionViewController().getPlayback().seekTo(previousKeyframe.getTime());
+        }
     };
     private EventHandler<ActionEvent> selectNextKeyframe=e->{
         itemViewController.getCompositionViewController().getKeyframeTable().resetSelectionOfEachExcept(getKeyframePane());
-        getKeyframePane().selectNextKeyframe();
+        final KeyframeView nextKeyframe = getKeyframePane().selectNextKeyframe();
+        if(nextKeyframe!=null){
+            itemViewController.getCompositionViewController().getPlayback().seekTo(nextKeyframe.getTime());
+        }
     };
     private EventHandler<ActionEvent> addManualKeyframe=e->{
         if (isKeyframable()) {

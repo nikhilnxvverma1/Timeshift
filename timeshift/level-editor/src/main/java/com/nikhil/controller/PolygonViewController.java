@@ -10,9 +10,7 @@ import com.nikhil.math.MathUtil;
 import com.nikhil.model.freeform.MovablePoint;
 import com.nikhil.model.shape.PolygonModel;
 import com.nikhil.model.shape.ShapeModel;
-import com.nikhil.timeline.change.spatial.SpatialChangeHandler;
 import com.nikhil.timeline.change.spatial.SpatialKeyframeChangeNode;
-import com.nikhil.timeline.change.temporal.TemporalChangeHandler;
 import com.nikhil.timeline.change.temporal.TemporalKeyframeChangeNode;
 import com.nikhil.util.modal.UtilPoint;
 import com.nikhil.view.item.PolygonView;
@@ -310,7 +308,7 @@ public class PolygonViewController extends ShapeViewController implements Polygo
 
             //using generic metadata wherever possible
             TreeItem<Metadata> polygonHeader= new TreeItem<>(
-                    new HeaderMetadata(polygonModelController.getPolygonModel().getName(), MetadataTag.HEADER,this));
+                    new HeaderMetadata(polygonModelController.getPolygonModel().getName(), MetadataTag.HEADER, true, this));
             TreeItem<Metadata> polygonScale= new TreeItem<>(new TemporalMetadata(MetadataTag.SCALE,
                     polygonModelController.getPolygonModel().scaleChange(),
                     this));

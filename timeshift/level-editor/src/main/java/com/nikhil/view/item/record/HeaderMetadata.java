@@ -2,7 +2,6 @@ package com.nikhil.view.item.record;
 
 import com.nikhil.controller.ItemViewController;
 import com.nikhil.view.custom.keyframe.KeyframePane;
-import javafx.beans.property.StringProperty;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
@@ -15,13 +14,11 @@ import javafx.scene.layout.HBox;
  */
 public class HeaderMetadata extends Metadata {
     private ItemViewController itemViewController;
+    private boolean itemNameHeader;
 
-    public HeaderMetadata(String name, MetadataTag tag) {
-        this(name,tag,null);
-    }
-
-    public HeaderMetadata(String name, MetadataTag tag, ItemViewController itemViewController) {
+    public HeaderMetadata(String name, MetadataTag tag, boolean itemNameHeader, ItemViewController itemViewController) {
         super(name, tag);
+        this.itemNameHeader = itemNameHeader;
         this.itemViewController = itemViewController;
     }
 
@@ -44,6 +41,15 @@ public class HeaderMetadata extends Metadata {
         CheckBox lock=new CheckBox();
         Tooltip.install(lock,new Tooltip("Lock"));
         return new HBox(visibility,solo,lock);
+    }
+
+    @Override
+    public String getName() {
+        if(isItemNameHeader()){
+            return itemViewController.getItemModel().getName();
+        }else{
+            return super.getName();
+        }
     }
 
     public boolean isHeader(){
@@ -79,5 +85,10 @@ public class HeaderMetadata extends Metadata {
     @Override
     public void setKeyframable(boolean keyframable) {
         //do nothing,
+    }
+
+    @Override
+    public boolean isItemNameHeader() {
+        return itemNameHeader;
     }
 }
