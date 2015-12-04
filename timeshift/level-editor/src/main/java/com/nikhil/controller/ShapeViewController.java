@@ -92,6 +92,9 @@ public abstract class ShapeViewController extends ItemViewController implements 
 
     @Override
     public void mousePressed(MouseEvent mouseEvent) {
+        if(!isInteractive()){
+            return;
+        }
         //capture the location and just consume the event
         //so that workspace doesn't clear selection
         UtilPoint normalized=getNormalizedPoint(mouseEvent.getX(),mouseEvent.getY());
@@ -102,6 +105,9 @@ public abstract class ShapeViewController extends ItemViewController implements 
 
     @Override
     public void mouseDragged(MouseEvent mouseEvent) {
+        if(!isInteractive()){
+            return;
+        }
         SelectedItems selectedItems = compositionViewController.getWorkspace().getSelectedItems();
         boolean selected = selectedItems.contains(this);
         if(!selected){
@@ -118,6 +124,9 @@ public abstract class ShapeViewController extends ItemViewController implements 
 
     @Override
     public void mouseReleased(MouseEvent mouseEvent) {
+        if(!isInteractive()){
+            return;
+        }
         Workspace workspace=compositionViewController.getWorkspace();
         if(workspace.getSelectedItems().contains(this)){
             double x = mouseEvent.getX();

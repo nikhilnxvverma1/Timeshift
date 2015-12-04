@@ -1,4 +1,6 @@
-package com.nikhil.command;
+package com.nikhil.command.composite;
+
+import com.nikhil.command.Command;
 
 import java.util.LinkedList;
 import java.util.List;

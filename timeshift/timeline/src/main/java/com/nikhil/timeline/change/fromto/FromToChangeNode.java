@@ -166,7 +166,7 @@ public class FromToChangeNode extends ChangeNode {
 			//during change, compute the interpolated value and trigger value change callback 
 			double timeElapsed=time-start;
 			double fractionOfDuration=timeElapsed/duration;//this will be between 0.0 to 1.0
-			double progression= curve.valueFor(fractionOfDuration);//TODO casting :change all types to double
+			double progression= curve.valueFor(fractionOfDuration);
 			KeyValue currentValue= getInterpolatedValue(startValue, endValue, progression);
 			changeHandler.valueChanged( time, this, currentValue);
 

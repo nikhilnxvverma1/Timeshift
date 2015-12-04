@@ -1,9 +1,9 @@
-package com.nikhil.command;
+package com.nikhil.command.item;
 
+import com.nikhil.command.item.ItemCommand;
 import com.nikhil.controller.ItemViewController;
 import com.nikhil.util.modal.UtilPoint;
 
-import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -19,9 +19,7 @@ public abstract class SpatialActionOnSingleItem extends ItemCommand {
 
     @Override
     public List<ItemViewController> getItemList() {
-        LinkedList<ItemViewController> linkedList=new LinkedList<>();
-        linkedList.add(itemViewController);
-        return linkedList;
+        return listForSingleItem(itemViewController);
     }
 
     public abstract UtilPoint getInitialPoint();

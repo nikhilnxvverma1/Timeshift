@@ -1,11 +1,10 @@
 package com.nikhil.view.custom.keyframe;
 
-import com.nikhil.command.MoveKeyframes;
+import com.nikhil.command.keyframe.MoveKeyframes;
 import com.nikhil.controller.CompositionViewController;
 import com.nikhil.editor.selection.SelectionArea;
 import com.nikhil.editor.selection.SelectionOverlap;
 import com.nikhil.editor.workspace.Workspace;
-import com.nikhil.timeline.KeyValue;
 import com.nikhil.timeline.keyframe.Keyframe;
 import com.nikhil.view.item.record.Metadata;
 import javafx.collections.ObservableList;
@@ -15,8 +14,6 @@ import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.LinkedList;
 import java.util.List;
 

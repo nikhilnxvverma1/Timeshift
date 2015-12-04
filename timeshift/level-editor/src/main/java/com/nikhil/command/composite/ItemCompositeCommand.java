@@ -1,5 +1,7 @@
-package com.nikhil.command;
+package com.nikhil.command.composite;
 
+import com.nikhil.command.Command;
+import com.nikhil.command.item.ItemCommand;
 import com.nikhil.controller.ItemViewController;
 import com.nikhil.editor.selection.SelectedItems;
 import com.nikhil.editor.workspace.Workspace;

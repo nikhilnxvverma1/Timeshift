@@ -1,10 +1,7 @@
-package com.nikhil.command;
+package com.nikhil.command.item;
 
 import com.nikhil.controller.ItemViewController;
 import com.nikhil.util.modal.UtilPoint;
-
-import java.util.LinkedList;
-import java.util.List;
 
 /**
  * Simple command to move a single item from an initial position to a final position

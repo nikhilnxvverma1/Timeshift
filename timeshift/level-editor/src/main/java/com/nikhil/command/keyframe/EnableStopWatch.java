@@ -1,5 +1,6 @@
-package com.nikhil.command;
+package com.nikhil.command.keyframe;
 
+import com.nikhil.command.Command;
 import com.nikhil.view.custom.keyframe.KeyframeView;
 import com.nikhil.view.item.record.Metadata;
 
@@ -8,7 +9,7 @@ import com.nikhil.view.item.record.Metadata;
  * (A manual keyframe is one that doesn't bring any change).
  * Created by NikhilVerma on 22/11/15.
  */
-public class EnableStopWatch extends Command{
+public class EnableStopWatch extends Command {
 
     private KeyframeView manualKeyframe;
 

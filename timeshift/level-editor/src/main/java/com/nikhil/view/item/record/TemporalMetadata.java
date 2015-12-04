@@ -1,6 +1,12 @@
 package com.nikhil.view.item.record;
 
-import com.nikhil.command.*;
+import com.nikhil.command.item.RotateShape;
+import com.nikhil.command.item.ScaleShape;
+import com.nikhil.command.item.TemporalActionOnSingleItem;
+import com.nikhil.command.keyframe.AddTemporalKeyframe;
+import com.nikhil.command.keyframe.DisableStopWatch;
+import com.nikhil.command.keyframe.EnableStopWatch;
+import com.nikhil.command.keyframe.ModifyTemporalKeyframe;
 import com.nikhil.controller.CompositionViewController;
 import com.nikhil.controller.ItemViewController;
 import com.nikhil.controller.ShapeViewController;
@@ -36,7 +42,6 @@ public class TemporalMetadata extends Metadata{
     private TemporalKeyframeChangeNode temporalKeyframeChangeNode;
 
     private CheckBox keyframable;
-    private TemporalKeyframe savedStart,savedLast;
     private ChangeListener<? super Number>[]propertyListeners=null;//hold reference to prevent it from being garbage collected
     private AddTemporalKeyframe recentAddKeyframeCommand;
     private ModifyTemporalKeyframe recentModifyKeyframeCommand;
@@ -57,6 +62,11 @@ public class TemporalMetadata extends Metadata{
         }
     };
     private EventHandler<ActionEvent> addManualKeyframe=e->{
+
+        if(!itemViewController.isInteractive()){
+            return;
+        }
+
         if (isKeyframable()) {
 
             //get the current time of the composition
@@ -85,6 +95,11 @@ public class TemporalMetadata extends Metadata{
         this.keyframable=new CheckBox();
         this.keyframable.setSelected(false);
         this.keyframable.setOnAction(event -> {
+            if(!itemViewController.isInteractive()){
+                //undo the selection that just got made
+                keyframable.setSelected(!keyframable.isSelected());
+                return;
+            }
             if(keyframable.isSelected()){
                 double currentTime=itemViewController.getCompositionViewController().getTime();
                 TemporalKeyframeView newKeyframe = createNewKeyframe(temporalKeyframeChangeNode.getCurrentValue(), currentTime);
@@ -191,6 +206,11 @@ public class TemporalMetadata extends Metadata{
 //                itemViewController.getCompositionViewController().getWorkspace().pushCommand(scaleShape,!dragged);
                 pushWithKeyframe(scaleShape,!dragged);
             }
+
+            @Override
+            public boolean isEnabled() {
+                return itemViewController.isInteractive();
+            }
         });
         draggableTextValue.setLowerLimit(0);
         draggableTextValue.setLowerLimitExists(true);
@@ -234,6 +254,11 @@ public class TemporalMetadata extends Metadata{
                 }
                 RotateShape rotateShape=new RotateShape(((ShapeViewController)itemViewController),initialValue,finalValue);
                 pushWithKeyframe(rotateShape,!dragged);
+            }
+
+            @Override
+            public boolean isEnabled() {
+                return itemViewController.isInteractive();
             }
         });
         draggableTextValue.setStep(1);

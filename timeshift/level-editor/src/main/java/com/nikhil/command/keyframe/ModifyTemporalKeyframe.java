@@ -1,6 +1,8 @@
-package com.nikhil.command;
+package com.nikhil.command.keyframe;
 
 
+import com.nikhil.command.item.ItemCommand;
+import com.nikhil.command.item.TemporalActionOnSingleItem;
 import com.nikhil.controller.ItemViewController;
 import com.nikhil.timeline.KeyValue;
 import com.nikhil.view.custom.keyframe.TemporalKeyframeView;
@@ -12,7 +14,7 @@ import java.util.List;
  *
  * Created by NikhilVerma on 13/11/15.
  */
-public class ModifyTemporalKeyframe extends ItemCommand{
+public class ModifyTemporalKeyframe extends ItemCommand {
     private TemporalKeyframeView temporalKeyframeView;
     private KeyValue initialValue;
     private KeyValue finalValue;

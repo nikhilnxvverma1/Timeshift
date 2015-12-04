@@ -1,7 +1,7 @@
-package com.nikhil.command;
+package com.nikhil.command.item;
 
+import com.nikhil.command.item.ItemCommand;
 import com.nikhil.controller.ItemViewController;
-import com.nikhil.editor.selection.SelectedItems;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -10,7 +10,7 @@ import java.util.Set;
 /**
  * Created by NikhilVerma on 20/09/15.
  */
-public abstract class ActionOnItemSet extends ItemCommand{
+public abstract class ActionOnItemSet extends ItemCommand {
     protected Set<ItemViewController> itemSet;
 
     public ActionOnItemSet(Set<ItemViewController> itemSet) {

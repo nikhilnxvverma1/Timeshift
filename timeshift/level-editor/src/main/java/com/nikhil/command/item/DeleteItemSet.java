@@ -1,7 +1,6 @@
-package com.nikhil.command;
+package com.nikhil.command.item;
 
 import com.nikhil.controller.ItemViewController;
-import com.nikhil.editor.selection.SelectedItems;
 import com.nikhil.editor.workspace.Workspace;
 
 import java.util.Set;

@@ -1,10 +1,9 @@
-package com.nikhil.command;
+package com.nikhil.command.keyframe;
 
+import com.nikhil.command.AddKeyframe;
+import com.nikhil.command.item.TemporalActionOnSingleItem;
 import com.nikhil.timeline.KeyValue;
-import com.nikhil.timeline.keyframe.TemporalKeyframe;
-import com.nikhil.view.custom.keyframe.KeyframeView;
 import com.nikhil.view.custom.keyframe.TemporalKeyframeView;
-import com.nikhil.view.item.record.TemporalMetadata;
 
 /**
  * Temporal version of adding a keyframe. The requirement of this class is a keyframe in the constructor.

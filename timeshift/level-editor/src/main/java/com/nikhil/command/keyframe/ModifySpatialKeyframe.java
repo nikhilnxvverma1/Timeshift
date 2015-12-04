@@ -1,5 +1,7 @@
-package com.nikhil.command;
+package com.nikhil.command.keyframe;
 
+import com.nikhil.command.item.ItemCommand;
+import com.nikhil.command.item.SpatialActionOnSingleItem;
 import com.nikhil.controller.ItemViewController;
 import com.nikhil.space.bezier.path.BezierPoint;
 import com.nikhil.util.modal.UtilPoint;
@@ -11,7 +13,7 @@ import java.util.List;
 /**
  * Created by NikhilVerma on 28/11/15.
  */
-public class ModifySpatialKeyframe extends ItemCommand{
+public class ModifySpatialKeyframe extends ItemCommand {
 
     private SpatialKeyframeView spatialKeyframeView;
     private BezierPoint initialBezierPoint;

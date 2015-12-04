@@ -63,7 +63,7 @@ public class SelectionTool extends BaseTool implements SelectionOverlap {
 
                 ItemViewController itemViewController=itemViewControllerIterator.next();
                 //if it is overlapping with the bounds,add it to the selection
-                if(itemViewController.overlapsWithSceneBounds(sceneBounds)){
+                if(itemViewController.overlapsWithSceneBounds(sceneBounds)&& itemViewController.isInteractive()){
                     workspace.getSelectedItems().addToSelection(itemViewController);
                 }else{
                     workspace.getSelectedItems().removeFromSelection(itemViewController);

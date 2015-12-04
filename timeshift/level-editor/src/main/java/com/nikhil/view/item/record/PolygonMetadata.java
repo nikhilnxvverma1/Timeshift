@@ -1,8 +1,8 @@
 package com.nikhil.view.item.record;
 
-import com.nikhil.command.MoveItemSet;
-import com.nikhil.command.RotateShape;
-import com.nikhil.command.ScaleShape;
+import com.nikhil.command.item.MoveItemSet;
+import com.nikhil.command.item.RotateShape;
+import com.nikhil.command.item.ScaleShape;
 import com.nikhil.controller.ItemViewController;
 import com.nikhil.controller.PolygonViewController;
 import com.nikhil.editor.selection.SelectedItems;
@@ -94,6 +94,11 @@ public class PolygonMetadata extends Metadata{
                 ScaleShape scaleShape =new ScaleShape(polygonViewController,initialValue,finalValue);
                 polygonViewController.getCompositionViewController().getWorkspace().pushCommand(scaleShape,!dragged);
             }
+
+            @Override
+            public boolean isEnabled() {
+                return polygonViewController.isInteractive();
+            }
         });
         draggableTextValue.setLowerLimit(0);
         draggableTextValue.setLowerLimitExists(true);
@@ -132,6 +137,11 @@ public class PolygonMetadata extends Metadata{
                 }
                 RotateShape rotateShape=new RotateShape(polygonViewController,initialValue,finalValue);
                 polygonViewController.getCompositionViewController().getWorkspace().pushCommand(rotateShape,!dragged);
+            }
+
+            @Override
+            public boolean isEnabled() {
+                return polygonViewController.isInteractive();
             }
         });
         draggableTextValue.setStep(1);
@@ -179,6 +189,11 @@ public class PolygonMetadata extends Metadata{
                 MoveItemSet shiftHorizontally=new MoveItemSet(itemSetForNewCommand, initialPoint,finalPoint);
                 workspace.pushCommand(shiftHorizontally, !dragged);
             }
+
+            @Override
+            public boolean isEnabled() {
+                return polygonViewController.isInteractive();
+            }
         });
         xValue.setStep(1);
         xValue.setValue(polygonViewController.getPolygonView().getLayoutX());
@@ -223,6 +238,11 @@ public class PolygonMetadata extends Metadata{
                 MoveItemSet shiftVertically=new MoveItemSet(itemSetForNewCommand, initialPoint,finalPoint);
                 workspace.pushCommand(shiftVertically, !dragged);
             }
+
+            @Override
+            public boolean isEnabled() {
+                return polygonViewController.isInteractive();
+            }
         });
         yValue.setStep(1);
         yValue.setValue(polygonViewController.getPolygonView().getLayoutY());
@@ -247,6 +267,11 @@ public class PolygonMetadata extends Metadata{
             public void valueFinishedChanging(DraggableTextValue draggableTextValue, double initialValue, double finalValue, boolean dragged) {
 
             }
+
+            @Override
+            public boolean isEnabled() {
+                return polygonViewController.isInteractive();
+            }
         });
         xValue.setStep(1);
         xValue.setValue(polygonViewController.getPolygonView().getTranslateX());
@@ -264,6 +289,11 @@ public class PolygonMetadata extends Metadata{
             @Override
             public void valueFinishedChanging(DraggableTextValue draggableTextValue, double initialValue, double finalValue, boolean dragged) {
 
+            }
+
+            @Override
+            public boolean isEnabled() {
+                return polygonViewController.isInteractive();
             }
         });
         yValue.setStep(1);

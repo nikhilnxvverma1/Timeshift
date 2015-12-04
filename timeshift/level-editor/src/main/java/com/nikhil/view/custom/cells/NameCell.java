@@ -1,7 +1,6 @@
 package com.nikhil.view.custom.cells;
 
-import com.nikhil.command.ChangeItemName;
-import com.nikhil.logging.Logger;
+import com.nikhil.command.item.ChangeItemName;
 import com.nikhil.view.item.record.Metadata;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TreeTableCell;

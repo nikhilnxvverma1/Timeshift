@@ -118,4 +118,9 @@ public class Playback implements ThumbSeekerDelegate,DraggableTextValueDelegate 
             seekTo(finalValue);
         }
     }
+
+    @Override
+    public boolean isEnabled() {
+        return true;
+    }
 }

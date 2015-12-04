@@ -1,6 +1,7 @@
 package com.nikhil.command;
 
 
+import com.nikhil.command.item.ItemCommand;
 import com.nikhil.controller.ItemViewController;
 import com.nikhil.view.custom.keyframe.KeyframeView;
 
@@ -29,7 +30,7 @@ import java.util.List;
  *
  * Created by NikhilVerma on 22/11/15.
  */
-public abstract class AddKeyframe extends ItemCommand{
+public abstract class AddKeyframe extends ItemCommand {
     protected boolean manual;
     protected Command continuousCommand;
 

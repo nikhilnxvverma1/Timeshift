@@ -1,4 +1,6 @@
-package com.nikhil.command;
+package com.nikhil.command.composite;
+
+import com.nikhil.command.Command;
 
 import java.util.List;
 
@@ -6,7 +8,7 @@ import java.util.List;
  * A command that consists of a bunch of commands to execute/unexecute at once
  * Created by NikhilVerma on 27/11/15.
  */
-public abstract class CompositeCommand extends Command{
+public abstract class CompositeCommand extends Command {
     /**
      * @return List of commands that this composite command executes
      */

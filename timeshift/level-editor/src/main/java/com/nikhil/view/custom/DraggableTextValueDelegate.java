@@ -22,4 +22,10 @@ public interface DraggableTextValueDelegate {
      * @param dragged true if this change was caused by drag ,false if the change was caused by manual entry in textfield
      */
     void valueFinishedChanging(DraggableTextValue draggableTextValue, double initialValue, double finalValue, boolean dragged);
+
+    /**
+     * Called by the draggable text value to know if field is enabled or not
+     * @return true if interaction with the draggable text value should be editable ,false otherwise
+     */
+    boolean isEnabled();
 }

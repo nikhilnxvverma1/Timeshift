@@ -1,4 +1,4 @@
-package com.nikhil.command;
+package com.nikhil.command.keyframe;
 
 import com.nikhil.view.custom.keyframe.KeyframePane;
 import com.nikhil.view.custom.keyframe.KeyframeTreeView;

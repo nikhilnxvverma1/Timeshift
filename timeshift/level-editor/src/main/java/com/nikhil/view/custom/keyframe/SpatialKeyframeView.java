@@ -1,7 +1,7 @@
 package com.nikhil.view.custom.keyframe;
 
-import com.nikhil.command.ModifySpatialKeyframe;
-import com.nikhil.command.MoveItem;
+import com.nikhil.command.keyframe.ModifySpatialKeyframe;
+import com.nikhil.command.item.MoveItem;
 import com.nikhil.controller.ItemViewController;
 import com.nikhil.space.bezier.path.BezierPoint;
 import com.nikhil.timeline.keyframe.SpatialKeyframe;

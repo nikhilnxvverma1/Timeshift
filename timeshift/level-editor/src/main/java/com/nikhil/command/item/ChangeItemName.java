@@ -1,18 +1,18 @@
-package com.nikhil.command;
+package com.nikhil.command.item;
 
+import com.nikhil.command.item.ItemCommand;
 import com.nikhil.controller.ItemViewController;
 import com.nikhil.view.item.record.Metadata;
 import javafx.scene.control.TreeTableColumn;
 import javafx.scene.control.TreeTableView;
 
-import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
 /**
  * Created by NikhilVerma on 30/11/15.
  */
-public class ChangeItemName extends ItemCommand{
+public class ChangeItemName extends ItemCommand {
 
     private Metadata metadata;
     private String oldName;

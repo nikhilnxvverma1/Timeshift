@@ -1,7 +1,6 @@
-package com.nikhil.command;
+package com.nikhil.command.item;
 
 import com.nikhil.controller.ItemViewController;
-import com.nikhil.editor.selection.SelectedItems;
 import javafx.geometry.Point2D;
 
 import java.util.Set;

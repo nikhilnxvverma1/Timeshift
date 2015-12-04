@@ -24,7 +24,7 @@ public class DraggableTextValue extends HBox{ //TODO textfield listeners may lea
 	private double upperLimit=100;
 	private double lowerLimit=0;
 	
-	private double value=50;//TODO make this an Observable Value
+	private double value=50;
 	private ValueFormatter valueFormatter;
 	private String postfix;
 
@@ -82,7 +82,7 @@ public class DraggableTextValue extends HBox{ //TODO textfield listeners may lea
 		label.setFocusTraversable(true);
 		label.setLabelFor(textfield);
 		label.focusedProperty().addListener((arg0, wasFocused, nowFocused) -> {
-            if (nowFocused){
+            if (nowFocused && delegate.isEnabled()){
                 editValueInTextfield();
             }
         });
@@ -145,11 +145,17 @@ public class DraggableTextValue extends HBox{ //TODO textfield listeners may lea
 	}
 
 	private void labelPressed(MouseEvent mousePressEvent){
+		if(!delegate.isEnabled()){
+			return;
+		}
 		lastX=mousePressEvent.getX();
 		valueBeforeChange=value;
 	}
 
 	private void labelDragged(MouseEvent dragEvent){
+		if(!delegate.isEnabled()){
+			return;
+		}
 		double x=dragEvent.getX();
 		double oldValue=value;
 		if(x>=lastX){
@@ -174,6 +180,9 @@ public class DraggableTextValue extends HBox{ //TODO textfield listeners may lea
 	
 	@FXML 
 	private void labelReleased(MouseEvent releaseEvent){
+		if(!delegate.isEnabled()){
+			return;
+		}
 		if(!justGotDragged){
 			editValueInTextfield();
 		}else{

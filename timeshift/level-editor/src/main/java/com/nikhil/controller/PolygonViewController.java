@@ -1,6 +1,6 @@
 package com.nikhil.controller;
 
-import com.nikhil.command.MovePolygonPoint;
+import com.nikhil.command.item.MovePolygonPoint;
 import com.nikhil.controller.item.ItemModelController;
 import com.nikhil.controller.item.PolygonModelController;
 import com.nikhil.editor.gizmo.GizmoVisibilityOption;
@@ -308,7 +308,7 @@ public class PolygonViewController extends ShapeViewController implements Polygo
 
             //using generic metadata wherever possible
             TreeItem<Metadata> polygonHeader= new TreeItem<>(
-                    new HeaderMetadata(polygonModelController.getPolygonModel().getName(), MetadataTag.HEADER, true, this));
+                    new HeaderMetadata(polygonModelController.getPolygonModel().getName(), MetadataTag.HEADER, this, true));
             TreeItem<Metadata> polygonScale= new TreeItem<>(new TemporalMetadata(MetadataTag.SCALE,
                     polygonModelController.getPolygonModel().scaleChange(),
                     this));

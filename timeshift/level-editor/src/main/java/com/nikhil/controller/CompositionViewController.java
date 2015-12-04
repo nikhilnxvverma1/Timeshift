@@ -41,6 +41,9 @@ import java.util.function.Predicate;
  */
 public class CompositionViewController {
 
+    private static final double NON_SOLO_ITEM_VISIBILITY_OPACITY=0.5;
+    private static final double FULL_OPACITY=1;
+
     public static final double DEFAULT_DURATION =30;
     public static final double PLAYBACK_FEATURES_HEIGHT = 40d;
     public static int TOTAL_COMPOSITIONS_SO_FAR =0;
@@ -51,6 +54,7 @@ public class CompositionViewController {
 
     private CompositionController compositionController;
     private double duration= DEFAULT_DURATION;
+    private int totalSoloItems=0;
     private Tab tab;
     private Workspace workspace;
     private List<ItemViewController> itemViewControllers = new LinkedList<ItemViewController>();
@@ -58,7 +62,7 @@ public class CompositionViewController {
     private TreeTableView<Metadata> itemTable;
     private KeyframeTreeView keyframeTable;
     private Playback playback;
-    private TextField filterField=new TextField();;
+    private TextField filterField=new TextField();
 
     public CompositionViewController(CompositionController compositionController,Workspace workspace) {
         this.compositionController=compositionController;
@@ -87,10 +91,69 @@ public class CompositionViewController {
         return tab;
     }
 
+    public int getTotalSoloItems() {
+        return totalSoloItems;
+    }
+
+    /**
+     * Sets the count of total solo items. This method is specifically designed to be called
+     * by the item view controller's solo setter
+     * @param totalSoloItems the total solo items in this composition
+     */
+    public void setTotalSoloItems(int totalSoloItems) {
+        if(totalSoloItems<0){
+            throw new RuntimeException("Total solo items can never be set to a negative number");
+        }
+        this.totalSoloItems = totalSoloItems;
+        if(totalSoloItems>0){
+            makeNonSoloItemsVisible(false);
+        }else{
+            makeNonSoloItemsVisible(true);
+        }
+    }
+
+    /**
+     * Makes other item in the composition hidden or visible  based on their solo and visiblity flag.
+     * @param visible weather non solo items should be visible or not
+     */
+    public void makeNonSoloItemsVisible(boolean visible){
+
+        //iterate over all items in parent composition
+        Iterator<ItemViewController> itemViewControllerIterator = this.getItemViewControllerIterator();
+        while (itemViewControllerIterator.hasNext()){
+
+            //make the view hidden without toggling the visibility flag
+            ItemViewController itemViewController = itemViewControllerIterator.next();
+            if(!itemViewController.isSolo()){
+
+                //do this only for visible and non-solo items
+                if (itemViewController.isVisible()) {
+                    itemViewController.getItemView().setVisible(visible);
+                }
+
+                //also set a style on their visible checkbox switch
+                HeaderMetadata headerMetadata = itemViewController.getHeaderMetadata();
+
+                if (!visible) {
+                    headerMetadata.getVisibility().setOpacity(NON_SOLO_ITEM_VISIBILITY_OPACITY);
+                    getWorkspace().getSelectedItems().removeFromSelection(itemViewController);
+                }else{
+                    headerMetadata.getVisibility().setOpacity(FULL_OPACITY);
+                }
+            }else{
+
+                //make the solo item visible (if its allowed) and reinstate the checkbox
+                if (itemViewController.isVisible()) {
+                    itemViewController.getItemView().setVisible(true);
+                }
+                itemViewController.getHeaderMetadata().getVisibility().setOpacity(FULL_OPACITY);
+            }
+        }
+    }
+
     public void addItemViewController(ItemViewController itemViewController){
         itemViewControllers.add(itemViewController);
         TreeItem<Metadata> metadataTree = itemViewController.getMetadataTree();
-//        rootTreeItem.getChildren().add(metadataTree);
         rootTreeItem.getInternalChildren().add(metadataTree);
 
         //add to the timeline
@@ -101,7 +164,6 @@ public class CompositionViewController {
         boolean removed = itemViewControllers.remove(itemViewController);
         if(removed){
             TreeItem<Metadata> metadataTree = itemViewController.getMetadataTree();
-//            rootTreeItem.getChildren().remove(metadataTree);
             rootTreeItem.getInternalChildren().remove(metadataTree);
 
             //remove from timeline
@@ -266,7 +328,7 @@ public class CompositionViewController {
     }
 
     private void initRoot() {
-        rootTreeItem=new FilterableTreeItem<>(new HeaderMetadata("Root", MetadataTag.ROOT, false,null));
+        rootTreeItem=new FilterableTreeItem<>(new HeaderMetadata("Root", MetadataTag.ROOT, null, false));
         rootTreeItem.predicateProperty().bind(Bindings.createObjectBinding(() -> {
 //            if (filterField.getText() == null || filterField.getText().isEmpty())
 //                return null;
@@ -394,7 +456,8 @@ public class CompositionViewController {
         treeTableView.setShowRoot(false);
         treeTableView.setEditable(true);
         treeTableView.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
-            if(newValue!=null){//TODO NPE occurs during copy paste
+            if(newValue!=null &&//TODO NPE occurs during copy paste
+                    newValue.getValue().getItemViewController().isInteractive()){
                 workspace.getSelectedItems().selectOnly(newValue.getValue().getItemViewController());
                 keyframeTable.getSelectionModel().select(newValue);
             }

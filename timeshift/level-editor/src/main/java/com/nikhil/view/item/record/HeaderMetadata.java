@@ -1,5 +1,8 @@
 package com.nikhil.view.item.record;
 
+import com.nikhil.command.item.toggle.ToggleItemLock;
+import com.nikhil.command.item.toggle.ToggleItemSolo;
+import com.nikhil.command.item.toggle.ToggleItemVisibility;
 import com.nikhil.controller.ItemViewController;
 import com.nikhil.view.custom.keyframe.KeyframePane;
 import javafx.scene.Node;
@@ -16,30 +19,85 @@ public class HeaderMetadata extends Metadata {
     private ItemViewController itemViewController;
     private boolean itemNameHeader;
 
-    public HeaderMetadata(String name, MetadataTag tag, boolean itemNameHeader, ItemViewController itemViewController) {
+    private CheckBox visibility;
+    private CheckBox solo;
+    private CheckBox lock;
+
+    public HeaderMetadata(String name, MetadataTag tag, ItemViewController itemViewController, boolean itemNameHeader) {
         super(name, tag);
         this.itemNameHeader = itemNameHeader;
         this.itemViewController = itemViewController;
+        if(itemNameHeader){
+            initSwitches();
+        }
     }
 
     public ItemViewController getItemViewController(){
         return itemViewController;
     }
 
+    public CheckBox getVisibility() {
+        return visibility;
+    }
+
+    public CheckBox getSolo() {
+        return solo;
+    }
+
+    public CheckBox getLock() {
+        return lock;
+    }
+
     public Node getValueNode(){
         return new Button("Reset");//TODO delegation and visual size
     }
 
-    public Node getOptionNode(){
-        CheckBox visibility=new CheckBox();
-        visibility.setSelected(true);//TODO register listener
+    /**
+     * Initializes the checkboxes for the headers.
+     * These checkboxes are deliberately instantiated here because while getting recycled in the option cell,
+     * we don't want new checkboxes to be created on a call to getOptionsNode().
+     * FYI these checkboxes are referenced externally in their specific commands.
+     */
+    private void initSwitches(){
+
+        //visibility toggle
+        visibility=new CheckBox();
+        visibility.setSelected(true);
         Tooltip.install(visibility, new Tooltip("Visible"));
+        visibility.setOnAction(event -> {
+            ToggleItemVisibility toggleItemVisibility=new ToggleItemVisibility(itemViewController,
+                    !visibility.isSelected(),
+                    visibility.isSelected(),
+                    visibility);
+            itemViewController.getCompositionViewController().getWorkspace().pushCommand(toggleItemVisibility);
 
-        CheckBox solo=new CheckBox();
+        });
+
+        //solo toggle
+        solo=new CheckBox();
         Tooltip.install(solo,new Tooltip("Solo"));
+        solo.setOnAction(event -> {
+            ToggleItemSolo toggleItemSolo=new ToggleItemSolo(itemViewController,
+                    !solo.isSelected(),
+                    solo.isSelected(),
+                    solo);
+            itemViewController.getCompositionViewController().getWorkspace().pushCommand(toggleItemSolo);
+        });
 
-        CheckBox lock=new CheckBox();
-        Tooltip.install(lock,new Tooltip("Lock"));
+
+        //lock toggle
+        lock=new CheckBox();
+        Tooltip.install(lock, new Tooltip("Lock"));
+        lock.setOnAction(e -> {
+            final ToggleItemLock toggleItemLock = new ToggleItemLock(itemViewController,
+                    !lock.isSelected(),
+                    lock.isSelected(),
+                    lock);
+            itemViewController.getCompositionViewController().getWorkspace().pushCommand(toggleItemLock);
+        });
+    }
+
+    public Node getOptionNode(){
         return new HBox(visibility,solo,lock);
     }
 
@@ -66,15 +124,6 @@ public class HeaderMetadata extends Metadata {
     }
     public KeyframePane getKeyframePane(){
         return null;
-    }
-
-    /**
-     * Called just before this metadata is about to be removed from the view.
-     * Subclasses are expected to override this method and remove any event handlers
-     * that may leak memory later
-     */
-    public void cleanUp(){
-
     }
 
     @Override

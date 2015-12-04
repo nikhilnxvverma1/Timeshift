@@ -1,14 +1,17 @@
 package com.nikhil.view.item.record;
 
-import com.nikhil.command.*;
+import com.nikhil.command.composite.ItemCompositeCommand;
+import com.nikhil.command.item.*;
+import com.nikhil.command.keyframe.AddSpatialKeyframe;
+import com.nikhil.command.keyframe.DisableStopWatch;
+import com.nikhil.command.keyframe.EnableStopWatch;
+import com.nikhil.command.keyframe.ModifySpatialKeyframe;
 import com.nikhil.controller.CompositionViewController;
 import com.nikhil.controller.ItemViewController;
 import com.nikhil.editor.workspace.Workspace;
-import com.nikhil.logging.Logger;
 import com.nikhil.space.bezier.path.BezierPoint;
 import com.nikhil.timeline.change.spatial.SpatialKeyframeChangeNode;
 import com.nikhil.timeline.keyframe.SpatialKeyframe;
-import com.nikhil.timeline.keyframe.TemporalKeyframe;
 import com.nikhil.util.modal.UtilPoint;
 import com.nikhil.view.custom.DraggableTextValue;
 import com.nikhil.view.custom.DraggableTextValueDelegate;
@@ -20,8 +23,6 @@ import javafx.event.EventHandler;
 import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
-
-import java.util.Set;
 
 /**
  * Created by NikhilVerma on 11/11/15.
@@ -52,6 +53,11 @@ public class SpatialMetadata extends Metadata {
         }
     };
     private EventHandler<ActionEvent> addManualKeyframe=e->{
+
+        if(!itemViewController.isInteractive()){
+            return;
+        }
+
         if (isKeyframable()) {
 
             //get the current time of the composition
@@ -82,6 +88,11 @@ public class SpatialMetadata extends Metadata {
         this.keyframable=new CheckBox();
         this.keyframable.setSelected(false);
         this.keyframable.setOnAction(event -> {
+            if(!itemViewController.isInteractive()){
+                //undo the selection that just got made
+                keyframable.setSelected(!keyframable.isSelected());
+                return;
+            }
             if(keyframable.isSelected()){
                 double currentTime=itemViewController.getCompositionViewController().getTime();
                 SpatialKeyframeView newKeyframe = createNewKeyframe(spatialKeyframeChangeNode.getCurrentPoint(), currentTime);
@@ -197,6 +208,11 @@ public class SpatialMetadata extends Metadata {
                 MoveItem shiftHorizontally=new MoveItem(itemViewController, initialPoint,finalPoint);
                 endContinuousChange(shiftHorizontally,!dragged,null);
             }
+
+            @Override
+            public boolean isEnabled() {
+                return itemViewController.isInteractive();
+            }
         });
         xValue.setStep(1);
         xValue.setValue(itemViewController.getItemView().getLayoutX());
@@ -239,6 +255,11 @@ public class SpatialMetadata extends Metadata {
                 MoveItem shiftVertically=new MoveItem(itemViewController, initialPoint,finalPoint);
                 endContinuousChange(shiftVertically,!dragged,null);
             }
+
+            @Override
+            public boolean isEnabled() {
+                return itemViewController.isInteractive();
+            }
         });
         yValue.setStep(1);
         yValue.setValue(itemViewController.getItemView().getLayoutY());
@@ -263,6 +284,11 @@ public class SpatialMetadata extends Metadata {
             public void valueFinishedChanging(DraggableTextValue draggableTextValue, double initialValue, double finalValue, boolean dragged) {
 
             }
+
+            @Override
+            public boolean isEnabled() {
+                return itemViewController.isInteractive();
+            }
         });
         xValue.setStep(1);
         xValue.setValue(itemViewController.getItemView().getTranslateX());
@@ -280,6 +306,11 @@ public class SpatialMetadata extends Metadata {
             @Override
             public void valueFinishedChanging(DraggableTextValue draggableTextValue, double initialValue, double finalValue, boolean dragged) {
 
+            }
+
+            @Override
+            public boolean isEnabled() {
+                return itemViewController.isInteractive();
             }
         });
         yValue.setStep(1);

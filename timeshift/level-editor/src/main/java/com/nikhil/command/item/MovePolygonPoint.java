@@ -1,5 +1,6 @@
-package com.nikhil.command;
+package com.nikhil.command.item;
 
+import com.nikhil.command.Command;
 import com.nikhil.controller.PolygonViewController;
 import com.nikhil.editor.selection.SelectedItems;
 import com.nikhil.util.modal.UtilPoint;

@@ -1,5 +1,6 @@
-package com.nikhil.command;
+package com.nikhil.command.keyframe;
 
+import com.nikhil.command.Command;
 import com.nikhil.view.custom.keyframe.KeyframeTreeView;
 import com.nikhil.view.custom.keyframe.KeyframeView;
 import com.nikhil.view.item.record.Metadata;
@@ -13,7 +14,7 @@ import java.util.LinkedList;
  * several collective actions all of which have same keys.
  * Created by NikhilVerma on 21/11/15.
  */
-public abstract class ActionOnKeyframes extends Command{
+public abstract class ActionOnKeyframes extends Command {
     protected LinkedList<KeyframeView> keyframeViews;
 
     /**
