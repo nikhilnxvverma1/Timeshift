@@ -65,7 +65,7 @@ public class XMLLoader {
 
             //create item view controllers and add them to the workspace
             ItemViewController itemViewController=getItemViewController(t,compositionViewController);
-            compositionViewController.addItemViewController(itemViewController,false);//don't add back again to timeline
+            compositionViewController.addItemViewController(itemViewController,true);
 //            workspace.addToTimelineSystem(itemViewController);//it already came added from the XMLReader
 //            itemViewController.addViewsTo();
 

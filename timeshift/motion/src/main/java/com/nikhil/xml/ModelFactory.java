@@ -3,6 +3,13 @@ package com.nikhil.xml;
 import com.nikhil.model.freeform.MovablePoint;
 import com.nikhil.model.shape.PolygonModel;
 import com.nikhil.model.shape.ShapeModel;
+import com.nikhil.space.bezier.path.BezierPoint;
+import com.nikhil.timeline.KeyValue;
+import com.nikhil.timeline.change.KeyframeChangeNode;
+import com.nikhil.timeline.change.spatial.SpatialKeyframeChangeNode;
+import com.nikhil.timeline.change.temporal.TemporalKeyframeChangeNode;
+import com.nikhil.timeline.keyframe.SpatialKeyframe;
+import com.nikhil.timeline.keyframe.TemporalKeyframe;
 import com.nikhil.util.modal.UtilPoint;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -19,6 +26,7 @@ public class ModelFactory {
 
     public PolygonModel parsePolygonModel(Element polygonElement){
         PolygonModel polygonModel=new PolygonModel();
+        polygonModel.setName(polygonElement.getAttribute(XMLAttribute.NAME.toString()));
 
         //traverse each child of the polygon tag
         int length=polygonElement.getChildNodes().getLength();
@@ -29,24 +37,21 @@ public class ModelFactory {
             if(node instanceof Element){
                 Element element=(Element)node;
                 XMLTag tag=XMLTag.toTag(element.getTagName());
-                switch (tag){
-                    case SHAPE:
-                        extractShapeProperties(element,polygonModel);
-                        break;
-                    case VERTICES:
-                        addPolygonVertices(element,polygonModel);
-                        break;
+                if (tag == XMLTag.SHAPE) {
+                    extractShapeProperties(element, polygonModel);
+                } else if (tag == XMLTag.VERTICES) {
+                    addPolygonVertices(element, polygonModel);
                 }
             }
         }
         return polygonModel;
     }
 
-    protected int addPolygonVertices(Element verticesElement,PolygonModel polygonModel){
+    protected void addPolygonVertices(Element verticesElement,PolygonModel polygonModel){
 
-        //traverse each vertex element
-        int totalVertices=verticesElement.getChildNodes().getLength();
-        for (int i = 0; i < totalVertices; i++) {
+        //traverse each node in this element
+        int totalNodes=verticesElement.getChildNodes().getLength();
+        for (int i = 0; i < totalNodes; i++) {
 
             //each vertex is of the type MovablePoint
             Node node=verticesElement.getChildNodes().item(i);
@@ -56,27 +61,23 @@ public class ModelFactory {
                 Element element=(Element)node;
                 XMLTag tag=XMLTag.toTag(element.getTagName());
 
-                switch (tag){
-                    case MOVABLE_POINT:
-                        //add movable point to the polygonModel
-                        MovablePoint movablePoint=getMovablePoint(element);
-                        polygonModel.addPoint(movablePoint);
-                        break;
+                if (tag == XMLTag.MOVABLE_POINT) {//add movable point to the polygonModel
+                    MovablePoint movablePoint = getMovablePoint(element);
+                    polygonModel.addPoint(movablePoint);
                 }
 
             }
         }
-        return totalVertices;
     }
 
     protected void extractShapeProperties(Element shapeElement,ShapeModel shapeModel){
 
         //initialize properties with default values
-        double scale=ShapeModel.DEFAULT_SCALE;
-        double rotation=ShapeModel.DEFAULT_ROTATION;
-        UtilPoint translation=new UtilPoint(ShapeModel.DEFAULT_TRANSLATION_X,ShapeModel.DEFAULT_TRANSLATION_Y);
-        UtilPoint anchorPoint=new UtilPoint();
-
+        shapeModel.setScale(ShapeModel.DEFAULT_SCALE);
+        shapeModel.setRotation(ShapeModel.DEFAULT_ROTATION);
+        shapeModel.setTranslation(new UtilPoint(ShapeModel.DEFAULT_TRANSLATION_X,ShapeModel.DEFAULT_TRANSLATION_Y));
+        shapeModel.setAnchorPoint(new UtilPoint());
+        
         //traverse each shape property
         int length=shapeElement.getChildNodes().getLength();
         for (int i = 0; i < length; i++) {
@@ -87,28 +88,255 @@ public class ModelFactory {
                 XMLTag tag=XMLTag.toTag(child.getTagName());
 
                 //each element can either be :scale rotation translation or anchor point
-                switch (tag){
-                    case SCALE:
-                        scale= Double.parseDouble(child.getTextContent());
-                        break;
-                    case ROTATION:
-                        rotation= Double.parseDouble(child.getTextContent());
-                        break;
-                    case TRANSLATION:
-                        translation=getPoint(child);
-                        break;
-                    case ANCHOR_POINT:
-                        anchorPoint=getPoint(child);
-                        break;
+                if (tag == XMLTag.SCALE) {
+                    if (keyframesPresent(child)) {
+                        addKeyframes(child, shapeModel.scaleChange());
+                    } else {
+                        shapeModel.setScale(Double.parseDouble(child.getTextContent()));
+                    }
+                } else if (tag == XMLTag.ROTATION) {
+                    if (keyframesPresent(child)) {
+                        addKeyframes(child, shapeModel.rotationChange());
+                    } else {
+                        shapeModel.setRotation(Double.parseDouble(child.getTextContent()));
+                    }
+
+                } else if (tag == XMLTag.TRANSLATION) {
+                    if (keyframesPresent(child)) {
+                        addKeyframes(child, shapeModel.translationChange());
+                    } else {
+                        shapeModel.setTranslation(getPoint(child));
+                    }
+
+                } else if (tag == XMLTag.ANCHOR_POINT) {
+                    if (keyframesPresent(child)) {
+                        addKeyframes(child, shapeModel.anchorPointChange());
+                    } else {
+                        shapeModel.setAnchorPoint(getPoint(child));
+                    }
+
                 }
             }
         }
-        shapeModel.setScale((float) scale);
-        shapeModel.setRotation((float) rotation);
-        shapeModel.setTranslation(translation);
-        shapeModel.setAnchorPoint(anchorPoint);
     }
 
+    protected boolean keyframesPresent(Element propertyElement){
+        //traverse each child of this property
+        int length=propertyElement.getChildNodes().getLength();
+        for (int i = 0; i < length; i++) {
+
+            Node node=propertyElement.getChildNodes().item(i);
+            if(node instanceof Element){
+                Element child=(Element)node;
+                XMLTag tag=XMLTag.toTag(child.getTagName());
+
+                //if this child element is a "keyframes" tag,return true
+                if (tag == XMLTag.SPATIAL_KEYFRAMES||tag == XMLTag.TEMPORAL_KEYFRAMES) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    protected void addKeyframes(Element propertyElement,TemporalKeyframeChangeNode keyframeChangeNode){
+
+        //traverse each node of the property element
+        int totalNodes=propertyElement.getChildNodes().getLength();
+        for (int i = 0; i < totalNodes; i++) {
+
+            //each vertex is of the type MovablePoint
+            Node node=propertyElement.getChildNodes().item(i);
+            if(node instanceof Element){
+                Element child=(Element)node;
+                //extract the movable point
+                XMLTag tag=XMLTag.toTag(child.getTagName());
+
+                if (tag != null && (tag==XMLTag.TEMPORAL_KEYFRAMES)) {
+                    extractKeyframes(child,keyframeChangeNode);
+                }
+            }
+        }
+    }
+
+    protected void addKeyframes(Element propertyElement,SpatialKeyframeChangeNode keyframeChangeNode){
+
+        //traverse each node of the property element
+        int totalNodes=propertyElement.getChildNodes().getLength();
+        for (int i = 0; i < totalNodes; i++) {
+
+            //each vertex is of the type MovablePoint
+            Node node=propertyElement.getChildNodes().item(i);
+            if(node instanceof Element){
+                Element child=(Element)node;
+                //extract the movable point
+                XMLTag tag=XMLTag.toTag(child.getTagName());
+
+                if (tag != null && (tag==XMLTag.SPATIAL_KEYFRAMES)) {
+                    extractKeyframes(child,keyframeChangeNode);
+                }
+            }
+        }
+    }
+
+
+
+    protected void extractKeyframes(Element keyframeElement,TemporalKeyframeChangeNode temporalKeyframeChangeNode){
+        TemporalKeyframe start=null;
+        TemporalKeyframe last=null;
+        
+        //traverse each temporal keyframe 
+        int length=keyframeElement.getChildNodes().getLength();
+        for (int i = 0; i < length; i++) {
+
+            Node node=keyframeElement.getChildNodes().item(i);
+            if(node instanceof Element){
+                Element child=(Element)node;
+                XMLTag tag=XMLTag.toTag(child.getTagName());
+
+                //each element has to be a temporal keyframe
+                if (tag == XMLTag.TEMPORAL_KEYFRAME) {
+                    double time = Double.parseDouble(child.getAttribute(XMLAttribute.TIME.toString()));
+                    
+                    TemporalKeyframe temporalKeyframe = new TemporalKeyframe(time, new KeyValue());
+                    extractKeyframe(child, temporalKeyframe);
+                    
+                    //add this keyframe to list
+                    if(start==null){
+                        start=temporalKeyframe;
+                        last=start;
+                    }else{
+                        temporalKeyframe.setPrevious(last);
+                        last.setNext(temporalKeyframe);
+                        last=temporalKeyframe;
+                    }
+                }
+            }
+        }
+        temporalKeyframeChangeNode.setKeyframes(start,last);
+    }
+
+    protected void extractKeyframe(Element temporalKeyframeElement,TemporalKeyframe temporalKeyframe){
+        //traverse each component of the key value
+        int length=temporalKeyframeElement.getChildNodes().getLength();
+        for (int i = 0; i < length; i++) {
+
+            Node node=temporalKeyframeElement.getChildNodes().item(i);
+            if(node instanceof Element){
+                Element child=(Element)node;
+                XMLTag tag=XMLTag.toTag(child.getTagName());
+
+                //each element has to be a KeyValue(apparently)
+                if (tag == XMLTag.KEY_VALUE) {
+                    KeyValue keyValue=temporalKeyframe.getKeyValue();
+                    keyValue.setDimension(Integer.parseInt(child.getAttribute(XMLAttribute.SIZE.toString())));
+                    extractKeyValue(child, keyValue);
+                }
+            }
+        }
+    }
+
+    protected void extractKeyValue(Element keyValueElement,KeyValue keyValue){
+        //traverse each component of the key value
+        int length=keyValueElement.getChildNodes().getLength();
+        for (int i = 0; i < length; i++) {
+
+            Node node=keyValueElement.getChildNodes().item(i);
+            if(node instanceof Element){
+                Element child=(Element)node;
+                XMLTag tag=XMLTag.toTag(child.getTagName());
+
+                //each element has to be a Component
+                if (tag == XMLTag.COMPONENT) {
+                    int index = Integer.parseInt(child.getAttribute(XMLAttribute.INDEX.toString()));
+                    double value = Double.parseDouble(child.getAttribute(XMLAttribute.VALUE.toString()));
+                    keyValue.set(index, value);
+                }
+            }
+        }
+    }
+
+    protected void extractKeyframes(Element keyframeElement,SpatialKeyframeChangeNode spatialKeyframeChangeNode){
+        SpatialKeyframe start=null;
+        SpatialKeyframe last=null;
+
+        //traverse each spatial keyframe 
+        int length=keyframeElement.getChildNodes().getLength();
+        for (int i = 0; i < length; i++) {
+
+            Node node=keyframeElement.getChildNodes().item(i);
+            if(node instanceof Element){
+                Element child=(Element)node;
+                XMLTag tag=XMLTag.toTag(child.getTagName());
+
+                //each element has to be a spatial keyframe
+                if (tag == XMLTag.SPATIAL_KEYFRAME) {
+                    double time = Double.parseDouble(child.getAttribute(XMLAttribute.TIME.toString()));
+                    SpatialKeyframe spatialKeyframe=new SpatialKeyframe(time,new UtilPoint());
+                    //extract full spatial keyfram definition
+                    extractKeyframe(child,spatialKeyframe);
+                    //add this keyframe to list
+                    if(start==null){
+                        start=spatialKeyframe;
+                        last=start;
+                    }else{
+                        spatialKeyframe.setPrevious(last);
+                        last.setNext(spatialKeyframe);
+                        last=spatialKeyframe;
+                    }
+                }
+            }
+        }
+        spatialKeyframeChangeNode.setKeyframes(start,last);
+    }
+
+
+    protected void extractKeyframe(Element spatialKeyframeElement,SpatialKeyframe spatialKeyframe){
+        //traverse each bezier point of the key value(note only one is expected to be there)
+        int length=spatialKeyframeElement.getChildNodes().getLength();
+        for (int i = 0; i < length; i++) {
+
+            Node node=spatialKeyframeElement.getChildNodes().item(i);
+            if(node instanceof Element){
+                Element child=(Element)node;
+                XMLTag tag=XMLTag.toTag(child.getTagName());
+
+                //each element has to be a bezier point
+                if (tag == XMLTag.BEZIER_POINT) {
+                    extractBezierPoint(child,spatialKeyframe.getBezierPoint());
+                }
+            }
+        }
+    }
+    
+    protected void extractBezierPoint(Element bezierPointElement,BezierPoint bezierPoint){
+        //traverse each component of the key value
+        int length=bezierPointElement.getChildNodes().getLength();
+        for (int i = 0; i < length; i++) {
+
+            Node node=bezierPointElement.getChildNodes().item(i);
+            if(node instanceof Element){
+                Element child=(Element)node;
+                XMLTag tag=XMLTag.toTag(child.getTagName());
+
+                //each element has to be a bezier anchor point, previous control point or next control point
+                if (tag == XMLTag.BEZIER_ANCHOR_POINT) {
+                    double x = Double.parseDouble(child.getAttribute(XMLAttribute.X.toString()));
+                    double y = Double.parseDouble(child.getAttribute(XMLAttribute.Y.toString()));
+                    bezierPoint.getAnchorPoint().set(x,y);
+                }else if (tag == XMLTag.PREVIOUS_CONTROL_POINT) {
+                    double x = Double.parseDouble(child.getAttribute(XMLAttribute.X.toString()));
+                    double y = Double.parseDouble(child.getAttribute(XMLAttribute.Y.toString()));
+                    bezierPoint.getControlPointWithPrevious().set(x,y);
+                }else if (tag == XMLTag.NEXT_CONTROL_POINT) {
+                    double x = Double.parseDouble(child.getAttribute(XMLAttribute.X.toString()));
+                    double y = Double.parseDouble(child.getAttribute(XMLAttribute.Y.toString()));
+                    bezierPoint.getControlPointWithNext().set(x, y);
+                }
+            }
+        }
+    }
+    
     public MovablePoint getMovablePoint(Element movablePointElement){
         MovablePoint movablePoint=null;
 

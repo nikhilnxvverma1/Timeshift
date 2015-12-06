@@ -15,6 +15,7 @@ public class TemporalKeyframePane extends KeyframePane{
     public TemporalKeyframePane(double totalTime, double length,TemporalMetadata metadata) {
         super(totalTime, length);
         this.metadata=metadata;
+        initKeyframes();
     }
 
     @Override
@@ -34,13 +35,23 @@ public class TemporalKeyframePane extends KeyframePane{
         TemporalKeyframe keyframeModel=new TemporalKeyframe(time,keyValue);
         metadata.getTemporalKeyframeChangeNode().addKeyframe(keyframeModel);
 
-        //create a new keyframe view which houses this keyframe mode, select it
-        //and add it to the "keyContainer" node.
+        //insert a new keyframe view and select it
+        TemporalKeyframeView keyframeView = insertNewKeyframeView(keyframeModel);
+        keyframeView.setSelected(false);//we don want the keyframe selected
+        return keyframeView;
+    }
+
+    /**
+     * Create a new keyframe view which houses this keyframe model,
+     * and adds it to the "keyContainer" node.
+     * @param keyframeModel the keyframe model for which this keyframe view is being created
+     * @return the new keyframe view
+     */
+    private TemporalKeyframeView insertNewKeyframeView(TemporalKeyframe keyframeModel) {
+
         TemporalKeyframeView keyframeView=new TemporalKeyframeView(keyframeModel,this);
-        keyframeView.setSelected(true);
         keyframeView.setLayoutX(getLayoutXFor(keyframeView));
         keyContainer.getChildren().add(keyframeView);
-
         return keyframeView;
     }
 
@@ -83,5 +94,13 @@ public class TemporalKeyframePane extends KeyframePane{
     public void keyframesMoved(int totalKeysMoved) {
         double currentTime = getMetadata().getItemViewController().getCompositionViewController().getTime();
         getMetadata().getTemporalKeyframeChangeNode().setTime(currentTime);
+    }
+
+    private void initKeyframes(){
+        TemporalKeyframe t=metadata.getTemporalKeyframeChangeNode().getStart();
+        while(t!=null){
+            insertNewKeyframeView(t);
+            t=t.getNext();
+        }
     }
 }

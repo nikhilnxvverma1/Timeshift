@@ -20,7 +20,7 @@ import com.nikhil.view.util.AlertBox;
 import com.nikhil.view.zoom.ZoomableScrollPane;
 import com.nikhil.xml.XMLWriter;
 import javafx.geometry.Point2D;
-import javafx.scene.control.Tab;
+import javafx.scene.Group;
 import javafx.scene.control.TabPane;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.input.ScrollEvent;
@@ -74,20 +74,19 @@ public class Workspace  {
     public Workspace(WorkspaceListener workspaceListener,TabPane compositionTabs) {
 
         this.compositionTabs =compositionTabs;
+        selectedItems=new SelectedItems(this);
+        selectedItems.initView();
+        selectedItems.updateView();
 
         //initialize the workspace container
         initializeGraphics(workspaceListener);
+        containerPane.getChildren().add(selectedItems);
 
         //remove any tab(there is a dummy tab in the beginning)
         compositionTabs.getTabs().clear();
         //make a new tab and add this tab to the list of tabs
         currentComposition = createNewComposition();
         addComposition(currentComposition,0);
-
-        selectedItems=new SelectedItems(this);
-        selectedItems.initView();
-        selectedItems.updateView();
-        containerPane.getChildren().add(selectedItems);
     }
 
     /**
@@ -364,15 +363,23 @@ public class Workspace  {
         Logger.log("setting current composition Called ");
         //remove the old worksheet from the container
         containerPane.getChildren().remove(this.currentComposition.getWorksheet());
+        containerPane.getChildren().remove(this.currentComposition.getOutlineGroup());
         this.currentComposition = currentComposition;
 
         //add the worksheet pane of the current tab as the only child of the container in the middle
-        Pane worksheetPane=currentComposition.getWorksheet();
-        double worksheetPrefWidth=worksheetPane.getPrefWidth();
-        double worksheetPrefHeight=worksheetPane.getPrefWidth();
-        worksheetPane.setLayoutX(CONTAINER_WIDTH /2-(worksheetPrefWidth/2));
-        worksheetPane.setLayoutY(CONTAINER_HEIGHT /2-(worksheetPrefHeight/2));
-        containerPane.getChildren().add(0,currentComposition.getWorksheet());//make sure to add with lowest z-index
+        Pane worksheet=currentComposition.getWorksheet();
+        Group outlineGroup = currentComposition.getOutlineGroup();
+        double width=worksheet.getPrefWidth();
+        double height=worksheet.getPrefWidth();
+        worksheet.setLayoutX(CONTAINER_WIDTH / 2 - (width / 2));
+        worksheet.setLayoutY(CONTAINER_HEIGHT / 2 - (height / 2));
+        outlineGroup.setLayoutX(CONTAINER_WIDTH / 2 - (width / 2));
+        outlineGroup.setLayoutY(CONTAINER_HEIGHT / 2 - (height / 2));
+        containerPane.getChildren().add(0,worksheet);//make sure to add with lowest z-index
+        containerPane.getChildren().add(1,outlineGroup);//outline should be just above the worksheet
+
+        //clear the selection as we don't want anything from the other composition to be acted on
+        selectedItems.clearSelection();
 
         Logger.log(currentComposition.getTab().getText()+" is now selected");
     }

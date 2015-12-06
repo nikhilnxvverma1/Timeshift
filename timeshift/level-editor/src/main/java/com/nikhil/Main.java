@@ -34,7 +34,7 @@ public class Main extends Application {
 		this.fileToOpen = fileToOpen;
 		//testing purposes
 //		/Users/NikhilVerma/Desktop/myfile.xml
-		this.fileToOpen=new File("/Users/NikhilVerma/Desktop/myfile.xml");
+		this.fileToOpen=new File("/Users/NikhilVerma/Desktop/myfile2.xml");
 	}
 
 	public static void main(String[] args) {

@@ -8,7 +8,6 @@ import com.nikhil.model.shape.PolygonModel;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
 import javax.xml.parsers.DocumentBuilder;
@@ -16,7 +15,6 @@ import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 import java.io.File;
 import java.io.IOException;
-import java.io.InputStream;
 
 /**
  * DOM parser that uses configurable model and controller factories to build entire
@@ -28,7 +26,7 @@ public class XMLReader {
     private ModelFactory modelFactory;
     private ControllerFactory controllerFactory;
     private RootController rootController;
-    private CompositionController lastCompositionController;
+//    private CompositionController lastCompositionController;
 
     public XMLReader() {
         this(new ModelFactory(),new ControllerFactory());
@@ -63,8 +61,8 @@ public class XMLReader {
     final public RootController load(File file) throws ParserConfigurationException, IOException, SAXException {
 
         rootController=new RootController();
-        lastCompositionController =new CompositionController();
-        rootController.addCompositionController(lastCompositionController);
+//        lastCompositionController =new CompositionController();
+//        rootController.addCompositionController(lastCompositionController);
 
         DocumentBuilderFactory documentBuilderFactory=DocumentBuilderFactory.newInstance();
         DocumentBuilder documentBuilder = documentBuilderFactory.newDocumentBuilder();
@@ -106,15 +104,12 @@ public class XMLReader {
      */
     protected void parseDirectChildOfRoot(Element element){
         XMLTag tag=XMLTag.toTag(element.getTagName());
-        switch (tag){
-            case ROOT:
-                Logger.log("Came to root");
-                break;
-            case COMPOSITIONS:
-                parseAllCompositions(element);
-                break;
-            default:
-                Logger.log("Unknown element '"+element.getTagName()+"', will be processed by subclass");
+        if (tag == XMLTag.ROOT) {
+            Logger.log("Came to root");
+        } else if (tag == XMLTag.COMPOSITIONS) {
+            parseAllCompositions(element);
+        } else {
+            Logger.log("Unknown element '" + element.getTagName() + "', will be processed by subclass");
         }
     }
 
@@ -131,19 +126,20 @@ public class XMLReader {
                 //a child can be either an item list, TODO or playback control
                 Element child=(Element)node;
                 XMLTag tag=XMLTag.toTag(child.getTagName());
-                switch (tag){
-                    case COMPOSITION:
-                        parseComposition(child);
-                        break;
+                if (tag == XMLTag.COMPOSITION) {
+                    CompositionController compositionController = new CompositionController();
+                    rootController.addCompositionController(compositionController);
+                    parseComposition(child, compositionController);
+
                     //extend here
-                    default:
-                        Logger.log("Unknown element in the composition list");
+                } else {
+                    Logger.log("Unknown element in the composition list");
                 }
             }
         }
     }
 
-    protected void parseComposition(Element compositionElement) {
+    protected void parseComposition(Element compositionElement, CompositionController compositionController) {
         //traverse each element in composition
         int length = compositionElement.getChildNodes().getLength();
         for (int i = 0; i < length; i++) {
@@ -153,17 +149,16 @@ public class XMLReader {
             if (node instanceof Element) {
                 Element child=(Element)node;
                 XMLTag tag=XMLTag.toTag(child.getTagName());
-                switch (tag){
-                    case ITEMS:
-                        parseAllItems(child);
-                        break;
+                if (tag == XMLTag.ITEMS) {
+                    parseAllItems(child, compositionController);
+
                     //extend here for posssibly playback controls
                 }
             }
         }
     }
 
-    protected void parseAllItems(Element itemList){
+    protected void parseAllItems(Element itemList, CompositionController compositionController){
         //traverse each item
         int length = itemList.getChildNodes().getLength();
         for (int i = 0; i < length; i++) {
@@ -175,15 +170,14 @@ public class XMLReader {
                 //each item cane be one of the following
                 Element element=(Element)node;
                 XMLTag tag=XMLTag.toTag(element.getTagName());
-                switch (tag){
-                    case POLYGON:
-                        PolygonModel polygonModel = modelFactory.parsePolygonModel(element);
-                        ItemModelController polygonModelController = controllerFactory.getItemControllerFor(polygonModel);
-                        lastCompositionController.addItemController(polygonModelController);
-                        break;
+                if (tag == XMLTag.POLYGON) {
+                    PolygonModel polygonModel = modelFactory.parsePolygonModel(element);
+                    ItemModelController polygonModelController = controllerFactory.getItemControllerFor(polygonModel);
+                    compositionController.addItemController(polygonModelController);
+
                     //extend here
-                    default:
-                        Logger.log("Unknown item in the composition");
+                } else {
+                    Logger.log("Unknown item in the composition");
                 }
             }
         }

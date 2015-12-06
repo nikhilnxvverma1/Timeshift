@@ -50,6 +50,10 @@ public class UtilPoint {
 		this.y=y;
 	}
 
+	/**
+	 * Copies the x,y values from another point
+	 * @param copyFrom the point to copy from
+	 */
 	public void set(UtilPoint copyFrom){
 		this.x=copyFrom.getX();
 		this.y=copyFrom.getY();

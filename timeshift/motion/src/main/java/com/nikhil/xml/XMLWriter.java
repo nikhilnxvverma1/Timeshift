@@ -10,6 +10,12 @@ import com.nikhil.model.pathsystem.TravelPath;
 import com.nikhil.model.pathsystem.TravellingLinkPoint;
 import com.nikhil.model.pathsystem.traveller.TravellerConfiguration;
 import com.nikhil.model.shape.*;
+import com.nikhil.space.bezier.path.BezierPoint;
+import com.nikhil.timeline.KeyValue;
+import com.nikhil.timeline.change.spatial.SpatialKeyframeChangeNode;
+import com.nikhil.timeline.change.temporal.TemporalKeyframeChangeNode;
+import com.nikhil.timeline.keyframe.SpatialKeyframe;
+import com.nikhil.timeline.keyframe.TemporalKeyframe;
 import com.nikhil.util.modal.UtilPoint;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -76,7 +82,7 @@ public class XMLWriter implements ModelVisitor {
     @Override
     public void visit(RootController rootController) {
         //<root>
-        root = document.createElement(XMLTag.ROOT.toString());
+        root = XMLTag.ROOT.element(document);
         document.appendChild(root);
         Logger.log("Added root");
     }
@@ -87,17 +93,17 @@ public class XMLWriter implements ModelVisitor {
         //if a composition tag doesn't exist already, create one
         if(compositions==null){
             //<compositions>
-            compositions=document.createElement(XMLTag.COMPOSITIONS.toString());
+            compositions=XMLTag.COMPOSITIONS.element(document);
             root.appendChild(compositions);
             Logger.log("Added compositions container");
         }
 
         //<composition>
-        composition =document.createElement(XMLTag.COMPOSITION.toString());
+        composition =XMLTag.COMPOSITION.element(document);
         compositions.appendChild(composition);
 
         //<items>
-        itemContainer=document.createElement(XMLTag.ITEMS.toString());
+        itemContainer=XMLTag.ITEMS.element(document);
         composition.appendChild(itemContainer);
         Logger.log("Added composition");
     }
@@ -135,28 +141,29 @@ public class XMLWriter implements ModelVisitor {
     @Override
     public void visit(PolygonModel polygonModel) {
 
-        Element polygon=document.createElement(XMLTag.POLYGON.toString());
-        polygon.appendChild(getShapeProperties(polygonModel));
+        Element polygonTag=XMLTag.POLYGON.element(document);
+        polygonTag.setAttribute(XMLAttribute.NAME.toString(),polygonModel.getName());
+        polygonTag.appendChild(getShapeTag(polygonModel));
 
-        movablePointContainer =document.createElement(XMLTag.VERTICES.toString());
-        polygon.appendChild(movablePointContainer);
+        movablePointContainer =XMLTag.VERTICES.element(document);
+        polygonTag.appendChild(movablePointContainer);
 
         //add to the last composition(this method doesn't know which composition it will  get added to)
-        itemContainer.appendChild(polygon);
+        itemContainer.appendChild(polygonTag);
         Logger.log("Added polygon model");
     }
 
     @Override
     public void visit(MovablePoint movablePoint) {
         //<MovablePoint>
-        Element header=document.createElement(XMLTag.MOVABLE_POINT.toString());
+        Element header=XMLTag.MOVABLE_POINT.element(document);
 
         //<Position>
-        Element position=document.createElement(XMLTag.POSITION.toString());
+        Element position=XMLTag.POSITION.element(document);
 
         header.appendChild(position);
-        position.appendChild(getX(movablePoint.getPoint()));
-        position.appendChild(getY(movablePoint.getPoint()));
+        position.appendChild(getXTag(movablePoint.getPoint()));
+        position.appendChild(getYTag(movablePoint.getPoint()));
 
         //add this to the whatever the container is(this method doesn't know where it will get added to)
         movablePointContainer.appendChild(header);
@@ -169,47 +176,149 @@ public class XMLWriter implements ModelVisitor {
 
     }
 
-    protected Element getShapeProperties(ShapeModel shapeModel){
+    protected Element getShapeTag(ShapeModel shapeModel){
         //<shape>
-        Element shape=document.createElement(XMLTag.SHAPE.toString());
+        Element shapeTag=XMLTag.SHAPE.element(document);
 
         //<scale>
-        Element scale=document.createElement(XMLTag.SCALE.toString());
-        scale.appendChild(document.createTextNode(shapeModel.getScale()+""));
+        Element scaleTag=XMLTag.SCALE.element(document);
+        if (shapeModel.scaleChange().isEmpty()) {
+            scaleTag.appendChild(document.createTextNode(shapeModel.getScale() + ""));
+        } else {
+            scaleTag.appendChild(getKeyframesTag(shapeModel.scaleChange()));
+        }
 
         //<rotation>
-        Element rotation=document.createElement(XMLTag.ROTATION.toString());
-        rotation.appendChild(document.createTextNode(shapeModel.getRotation()+""));
+        Element rotationTag=XMLTag.ROTATION.element(document);
+        if(shapeModel.rotationChange().isEmpty()){
+            rotationTag.appendChild(document.createTextNode(shapeModel.getRotation() + ""));
+        }else{
+            rotationTag.appendChild(getKeyframesTag(shapeModel.rotationChange()));
+        }
 
         //<translation>
-        Element translation=document.createElement(XMLTag.TRANSLATION.toString());
-        translation.appendChild(getX(shapeModel.getTranslation()));
-        translation.appendChild(getY(shapeModel.getTranslation()));
+        Element translationTag=XMLTag.TRANSLATION.element(document);
+        if(shapeModel.translationChange().isEmpty()){
+            translationTag.appendChild(getXTag(shapeModel.getTranslation()));
+            translationTag.appendChild(getYTag(shapeModel.getTranslation()));
+        }else{
+            translationTag.appendChild(getKeyframesTag(shapeModel.translationChange()));
+        }
 
         //<anchor point>
-        Element anchorPoint=document.createElement(XMLTag.ANCHOR_POINT.toString());
-        anchorPoint.appendChild(getX(shapeModel.getAnchorPoint()));
-        anchorPoint.appendChild(getY(shapeModel.getAnchorPoint()));
+        Element anchorPointTag=XMLTag.ANCHOR_POINT.element(document);
+        if(shapeModel.anchorPointChange().isEmpty()){
+            anchorPointTag.appendChild(getXTag(shapeModel.getAnchorPoint()));
+            anchorPointTag.appendChild(getYTag(shapeModel.getAnchorPoint()));
+        }else{
+            anchorPointTag.appendChild(getKeyframesTag(shapeModel.anchorPointChange()));
+        }
 
         //add all properties to shape element
-        shape.appendChild(scale);
-        shape.appendChild(rotation);
-        shape.appendChild(translation);
-        shape.appendChild(anchorPoint);
+        shapeTag.appendChild(scaleTag);
+        shapeTag.appendChild(rotationTag);
+        shapeTag.appendChild(translationTag);
+        shapeTag.appendChild(anchorPointTag);
 
-        return shape;
+        return shapeTag;
     }
 
-    protected Element getX(UtilPoint utilPoint){
-        Element x=document.createElement(XMLTag.X.toString());
-        x.appendChild(document.createTextNode(utilPoint.getX()+""));
-        return x;
+    protected Element getXTag(UtilPoint utilPoint){
+        Element xTag=XMLTag.X.element(document);
+        xTag.appendChild(document.createTextNode(utilPoint.getX() + ""));
+        return xTag;
     }
 
-    protected Element getY(UtilPoint utilPoint){
-        Element y = document.createElement(XMLTag.Y.toString());
-        y.appendChild(document.createTextNode(utilPoint.getY() + ""));
-        return y;
+    protected Element getYTag(UtilPoint utilPoint){
+        Element yTag = XMLTag.Y.element(document);
+        yTag.appendChild(document.createTextNode(utilPoint.getY() + ""));
+        return yTag;
     }
 
+    protected Element getKeyframesTag(TemporalKeyframeChangeNode temporalKeyframeChangeNode){
+        //<TemporalKeyframes>
+        Element temporalKeyframesTag=XMLTag.TEMPORAL_KEYFRAMES.element(document);
+
+        //iterate through all the keyframes
+        TemporalKeyframe t = temporalKeyframeChangeNode.getStart();
+        while(t!=null){
+
+            //<TemporalKeyframe>
+            Element temporalKeyframeTag=XMLTag.TEMPORAL_KEYFRAME.element(document);
+            temporalKeyframeTag.setAttribute(XMLAttribute.TIME.toString(), t.getTime() + "");
+            temporalKeyframeTag.appendChild(getKeyValuesTag(t.getKeyValue()));
+
+            //add each keyframe to keyframes tag
+            temporalKeyframesTag.appendChild(temporalKeyframeTag);
+            t=t.getNext();
+        }
+        return temporalKeyframesTag;
+    }
+
+    protected Element getKeyValuesTag(KeyValue keyValue){
+        //<KeyValues>
+        Element keyValueTag=XMLTag.KEY_VALUE.element(document);
+        int dimension = keyValue.getDimension();
+        keyValueTag.setAttribute(XMLAttribute.SIZE.toString(), dimension + "");
+
+        //iterate over all the value of this KeyValue
+        for (int i = 0; i < dimension; i++) {
+
+            //<Value>
+            Element componentTag=XMLTag.COMPONENT.element(document);
+            componentTag.setAttribute(XMLAttribute.INDEX.toString(), i + "");
+            componentTag.setAttribute(XMLAttribute.VALUE.toString(), keyValue.get(i) + "");
+
+            //append a KeyValue as a child for this value
+            keyValueTag.appendChild(componentTag);
+
+        }
+        return keyValueTag;
+    }
+
+    protected Element getKeyframesTag(SpatialKeyframeChangeNode spatialKeyframeChangeNode){
+        //<SpatialKeyframes>
+        Element spatialKeyframesTag=XMLTag.SPATIAL_KEYFRAMES.element(document);
+        
+        //iterate through all the keyframes
+        SpatialKeyframe t = spatialKeyframeChangeNode.getStart();
+        while(t!=null){
+
+            //<SpatialKeyframe>
+            Element spatialKeyframeTag=XMLTag.SPATIAL_KEYFRAME.element(document);
+            spatialKeyframeTag.setAttribute(XMLAttribute.TIME.toString(), t.getTime() + "");
+            spatialKeyframeTag.appendChild(getBezierPointTag(t.getBezierPoint()));
+
+            //add each keyframe to keyframes tag
+            spatialKeyframesTag.appendChild(spatialKeyframeTag);
+            t=t.getNext();
+        }
+        return spatialKeyframesTag;
+    }
+
+    protected Element getBezierPointTag(BezierPoint bezierPoint){
+        //<BezierPoint>
+        Element bezierPointTag=XMLTag.BEZIER_POINT.element(document);
+        
+        //<BezierAnchorPoint>
+        Element anchorPointTag=XMLTag.BEZIER_ANCHOR_POINT.element(document);
+        anchorPointTag.setAttribute(XMLAttribute.X.toString(),bezierPoint.getAnchorPoint().getX()+"");
+        anchorPointTag.setAttribute(XMLAttribute.Y.toString(),bezierPoint.getAnchorPoint().getY()+"");
+        
+        //<PreviousControlPoint>
+        Element previousControlPointTag=XMLTag.PREVIOUS_CONTROL_POINT.element(document);
+        previousControlPointTag.setAttribute(XMLAttribute.X.toString(),bezierPoint.getControlPointWithPrevious().getX()+"");
+        previousControlPointTag.setAttribute(XMLAttribute.Y.toString(),bezierPoint.getControlPointWithPrevious().getY()+"");
+        
+        //<NextControlPoint>
+        Element nextControlPointTag=XMLTag.NEXT_CONTROL_POINT.element(document);
+        nextControlPointTag.setAttribute(XMLAttribute.X.toString(),bezierPoint.getControlPointWithNext().getX()+"");
+        nextControlPointTag.setAttribute(XMLAttribute.Y.toString(),bezierPoint.getControlPointWithNext().getY()+"");
+
+        bezierPointTag.appendChild(anchorPointTag);
+        bezierPointTag.appendChild(previousControlPointTag);
+        bezierPointTag.appendChild(nextControlPointTag);
+
+        return bezierPointTag;
+    }
 }

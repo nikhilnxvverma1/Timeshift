@@ -550,4 +550,5 @@ public abstract class KeyframePane extends AnchorPane implements SelectionOverla
 	 * @param totalKeysMoved the total keys whose time was changed. This will always be >0
 	 */
 	public abstract void keyframesMoved(int totalKeysMoved);
+
 }

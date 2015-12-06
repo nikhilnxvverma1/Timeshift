@@ -1,11 +1,9 @@
 package com.nikhil.view.custom.keyframe;
 
-import com.nikhil.logging.Logger;
-import com.nikhil.space.bezier.path.BezierPoint;
 import com.nikhil.timeline.keyframe.Keyframe;
 import com.nikhil.timeline.keyframe.SpatialKeyframe;
-import com.nikhil.view.item.record.Metadata;
 import com.nikhil.view.item.record.SpatialMetadata;
+import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.layout.Pane;
 
@@ -19,6 +17,7 @@ public class SpatialKeyframePane extends KeyframePane{
     public SpatialKeyframePane(double totalTime, double length,SpatialMetadata metadata) {
         super(totalTime, length);
         this.metadata=metadata;
+        initKeyframes();
     }
 
     @Override
@@ -51,14 +50,22 @@ public class SpatialKeyframePane extends KeyframePane{
 
         //select it and add it to the "keyContainer" node.
         keyframeView.setSelected(true);
+        insertKeyframeWithBezierPoint(keyframeView);
+        keyframeView.updateMotionPath();
+
+    }
+
+    /**
+     * Adds the keyframe view along with the interactive bezier point
+     * @param keyframeView the keyframe view to add
+     */
+    private void insertKeyframeWithBezierPoint(SpatialKeyframeView keyframeView) {
         keyframeView.setLayoutX(getLayoutXFor(keyframeView));
         keyContainer.getChildren().add(keyframeView);
 
         //add a new bezier point
-        Pane worksheetPane = metadata.getItemViewController().getCompositionViewController().getWorksheet();
-        keyframeView.getInteractiveBezierPoint().addAsChildrenTo(worksheetPane);
-        keyframeView.updateMotionPath();
-
+        Group outlineGroup = metadata.getItemViewController().getCompositionViewController().getOutlineGroup();
+        keyframeView.getInteractiveBezierPoint().addAsChildrenTo(outlineGroup);
     }
 
     /**
@@ -98,5 +105,18 @@ public class SpatialKeyframePane extends KeyframePane{
             SpatialKeyframeView keyframeView=(SpatialKeyframeView)node;
             keyframeView.updateMotionPath();
         }
+    }
+
+    private void initKeyframes(){
+        SpatialKeyframe t=metadata.getSpatialKeyframeChangeNode().getStart();
+        while(t!=null){
+            insertKeyframeWithBezierPoint(new SpatialKeyframeView(t, this));
+            t=t.getNext();
+        }
+        //update the entire motion path (so that cubic curves get updated)
+        updateMotionPath();
+
+        //hide the motion path
+        showMotionPath(false);
     }
 }

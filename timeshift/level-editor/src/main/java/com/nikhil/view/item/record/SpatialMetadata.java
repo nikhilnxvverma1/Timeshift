@@ -78,6 +78,8 @@ public class SpatialMetadata extends Metadata {
     };
 
     private ChangeListener<? super Number>[]propertyListeners=null;//hold reference to prevent it from being garbage collected
+
+
     public SpatialMetadata(MetadataTag tag,SpatialKeyframeChangeNode spatialKeyframeChangeNode,ItemViewController itemViewController) {
         super(tag.toString(), tag);
 
@@ -86,7 +88,7 @@ public class SpatialMetadata extends Metadata {
         this.itemViewController=itemViewController;
         this.spatialKeyframeChangeNode=spatialKeyframeChangeNode;
         this.keyframable=new CheckBox();
-        this.keyframable.setSelected(false);
+        this.keyframable.setSelected(!spatialKeyframeChangeNode.isEmpty());
         this.keyframable.setOnAction(event -> {
             if(!itemViewController.isInteractive()){
                 //undo the selection that just got made
@@ -103,6 +105,7 @@ public class SpatialMetadata extends Metadata {
                 itemViewController.getCompositionViewController().getWorkspace().pushCommand(disableStopWatch);
             }
         });
+        initKeyframePane(itemViewController.getCompositionViewController().getTimelineWidth());
     }
 
     @Override
@@ -163,7 +166,9 @@ public class SpatialMetadata extends Metadata {
         if(spatialKeyframePane!=null){
             return spatialKeyframePane;
         }
-        spatialKeyframePane = new SpatialKeyframePane(30, width,this);//TODO remove hardcode
+        CompositionViewController composition = itemViewController.getCompositionViewController();
+        spatialKeyframePane = new SpatialKeyframePane(composition.getDuration()
+                , width,this);
         spatialKeyframePane.layoutXProperty().addListener((observable, oldValue, newValue) -> {
             ((DoubleProperty)observable).set(0);//downcast to double because we know that layoutx is a double property
         });

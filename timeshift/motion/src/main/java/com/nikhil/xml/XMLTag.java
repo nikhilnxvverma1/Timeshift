@@ -1,7 +1,8 @@
 package com.nikhil.xml;
 
 import com.nikhil.logging.Logger;
-import javafx.scene.shape.Shape;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
 
 /**
  * XML tag for any element in the XML.
@@ -25,7 +26,16 @@ public enum XMLTag {
     POSITION,
     X,
     Y,
-    KEYFRAMES;
+    BEZIER_POINT,
+    BEZIER_ANCHOR_POINT,
+    PREVIOUS_CONTROL_POINT,
+    NEXT_CONTROL_POINT,
+    KEY_VALUE,
+    COMPONENT,
+    TEMPORAL_KEYFRAMES,
+    TEMPORAL_KEYFRAME,
+    SPATIAL_KEYFRAMES,
+    SPATIAL_KEYFRAME;
 
     @Override
     public String toString(){
@@ -60,8 +70,26 @@ public enum XMLTag {
                 return "x";
             case Y:
                 return "y";
-            case KEYFRAMES:
-                return "keyframes";
+            case BEZIER_POINT:
+                return "bezierPoint";
+            case BEZIER_ANCHOR_POINT:
+                return "bezierAnchorPoint";
+            case PREVIOUS_CONTROL_POINT:
+                return "previousControlPoint";
+            case NEXT_CONTROL_POINT:
+                return "nextControlPoint";
+            case KEY_VALUE:
+                return "keyValue";
+            case COMPONENT:
+                return "component";
+            case TEMPORAL_KEYFRAMES:
+                return "temporalKeyframes";
+            case TEMPORAL_KEYFRAME:
+                return "temporalKeyframe";
+            case SPATIAL_KEYFRAMES:
+                return "spatialKeyframes";
+            case SPATIAL_KEYFRAME:
+                return "spatialKeyframe";
         }
         return null;
     }
@@ -104,12 +132,47 @@ public enum XMLTag {
                 return X;
             case "y":
                 return Y;
-            case "keyframes":
-                return KEYFRAMES;
+            case "bezierPoint":
+                return BEZIER_POINT;
+            case "bezierAnchorPoint":
+                return BEZIER_ANCHOR_POINT;
+            case "previousControlPoint":
+                return PREVIOUS_CONTROL_POINT;
+            case "nextControlPoint":
+                return NEXT_CONTROL_POINT;
+            case "component":
+                return COMPONENT;
+            case "keyValue":
+                return KEY_VALUE;
+            case "temporalKeyframes":
+                return TEMPORAL_KEYFRAMES;
+            case "temporalKeyframe":
+                return TEMPORAL_KEYFRAME;
+            case "spatialKeyframes":
+                return SPATIAL_KEYFRAMES;
+            case "spatialKeyframe":
+                return SPATIAL_KEYFRAME;
             default:
                 Logger.log("No tag found for:" + element);
         }
         return null;
+    }
+
+    /**
+     * Creates a new element tag using the supplied document
+     * @param document document that is used to create the element tag
+     * @return A new Element for this xml tag
+     */
+    public Element element(Document document){
+        return document.createElement(this.toString());
+    }
+
+    /**
+     * @deprecated there can be custom keyframes that may not be accounted for by this method
+     * @return true if this tag is a spatial or temporal keyframe
+     */
+    public boolean isKeyframe(){
+        return this==SPATIAL_KEYFRAME||this==TEMPORAL_KEYFRAME;
     }
 
 }

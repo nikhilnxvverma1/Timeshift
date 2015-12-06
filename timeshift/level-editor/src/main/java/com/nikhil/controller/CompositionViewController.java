@@ -22,6 +22,7 @@ import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.geometry.Orientation;
 import javafx.geometry.Pos;
+import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.control.*;
@@ -62,6 +63,7 @@ public class CompositionViewController {
     private List<ItemViewController> itemViewControllers = new LinkedList<ItemViewController>();
     private FilterableTreeItem<Metadata> rootTreeItem;
     private Pane worksheet;
+    private Group outlineGroup;
     private TreeTableView<Metadata> itemTable;
     private KeyframeTreeView keyframeTable;
     private Playback playback;
@@ -72,10 +74,13 @@ public class CompositionViewController {
         this.compositionController=compositionController;
         this.workspace=workspace;
         this.tab=new Tab();
+
         this.worksheet=new Pane();
         this.worksheet.setStyle("-fx-background-color:#EEEEEE");
-        this.worksheet.setPrefWidth(width);
-        this.worksheet.setPrefHeight(height);
+        this.worksheet.setPrefSize(width,height);
+        this.outlineGroup =new Group();
+//        this.outlineGroup.setPrefSize(width, height);
+
         this.tab.setText(name);
         this.tab.setOnSelectionChanged(e->{
             if(tab.isSelected()){
@@ -101,8 +106,21 @@ public class CompositionViewController {
         return tab;
     }
 
+    /**
+     * Worksheet is where all the model graphics go.
+     * @return worksheet pane
+     */
     public Pane getWorksheet() {
         return worksheet;
+    }
+
+    /**
+     * Outline group is a layer used for overlaying any outlines specific to a model
+     * on top of the regular worksheet. Such as motion paths or item gizmos
+     * @return the outline group which will always be above the worksheet
+     */
+    public Group getOutlineGroup() {
+        return outlineGroup;
     }
 
     public int getTotalSoloItems() {
@@ -166,19 +184,22 @@ public class CompositionViewController {
     }
 
     public void addItemViewController(ItemViewController itemViewController){
-        addItemViewController(itemViewController, true);
+        addItemViewController(itemViewController, false);
     }
 
-    public void addItemViewController(ItemViewController itemViewController,boolean shouldAddToTimeline){
+    public void addItemViewController(ItemViewController itemViewController,boolean alreadyAddedToModelComposition){
         itemViewControllers.add(itemViewController);
         TreeItem<Metadata> metadataTree = itemViewController.getMetadataTree();
         rootTreeItem.getInternalChildren().add(metadataTree);
-        itemViewController.addViewsTo(worksheet);
+        worksheet.getChildren().add(itemViewController.getItemView());
+        outlineGroup.getChildren().add(itemViewController.getGizmo());
+//        itemViewController.addViewsTo(worksheet);
 
         //add to the timeline
-        if (shouldAddToTimeline) {
-            compositionController.getTimeline().add(itemViewController.getItemModel().changeNodeIterator());
-            //add to the timeline
+        compositionController.getTimeline().add(itemViewController.getItemModel().changeNodeIterator());
+
+        //add to the composition if needed
+        if (!alreadyAddedToModelComposition) {
             ItemModelController itemModelController = itemViewController.getModelController();
             compositionController.addItemController(itemModelController);
         }
@@ -500,5 +521,10 @@ public class CompositionViewController {
      */
     public TreeTableView<Metadata> getItemTable() {
         return itemTable;
+    }
+
+    /**@return Unscaled width on the right side of the timeline pane that houses the keyframe panes*/
+    public double getTimelineWidth(){
+        return Main.WIDTH -(NAME_COLUMN_WIDTH+VALUE_COLUMN_WIDTH+OPTION_COLUMN_WIDTH);
     }
 }

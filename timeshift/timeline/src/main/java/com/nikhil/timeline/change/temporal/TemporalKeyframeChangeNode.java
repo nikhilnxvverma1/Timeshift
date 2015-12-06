@@ -15,7 +15,7 @@ import com.nikhil.timeline.keyframe.TemporalKeyframe;
 public class TemporalKeyframeChangeNode extends KeyframeChangeNode {
 
     private TemporalKeyframe start;
-    private TemporalKeyframe last;//only needed for quickly finding the ending time
+    private TemporalKeyframe last;
     private KeyValue currentValue;
     private TemporalChangeHandler changeHandler;
     /**cache to reduce time taken when finding a keyframe at a given time*/
@@ -392,5 +392,21 @@ public class TemporalKeyframeChangeNode extends KeyframeChangeNode {
             }
         }
         return nearest;
+    }
+
+    /**
+     * Sets the list of keyframes using the references to start and last
+     * nodes of the linked list. Care should be taken(by the caller) to ensure
+     * that both the nodes belong to the same list and that the list is valid.
+     * @param start starting node of the list
+     * @param last last node of the list
+     */
+    public void setKeyframes(TemporalKeyframe start,TemporalKeyframe last){
+        this.start=start;
+        this.last=last;
+        this.nearestAccessedKeyframe=null;
+        if (start!=null) {
+            this.currentValue.set(start.getKeyValue());
+        }
     }
 }

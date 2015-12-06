@@ -93,7 +93,7 @@ public class TemporalMetadata extends Metadata{
         this.temporalKeyframeChangeNode=temporalKeyframeChangeNode;
         this.itemViewController=itemViewController;
         this.keyframable=new CheckBox();
-        this.keyframable.setSelected(false);
+        this.keyframable.setSelected(temporalKeyframeChangeNode.isEmpty());
         this.keyframable.setOnAction(event -> {
             if(!itemViewController.isInteractive()){
                 //undo the selection that just got made
@@ -110,6 +110,7 @@ public class TemporalMetadata extends Metadata{
                 itemViewController.getCompositionViewController().getWorkspace().pushCommand(disableStopWatch);
             }
         });
+        initKeyframePane(itemViewController.getCompositionViewController().getTimelineWidth());
     }
 
     public TemporalKeyframeChangeNode getTemporalKeyframeChangeNode() {

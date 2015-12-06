@@ -2,6 +2,10 @@ package com.nikhil.view.bezier;
 
 import com.nikhil.space.bezier.path.BezierPoint;
 import com.nikhil.util.modal.UtilPoint;
+import javafx.collections.ObservableList;
+import javafx.scene.Group;
+import javafx.scene.Node;
+import javafx.scene.Parent;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
@@ -179,20 +183,26 @@ public class GraphicalBezierPoint extends BezierPoint {
         this.setControlPointWithPrevious(new UtilPoint(-x, -y));
     }
 
-    public void addAsChildrenTo(Pane parent){
+    public void addAsChildrenTo(Group group){
+        addToObservableList(group.getChildren());
+    }
+
+    public void addAsChildrenTo(Pane pane){
+        addToObservableList(pane.getChildren());
+    }
+    
+    protected void addToObservableList(ObservableList<Node> list){
         //since points should always have higher Z value
         //prepend the lines and the curve
-        parent.getChildren().add(0,previousControlLine);
-        parent.getChildren().add(0,nextControlLine);
+        list.add(0, previousControlLine);
+        list.add(0, nextControlLine);
         if(cubicCurve!=null){
-            parent.getChildren().add(0,cubicCurve);
+            list.add(0, cubicCurve);
         }
         //add the points
-        parent.getChildren().add(previousControlPointCircle);
-        parent.getChildren().add(nextControlPointCircle);
-        parent.getChildren().add(anchorPointRect);
-
-
+        list.add(previousControlPointCircle);
+        list.add(nextControlPointCircle);
+        list.add(anchorPointRect);
     }
 
     public void removeAsChildrenFrom(Pane parent){

@@ -285,7 +285,7 @@ public class SpatialKeyframeChangeNode extends KeyframeChangeNode {
     }
 
     @Override
-    public Keyframe getStart() {
+    public SpatialKeyframe getStart() {
         return start;
     }
 
@@ -357,6 +357,22 @@ public class SpatialKeyframeChangeNode extends KeyframeChangeNode {
     public void notifyAnyChangeHandler(){
         if(changeHandler!=null){
             changeHandler.valueChanged(this);
+        }
+    }
+
+    /**
+     * Sets the list of keyframes using the references to start and last
+     * nodes of the linked list. Care should be taken(by the caller) to ensure
+     * that both the nodes belong to the same list and that the list is valid.
+     * @param start starting node of the list
+     * @param last last node of the list
+     */
+    public void setKeyframes(SpatialKeyframe start,SpatialKeyframe last){
+        this.start=start;
+        this.last=last;
+        this.nearestAccessedKeyframe=null;
+        if (start!=null) {
+            this.currentPoint.set(start.getBezierPoint().getAnchorPoint());
         }
     }
 }

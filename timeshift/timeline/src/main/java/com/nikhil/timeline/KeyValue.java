@@ -26,11 +26,11 @@ public class KeyValue {
 		return dimension;
 	}
 	/**
-	 * Sets the dimension of the values array. This is only used privately
+	 * Sets the dimension of the values array.
 	 * This truncates all the old values too(if they exist)
 	 * @param dimension size of the values array
 	 */
-	private void setDimension(int dimension) {
+	public void setDimension(int dimension) {
 		this.dimension = dimension;
 		this.values=new double[dimension];
 	}

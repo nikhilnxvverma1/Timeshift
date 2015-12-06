@@ -8,6 +8,7 @@ import com.nikhil.timeline.keyframe.SpatialKeyframe;
 import com.nikhil.util.modal.UtilPoint;
 import com.nikhil.view.bezier.BezierPointInteraction;
 import com.nikhil.view.bezier.InteractiveBezierPoint;
+import javafx.scene.Group;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 
@@ -31,21 +32,21 @@ public class SpatialKeyframeView extends KeyframeView implements BezierPointInte
         this.keyframePane=keyframePane;
         this.interactiveBezierPoint=new InteractiveBezierPoint(keyframe.getBezierPoint().getAnchorPoint(),this){
             @Override
-            public void addAsChildrenTo(Pane parent){
+            public void addAsChildrenTo(Group group){
                 //since points should always have higher Z value
                 //prepend the lines and the curve
-                parent.getChildren().add(previousControlLine);
-                parent.getChildren().add(nextControlLine);
+                group.getChildren().add(previousControlLine);
+                group.getChildren().add(nextControlLine);
                 if(cubicCurve!=null){
-                    parent.getChildren().add(cubicCurve);
+                    group.getChildren().add(cubicCurve);
                 }
                 //add the points on top of it
-                parent.getChildren().add(previousControlPointCircle);
-                parent.getChildren().add(nextControlPointCircle);
-                parent.getChildren().add(anchorPointRect);
+                group.getChildren().add(previousControlPointCircle);
+                group.getChildren().add(nextControlPointCircle);
+                group.getChildren().add(anchorPointRect);
 
 
-            }
+            }//TODO why did we override this?
         };
     }
 

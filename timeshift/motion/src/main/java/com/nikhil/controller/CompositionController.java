@@ -2,6 +2,7 @@ package com.nikhil.controller;
 
 import com.nikhil.common.PulseListener;
 import com.nikhil.controller.item.ItemModelController;
+import com.nikhil.model.ItemModel;
 import com.nikhil.model.ModelElement;
 import com.nikhil.model.ModelVisitor;
 import com.nikhil.playback.SimpleTimelinePlayer;
@@ -80,12 +81,31 @@ public class CompositionController implements PulseListener,TimelineReachedTermi
         this.timeline = timeline;
     }
 
-    public void addItemController(ItemModelController itemModelController) {
+    /**
+     * Appends an item model controller.If its already present, this method is a no-op
+     * @param itemModelController the item model controller to append
+     * @return true if added successfully, false if it was already present in the list
+     */
+    public boolean addItemController(ItemModelController itemModelController) {
         if (itemModelControllerStart == null) {
             itemModelControllerStart = itemModelController;
         }else{
-            itemModelControllerStart.getLast().setNext(itemModelController);
+
+            //go till the last element
+            ItemModelController t=itemModelControllerStart;
+            while(t.getNext()!=null){
+
+                // if the same item is found, reject and return false
+                if(t==itemModelController){
+                    return false;
+                }
+                t=t.getNext();
+            }
+
+            //add after the last item
+            t.setNext(itemModelController);
         }
+        return true;//indicates item added successfully
     }
 
     /**
