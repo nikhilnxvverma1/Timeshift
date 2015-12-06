@@ -1,6 +1,7 @@
 package com.nikhil.command.item;
 
 import com.nikhil.controller.ItemViewController;
+import com.nikhil.util.modal.UtilPoint;
 import javafx.geometry.Point2D;
 
 import java.util.Set;
@@ -24,7 +25,8 @@ public class MoveItemSet extends ActionOnItemSet {
         double dx = to.getX() - from.getX();
         double dy = to.getY() - from.getY();
         for (ItemViewController itemViewController : itemSet) {
-            itemViewController.moveBy(dx, dy);
+            final UtilPoint translation = itemViewController.getTranslation();
+            itemViewController.moveTo(translation.getX()+dx, translation.getY()+dy);
         }
     }
 
@@ -34,7 +36,8 @@ public class MoveItemSet extends ActionOnItemSet {
         double dx = from.getX() - to.getX();
         double dy = from.getY() - to.getY();
         for (ItemViewController itemViewController : itemSet) {
-            itemViewController.moveBy(dx, dy);
+            final UtilPoint translation = itemViewController.getTranslation();
+            itemViewController.moveTo(translation.getX()+dx, translation.getY()+dy);
         }
     }
 }

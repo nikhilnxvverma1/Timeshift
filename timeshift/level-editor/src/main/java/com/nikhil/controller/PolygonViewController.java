@@ -19,6 +19,7 @@ import com.nikhil.view.item.record.*;
 import javafx.geometry.Bounds;
 import javafx.scene.Group;
 import javafx.scene.control.TreeItem;
+import javafx.scene.layout.Pane;
 import javafx.scene.shape.Shape;
 
 import java.util.ArrayList;
@@ -50,8 +51,9 @@ public class PolygonViewController extends ShapeViewController implements Polygo
         constructModelControllerUsingView();
         polygonGizmo=new PolygonGizmo(polygonView);
         polygonGizmo.initializeView();
-        compositionViewController.getWorkspace().getSelectedItems().requestFocus(this,false);//TODO objectionable,what if the context doesn't need this to be highlighted
         setSelfAsChangeHandler();
+        initMetadataTree();
+        compositionViewController.getWorkspace().getSelectedItems().requestFocus(this,false);
     }
 
     public PolygonViewController(CompositionViewController compositionViewController,PolygonModelController polygonModelController){
@@ -62,7 +64,7 @@ public class PolygonViewController extends ShapeViewController implements Polygo
         polygonGizmo=new PolygonGizmo(polygonView);
         polygonGizmo.initializeView();
         setSelfAsChangeHandler();
-
+        initMetadataTree();
     }
 
     /**
@@ -177,27 +179,24 @@ public class PolygonViewController extends ShapeViewController implements Polygo
     }
 
     @Override
-    public void addViewsToWorksheet(){
-        Workspace workspace = compositionViewController.getWorkspace();
-
-        workspace.getWorksheetPane().getChildren().add(polygonView);
-        workspace.getWorksheetPane().getChildren().add(polygonGizmo);
+    public void addViewsTo(Pane pane){
+        pane.getChildren().add(polygonView);
+        pane.getChildren().add(polygonGizmo);
     }
 
     @Override
-    public void removeViewsFromWorksheet(){
-        Workspace workspace=compositionViewController.getWorkspace();
-        workspace.getWorksheetPane().getChildren().remove(polygonView);
-        workspace.getWorksheetPane().getChildren().remove(polygonGizmo);
+    public void removeViews(Pane pane){
+        pane.getChildren().remove(polygonView);
+        pane.getChildren().remove(polygonGizmo);
     }
 
     @Override
-    public void moveBy(double dx, double dy) {
+    public void moveTo(double newX, double newY) {
         //change translation component of the view and gizmo
-        double x=polygonView.getLayoutX();
-        double y=polygonView.getLayoutY();
-        double newX = x + dx;
-        double newY = y + dy;
+//        double x=polygonView.getLayoutX();
+//        double y=polygonView.getLayoutY();
+//        double newX = x + dx;
+//        double newY = y + dy;
         polygonView.setLayoutX(newX);
         polygonView.setLayoutY(newY);
         polygonGizmo.updateView();
@@ -290,22 +289,12 @@ public class PolygonViewController extends ShapeViewController implements Polygo
     }
 
     @Override
-    public ItemViewController clone() {
+    public PolygonViewController clone() {
         return new PolygonViewController(this);
     }
 
-    @Override
-    public TreeItem<Metadata> getMetadataTree() {
+    public TreeItem<Metadata> initMetadataTree() {
         if(metadataTree==null){
-            //using Polygon metadata everywhere
-//            TreeItem<Metadata> polygonHeader= new TreeItem<>(
-//                    new PolygonMetadata(polygonModelController.getPolygonModel().getName(), MetadataTag.HEADER,this));
-//            TreeItem<Metadata> polygonScale= new TreeItem<>(new PolygonMetadata("Scale", MetadataTag.SCALE,this));
-//            TreeItem<Metadata> polygonRotation= new TreeItem<>(new PolygonMetadata("Rotation", MetadataTag.ROTATION,this));
-//            TreeItem<Metadata> polygonTranslation= new TreeItem<>(new PolygonMetadata("Translation", MetadataTag.TRANSLATION,this));
-//            TreeItem<Metadata> polygonAnchorPoint= new TreeItem<>(new PolygonMetadata("Anchor Point",  MetadataTag.ANCHOR_POINT, this));
-//            TreeItem<Metadata> polygonVertices= new TreeItem<>(new PolygonMetadata("Vertices",  MetadataTag.POLYGON_VERTEX_HEADER, this));
-
             //using generic metadata wherever possible
             TreeItem<Metadata> polygonHeader= new TreeItem<>(
                     new HeaderMetadata(polygonModelController.getPolygonModel().getName(), MetadataTag.HEADER, this, true));
@@ -330,6 +319,11 @@ public class PolygonViewController extends ShapeViewController implements Polygo
             polygonHeader.getChildren().add(VERTEX_HEADER_INDEX,polygonVertices);
             metadataTree=polygonHeader;
         }
+        return metadataTree;
+    }
+
+    @Override
+    public TreeItem<Metadata> getMetadataTree() {
         return metadataTree;
     }
 
@@ -390,6 +384,10 @@ public class PolygonViewController extends ShapeViewController implements Polygo
         //TODO set change handler for each vertex
     }
 
+    //=============================================================================================
+    //Change Handlers
+    //=============================================================================================
+
     @Override
     public void valueChanged(SpatialKeyframeChangeNode changeNode) {
         super.valueChanged(changeNode);
@@ -417,9 +415,4 @@ public class PolygonViewController extends ShapeViewController implements Polygo
                 finalPosition);
         getCompositionViewController().getWorkspace().pushCommand(movePolygonPoint, false);
     }
-
-    //=============================================================================================
-    //Change Handlers
-    //=============================================================================================
-
 }

@@ -20,6 +20,7 @@ import com.nikhil.view.util.AlertBox;
 import com.nikhil.view.zoom.ZoomableScrollPane;
 import com.nikhil.xml.XMLWriter;
 import javafx.geometry.Point2D;
+import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.input.ScrollEvent;
@@ -41,10 +42,13 @@ public class Workspace  {
     public static final double PASTE_OFFSET_X=60;
     public static final double PASTE_OFFSET_Y=60;
 
-    private RootController rootController;
-    private List<CompositionViewController> compositionViewControllers=new LinkedList<CompositionViewController>();
-    private CompositionViewController currentComposition;
+    private RootController rootController=new RootController();
 
+    //its very important that the composition linked list and the composition tabs have the same order
+    //because they have a one to one relationship
+    private List<CompositionViewController> compositionViewControllers=new LinkedList<CompositionViewController>();
+    private TabPane compositionTabs;
+    private CompositionViewController currentComposition;
 
     private Stack<Command> commandStack=new Stack<Command>();
     private Stack<Command> undoStack =new Stack<Command>();
@@ -60,17 +64,28 @@ public class Workspace  {
 
     private ZoomableScrollPane zoomableScrollPane;
     private Pane containerPane;
-    private Pane worksheetPane;
+    public static final int CONTAINER_WIDTH = 5000;
+    public static final int CONTAINER_HEIGHT = 7000;
 
     /**
      * creates a new workspace
      * @param workspaceListener the delegate that will listen to certain mouse events
      */
-    public Workspace(final WorkspaceListener workspaceListener) {
-        //instantiate the workspace pane and the worksheet pane
+    public Workspace(WorkspaceListener workspaceListener,TabPane compositionTabs) {
+
+        this.compositionTabs =compositionTabs;
+
+        //initialize the workspace container
         initializeGraphics(workspaceListener);
+
+        //remove any tab(there is a dummy tab in the beginning)
+        compositionTabs.getTabs().clear();
+        //make a new tab and add this tab to the list of tabs
+        currentComposition = createNewComposition();
+        addComposition(currentComposition,0);
+
         selectedItems=new SelectedItems(this);
-        selectedItems.initializeView();
+        selectedItems.initView();
         selectedItems.updateView();
         containerPane.getChildren().add(selectedItems);
     }
@@ -79,22 +94,13 @@ public class Workspace  {
      * initializes the workspace for the specified file to load(possibly null).
      * This method should be called only after the worksheetPane has been added to the stage.
      * @param fileToOpen the file that needs to be loaded(this can be null too for an empty document)
-     * @param compositionTabs
      */
-    public void initializeSystem(File fileToOpen, TabPane compositionTabs) {
+    public void initializeSystem(File fileToOpen) {
         file=fileToOpen;
 
         //reset any controllers in the list if they may exist
         compositionViewControllers.clear();
-//        itemViewControllers.clear();
-        if(file==null){
-            rootController=new RootController();
-
-            currentComposition = makeNewComposition();
-            //add its tab after removing dummy
-            compositionTabs.getTabs().clear();
-            compositionTabs.getTabs().add(currentComposition.getTab());
-        }else{
+        if(file!=null){
             try {
                 open(file, compositionTabs);
             } catch (Exception e) {
@@ -104,23 +110,16 @@ public class Workspace  {
         }
     }
 
-    private void initializeGraphics(final WorkspaceListener workspaceListener){
+    private void initializeGraphics(WorkspaceListener workspaceListener){
         containerPane =new Pane();
-
-        worksheetPane=new Pane();
-        containerPane.getChildren().add(worksheetPane);
 
         //add events to the container
         containerPane.addEventHandler(MouseEvent.MOUSE_PRESSED,(e)->{
             selectedItems.clearSelection();
             workspaceListener.workspaceMousePressed(e);
         });
-        containerPane.addEventHandler(MouseEvent.MOUSE_DRAGGED,(e)->{
-            workspaceListener.workspaceMouseDragged(e);
-        });
-        containerPane.addEventHandler(MouseEvent.MOUSE_RELEASED,(e)->{
-            workspaceListener.workspaceMouseReleased(e);
-        });
+        containerPane.addEventHandler(MouseEvent.MOUSE_DRAGGED, workspaceListener::workspaceMouseDragged);
+        containerPane.addEventHandler(MouseEvent.MOUSE_RELEASED, workspaceListener::workspaceMouseReleased);
 
         zoomableScrollPane=new ZoomableScrollPane(containerPane);
         zoomableScrollPane.addEventFilter(ScrollEvent.SCROLL, (e) -> {
@@ -129,79 +128,102 @@ public class Workspace  {
             }
         });
 
-        configureViews();
-    }
-
-    /** sets the dimension ,position and style of the views */
-    private void configureViews() {
-        //TODO remove hardcoding, make it dynamic to screen size
-        int prefWidth = 850;
-        int prefHeight = 550;
-//        zoomableScrollPane.setPrefSize(prefWidth,prefHeight);
+        //sets the dimension ,position and style of the views
         zoomableScrollPane.setStyle("-fx-background:#111111");
-        zoomableScrollPane.setPrefWidth(prefWidth);
-        zoomableScrollPane.setPrefHeight(prefHeight);
+        zoomableScrollPane.setPrefWidth(CONTAINER_WIDTH);
+        zoomableScrollPane.setPrefHeight(CONTAINER_HEIGHT);
+        zoomableScrollPane.setHvalue(0.5);
+        zoomableScrollPane.setVvalue(0.5);
         Logger.log("zoomable scorllpane width" + zoomableScrollPane.getWidth());
 
-        containerPane.setPrefSize(prefWidth,prefHeight);
-//        containerPane.setMaxSize(Double.MAX_VALUE,Double.MAX_VALUE);
-//        containerPane.setMaxSize(Control.USE_COMPUTED_SIZE,Control.USE_COMPUTED_SIZE);
+        containerPane.setPrefSize(CONTAINER_WIDTH, CONTAINER_HEIGHT);
         containerPane.setLayoutX(0);
         containerPane.setLayoutY(0);
         containerPane.setStyle("-fx-background-color:#444444");
-
-
-        double worksheetPrefWidth=566;
-        double worksheetPrefHeight=330;
-        worksheetPane.setPrefWidth(worksheetPrefWidth);
-        worksheetPane.setPrefHeight(worksheetPrefHeight);
-        worksheetPane.setLayoutX(prefWidth/2-(worksheetPrefWidth/2));
-        worksheetPane.setLayoutY(prefHeight/2-(worksheetPrefHeight/2));
-        worksheetPane.setStyle("-fx-background-color:#EEEEEE");
     }
 
     //=============================================================================================
-    //Items management
+    //Composition management
     //=============================================================================================
 
-    public boolean deleteCurrentComposition(){//TODO still need to work on removing from timeline
-
-        if(compositionViewControllers.size()>1){ //stop at the last composition
-            int index = compositionViewControllers.indexOf(currentComposition);
-            compositionViewControllers.remove(currentComposition);
-            removeFromTimelineSystem(currentComposition.getCompositionController());
-
-            //remove tab of the current composition from the tab pane
-            TabPane compositionTabs = currentComposition.getTab().getTabPane();
-            compositionTabs.getTabs().remove(currentComposition.getTab());
-
-            //select the previous tab if possible
-            if(index>1){
-                currentComposition=compositionViewControllers.get(index-1);
-            }else{ //select the tab next to this tab(which already has the same index)
-                currentComposition=compositionViewControllers.get(index);
-            }
-            compositionTabs.getSelectionModel().select(currentComposition.getTab());
-
-            return true;//indicate composition removed
-        }
-        return false;// to indicate that the last composition will not be removed
-    }
-
-    public CompositionViewController makeNewComposition(){
+    private CompositionViewController createNewComposition(){
         CompositionController compositionController=new CompositionController();
-        CompositionViewController newComposition=new CompositionViewController(compositionController,this);
-        addComposition(newComposition);
+        CompositionViewController newComposition=new CompositionViewController(compositionController,this,
+                CompositionViewController.getNewTabName());
         return newComposition;
     }
 
-    public void addComposition(CompositionViewController compositionViewController){
-        rootController.addCompositionController(compositionViewController.getCompositionController());
-        compositionViewControllers.add(compositionViewController);
+    public void addComposition(CompositionViewController composition, int index) {
+        rootController.addCompositionController(composition.getCompositionController());
+
+        //because of the one to one relationship,
+        //its very important that the composition linked list and the composition tabs have the same order
+        compositionViewControllers.add(index,composition);
+        compositionTabs.getTabs().add(index, composition.getTab());
     }
 
-    public boolean removeFromTimelineSystem(CompositionController compositionController){
-        return rootController.removeCompositionController(compositionController);
+    public void addNewComposition(){
+        CompositionViewController newComposition = createNewComposition();
+        AddRemoveComposition addComposition=new AddRemoveComposition(newComposition,
+                compositionTabs.getTabs().size(),
+                true);
+        pushCommand(addComposition);
+    }
+
+    public boolean removeCurrentComposition(){
+        if(compositionViewControllers.size()>1) { //stop at the last composition
+
+            //push a command to remove composition
+            int index = compositionTabs.getTabs().indexOf(currentComposition.getTab());
+            AddRemoveComposition removeComposition = new AddRemoveComposition(currentComposition, index, false);
+            pushCommand(removeComposition);
+
+            //select the previous tab if possible
+            if (index > 1) {
+                CompositionViewController compositionToSelect = compositionViewControllers.get(index-1);
+                compositionTabs.getSelectionModel().select(compositionToSelect.getTab());
+            }
+            return true;
+        }
+        return false;
+    }
+
+    public boolean removeComposition(CompositionViewController composition){
+
+        if (compositionViewControllers.remove(composition)) {
+
+            //remove the model composition controller from root
+            rootController.removeCompositionController(composition.getCompositionController());
+
+            //remove tab of the composition from the tab pane
+            compositionTabs.getTabs().remove(composition.getTab());
+
+            return true;//indicate composition removed
+        }
+        return false;// to indicate that the composition was not removed
+    }
+
+    /**
+     * Selects the next or previous tab relative to the current composition if possible
+     * @param dIndex the amount by which the next or previous tab needs to be selected.
+     *               Example: 1 for next tab, -1 for previous tab
+     * @return true if it shifted to a new composition,false otherwise
+     */
+    public boolean selectComposition(int dIndex){
+
+        //find the new index
+        int currentIndex=compositionTabs.getTabs().indexOf(currentComposition.getTab());
+        int newIndex=currentIndex+dIndex;
+
+        //if it is within bounds, select that tab
+        if(newIndex>=0&&newIndex<compositionTabs.getTabs().size()){
+
+            //set the current composition as the composition at the new index
+            CompositionViewController compositionToSelect = compositionViewControllers.get(newIndex);
+            compositionTabs.getSelectionModel().select(compositionToSelect.getTab());
+            return true;
+        }
+        return false;
     }
 
     public int pasteFromClipboard(){
@@ -212,7 +234,7 @@ public class Workspace  {
             offsetX=PASTE_OFFSET_X;
             offsetY=PASTE_OFFSET_Y;
         }
-        Set<ItemViewController> itemsToPaste= Clipboard.getSharedInstance().getDeepCopyOfItems(offsetX,offsetY);
+        Set<ItemViewController> itemsToPaste= Clipboard.getSharedInstance().getDeepCopyOfItems(offsetX, offsetY);
         if(itemsToPaste!=null){
             totalItemsPasted=itemsToPaste.size();
             AddItemSet addItemSet =new AddItemSet(itemsToPaste, currentComposition);
@@ -221,7 +243,7 @@ public class Workspace  {
         return totalItemsPasted;
     }
 
-    public void deleteSelectedKeyframes(){
+    public void removeSelectedKeyframes(){
         pushCommand(new DeleteKeyframes(getReusableListOfKeyframesIfPossible()));
     }
 
@@ -261,6 +283,13 @@ public class Workspace  {
 
     public File getFile() {
         return file;
+    }
+
+    /**
+     * @return tab pane for the compositions
+     */
+    public TabPane getCompositionTabs() {
+        return compositionTabs;
     }
 
     public boolean isFileModified() {
@@ -322,10 +351,6 @@ public class Workspace  {
         return containerPane;
     }
 
-    public Pane getWorksheetPane() {
-        return worksheetPane;
-    }
-
     public SelectedItems getSelectedItems() {
         return selectedItems;
     }
@@ -335,7 +360,21 @@ public class Workspace  {
     }
 
     public void setCurrentComposition(CompositionViewController currentComposition) {
+
+        Logger.log("setting current composition Called ");
+        //remove the old worksheet from the container
+        containerPane.getChildren().remove(this.currentComposition.getWorksheet());
         this.currentComposition = currentComposition;
+
+        //add the worksheet pane of the current tab as the only child of the container in the middle
+        Pane worksheetPane=currentComposition.getWorksheet();
+        double worksheetPrefWidth=worksheetPane.getPrefWidth();
+        double worksheetPrefHeight=worksheetPane.getPrefWidth();
+        worksheetPane.setLayoutX(CONTAINER_WIDTH /2-(worksheetPrefWidth/2));
+        worksheetPane.setLayoutY(CONTAINER_HEIGHT /2-(worksheetPrefHeight/2));
+        containerPane.getChildren().add(0,currentComposition.getWorksheet());//make sure to add with lowest z-index
+
+        Logger.log(currentComposition.getTab().getText()+" is now selected");
     }
 
     public List<CompositionViewController> getCompositionViewControllers() {
@@ -455,11 +494,11 @@ public class Workspace  {
     }
 
     public Point2D toWorksheetPoint(double containerX,double containerY){
-        return worksheetPane.parentToLocal(containerX,containerY);
+        return currentComposition.getWorksheet().parentToLocal(containerX,containerY);
     }
 
     public Point2D toContainerPoint(double worksheetX,double worksheetY){
-        return worksheetPane.localToParent(worksheetX,worksheetY);
+        return currentComposition.getWorksheet().localToParent(worksheetX,worksheetY);
     }
 
     //=============================================================================================

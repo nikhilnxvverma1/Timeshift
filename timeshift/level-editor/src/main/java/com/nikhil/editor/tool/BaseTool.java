@@ -28,10 +28,10 @@ public abstract class BaseTool implements Tool {
     }
 
     protected double xInWorksheet(MouseEvent mouseEvent){
-        return workspace.getWorksheetPane().parentToLocal(mouseEvent.getX(), mouseEvent.getY()).getX();
+        return workspace.getCurrentComposition().getWorksheet().parentToLocal(mouseEvent.getX(), mouseEvent.getY()).getX();
     }
 
     protected double yInWorksheet(MouseEvent mouseEvent){
-        return workspace.getWorksheetPane().parentToLocal(mouseEvent.getX(), mouseEvent.getY()).getY();
+        return workspace.getCurrentComposition().getWorksheet().parentToLocal(mouseEvent.getX(), mouseEvent.getY()).getY();
     }
 }

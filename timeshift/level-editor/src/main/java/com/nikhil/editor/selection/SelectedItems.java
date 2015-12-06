@@ -59,7 +59,7 @@ public class SelectedItems extends Group implements EventHandler<MouseEvent>{
         this.workspace=workspace;
     }
 
-    public void initializeView(){
+    public void initView(){
         outlineRect=new Rectangle();
         outlineRect.setFill(null);
         outlineRect.setStroke(Color.BLUE);
@@ -389,7 +389,7 @@ public class SelectedItems extends Group implements EventHandler<MouseEvent>{
         }
         for(ItemViewController itemViewController:managedItems){
             UtilPoint oldPoint = itemViewController.getTranslation();
-            itemViewController.moveBy(dx, dy);
+            itemViewController.moveTo(oldPoint.getX() + dx, oldPoint.getY()+dy);
             UtilPoint newPoint = itemViewController.getTranslation();
             SpatialMetadata spatialMetadata = itemViewController.getSpatialMetadata(MetadataTag.TRANSLATION);
             spatialMetadata.registerContinuousChange(oldPoint,newPoint,temporaryCompositeCommand);

@@ -18,18 +18,18 @@ public class DeleteItemSet extends ActionOnItemSet {
     public void execute() {
 
         for(ItemViewController itemViewController: itemSet){
-            itemViewController.removeViewsFromWorksheet();
+//            itemViewController.removeViews();
             itemViewController.getCompositionViewController().removeItemViewController(itemViewController);
-            itemViewController.getCompositionViewController().removeFromTimelineSystem(itemViewController);
+//            itemViewController.getCompositionViewController().removeFromTimelineSystem(itemViewController);
         }
     }
 
     @Override
     public void unexecute() {
         for(ItemViewController itemViewController: itemSet){
-            itemViewController.addViewsToWorksheet();
+//            itemViewController.addViewsTo();
             itemViewController.getCompositionViewController().addItemViewController(itemViewController);
-            itemViewController.getCompositionViewController().addToTimelineSystem(itemViewController);
+//            itemViewController.getCompositionViewController().addToTimelineSystem(itemViewController);
         }
     }
 

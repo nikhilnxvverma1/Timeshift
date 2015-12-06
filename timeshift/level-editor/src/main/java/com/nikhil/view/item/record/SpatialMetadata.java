@@ -191,7 +191,7 @@ public class SpatialMetadata extends Metadata {
                 UtilPoint newTranslation = new UtilPoint(itemViewController.getTranslation());
                 newTranslation.setX(newValue);
 
-                itemViewController.moveBy(newValue-oldValue,0);
+                itemViewController.moveTo(newTranslation.getX(),oldTranslation.getY());
                 registerContinuousChange(oldTranslation,newTranslation,null);
                 //update the outline
                 itemViewController.getCompositionViewController().getWorkspace().getSelectedItems().updateView();
@@ -237,7 +237,7 @@ public class SpatialMetadata extends Metadata {
                 UtilPoint newTranslation = new UtilPoint(itemViewController.getTranslation());
                 newTranslation.setY(newValue);
 
-                itemViewController.moveBy(0,newValue-oldValue);
+                itemViewController.moveTo(oldTranslation.getX(),newTranslation.getY());
                 registerContinuousChange(oldTranslation,newTranslation,null);
                 
                 //update the outline

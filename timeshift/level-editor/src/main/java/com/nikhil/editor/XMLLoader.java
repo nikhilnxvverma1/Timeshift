@@ -39,12 +39,11 @@ public class XMLLoader {
         CompositionViewController firstComposition=null;
         compositionTabs.getTabs().clear();
         while(t!=null){
-            CompositionViewController compositionViewController=new CompositionViewController(t,workspace);
-            //keep track of the first compostion view controller
+            CompositionViewController compositionViewController=new CompositionViewController(t,workspace,CompositionViewController.getNewTabName());
+            //keep track of the first composition view controller
             if(firstComposition==null){
                 firstComposition=compositionViewController;
             }
-//            workspace.addComposition(compositionViewController);//it already came added from the XMLReader
 
             createItemsIn(compositionViewController);
             workspace.getCompositionViewControllers().add(compositionViewController);
@@ -66,9 +65,9 @@ public class XMLLoader {
 
             //create item view controllers and add them to the workspace
             ItemViewController itemViewController=getItemViewController(t,compositionViewController);
-            compositionViewController.addItemViewController(itemViewController);
+            compositionViewController.addItemViewController(itemViewController,false);//don't add back again to timeline
 //            workspace.addToTimelineSystem(itemViewController);//it already came added from the XMLReader
-            itemViewController.addViewsToWorksheet();
+//            itemViewController.addViewsTo();
 
             t=t.getNext();
         }

@@ -10,7 +10,9 @@ import com.nikhil.timeline.change.spatial.SpatialKeyframeChangeNode;
 import com.nikhil.timeline.change.temporal.TemporalChangeHandler;
 import com.nikhil.timeline.change.temporal.TemporalKeyframeChangeNode;
 import com.nikhil.util.modal.UtilPoint;
+import com.nikhil.view.item.record.Metadata;
 import javafx.geometry.Bounds;
+import javafx.scene.control.TreeItem;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.shape.Shape;
 
@@ -19,10 +21,11 @@ import javafx.scene.shape.Shape;
  */
 public abstract class ShapeViewController extends ItemViewController implements TemporalChangeHandler,SpatialChangeHandler {
 
+    protected TreeItem<Metadata> metadataTree;
+
     public ShapeViewController(CompositionViewController compositionViewController) {
         super(compositionViewController);
     }
-
     /**
      * Gets the rotated point after rotating it by the shape's angle
      * around the shapes anchor point

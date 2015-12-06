@@ -108,12 +108,12 @@
                   <MenuItem mnemonicParsing="false" text="Rename" />
                   <MenuItem mnemonicParsing="false" onAction="#deleteComposition" text="Delete" />
                   <SeparatorMenuItem mnemonicParsing="false" text="Navigate" />
-                  <MenuItem mnemonicParsing="false" text="Previous ">
+                  <MenuItem mnemonicParsing="false" onAction="#previousComposition" text="Previous ">
                      <accelerator>
                         <KeyCodeCombination alt="UP" code="OPEN_BRACKET" control="UP" meta="DOWN" shift="DOWN" shortcut="UP" />
                      </accelerator>
                   </MenuItem>
-                  <MenuItem mnemonicParsing="false" text="Next ">
+                  <MenuItem mnemonicParsing="false" onAction="#nextComposition" text="Next ">
                      <accelerator>
                         <KeyCodeCombination alt="UP" code="CLOSE_BRACKET" control="UP" meta="DOWN" shift="DOWN" shortcut="UP" />
                      </accelerator>

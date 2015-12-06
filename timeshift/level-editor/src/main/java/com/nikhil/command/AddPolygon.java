@@ -35,10 +35,10 @@ public class AddPolygon extends Command{
         //and controller to the compositionViewController
         compositionViewController.addItemViewController(polygonViewController);
         //add the polygon and its gizmo to the view
-        polygonViewController.addViewsToWorksheet();
+//        polygonViewController.addViewsTo();
 
         //add to timeline
-        compositionViewController.addToTimelineSystem(polygonViewController);
+//        compositionViewController.addToTimelineSystem(polygonViewController);
     }
 
     @Override
@@ -48,14 +48,14 @@ public class AddPolygon extends Command{
         CompositionViewController compositionViewController=polygonViewController.getCompositionViewController();
         compositionViewController.removeItemViewController(polygonViewController);
         //also remove the polygon views and gizmo from the worksheet
-        polygonViewController.removeViewsFromWorksheet();
+//        polygonViewController.removeViews();
 
         //show the graphical helping outline again
         addGraphicalPolygonPointsToView();
         drawLineBetweenFirstAndLastPoint();
 
         //remove from timeline
-        compositionViewController.removeFromTimelineSystem(polygonViewController);
+//        compositionViewController.removeFromTimelineSystem(polygonViewController);
     }
 
     private void drawLineBetweenFirstAndLastPoint() {
@@ -76,14 +76,14 @@ public class AddPolygon extends Command{
     private void removeGraphicalPolygonPointsFromView(){
         Workspace workspace=polygonViewController.getCompositionViewController().getWorkspace();
         for(GraphicalPolygonPoint graphicalPolygonPoint: graphicalPolygonPointArrayList){
-            graphicalPolygonPoint.removeAsChildrenFrom(workspace.getWorksheetPane());
+            graphicalPolygonPoint.removeAsChildrenFrom(workspace.getCurrentComposition().getWorksheet());
         }
     }
 
     private void addGraphicalPolygonPointsToView(){
         Workspace workspace=polygonViewController.getCompositionViewController().getWorkspace();
         for(GraphicalPolygonPoint graphicalPolygonPoint: graphicalPolygonPointArrayList){
-            graphicalPolygonPoint.addAsChildrenTo(workspace.getWorksheetPane());
+            graphicalPolygonPoint.addAsChildrenTo(workspace.getCurrentComposition().getWorksheet());
         }
     }
 

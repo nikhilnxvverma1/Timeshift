@@ -33,7 +33,7 @@ public class PolygonTool extends BaseTool{
 
     @Override
     public void mousePressed(MouseEvent mouseEvent) {
-        Pane pane=workspace.getWorksheetPane();
+        Pane pane=workspace.getCurrentComposition().getWorksheet();
 
         double x=xInWorksheet(mouseEvent);
         double y=yInWorksheet(mouseEvent);
@@ -121,7 +121,7 @@ public class PolygonTool extends BaseTool{
             int size=graphicalPolygonPointArrayList.size();
             GraphicalPolygonPoint lastPolygonPoint=graphicalPolygonPointArrayList.get(size-1);
             graphicalPolygonPointArrayList.remove(lastPolygonPoint);
-            lastPolygonPoint.removeAsChildrenFrom(workspace.getWorksheetPane());
+            lastPolygonPoint.removeAsChildrenFrom(workspace.getCurrentComposition().getWorksheet());
 
             //make the polygon
             command = createAddPolygonCommand();
@@ -186,7 +186,7 @@ public class PolygonTool extends BaseTool{
 
     private void removeGraphicalPolygonPointsFromView(){
         for(GraphicalPolygonPoint graphicalPolygonPoint: graphicalPolygonPointArrayList){
-            graphicalPolygonPoint.removeAsChildrenFrom(workspace.getWorksheetPane());
+            graphicalPolygonPoint.removeAsChildrenFrom(workspace.getCurrentComposition().getWorksheet());
         }
     }
 

@@ -164,7 +164,7 @@ public class PolygonMetadata extends Metadata{
 
             @Override
             public void valueBeingDragged(DraggableTextValue draggableTextValue, double initialValue, double oldValue, double newValue) {
-                polygonViewController.moveBy(newValue-oldValue,0);
+                polygonViewController.moveTo(newValue,polygonViewController.getTranslation().getY());
                 //update the outline
                 polygonViewController.getCompositionViewController().getWorkspace().getSelectedItems().updateView();
             }
@@ -213,7 +213,7 @@ public class PolygonMetadata extends Metadata{
 
             @Override
             public void valueBeingDragged(DraggableTextValue draggableTextValue, double initialValue, double oldValue, double newValue) {
-                polygonViewController.moveBy(0,newValue-oldValue);
+                polygonViewController.moveTo(polygonViewController.getTranslation().getX(),newValue);
 
                 //update the outline
                 polygonViewController.getCompositionViewController().getWorkspace().getSelectedItems().updateView();

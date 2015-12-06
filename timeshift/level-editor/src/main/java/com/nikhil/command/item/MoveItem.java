@@ -20,16 +20,12 @@ public class MoveItem extends SpatialActionOnSingleItem{
 
     @Override
     public void execute() {
-        double dx = finalPosition.getX() - initialPosition.getX();
-        double dy = finalPosition.getY() - initialPosition.getY();
-        itemViewController.moveBy(dx, dy);
+        itemViewController.moveTo(finalPosition.getX(), finalPosition.getY());
     }
 
     @Override
     public void unexecute() {
-        double dx = initialPosition.getX() - finalPosition.getX();
-        double dy = initialPosition.getY() - finalPosition.getY();
-        itemViewController.moveBy(dx, dy);
+        itemViewController.moveTo(initialPosition.getX(),initialPosition.getY());
     }
 
     @Override

@@ -3,7 +3,6 @@ package com.nikhil.controller;
 import com.nikhil.Main;
 import com.nikhil.controller.item.ItemModelController;
 import com.nikhil.editor.workspace.Workspace;
-import com.nikhil.logging.Logger;
 import com.nikhil.view.custom.*;
 import com.nikhil.view.custom.cells.KeyframeCell;
 import com.nikhil.view.custom.cells.NameCell;
@@ -28,6 +27,7 @@ import javafx.scene.Parent;
 import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Pane;
 import org.eclipse.fx.FilterableTreeItem;
 import org.eclipse.fx.TreeItemPredicate;
 
@@ -46,6 +46,8 @@ public class CompositionViewController {
 
     public static final double DEFAULT_DURATION =30;
     public static final double PLAYBACK_FEATURES_HEIGHT = 40d;
+    public static final int DEFAULT_WIDTH = 720;
+    public static final int DEFAULT_HEIGHT = 480;
     public static int TOTAL_COMPOSITIONS_SO_FAR =0;
     private static final double NAME_COLUMN_WIDTH=175;
     private static final double VALUE_COLUMN_WIDTH=125;
@@ -59,27 +61,35 @@ public class CompositionViewController {
     private Workspace workspace;
     private List<ItemViewController> itemViewControllers = new LinkedList<ItemViewController>();
     private FilterableTreeItem<Metadata> rootTreeItem;
+    private Pane worksheet;
     private TreeTableView<Metadata> itemTable;
     private KeyframeTreeView keyframeTable;
     private Playback playback;
     private TextField filterField=new TextField();
 
-    public CompositionViewController(CompositionController compositionController,Workspace workspace) {
+    public CompositionViewController(CompositionController compositionController,Workspace workspace,
+                                     String name,double width,double height){
         this.compositionController=compositionController;
         this.workspace=workspace;
         this.tab=new Tab();
-        String tabName = getNewTabName();
-        this.tab.setText(tabName);
+        this.worksheet=new Pane();
+        this.worksheet.setStyle("-fx-background-color:#EEEEEE");
+        this.worksheet.setPrefWidth(width);
+        this.worksheet.setPrefHeight(height);
+        this.tab.setText(name);
         this.tab.setOnSelectionChanged(e->{
             if(tab.isSelected()){
-                Logger.log(tab.getText()+" is selected");
                 workspace.setCurrentComposition(this);
             }
         });
         initView();
     }
 
-    private String getNewTabName() {
+    public CompositionViewController(CompositionController compositionController,Workspace workspace,String name) {
+        this(compositionController,workspace,name, DEFAULT_WIDTH, DEFAULT_HEIGHT);
+    }
+
+    public static String getNewTabName() {
         return "Comp " + ++TOTAL_COMPOSITIONS_SO_FAR;//TODO store the composition names in the model itself
     }
 
@@ -89,6 +99,10 @@ public class CompositionViewController {
 
     public Tab getTab() {
         return tab;
+    }
+
+    public Pane getWorksheet() {
+        return worksheet;
     }
 
     public int getTotalSoloItems() {
@@ -152,12 +166,22 @@ public class CompositionViewController {
     }
 
     public void addItemViewController(ItemViewController itemViewController){
+        addItemViewController(itemViewController, true);
+    }
+
+    public void addItemViewController(ItemViewController itemViewController,boolean shouldAddToTimeline){
         itemViewControllers.add(itemViewController);
         TreeItem<Metadata> metadataTree = itemViewController.getMetadataTree();
         rootTreeItem.getInternalChildren().add(metadataTree);
+        itemViewController.addViewsTo(worksheet);
 
         //add to the timeline
-        compositionController.getTimeline().add(itemViewController.getItemModel().changeNodeIterator());
+        if (shouldAddToTimeline) {
+            compositionController.getTimeline().add(itemViewController.getItemModel().changeNodeIterator());
+            //add to the timeline
+            ItemModelController itemModelController = itemViewController.getModelController();
+            compositionController.addItemController(itemModelController);
+        }
     }
 
     public boolean removeItemViewController(ItemViewController itemViewController){
@@ -165,9 +189,10 @@ public class CompositionViewController {
         if(removed){
             TreeItem<Metadata> metadataTree = itemViewController.getMetadataTree();
             rootTreeItem.getInternalChildren().remove(metadataTree);
-
+            itemViewController.removeViews(worksheet);
             //remove from timeline
             compositionController.getTimeline().remove(itemViewController.getItemModel().changeNodeIterator());
+            compositionController.removeItemController(itemViewController.getModelController());
         }
         return removed;
     }
@@ -196,26 +221,6 @@ public class CompositionViewController {
 
     public KeyframeTreeView getKeyframeTable() {
         return keyframeTable;
-    }
-
-    public void addToTimelineSystem(ItemViewController itemViewController){
-        //add to the timeline
-        ItemModelController itemModelController = itemViewController.getModelController();
-        compositionController.addItemController(itemModelController);
-    }
-
-    /**
-     * finds the virtual flow if present in a node
-     * @param parent parent which has unmodifieable children
-     * @return virtual flow if found,else null
-     */
-    private VirtualFlow findVirtualFlow(Parent parent){
-        for(Node node:parent.getChildrenUnmodifiable()){
-            if(node instanceof VirtualFlow){
-                return (VirtualFlow)node;
-            }
-        }
-        return null;
     }
 
     /**
@@ -466,15 +471,6 @@ public class CompositionViewController {
         treeTableView.setFixedCellSize(Metadata.CELL_HEIGHT);
 
         return treeTableView;
-    }
-
-    /**
-     * remove from timeline system
-     * @param itemViewController the associated item view controller whose model controller needs to be removed
-     * @return indicate weather the node has been removed
-     */
-    public boolean removeFromTimelineSystem(ItemViewController itemViewController) {
-        return compositionController.removeItemController(itemViewController.getModelController());
     }
 
     /**

@@ -55,7 +55,7 @@ public class SpatialKeyframePane extends KeyframePane{
         keyContainer.getChildren().add(keyframeView);
 
         //add a new bezier point
-        Pane worksheetPane = metadata.getItemViewController().getCompositionViewController().getWorkspace().getWorksheetPane();
+        Pane worksheetPane = metadata.getItemViewController().getCompositionViewController().getWorksheet();
         keyframeView.getInteractiveBezierPoint().addAsChildrenTo(worksheetPane);
         keyframeView.updateMotionPath();
 
@@ -73,7 +73,7 @@ public class SpatialKeyframePane extends KeyframePane{
         if(wasRemoved){
             //remove the value from the change node too
             metadata.getSpatialKeyframeChangeNode().removeKeyframe(keyframeView.getKeyframeModel());
-            Pane worksheetPane = metadata.getItemViewController().getCompositionViewController().getWorkspace().getWorksheetPane();
+            Pane worksheetPane = metadata.getItemViewController().getCompositionViewController().getWorksheet();
             keyframeView.getInteractiveBezierPoint().removeAsChildrenFrom(worksheetPane);
             if (previousKeyframeView != null) {
                 previousKeyframeView.updateMotionPathOnlyForNext();

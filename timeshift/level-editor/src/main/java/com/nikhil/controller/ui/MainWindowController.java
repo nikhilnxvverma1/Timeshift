@@ -1,7 +1,6 @@
 package com.nikhil.controller.ui;
 
 import com.nikhil.Main;
-import com.nikhil.controller.CompositionViewController;
 import com.nikhil.editor.workspace.Workspace;
 import com.nikhil.editor.tool.*;
 import com.nikhil.editor.workspace.WorkspaceListener;
@@ -61,7 +60,7 @@ public class MainWindowController implements WorkspaceListener {
     public void init(File fileToOpen){
         Logger.log("Initializing Main window controller");
         workspaceContainer.getChildren().remove(dummyWorkspace);
-        workspace=new Workspace(this);
+        workspace=new Workspace(this,compositionTabs);
         ZoomableScrollPane zoomableScrollPane = workspace.getZoomableScrollPane();
         workspaceContainer.getChildren().add(zoomableScrollPane);
         AnchorPane.setTopAnchor(zoomableScrollPane,0d);
@@ -69,7 +68,7 @@ public class MainWindowController implements WorkspaceListener {
         AnchorPane.setBottomAnchor(zoomableScrollPane,0d);
         AnchorPane.setLeftAnchor(zoomableScrollPane, toolBar.getWidth());
 
-        workspace.initializeSystem(fileToOpen,compositionTabs );
+        workspace.initializeSystem(fileToOpen);
         initializeTools();
     }
 
@@ -212,7 +211,7 @@ public class MainWindowController implements WorkspaceListener {
 
         if(workspace.isEmptyDocument()){
             //open in the same instance of the application
-            workspace.initializeSystem(file,compositionTabs );
+            workspace.initializeSystem(file);
         }else{
             //open new instance of the application running in a parallel thread
             Platform.runLater(new Runnable() {
@@ -349,25 +348,40 @@ public class MainWindowController implements WorkspaceListener {
 
     @FXML
     private void newComposition(ActionEvent actionEvent){
-        Logger.log("New composition to be created");
         //create new composition
-        Tab tab = workspace.makeNewComposition().getTab();
-        compositionTabs.getTabs().add(tab);
+
+//        Tab tab = workspace.createNewComposition().getTab();
+//        compositionTabs.getTabs().add(tab);
+        workspace.addNewComposition();
+        Logger.log("New composition created");
     }
     @FXML
     private void deleteComposition(ActionEvent actionEvent){
-        boolean wasDeleted = workspace.deleteCurrentComposition();
+        boolean wasDeleted = workspace.removeCurrentComposition();
         if(!wasDeleted){
             AlertBox.display("Last composition","At least one composition must exist");
         }
     }
+
+    @FXML
+    private void previousComposition(ActionEvent actionEvent){
+        //select previous composition
+        workspace.selectComposition(-1);
+    }
+
+    @FXML
+    private void nextComposition(ActionEvent actionEvent){
+        //select next composition
+        workspace.selectComposition(1);
+    }
+
 
     public void keyPressed(KeyEvent keyEvent){
 
         //delete selected keyframes when just delete is pressed
         if((keyEvent.getCode()== KeyCode.DELETE||keyEvent.getCode()==KeyCode.BACK_SPACE) &&
                 !keyEvent.isMetaDown()){
-            workspace.deleteSelectedKeyframes();
+            workspace.removeSelectedKeyframes();
         }
     }
 }

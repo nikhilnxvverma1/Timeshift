@@ -8,6 +8,7 @@ import com.nikhil.view.item.record.*;
 import javafx.geometry.Bounds;
 import javafx.scene.Group;
 import javafx.scene.control.TreeItem;
+import javafx.scene.layout.Pane;
 import javafx.scene.shape.Shape;
 
 import java.util.Iterator;
@@ -22,7 +23,6 @@ public abstract class ItemViewController implements ItemViewDelegate {
     private static final double FULL_OPACITY=1;
 
     protected CompositionViewController compositionViewController;
-    protected TreeItem<Metadata> metadataTree;//TODO let subclasses take care of this
     private boolean locked=false;
     private boolean visible=true;//by default every item is visible
     private boolean solo=false;
@@ -130,7 +130,7 @@ public abstract class ItemViewController implements ItemViewDelegate {
     public abstract boolean contains(double x, double y);
     public abstract void hoveredOver(boolean isHoveringOver, boolean isSelected);
     public abstract Bounds getLayoutBoundsInWorksheet();
-    public abstract void moveBy(double dx, double dy);
+    public abstract void moveTo(double dx, double dy);
     public abstract UtilPoint getTranslation();
 
     /**
@@ -150,11 +150,11 @@ public abstract class ItemViewController implements ItemViewDelegate {
     public abstract void hasSelectionFocus(boolean isSelected);
     public abstract void hasSelectionFocus(boolean isSelected,boolean isSelectedInDetail);
     public abstract ItemModelController getModelController();
-    public abstract void addViewsToWorksheet();
-    public abstract void removeViewsFromWorksheet();
+    public abstract void addViewsTo(Pane pane);
+    public abstract void removeViews(Pane pane);
     /**@return deep copy of this item controller*/
     public abstract ItemViewController clone();
-    /**@return returns the metadata that contains all information about the properties of this item(lazily created)*/
+    /**@return returns the metadata that contains all information about the properties of this item*/
     public abstract TreeItem<Metadata> getMetadataTree();
     public abstract Shape getItemView();
 
@@ -191,7 +191,7 @@ public abstract class ItemViewController implements ItemViewDelegate {
      * @return the header metadata
      */
     public HeaderMetadata getHeaderMetadata() {
-        return (HeaderMetadata)metadataTree.getValue();
+        return (HeaderMetadata)getMetadataTree().getValue();
     }
 
     public ItemModel getItemModel(){
