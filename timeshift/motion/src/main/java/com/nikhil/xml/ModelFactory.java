@@ -1,6 +1,7 @@
 package com.nikhil.xml;
 
 import com.nikhil.model.freeform.MovablePoint;
+import com.nikhil.model.shape.CircleModel;
 import com.nikhil.model.shape.PolygonModel;
 import com.nikhil.model.shape.ShapeModel;
 import com.nikhil.space.bezier.path.BezierPoint;
@@ -23,6 +24,53 @@ import org.w3c.dom.NodeList;
  * Created by NikhilVerma on 20/08/15.
  */
 public class ModelFactory {
+
+    public CircleModel parseCircleModel(Element circleElement){
+
+        CircleModel circleModel=new CircleModel();
+        circleModel.setName(circleElement.getAttribute(XMLAttribute.NAME.toString()));
+
+        //traverse each child of the polygon tag
+        int length=circleElement.getChildNodes().getLength();
+        for (int i = 0; i < length; i++) {
+
+            //each direct child can either be Shape or Vertices tag
+            Node node=circleElement.getChildNodes().item(i);
+            if(node instanceof Element){
+                Element child=(Element)node;
+                XMLTag tag=XMLTag.toTag(child.getTagName());
+                if (tag == XMLTag.SHAPE) {
+                    extractShapeProperties(child, circleModel);
+                } else if (tag == XMLTag.INNER_RADIUS) {
+                    if (keyframesPresent(child)) {
+                        addKeyframes(child, circleModel.innerRadiusChange());
+                    } else {
+                        circleModel.setInnerRadius(Double.parseDouble(child.getTextContent()));
+                    }
+                }else if (tag == XMLTag.OUTER_RADIUS) {
+                    if (keyframesPresent(child)) {
+                        addKeyframes(child, circleModel.outerRadiusChange());
+                    } else {
+                        circleModel.setOuterRadius(Double.parseDouble(child.getTextContent()));
+                    }
+                }else if (tag == XMLTag.STARTING_ANGLE) {
+                    if (keyframesPresent(child)) {
+                        addKeyframes(child, circleModel.startingAngleChange());
+                    } else {
+                        circleModel.setStartingAngle(Double.parseDouble(child.getTextContent()));
+                    }
+                }else if (tag == XMLTag.ENDING_ANGLE) {
+                    if (keyframesPresent(child)) {
+                        addKeyframes(child, circleModel.endingAngleChange());
+                    } else {
+                        circleModel.setEndingAngle(Double.parseDouble(child.getTextContent()));
+                    }
+                }
+            }
+        }
+
+        return circleModel;
+    }
 
     public PolygonModel parsePolygonModel(Element polygonElement){
         PolygonModel polygonModel=new PolygonModel();
@@ -179,8 +227,6 @@ public class ModelFactory {
         }
     }
 
-
-
     protected void extractKeyframes(Element keyframeElement,TemporalKeyframeChangeNode temporalKeyframeChangeNode){
         TemporalKeyframe start=null;
         TemporalKeyframe last=null;
@@ -289,7 +335,6 @@ public class ModelFactory {
         }
         spatialKeyframeChangeNode.setKeyframes(start,last);
     }
-
 
     protected void extractKeyframe(Element spatialKeyframeElement,SpatialKeyframe spatialKeyframe){
         //traverse each bezier point of the key value(note only one is expected to be there)

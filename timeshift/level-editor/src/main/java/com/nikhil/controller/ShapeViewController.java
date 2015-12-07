@@ -367,6 +367,31 @@ public abstract class ShapeViewController extends ItemViewController implements 
     }
 
     @Override
+    public TemporalMetadata getTemporalMetadata(MetadataTag tag) {
+        switch (tag){
+
+            case SCALE:
+                return (TemporalMetadata)metadataTree.getChildren().get(SCALE_INDEX).getValue();
+            case ROTATION:
+                return (TemporalMetadata)metadataTree.getChildren().get(ROTATION_INDEX).getValue();
+            default:
+                return null;
+        }
+    }
+
+    @Override
+    public SpatialMetadata getSpatialMetadata(MetadataTag tag) {
+        switch (tag){
+            case TRANSLATION:
+                return (SpatialMetadata)metadataTree.getChildren().get(TRANSLATION_INDEX).getValue();
+            case ANCHOR_POINT:
+                return (SpatialMetadata)metadataTree.getChildren().get(ANCHOR_POINT_INDEX).getValue();
+            default:
+                return null;
+        }
+    }
+
+    @Override
     public void valueChanged(SpatialKeyframeChangeNode changeNode) {
         ShapeModel shapeModel = getItemModel();
         Shape shapeView = getItemView();

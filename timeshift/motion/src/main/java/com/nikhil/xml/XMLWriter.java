@@ -109,11 +109,6 @@ public class XMLWriter implements ModelVisitor {
     }
 
     @Override
-    public void visit(CircleModel circleModel) {
-
-    }
-
-    @Override
     public void visit(IsoscelesTriangle isoscelesTriangle) {
 
     }
@@ -139,6 +134,39 @@ public class XMLWriter implements ModelVisitor {
     }
 
     @Override
+    public void visit(CircleModel circleModel) {
+        Element circleTag=XMLTag.CIRCLE.element(document);
+        circleTag.setAttribute(XMLAttribute.NAME.toString(), circleModel.getName());
+        circleTag.appendChild(getShapeTag(circleModel));
+        
+        //add the circle specific circle properties
+        //<InnerRadius>
+        Element innerRadiusTag=XMLTag.INNER_RADIUS.element(document);
+        innerRadiusTag.appendChild(document.createTextNode(circleModel.getInnerRadius() + ""));
+
+        //<OuterRadius>
+        Element outerRadiusTag=XMLTag.OUTER_RADIUS.element(document);
+        outerRadiusTag.appendChild(document.createTextNode(circleModel.getOuterRadius() + ""));
+        
+        //<StartingAngle>
+        Element startingAngleTag=XMLTag.STARTING_ANGLE.element(document);
+        startingAngleTag.appendChild(document.createTextNode(circleModel.getStartingAngle() + ""));
+        
+        //<EndingAngle>
+        Element endingAngleTag=XMLTag.ENDING_ANGLE.element(document);
+        endingAngleTag.appendChild(document.createTextNode(circleModel.getEndingAngle() + ""));
+
+        circleTag.appendChild(innerRadiusTag);
+        circleTag.appendChild(outerRadiusTag);
+        circleTag.appendChild(startingAngleTag);
+        circleTag.appendChild(endingAngleTag);
+
+        //add to the last composition(this method doesn't know which composition it will  get added to)
+        itemContainer.appendChild(circleTag);
+        Logger.log("Saving Circle model "+circleModel.getName());
+    }
+
+    @Override
     public void visit(PolygonModel polygonModel) {
 
         Element polygonTag=XMLTag.POLYGON.element(document);
@@ -150,7 +178,7 @@ public class XMLWriter implements ModelVisitor {
 
         //add to the last composition(this method doesn't know which composition it will  get added to)
         itemContainer.appendChild(polygonTag);
-        Logger.log("Added polygon model");
+        Logger.log("Saving Polygon model "+polygonModel.getName());
     }
 
     @Override

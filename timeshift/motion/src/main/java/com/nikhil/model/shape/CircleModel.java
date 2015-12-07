@@ -32,6 +32,10 @@ public class CircleModel extends ShapeModel {
 	private TemporalKeyframeChangeNode endingAngleChange=new TemporalKeyframeChangeNode(new KeyValue(DEFAULT_ENDING_ANGLE));
 
 
+	public CircleModel() {
+		this(DEFAULT_INNER_RADIUS,DEFAULT_OUTER_RADIUS,DEFAULT_STARTING_ANGLE,DEFAULT_ENDING_ANGLE);
+	}
+
 	public CircleModel(double innerRadius, double outerRadius, double startingAngle, double endingAngle){
 		setInnerRadius(innerRadius);
 		setOuterRadius(outerRadius);
@@ -63,6 +67,22 @@ public class CircleModel extends ShapeModel {
 	}
 	public void setEndingAngle(double endingAngle) {
 		endingAngleChange.getCurrentValue().set(0,endingAngle);
+	}
+
+	public TemporalKeyframeChangeNode innerRadiusChange() {
+		return innerRadiusChange;
+	}
+
+	public TemporalKeyframeChangeNode outerRadiusChange() {
+		return outerRadiusChange;
+	}
+
+	public TemporalKeyframeChangeNode startingAngleChange() {
+		return startingAngleChange;
+	}
+
+	public TemporalKeyframeChangeNode endingAngleChange() {
+		return endingAngleChange;
 	}
 
 	@Override

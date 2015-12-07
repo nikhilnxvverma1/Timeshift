@@ -15,7 +15,7 @@ import com.nikhil.model.shape.Parallelogram;
  */
 public class ControllerFactory {
 
-    public ItemModelController getItemControllerFor(CircleModel circleModel){
+    public CircleModelController getItemControllerFor(CircleModel circleModel){
         return new CircleModelController(circleModel);
     }
 
@@ -27,7 +27,7 @@ public class ControllerFactory {
         return new ParallelogramModelController(parallelogram);
     }
 
-    public ItemModelController getItemControllerFor(PolygonModel polygonModel){
+    public PolygonModelController getItemControllerFor(PolygonModel polygonModel){
         return new PolygonModelController(polygonModel);
     }
 

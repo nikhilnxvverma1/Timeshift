@@ -2,8 +2,10 @@ package com.nikhil.xml;
 
 import com.nikhil.controller.CompositionController;
 import com.nikhil.controller.RootController;
+import com.nikhil.controller.item.CircleModelController;
 import com.nikhil.controller.item.ItemModelController;
 import com.nikhil.logging.Logger;
+import com.nikhil.model.shape.CircleModel;
 import com.nikhil.model.shape.PolygonModel;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -176,7 +178,14 @@ public class XMLReader {
                     compositionController.addItemController(polygonModelController);
 
                     //extend here
-                } else {
+                }else if (tag == XMLTag.CIRCLE) {
+                    CircleModel circleModel = modelFactory.parseCircleModel(element);
+                    CircleModelController circleModelController = controllerFactory.getItemControllerFor(circleModel);
+                    compositionController.addItemController(circleModelController);
+
+                    //extend here
+                }
+                else {
                     Logger.log("Unknown item in the composition");
                 }
             }

@@ -151,8 +151,8 @@ public class CircleView extends ShapeView{
         setRotate(circleView.getRotate());
         setTranslateX(circleView.getTranslateX());
         setTranslateY(circleView.getTranslateY());
-        setLayoutX(circleView.getLayoutX());
-        setLayoutY(circleView.getLayoutY());
+//        setLayoutX(circleView.getLayoutX());
+//        setLayoutY(circleView.getLayoutY());
 
         setInnerRadius(circleView.innerRadius);
         setOuterRadius(circleView.outerRadius);

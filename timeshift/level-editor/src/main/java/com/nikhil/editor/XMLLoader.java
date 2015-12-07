@@ -1,6 +1,7 @@
 package com.nikhil.editor;
 
 import com.nikhil.controller.*;
+import com.nikhil.controller.item.CircleModelController;
 import com.nikhil.controller.item.ItemModelController;
 import com.nikhil.controller.item.PolygonModelController;
 import com.nikhil.editor.workspace.Workspace;
@@ -76,6 +77,8 @@ public class XMLLoader {
     private ItemViewController getItemViewController(ItemModelController itemModelController,CompositionViewController compositionViewController){
         if(itemModelController instanceof PolygonModelController){
             return new PolygonViewController(compositionViewController,(PolygonModelController)itemModelController);
+        }else if(itemModelController instanceof CircleModelController){
+            return new CircleViewController(compositionViewController,(CircleModelController)itemModelController);
         }
         return null;
     }

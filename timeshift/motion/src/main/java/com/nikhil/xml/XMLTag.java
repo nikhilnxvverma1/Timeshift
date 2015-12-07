@@ -1,6 +1,7 @@
 package com.nikhil.xml;
 
 import com.nikhil.logging.Logger;
+import com.sun.tools.javadoc.Start;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
@@ -35,7 +36,13 @@ public enum XMLTag {
     TEMPORAL_KEYFRAMES,
     TEMPORAL_KEYFRAME,
     SPATIAL_KEYFRAMES,
-    SPATIAL_KEYFRAME;
+    SPATIAL_KEYFRAME,
+    CIRCLE,
+    INNER_RADIUS,
+    OUTER_RADIUS,
+    STARTING_ANGLE,
+    ENDING_ANGLE
+    ;
 
     @Override
     public String toString(){
@@ -90,6 +97,16 @@ public enum XMLTag {
                 return "spatialKeyframes";
             case SPATIAL_KEYFRAME:
                 return "spatialKeyframe";
+            case CIRCLE:
+                return "circle";
+            case INNER_RADIUS:
+                return "innerRadius";
+            case OUTER_RADIUS:
+                return "outerRadius";
+            case STARTING_ANGLE:
+                return "startingAngle";
+            case ENDING_ANGLE:
+                return "endingAngle";
         }
         return null;
     }
@@ -152,6 +169,16 @@ public enum XMLTag {
                 return SPATIAL_KEYFRAMES;
             case "spatialKeyframe":
                 return SPATIAL_KEYFRAME;
+            case "circle":
+                return CIRCLE;
+            case "innerRadius":
+                return INNER_RADIUS;
+            case "outerRadius":
+                return OUTER_RADIUS;
+            case "startingAngle":
+                return STARTING_ANGLE;
+            case "endingAngle":
+                return ENDING_ANGLE;
             default:
                 Logger.log("No tag found for:" + element);
         }
