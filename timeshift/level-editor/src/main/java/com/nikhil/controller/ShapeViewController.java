@@ -1,20 +1,29 @@
 package com.nikhil.controller;
 
+import com.nikhil.command.item.RotateShape;
+import com.nikhil.command.item.ScaleShape;
 import com.nikhil.editor.selection.SelectedItems;
 import com.nikhil.editor.workspace.Workspace;
 import com.nikhil.logging.Logger;
 import com.nikhil.math.MathUtil;
 import com.nikhil.model.shape.PolygonModel;
 import com.nikhil.model.shape.ShapeModel;
+import com.nikhil.timeline.KeyValue;
 import com.nikhil.timeline.change.spatial.SpatialChangeHandler;
 import com.nikhil.timeline.change.spatial.SpatialKeyframeChangeNode;
 import com.nikhil.timeline.change.temporal.TemporalChangeHandler;
 import com.nikhil.timeline.change.temporal.TemporalKeyframeChangeNode;
 import com.nikhil.util.modal.UtilPoint;
-import com.nikhil.view.item.record.Metadata;
+import com.nikhil.view.custom.DraggableTextValue;
+import com.nikhil.view.custom.DraggableTextValueDelegate;
+import com.nikhil.view.item.ShapeView;
+import com.nikhil.view.item.record.*;
+import javafx.beans.value.ChangeListener;
 import javafx.geometry.Bounds;
+import javafx.scene.Node;
 import javafx.scene.control.TreeItem;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.HBox;
 import javafx.scene.shape.Shape;
 
 /**
@@ -57,24 +66,83 @@ public abstract class ShapeViewController extends ItemViewController implements 
      * first so as to set change handlers for basic shape properties (S.R.T etc)
      */
     protected void setSelfAsChangeHandler(){
-        ShapeModel shapeModel = getShapeModel();
+        ShapeModel shapeModel = getItemModel();
         shapeModel.anchorPointChange().setChangeHandler(this);
         shapeModel.translationChange().setChangeHandler(this);
         shapeModel.scaleChange().setChangeHandler(this);
         shapeModel.rotationChange().setChangeHandler(this);
     }
-
+    
     /**
      * Each subclass of shape view controller is supposed to return the shape model
      * associated with the shape view controller
      * @return the model shape that the subclass controller represents
      */
-    protected abstract ShapeModel getShapeModel();
+    @Override
+    public abstract ShapeModel getItemModel();
+
+    @Override
+    public abstract ShapeView getItemView() ;
 
     @Override
     public UtilPoint getTranslation(){
         Shape itemView = getItemView();
         return new UtilPoint(itemView.getLayoutX(),itemView.getLayoutY());
+    }
+
+    @Override
+    public Bounds getLayoutBoundsInWorksheet() {
+        return getItemView().getBoundsInParent();
+    }
+    
+    protected void initMetadataTree(){
+
+        ShapeModel shapeModel = getItemModel();
+
+        //header
+        TreeItem<Metadata> headerMeta= new TreeItem<>(
+                new HeaderMetadata(shapeModel.getName(), MetadataTag.HEADER, this, true));
+
+        //scale
+        final TemporalMetadata scaleMeta = new TemporalMetadata(MetadataTag.SCALE,
+                shapeModel.scaleChange(),
+                this);
+        scaleMeta.setValueNode(createScaleValueNode(scaleMeta));
+        TreeItem<Metadata> scaleTreeItem= new TreeItem<>(scaleMeta);
+
+        //rotation
+        final TemporalMetadata rotationMeta = new TemporalMetadata(MetadataTag.ROTATION,
+                shapeModel.rotationChange(),
+                this);
+        rotationMeta.setValueNode(createRotateValueNode(rotationMeta));
+        TreeItem<Metadata> rotationTreeItem= new TreeItem<>(rotationMeta);
+
+        //translation
+        TreeItem<Metadata> translationTreeItem= new TreeItem<>(new SpatialMetadata(MetadataTag.TRANSLATION,
+                shapeModel.translationChange(),
+                this));
+
+        //anchor point
+        TreeItem<Metadata> anchorPointTreeItem= new TreeItem<>(new SpatialMetadata(MetadataTag.ANCHOR_POINT,
+                shapeModel.anchorPointChange(),
+                this));
+
+        headerMeta.getChildren().add(SCALE_INDEX,scaleTreeItem);
+        headerMeta.getChildren().add(ROTATION_INDEX,rotationTreeItem);
+        headerMeta.getChildren().add(TRANSLATION_INDEX,translationTreeItem);
+        headerMeta.getChildren().add(ANCHOR_POINT_INDEX,anchorPointTreeItem);
+        metadataTree=headerMeta;
+    }
+    
+    @Override
+    public TreeItem<Metadata> getMetadataTree() {
+        return metadataTree;
+    }
+
+    @Override
+    public boolean overlapsWithSceneBounds(Bounds sceneBounds) {
+        Bounds polygonBoundsInScene = getItemView().localToScene(getItemView().getLayoutBounds());
+        return polygonBoundsInScene.intersects(sceneBounds);
     }
 
     public double getScale(){
@@ -118,7 +186,86 @@ public abstract class ShapeViewController extends ItemViewController implements 
         Workspace workspace=compositionViewController.getWorkspace();
         double workPointX = workspace.workPointX(newX);
         double workPointY = workspace.workPointY(newY);
-        getShapeModel().setTranslation(new UtilPoint(workPointX, workPointY));
+        getItemModel().setTranslation(new UtilPoint(workPointX, workPointY));
+    }
+
+    private HBox createScaleValueNode(TemporalMetadata metadata){
+
+        DraggableTextValue draggableTextValue=new DraggableTextValue(new DraggableTextValueDelegate() {
+            @Override
+            public void valueBeingDragged(DraggableTextValue draggableTextValue, double initialValue, double oldValue, double newValue) {
+                double dScale = newValue - oldValue;
+                double oldScale=ShapeViewController.this.getScale();
+                double newScale=ShapeViewController.this.scaleBy(dScale);
+                metadata.registerContinuousChange(new KeyValue(oldScale), new KeyValue(newScale));
+                //update the outline
+                getCompositionViewController().getWorkspace().getSelectedItems().updateView();
+            }
+
+            @Override
+            public void valueFinishedChanging(DraggableTextValue draggableTextValue, double initialValue, double finalValue, boolean dragged) {
+                ScaleShape scaleShape =new ScaleShape(ShapeViewController.this,initialValue,finalValue);
+                metadata.pushWithKeyframe(scaleShape, !dragged);
+            }
+
+            @Override
+            public boolean isEnabled() {
+                return isInteractive();
+            }
+        });
+        draggableTextValue.setLowerLimit(0);
+        draggableTextValue.setLowerLimitExists(true);
+        draggableTextValue.setStep(0.01);
+        draggableTextValue.setValue(getItemView().getScaleX());
+
+        ChangeListener<? super Number> scaleListener = ((observable, oldValue, newValue) -> {
+            draggableTextValue.setValue(newValue.doubleValue());
+        });
+        getItemView().scaleXProperty().addListener(scaleListener);
+        return new HBox(draggableTextValue);
+    }
+    
+    private Node createRotateValueNode(TemporalMetadata metadata){
+
+        DraggableTextValue draggableTextValue=new DraggableTextValue(new DraggableTextValueDelegate() {
+
+            @Override
+            public void valueBeingDragged(DraggableTextValue draggableTextValue, double initialValue, double oldValue, double newValue) {
+                double step=newValue-oldValue;
+                ShapeViewController.this.rotateBy(step);
+                metadata.registerContinuousChange(new KeyValue(oldValue), new KeyValue(newValue));
+                //update the outline
+                getCompositionViewController().getWorkspace().getSelectedItems().updateView();
+                //revise the value if it goes beyond 360
+                if(newValue<0||newValue>=360){
+                    draggableTextValue.setValue(MathUtil.under360(newValue));
+                }
+            }
+
+            @Override
+            public void valueFinishedChanging(DraggableTextValue draggableTextValue, double initialValue, double finalValue, boolean dragged) {
+                if(finalValue<0||finalValue>=360){
+                    draggableTextValue.setValue(MathUtil.under360(finalValue));
+                }
+                RotateShape rotateShape=new RotateShape(ShapeViewController.this,initialValue,finalValue);
+                metadata.pushWithKeyframe(rotateShape, !dragged);
+            }
+
+            @Override
+            public boolean isEnabled() {
+                return isInteractive();
+            }
+        });
+        draggableTextValue.setStep(1);
+        draggableTextValue.setValue(getItemView().getRotate());
+
+        //TODO save as field so as to release memory later?
+        ChangeListener<? super Number> rotationListener = ((observable, oldValue, newValue) -> {
+            draggableTextValue.setValue(newValue.doubleValue());
+        });
+
+        getItemView().rotateProperty().addListener(rotationListener);
+        return new HBox(draggableTextValue);
     }
 
     @Override
@@ -130,12 +277,12 @@ public abstract class ShapeViewController extends ItemViewController implements 
         if(newScale<0.1){
             return getItemView().getScaleX();
         }
-        getItemView().setScaleX(newScale);
+        getItemView().setScale(newScale);
         getGizmo().updateView();
 
         //TODO convert to work point scale and update the business model
         double workScale=newScale;
-        getShapeModel().setScale(workScale);
+        getItemModel().setScale(workScale);
         return getScale();
     }
 
@@ -150,7 +297,7 @@ public abstract class ShapeViewController extends ItemViewController implements 
 
         //TODO convert to work point scale and update the business model
         double workRotation=newRotation;
-        getShapeModel().setRotation(workRotation);
+        getItemModel().setRotation(workRotation);
         return newRotation;
     }
 
@@ -221,7 +368,7 @@ public abstract class ShapeViewController extends ItemViewController implements 
 
     @Override
     public void valueChanged(SpatialKeyframeChangeNode changeNode) {
-        ShapeModel shapeModel = getShapeModel();
+        ShapeModel shapeModel = getItemModel();
         Shape shapeView = getItemView();
         if(changeNode==shapeModel.translationChange()){
             shapeView.setLayoutX(changeNode.getCurrentPoint().getX());
@@ -234,10 +381,10 @@ public abstract class ShapeViewController extends ItemViewController implements 
 
     @Override
     public void valueChanged(TemporalKeyframeChangeNode changeNode) {
-        ShapeModel shapeModel = getShapeModel();
-        Shape shapeView = getItemView();
+        ShapeModel shapeModel = getItemModel();
+        ShapeView shapeView = getItemView();
         if(changeNode==shapeModel.scaleChange()){
-            shapeView.setScaleX(changeNode.getCurrentValue().get(0));// for all shapes, scale y is bind to scale x
+            shapeView.setScale(changeNode.getCurrentValue().get(0));// for all shapes, scale y is bind to scale x
         }else if(changeNode==shapeModel.rotationChange()){
             shapeView.setRotate(changeNode.getCurrentValue().get(0));
         }

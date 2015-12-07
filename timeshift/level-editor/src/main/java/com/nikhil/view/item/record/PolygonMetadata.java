@@ -43,7 +43,7 @@ public class PolygonMetadata extends Metadata{
     };
 
     public PolygonMetadata(String name, MetadataTag tag, PolygonViewController polygonViewController) {
-        super(name, tag);
+        super(polygonViewController,name, tag);
         this.polygonViewController = polygonViewController;
     }
 

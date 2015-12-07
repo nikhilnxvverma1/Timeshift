@@ -24,7 +24,7 @@ public class RotateShape extends TemporalActionOnSingleItem {
         TemporalMetadata rotateMetadata = shapeViewController.getTemporalMetadata(MetadataTag.ROTATION);
         if (rotateMetadata.isKeyframable()) {
             double currentTime = shapeViewController.getCompositionViewController().getTime();
-            rotateMetadata.getTemporalKeyframeChangeNode().setTime(currentTime);
+            rotateMetadata.getKeyframeChangeNode().setTime(currentTime);
         }else{
             double dRotation=finalAngle-initialAngle;
             shapeViewController.rotateBy(dRotation);
@@ -37,7 +37,7 @@ public class RotateShape extends TemporalActionOnSingleItem {
         TemporalMetadata rotateMetadata = shapeViewController.getTemporalMetadata(MetadataTag.ROTATION);
         if (rotateMetadata.isKeyframable()) {
             double currentTime = shapeViewController.getCompositionViewController().getTime();
-            rotateMetadata.getTemporalKeyframeChangeNode().setTime(currentTime);
+            rotateMetadata.getKeyframeChangeNode().setTime(currentTime);
         }else{
             double dRotation= initialAngle - finalAngle;
             shapeViewController.rotateBy(dRotation);

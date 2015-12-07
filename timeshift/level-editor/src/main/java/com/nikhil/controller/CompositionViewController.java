@@ -183,16 +183,30 @@ public class CompositionViewController {
         }
     }
 
+    /**
+     * Adds the item view along with the associated view to this composition.
+     * @param itemViewController The item  to add. The item view will also be added to the worksheet.
+     */
     public void addItemViewController(ItemViewController itemViewController){
         addItemViewController(itemViewController, false);
     }
 
+    /**
+     * Adds the item view along with the associated view to this composition.
+     * @param itemViewController The item  to add. The item view will also be added to the worksheet.
+     * @param alreadyAddedToModelComposition true indicates that the model for this item was already added before
+     *                                       in the model composition (for example by the loading of the XML)
+     */
     public void addItemViewController(ItemViewController itemViewController,boolean alreadyAddedToModelComposition){
         itemViewControllers.add(itemViewController);
         TreeItem<Metadata> metadataTree = itemViewController.getMetadataTree();
         rootTreeItem.getInternalChildren().add(metadataTree);
-        worksheet.getChildren().add(itemViewController.getItemView());
-        outlineGroup.getChildren().add(itemViewController.getGizmo());
+        if (!worksheet.getChildren().contains(itemViewController.getItemView())) {
+            worksheet.getChildren().add(itemViewController.getItemView());
+        }
+        if (!outlineGroup.getChildren().contains(itemViewController.getGizmo())) {
+            outlineGroup.getChildren().add(itemViewController.getGizmo());
+        }
 //        itemViewController.addViewsTo(worksheet);
 
         //add to the timeline
@@ -211,6 +225,7 @@ public class CompositionViewController {
             TreeItem<Metadata> metadataTree = itemViewController.getMetadataTree();
             rootTreeItem.getInternalChildren().remove(metadataTree);
             worksheet.getChildren().remove(itemViewController.getItemView());
+            outlineGroup.getChildren().remove(itemViewController.getGizmo());
             //remove from timeline
             compositionController.getTimeline().remove(itemViewController.getItemModel().changeNodeIterator());
             compositionController.removeItemController(itemViewController.getModelController());

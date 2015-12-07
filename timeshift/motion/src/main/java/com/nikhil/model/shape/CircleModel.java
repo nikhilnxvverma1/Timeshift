@@ -19,10 +19,12 @@ import com.nikhil.timeline.Timeline;
  */
 public class CircleModel extends ShapeModel {
 
+	private static int CIRCLE_COUNT=0;
+
 	public static final double DEFAULT_INNER_RADIUS=0;
 	public static final double DEFAULT_OUTER_RADIUS=50;
 	public static final double DEFAULT_STARTING_ANGLE=0;
-	public static final double DEFAULT_ENDING_ANGLE=359;
+	public static final double DEFAULT_ENDING_ANGLE=359.99;
 
 	private TemporalKeyframeChangeNode innerRadiusChange=new TemporalKeyframeChangeNode(new KeyValue(DEFAULT_INNER_RADIUS));
 	private TemporalKeyframeChangeNode outerRadiusChange=new TemporalKeyframeChangeNode(new KeyValue(DEFAULT_OUTER_RADIUS));
@@ -30,35 +32,36 @@ public class CircleModel extends ShapeModel {
 	private TemporalKeyframeChangeNode endingAngleChange=new TemporalKeyframeChangeNode(new KeyValue(DEFAULT_ENDING_ANGLE));
 
 
-	public CircleModel(float innerRadius, float outerRadius, float startingAngle, float endingAngle){
+	public CircleModel(double innerRadius, double outerRadius, double startingAngle, double endingAngle){
 		setInnerRadius(innerRadius);
 		setOuterRadius(outerRadius);
 		setStartingAngle(startingAngle);
 		setEndingAngle(endingAngle);
+		this.setName("Circle " + (++CIRCLE_COUNT));
 	}
 
 	public double getInnerRadius() {
 		return innerRadiusChange.getCurrentValue().get(0);
 	}
-	public void setInnerRadius(float innerRadius) {
+	public void setInnerRadius(double innerRadius) {
 		innerRadiusChange.getCurrentValue().set(0,innerRadius);
 	}
 	public double getOuterRadius() {
 		return outerRadiusChange.getCurrentValue().get(0);
 	}
-	public void setOuterRadius(float outerRadius) {
+	public void setOuterRadius(double outerRadius) {
 		outerRadiusChange.getCurrentValue().set(0,outerRadius);
 	}
 	public double getStartingAngle() {
 		return startingAngleChange.getCurrentValue().get(0);
 	}
-	public void setStartingAngle(float startingAngle) {
+	public void setStartingAngle(double startingAngle) {
 		startingAngleChange.getCurrentValue().set(0,startingAngle);
 	}
 	public double getEndingAngle() {
 		return endingAngleChange.getCurrentValue().get(0);
 	}
-	public void setEndingAngle(float endingAngle) {
+	public void setEndingAngle(double endingAngle) {
 		endingAngleChange.getCurrentValue().set(0,endingAngle);
 	}
 

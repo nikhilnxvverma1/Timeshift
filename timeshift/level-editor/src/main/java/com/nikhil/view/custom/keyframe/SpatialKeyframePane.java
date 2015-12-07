@@ -5,7 +5,6 @@ import com.nikhil.timeline.keyframe.SpatialKeyframe;
 import com.nikhil.view.item.record.SpatialMetadata;
 import javafx.scene.Group;
 import javafx.scene.Node;
-import javafx.scene.layout.Pane;
 
 /**
  * Created by NikhilVerma on 11/11/15.
@@ -31,7 +30,7 @@ public class SpatialKeyframePane extends KeyframePane{
         //update the motion path
         updateMotionPath();
         //set the time of the spatial keyframe change node
-        metadata.getSpatialKeyframeChangeNode().setTime(currentTime);
+        metadata.getKeyframeChangeNode().setTime(currentTime);
     }
 
     @Override
@@ -46,7 +45,7 @@ public class SpatialKeyframePane extends KeyframePane{
      */
     public void addKeyframe(SpatialKeyframeView keyframeView){
         //add the keyframe model to the spatial change node
-        metadata.getSpatialKeyframeChangeNode().addKeyframe(keyframeView.getKeyframeModel());
+        metadata.getKeyframeChangeNode().addKeyframe(keyframeView.getKeyframeModel());
 
         //select it and add it to the "keyContainer" node.
         keyframeView.setSelected(true);
@@ -79,7 +78,7 @@ public class SpatialKeyframePane extends KeyframePane{
         boolean wasRemoved = keyContainer.getChildren().remove(keyframeView);
         if(wasRemoved){
             //remove the value from the change node too
-            metadata.getSpatialKeyframeChangeNode().removeKeyframe(keyframeView.getKeyframeModel());
+            metadata.getKeyframeChangeNode().removeKeyframe(keyframeView.getKeyframeModel());
             Group worksheetPane = metadata.getItemViewController().getCompositionViewController().getOutlineGroup();
             keyframeView.getInteractiveBezierPoint().removeAsChildrenFrom(worksheetPane);
             if (previousKeyframeView != null) {
@@ -108,7 +107,7 @@ public class SpatialKeyframePane extends KeyframePane{
     }
 
     private void initKeyframes(){
-        SpatialKeyframe t=metadata.getSpatialKeyframeChangeNode().getStart();
+        SpatialKeyframe t=metadata.getKeyframeChangeNode().getStart();
         while(t!=null){
             insertKeyframeWithBezierPoint(new SpatialKeyframeView(t, this));
             t=t.getNext();

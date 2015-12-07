@@ -1,8 +1,10 @@
 package com.nikhil.editor.tool;
 
 import com.nikhil.command.AddCircle;
+import com.nikhil.controller.CircleViewController;
 import com.nikhil.editor.workspace.Workspace;
 import com.nikhil.math.MathUtil;
+import com.nikhil.view.item.CircleView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.shape.Circle;
 
@@ -11,7 +13,7 @@ import javafx.scene.shape.Circle;
  */
 public class CircleTool extends BaseTool{
 
-    private Circle circle;
+    private CircleView circleView;
     private double initialX,initialY;
 
     public CircleTool(Workspace workspace) {
@@ -22,11 +24,11 @@ public class CircleTool extends BaseTool{
     public void mousePressed(MouseEvent mouseEvent) {
         initialX=xInWorksheet(mouseEvent);
         initialY=yInWorksheet(mouseEvent);
-        circle =new Circle();
-        circle.setCenterX(initialX);
-        circle.setCenterY(initialY);
-        circle.setRadius(1);//initial radius is otherwise negligible
-        workspace.getCurrentComposition().getWorksheet().getChildren().add(circle);
+        circleView =new CircleView();
+        circleView.setLayoutX(initialX);
+        circleView.setLayoutY(initialY);
+        circleView.setOuterRadius(1);//initial radius is otherwise negligible
+        workspace.getCurrentComposition().getWorksheet().getChildren().add(circleView);
     }
 
     @Override
@@ -35,16 +37,15 @@ public class CircleTool extends BaseTool{
         double x=xInWorksheet(mouseEvent);
         double y=yInWorksheet(mouseEvent);
         double radius= MathUtil.distance(initialX,initialY,x,y);
-        circle.setRadius(radius);
+        circleView.setOuterRadius(radius);
 
     }
 
     @Override
     public void mouseReleased(MouseEvent mouseEvent) {
-
-        AddCircle addCircle = new AddCircle(circle, workspace.getCurrentComposition().getWorksheet());
-//        addCircle.execute();
-//        commandStack.push(addCircle);
+        CircleViewController circleViewController=new CircleViewController(workspace.getCurrentComposition(),circleView);
+        AddCircle addCircle=new AddCircle(circleViewController);
+        workspace.pushCommand(addCircle);
     }
 
     @Override

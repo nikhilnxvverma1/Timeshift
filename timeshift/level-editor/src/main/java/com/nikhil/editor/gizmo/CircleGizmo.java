@@ -1,10 +1,11 @@
 package com.nikhil.editor.gizmo;
 
+import com.nikhil.logging.Logger;
 import com.nikhil.math.MathUtil;
+import com.nikhil.model.shape.CircleModel;
 import com.nikhil.view.item.CircleView;
 import javafx.scene.Node;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.Pane;
 import javafx.scene.shape.Circle;
 
 /**
@@ -14,7 +15,7 @@ import javafx.scene.shape.Circle;
  */
 public class CircleGizmo extends Gizmo{
 
-    //TODO have a delegate for all the tweaking callbacks
+    public static final int LARGE_ANGLE_CHANGE = 300;
     private CircleView circleView;
     private CircleView outlineCircle;
     private Circle innerRadiusHandle;
@@ -67,7 +68,7 @@ public class CircleGizmo extends Gizmo{
         double handleRadius=endAngleHandle.getRadius();
         double handleReductionAngle=Math.toDegrees(Math.atan(handleRadius / circleView.getOuterRadius()));
         double totalRadius=handleRadius+circleView.getOuterRadius();
-        double angle=circleView.getEndAngle()-handleReductionAngle;
+        double angle=circleView.getEndingAngle()-handleReductionAngle;
         angle=Math.toRadians(angle);
         double x=Math.cos(angle)*totalRadius+circleView.getLayoutX();
         double y=Math.sin(angle)*totalRadius+circleView.getLayoutY();
@@ -79,7 +80,7 @@ public class CircleGizmo extends Gizmo{
         double handleRadius=startAngleHandle.getRadius();
         double handleElevationAngle=Math.toDegrees(Math.atan(handleRadius / circleView.getOuterRadius()));
         double totalRadius=handleRadius+circleView.getOuterRadius();
-        double angle=circleView.getStartAngle()+handleElevationAngle;
+        double angle=circleView.getStartingAngle()+handleElevationAngle;
         angle=Math.toRadians(angle);
         double x=Math.cos(angle)*totalRadius+circleView.getLayoutX();
         double y=Math.sin(angle)*totalRadius+circleView.getLayoutY();
@@ -88,7 +89,7 @@ public class CircleGizmo extends Gizmo{
     }
 
     private void updateInnerRadiusHandle() {
-        double averageAngle=(circleView.getStartAngle()+circleView.getEndAngle())/2;
+        double averageAngle=(circleView.getStartingAngle()+circleView.getEndingAngle())/2;
         averageAngle=Math.toRadians(averageAngle);
 
         double ix=Math.cos(averageAngle)*circleView.getInnerRadius()+circleView.getLayoutX();
@@ -98,7 +99,7 @@ public class CircleGizmo extends Gizmo{
     }
 
     private void updateOuterRadiusHandle() {
-        double averageAngle=(circleView.getStartAngle()+circleView.getEndAngle())/2;
+        double averageAngle=(circleView.getStartingAngle()+circleView.getEndingAngle())/2;
         averageAngle=Math.toRadians(averageAngle);
         double ox=Math.cos(averageAngle)*circleView.getOuterRadius()+circleView.getLayoutX();
         double oy=Math.sin(averageAngle)*circleView.getOuterRadius()+circleView.getLayoutY();
@@ -132,13 +133,24 @@ public class CircleGizmo extends Gizmo{
         double angleY=event.getY()+endAngleHandle.getTranslateY();
         double angle=MathUtil.angleOfPoint(centerX,centerY,angleX,angleY);
         angle+=handleReductionAngle;//discount the small angle shift created for the handle
-        System.out.println("end angel to possibly set : "+angle);
-        if(angle>circleView.getStartAngle()){
-            circleView.setEndAngle(angle);
-            outlineCircle.setEndAngle(angle);
+        double change=circleView.getEndingAngle()-angle;
+        //large sudden changes to angle are not allowed(which may arise if the user rotates one full circle
+        // and goes over)
+        if(angle>circleView.getStartingAngle()){
+            System.out.println("end angle to setting to : " + angle);
+            if(angle<=359.99){
+                circleView.setEndAngle(angle);
+                outlineCircle.setEndAngle(angle);
+            }else{
+                circleView.setEndAngle(359.99);
+                outlineCircle.setEndAngle(359.99);
+            }
             updateEndAngleHandle();
             updateOuterRadiusHandle();
             updateInnerRadiusHandle();
+            circleView.getDelegate().propertyCurrentlyGettingTweaked();
+        }else{
+            Logger.log("rejecting angle of "+angle);
         }
         event.consume();
     }
@@ -152,14 +164,15 @@ public class CircleGizmo extends Gizmo{
         double angleY=event.getY()+startAngleHandle.getTranslateY();
         double angle=MathUtil.angleOfPoint(centerX,centerY,angleX,angleY);
         angle+=handleReductionAngle;//discount the small angle shift created for the handle
-        System.out.println("end angel to possibly set : "+angle);
-        if(angle<circleView.getEndAngle()){
+        System.out.println("start angle to possibly set : "+angle);
+        if(angle<circleView.getEndingAngle()){
             circleView.setStartAngle(angle);
             outlineCircle.setStartAngle(angle);
             updateStartAngleHandle();
             updateOuterRadiusHandle();
             updateInnerRadiusHandle();
         }
+        circleView.getDelegate().propertyCurrentlyGettingTweaked();
         event.consume();
     }
 
@@ -175,9 +188,9 @@ public class CircleGizmo extends Gizmo{
             updateInnerRadiusHandle();
 //            innerRadiusHandle.setCenterX(innerX);
 //            innerRadiusHandle.setCenterY(innerY);
-            //TODO notify delegate
 
         }
+        circleView.getDelegate().propertyCurrentlyGettingTweaked();
         event.consume();
     }
 
@@ -197,9 +210,9 @@ public class CircleGizmo extends Gizmo{
             updateEndAngleHandle();
 //            outerRadiusHandle.setCenterX(outerX);
 //            outerRadiusHandle.setCenterY(outerY);
-            //TODO notify delegate
 
         }
+        circleView.getDelegate().propertyCurrentlyGettingTweaked();
         event.consume();
     }
 }

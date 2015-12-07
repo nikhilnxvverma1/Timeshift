@@ -34,11 +34,6 @@ public class AddPolygon extends Command{
         CompositionViewController compositionViewController = polygonViewController.getCompositionViewController();
         //and controller to the compositionViewController
         compositionViewController.addItemViewController(polygonViewController);
-        //add the polygon and its gizmo to the view
-//        polygonViewController.addViewsTo();
-
-        //add to timeline
-//        compositionViewController.addToTimelineSystem(polygonViewController);
     }
 
     @Override
@@ -47,15 +42,10 @@ public class AddPolygon extends Command{
         //remove the controller from the item view controller list
         CompositionViewController compositionViewController=polygonViewController.getCompositionViewController();
         compositionViewController.removeItemViewController(polygonViewController);
-        //also remove the polygon views and gizmo from the worksheet
-//        polygonViewController.removeViews();
 
         //show the graphical helping outline again
         addGraphicalPolygonPointsToView();
         drawLineBetweenFirstAndLastPoint();
-
-        //remove from timeline
-//        compositionViewController.removeFromTimelineSystem(polygonViewController);
     }
 
     private void drawLineBetweenFirstAndLastPoint() {

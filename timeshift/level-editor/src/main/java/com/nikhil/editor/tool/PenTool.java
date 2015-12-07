@@ -30,8 +30,8 @@ public class PenTool extends BaseTool{
     @Override
     public void mousePressed(MouseEvent mouseEvent) {
         //instantiate new graphical bezier point
-        double x=mouseEvent.getX();
-        double y=mouseEvent.getY();
+        double x=xInWorksheet(mouseEvent);
+        double y=yInWorksheet(mouseEvent);
         Logger.log("bezier point x,y " + x+","+y);
 
 
@@ -78,8 +78,8 @@ public class PenTool extends BaseTool{
         int size = bezierPoints.size();
         GraphicalBezierPoint lastGraphicalBezierPoint= bezierPoints.get(size - 1);
         //get relative drag from initial point
-        double x=lastGraphicalBezierPoint.getAnchorPoint().getX()-mouseEvent.getX();
-        double y=lastGraphicalBezierPoint.getAnchorPoint().getY()-mouseEvent.getY();
+        double x=lastGraphicalBezierPoint.getAnchorPoint().getX()-xInWorksheet(mouseEvent);
+        double y=lastGraphicalBezierPoint.getAnchorPoint().getY()-yInWorksheet(mouseEvent);
         Logger.log("dragged at "+x+","+y);
         lastGraphicalBezierPoint.extendPreviousControlPoint(x, y);
 

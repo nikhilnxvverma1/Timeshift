@@ -32,141 +32,52 @@ import javafx.scene.control.ToggleButton;
 import javafx.scene.control.Tooltip;
 import javafx.scene.layout.HBox;
 
+import java.time.temporal.Temporal;
+
 /**
+ * Metadata for any temporal property. <b>After instantiating, make sure to
+ * call setValueNode to supply the required node that controls this property.</b>
  * Created by NikhilVerma on 11/11/15.
  */
-public class TemporalMetadata extends Metadata{
+public class TemporalMetadata extends PropertyMetadata{
 
-    private ItemViewController itemViewController;
     private TemporalKeyframePane temporalKeyframePane;
     private TemporalKeyframeChangeNode temporalKeyframeChangeNode;
+    private Node valueNode;
 
-    private CheckBox keyframable;
-    private ChangeListener<? super Number>[]propertyListeners=null;//hold reference to prevent it from being garbage collected
     private AddTemporalKeyframe recentAddKeyframeCommand;
     private ModifyTemporalKeyframe recentModifyKeyframeCommand;
 
-    //TODO we might not need these, on remove from the scene graph , the buttons will be garbage collected
-    private EventHandler<ActionEvent> selectPreviousKeyframe=e->{
-        itemViewController.getCompositionViewController().getKeyframeTable().resetSelectionOfEachExcept(getKeyframePane());
-        final KeyframeView previousKeyframe=getKeyframePane().selectPreviousKeyframe();
-        if(previousKeyframe!=null){
-            itemViewController.getCompositionViewController().getPlayback().seekTo(previousKeyframe.getTime());
-        }
-    };
-    private EventHandler<ActionEvent> selectNextKeyframe=e->{
-        itemViewController.getCompositionViewController().getKeyframeTable().resetSelectionOfEachExcept(getKeyframePane());
-        final KeyframeView nextKeyframe = getKeyframePane().selectNextKeyframe();
-        if(nextKeyframe!=null){
-            itemViewController.getCompositionViewController().getPlayback().seekTo(nextKeyframe.getTime());
-        }
-    };
-    private EventHandler<ActionEvent> addManualKeyframe=e->{
-
-        if(!itemViewController.isInteractive()){
-            return;
-        }
-
-        if (isKeyframable()) {
-
-            //get the current time of the composition
-            double currentTime=itemViewController.getCompositionViewController().getTime();
-            //find a keyframe near that time
-            TemporalKeyframe nearbyKeyframe = temporalKeyframeChangeNode.findNearbyKeyframe(currentTime,
-                    CompositionViewController.NEGLIGIBLE_TIME_DIFFERENCE);
-
-            //create a command to add a manual keyframe at this time
-            if(nearbyKeyframe==null){
-                TemporalKeyframeView newKeyframe = createNewKeyframe(temporalKeyframeChangeNode.getCurrentValue(), currentTime);
-                recentAddKeyframeCommand = new AddTemporalKeyframe(newKeyframe,true);
-                itemViewController.getCompositionViewController().getWorkspace().pushCommand(recentAddKeyframeCommand);
-            }
-            //else ignore if a nearby keyframe already exists
-
-        }
-    };
-
     public TemporalMetadata(MetadataTag tag,TemporalKeyframeChangeNode temporalKeyframeChangeNode,ItemViewController itemViewController) {
-        super(tag.toString(), tag);
-        //TODO throw exception if inappropriate tag is given for a controller
-        //for example rotation tag for a travel path
+        super(itemViewController, tag);
         this.temporalKeyframeChangeNode=temporalKeyframeChangeNode;
-        this.itemViewController=itemViewController;
-        this.keyframable=new CheckBox();
-        this.keyframable.setSelected(!temporalKeyframeChangeNode.isEmpty());
-        this.keyframable.setOnAction(event -> {
-            if(!itemViewController.isInteractive()){
-                //undo the selection that just got made
-                keyframable.setSelected(!keyframable.isSelected());
-                return;
-            }
-            if(keyframable.isSelected()){
-                double currentTime=itemViewController.getCompositionViewController().getTime();
-                TemporalKeyframeView newKeyframe = createNewKeyframe(temporalKeyframeChangeNode.getCurrentValue(), currentTime);
-                EnableStopWatch enableStopWatch = new EnableStopWatch(newKeyframe);
-                itemViewController.getCompositionViewController().getWorkspace().pushCommand(enableStopWatch);
-            }else{
-                DisableStopWatch disableStopWatch=new DisableStopWatch(this);
-                itemViewController.getCompositionViewController().getWorkspace().pushCommand(disableStopWatch);
-            }
-        });
-        initKeyframePane(itemViewController.getCompositionViewController().getTimelineWidth());
+        postInit();
     }
 
-    public TemporalKeyframeChangeNode getTemporalKeyframeChangeNode() {
+    @Override
+    public TemporalKeyframeChangeNode getKeyframeChangeNode() {
         return temporalKeyframeChangeNode;
     }
 
     @Override
-    public ItemViewController getItemViewController() {
-        return itemViewController;
+    public void pushManualKeyframeCommand(double time) {
+        TemporalKeyframeView newKeyframe = createNewKeyframe(temporalKeyframeChangeNode.getCurrentValue(), time);
+        recentAddKeyframeCommand = new AddTemporalKeyframe(newKeyframe,true);
+        itemViewController.getCompositionViewController().getWorkspace().pushCommand(recentAddKeyframeCommand);
     }
 
     @Override
-    public Node getNameNode() {
-        return keyframable;
-    }
-
-    @Override
-    public boolean isKeyframable(){
-        return keyframable.isSelected();
-    }
-
-    @Override
-    public void setKeyframable(boolean keyframable) {
-        this.keyframable.setSelected(keyframable);
+    protected KeyframeView createNewKeyframe(double time) {
+        return createNewKeyframe(temporalKeyframeChangeNode.getCurrentValue(),time);
     }
 
     @Override
     public Node getValueNode() {
-        switch (tag){
-            case SCALE:
-                return getScaleValueNode();
-            case ROTATION:
-                return getRotationValueNode();
-        }
-        return null;
+        return valueNode;
     }
 
-    @Override
-    public Node getOptionNode() {
-        Button previousKeyframe = new Button("<");
-        previousKeyframe.setOnAction(selectPreviousKeyframe);
-        Tooltip.install(previousKeyframe, new Tooltip("Previous Keyframe"));
-
-        ToggleButton toggleButton = new ToggleButton("*");
-        toggleButton.setOnAction(addManualKeyframe);
-        Tooltip.install(toggleButton, new Tooltip("Toggle Keyframe"));
-
-        Button nextKeyframe = new Button(">");
-        nextKeyframe.setOnAction(selectNextKeyframe);
-        Tooltip.install(nextKeyframe, new Tooltip("Next Keyframe"));
-        return new HBox(previousKeyframe, toggleButton, nextKeyframe);
-    }
-
-    @Override
-    public boolean isHeader() {
-        return false;
+    public void setValueNode(Node valueNode) {
+        this.valueNode = valueNode;
     }
 
     @Override
@@ -184,97 +95,6 @@ public class TemporalMetadata extends Metadata{
     @Override
     public TemporalKeyframePane getKeyframePane() {
         return temporalKeyframePane;
-    }
-
-    private HBox getScaleValueNode(){
-        if(!(itemViewController instanceof ShapeViewController)){
-            throw new RuntimeException("Scale changes are only defined on shapes");
-        }
-        DraggableTextValue draggableTextValue=new DraggableTextValue(new DraggableTextValueDelegate() {
-            @Override
-            public void valueBeingDragged(DraggableTextValue draggableTextValue, double initialValue, double oldValue, double newValue) {
-                double dScale = newValue - oldValue;
-                double oldScale=((ShapeViewController) itemViewController).getScale();
-                double newScale=itemViewController.scaleBy(dScale);
-                registerContinuousChange(new KeyValue(oldScale),new KeyValue(newScale));
-                //update the outline
-                itemViewController.getCompositionViewController().getWorkspace().getSelectedItems().updateView();
-            }
-
-            @Override
-            public void valueFinishedChanging(DraggableTextValue draggableTextValue, double initialValue, double finalValue, boolean dragged) {
-                ScaleShape scaleShape =new ScaleShape((ShapeViewController)itemViewController,initialValue,finalValue);
-//                itemViewController.getCompositionViewController().getWorkspace().pushCommand(scaleShape,!dragged);
-                pushWithKeyframe(scaleShape,!dragged);
-            }
-
-            @Override
-            public boolean isEnabled() {
-                return itemViewController.isInteractive();
-            }
-        });
-        draggableTextValue.setLowerLimit(0);
-        draggableTextValue.setLowerLimitExists(true);
-        draggableTextValue.setStep(0.01);
-        draggableTextValue.setValue(itemViewController.getItemView().getScaleX());
-        if(propertyListeners !=null){
-            itemViewController.getItemView().scaleXProperty().removeListener(propertyListeners[0]);
-        }
-        propertyListeners = new ChangeListener[1];
-        propertyListeners[0] = ((observable, oldValue, newValue) -> {
-            draggableTextValue.setValue(newValue.doubleValue());
-        });
-        itemViewController.getItemView().scaleXProperty().addListener(propertyListeners[0]);
-        return new HBox(draggableTextValue);
-    }
-
-    private HBox getRotationValueNode(){
-        if(!(itemViewController instanceof ShapeViewController)){
-            throw new RuntimeException("Rotation changes are only defined on shapes");
-        }
-        DraggableTextValue draggableTextValue=new DraggableTextValue(new DraggableTextValueDelegate() {
-
-            @Override
-            public void valueBeingDragged(DraggableTextValue draggableTextValue, double initialValue, double oldValue, double newValue) {
-                double step=newValue-oldValue;
-                double oldRotation=((ShapeViewController) itemViewController).getRotation();
-                double newRotation = itemViewController.rotateBy(step);
-                registerContinuousChange(new KeyValue(oldValue),new KeyValue(newValue));
-                //update the outline
-                itemViewController.getCompositionViewController().getWorkspace().getSelectedItems().updateView();
-                //revise the value if it goes beyond 360
-                if(newValue<0||newValue>=360){
-                    draggableTextValue.setValue(MathUtil.under360(newValue));
-                }
-            }
-
-            @Override
-            public void valueFinishedChanging(DraggableTextValue draggableTextValue, double initialValue, double finalValue, boolean dragged) {
-                if(finalValue<0||finalValue>=360){
-                    draggableTextValue.setValue(MathUtil.under360(finalValue));
-                }
-                RotateShape rotateShape=new RotateShape(((ShapeViewController)itemViewController),initialValue,finalValue);
-                pushWithKeyframe(rotateShape,!dragged);
-            }
-
-            @Override
-            public boolean isEnabled() {
-                return itemViewController.isInteractive();
-            }
-        });
-        draggableTextValue.setStep(1);
-        draggableTextValue.setValue(itemViewController.getItemView().getRotate());
-
-        if(propertyListeners !=null){
-            itemViewController.getItemView().rotateProperty().removeListener(propertyListeners[0]);
-        }
-        propertyListeners = new ChangeListener[1];
-        propertyListeners[0] = ((observable, oldValue, newValue) -> {
-            draggableTextValue.setValue(newValue.doubleValue());
-        });
-
-        itemViewController.getItemView().rotateProperty().addListener(propertyListeners[0]);
-        return new HBox(draggableTextValue);
     }
 
     /**
@@ -356,7 +176,6 @@ public class TemporalMetadata extends Metadata{
 
         }
     }
-
 
     /**
      * Pushes the supplied command to the command stack by composing it in an existing

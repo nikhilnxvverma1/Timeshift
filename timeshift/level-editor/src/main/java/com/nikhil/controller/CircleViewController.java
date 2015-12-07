@@ -1,39 +1,42 @@
 package com.nikhil.controller;
 
+import com.nikhil.controller.item.CircleModelController;
 import com.nikhil.controller.item.ItemModelController;
-import com.nikhil.editor.gizmo.Gizmo;
+import com.nikhil.editor.gizmo.CircleGizmo;
+import com.nikhil.model.shape.CircleModel;
 import com.nikhil.model.shape.ShapeModel;
+import com.nikhil.view.item.CircleView;
+import com.nikhil.view.item.delegate.CircleViewDelegate;
 import com.nikhil.view.item.record.Metadata;
 import com.nikhil.view.item.record.MetadataTag;
 import com.nikhil.view.item.record.SpatialMetadata;
 import com.nikhil.view.item.record.TemporalMetadata;
 import javafx.geometry.Bounds;
 import javafx.scene.control.TreeItem;
-import javafx.scene.shape.Shape;
-
 /**
  * View controller for the circle model
  * Created by NikhilVerma on 06/12/15.
  */
-public class CircleViewController extends ShapeViewController{
+public class CircleViewController extends ShapeViewController implements CircleViewDelegate{
 
-    public CircleViewController(CompositionViewController compositionViewController) {
+    private CircleModelController circleModelController;
+    private CircleView circleView;
+    private CircleGizmo circleGizmo;
+
+    public CircleViewController(CompositionViewController compositionViewController,CircleView circleView) {
         super(compositionViewController);
-    }
-
-    @Override
-    public Bounds getLayoutBoundsInWorksheet() {
-        return null;
-    }
-
-    @Override
-    public boolean overlapsWithSceneBounds(Bounds sceneBounds) {
-        return false;
+        this.circleView=circleView;
+        this.circleView.setDelegate(this);
+        constructModelControllerUsingView();
+        circleGizmo=new CircleGizmo(circleView);
+        setSelfAsChangeHandler();
+        initMetadataTree();
+        compositionViewController.getWorkspace().getSelectedItems().requestFocus(this, false);
     }
 
     @Override
     public ItemModelController getModelController() {
-        return null;
+        return circleModelController;
     }
 
     @Override
@@ -42,13 +45,8 @@ public class CircleViewController extends ShapeViewController{
     }
 
     @Override
-    public TreeItem<Metadata> getMetadataTree() {
-        return null;
-    }
-
-    @Override
-    public Shape getItemView() {
-        return null;
+    public CircleView getItemView() {
+        return circleView;
     }
 
     @Override
@@ -62,18 +60,39 @@ public class CircleViewController extends ShapeViewController{
     }
 
     @Override
-    public Gizmo getGizmo() {
-        return null;
+    public CircleGizmo getGizmo() {
+        return circleGizmo;
     }
 
     @Override
-    protected ShapeModel getShapeModel() {
-        return null;
+    public CircleModel getItemModel() {
+        return circleModelController.getCircleModel();
     }
 
     @Override
     protected void constructModelControllerUsingView() {
+        CircleModel circleModel=new CircleModel(circleView.getInnerRadius(),circleView.getOuterRadius(),
+                circleView.getStartingAngle(),circleView.getEndingAngle());
+        circleModelController=new CircleModelController(circleModel);
+    }
+
+    @Override
+    public void finishedTweakingInnerRadius(double initialInnerRadius) {
 
     }
 
+    @Override
+    public void finishedTweakingOuterRadius(double initialOuterRadius) {
+
+    }
+
+    @Override
+    public void finishedTweakingStartingAngle(double initialStartingAngle) {
+
+    }
+
+    @Override
+    public void finishedTweakingEndingAngle(double initialEndingAngle) {
+
+    }
 }

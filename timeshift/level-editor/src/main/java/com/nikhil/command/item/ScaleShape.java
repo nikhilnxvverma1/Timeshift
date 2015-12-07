@@ -25,7 +25,7 @@ public class ScaleShape extends TemporalActionOnSingleItem {
         TemporalMetadata scaleMetadata = shapeViewController.getTemporalMetadata(MetadataTag.SCALE);
         if (scaleMetadata.isKeyframable()) {
             double currentTime = shapeViewController.getCompositionViewController().getTime();
-            scaleMetadata.getTemporalKeyframeChangeNode().setTime(currentTime);
+            scaleMetadata.getKeyframeChangeNode().setTime(currentTime);
         }else{
             double dScale = finalScale - initialScale;
             shapeViewController.scaleBy(dScale);
@@ -37,7 +37,7 @@ public class ScaleShape extends TemporalActionOnSingleItem {
         TemporalMetadata scaleMetadata = shapeViewController.getTemporalMetadata(MetadataTag.SCALE);
         if (scaleMetadata.isKeyframable()) {
             double currentTime = shapeViewController.getCompositionViewController().getTime();
-            scaleMetadata.getTemporalKeyframeChangeNode().setTime(currentTime);
+            scaleMetadata.getKeyframeChangeNode().setTime(currentTime);
         }else{
             double dScale = initialScale - finalScale;
             shapeViewController.scaleBy(dScale);

@@ -13,9 +13,10 @@ import javafx.scene.shape.Path;
 import java.util.List;
 
 /**
+ * Polygon view to display a polygon with a bunch of vertices.
  * Created by NikhilVerma on 06/09/15.
  */
-public class PolygonView extends Path{
+public class PolygonView extends ShapeView{
 
     private PolygonViewDelegate delegate;
 
@@ -53,7 +54,7 @@ public class PolygonView extends Path{
         this.getElements().add(new ClosePath());
         this.setFill(Color.ORANGE);
         this.setStroke(null);
-        this.scaleYProperty().bind(this.scaleXProperty());
+//        this.scaleYProperty().bind(this.scaleXProperty());
     }
 
     public void updatePoint(int index,UtilPoint newLocation){
@@ -84,14 +85,6 @@ public class PolygonView extends Path{
         return scaleXProperty();
     }
 
-    public double getScale() {
-        return getScaleX();
-    }
-
-    public void setScale(double scale) {
-        this.setScaleX(scale);
-    }
-
     public List<UtilPoint> getPolygonPoints() {
         return polygonPoints;
     }
@@ -101,26 +94,13 @@ public class PolygonView extends Path{
         updatePoints();
     }
 
+    @Override
     public PolygonViewDelegate getDelegate() {
         return delegate;
     }
 
     public void setDelegate(PolygonViewDelegate delegate) {
         this.delegate = delegate;
-        if(delegate!=null){
-            this.setOnMousePressed((e) -> {
-                delegate.mousePressed(e);
-            });
-            this.setOnMouseDragged((e)->{
-                delegate.mouseDragged(e);
-            });
-            this.setOnMouseReleased((e)->{
-                delegate.mouseReleased(e);
-            });
-        }else{
-            this.setOnMousePressed(null);
-            this.setOnMouseDragged(null);
-            this.setOnMouseReleased(null);
-        }
+        setDelegateAsEventHandler();
     }
 }

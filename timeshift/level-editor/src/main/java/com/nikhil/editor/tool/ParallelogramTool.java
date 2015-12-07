@@ -23,8 +23,8 @@ public class ParallelogramTool extends BaseTool {
 
     @Override
     public void mousePressed(MouseEvent mouseEvent) {
-        initialX=mouseEvent.getX();
-        initialY=mouseEvent.getY();
+        initialX=xInWorksheet(mouseEvent);
+        initialY=yInWorksheet(mouseEvent);
         rectangle=new Rectangle();
         rectangle.setX(initialX);
         rectangle.setY(initialY);
@@ -36,8 +36,8 @@ public class ParallelogramTool extends BaseTool {
 
     @Override
     public void mouseDragged(MouseEvent mouseEvent) {
-        double dragX=mouseEvent.getX();
-        double dragY=mouseEvent.getY();
+        double dragX=xInWorksheet(mouseEvent);
+        double dragY=yInWorksheet(mouseEvent);
         double x= MathUtil.getMin(initialX, dragX);
         double y=MathUtil.getMin(initialY, dragY);
 

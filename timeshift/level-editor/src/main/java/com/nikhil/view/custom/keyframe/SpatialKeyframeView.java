@@ -10,7 +10,6 @@ import com.nikhil.view.bezier.BezierPointInteraction;
 import com.nikhil.view.bezier.InteractiveBezierPoint;
 import javafx.scene.Group;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.Pane;
 
 /**
  * Created by NikhilVerma on 11/11/15.
@@ -152,6 +151,6 @@ public class SpatialKeyframeView extends KeyframeView implements BezierPointInte
 
     @Override
     protected void shiftTimeInChangeNode(double time) {
-        keyframePane.getMetadata().getSpatialKeyframeChangeNode().shiftKeyframe(keyframe,time);
+        keyframePane.getMetadata().getKeyframeChangeNode().shiftKeyframe(keyframe,time);
     }
 }

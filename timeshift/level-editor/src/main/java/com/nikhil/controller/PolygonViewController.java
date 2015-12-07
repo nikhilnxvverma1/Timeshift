@@ -142,54 +142,15 @@ public class PolygonViewController extends ShapeViewController implements Polygo
     }
 
     @Override
-    public Bounds getLayoutBoundsInWorksheet() {
-        return polygonView.getBoundsInParent();
-//        return polygonView.localToParent(polygonView.getLayoutBounds());
-    }
-
-    @Override
-    public boolean overlapsWithSceneBounds(Bounds sceneBounds) {
-        Bounds polygonBoundsInScene = polygonView.localToScene(polygonView.getLayoutBounds());
-        return polygonBoundsInScene.intersects(sceneBounds);
-    }
-
-    @Override
     public PolygonViewController deepCopy() {
         return new PolygonViewController(this);
     }
 
-    public TreeItem<Metadata> initMetadataTree() {
-        if(metadataTree==null){
-            //using generic metadata wherever possible
-            TreeItem<Metadata> polygonHeader= new TreeItem<>(
-                    new HeaderMetadata(polygonModelController.getPolygonModel().getName(), MetadataTag.HEADER, this, true));
-            TreeItem<Metadata> polygonScale= new TreeItem<>(new TemporalMetadata(MetadataTag.SCALE,
-                    polygonModelController.getPolygonModel().scaleChange(),
-                    this));
-            TreeItem<Metadata> polygonRotation= new TreeItem<>(new TemporalMetadata(MetadataTag.ROTATION,
-                    polygonModelController.getPolygonModel().rotationChange(),
-                    this));
-            TreeItem<Metadata> polygonTranslation= new TreeItem<>(new SpatialMetadata(MetadataTag.TRANSLATION,
-                    polygonModelController.getPolygonModel().translationChange(),
-                    this));
-            TreeItem<Metadata> polygonAnchorPoint= new TreeItem<>(new SpatialMetadata(MetadataTag.ANCHOR_POINT,
-                    polygonModelController.getPolygonModel().anchorPointChange(),
-                    this));
-            TreeItem<Metadata> polygonVertices= new TreeItem<>(new PolygonMetadata("Vertices",  MetadataTag.POLYGON_VERTEX_HEADER,this));
-
-            polygonHeader.getChildren().add(SCALE_INDEX,polygonScale);
-            polygonHeader.getChildren().add(ROTATION_INDEX,polygonRotation);
-            polygonHeader.getChildren().add(TRANSLATION_INDEX,polygonTranslation);
-            polygonHeader.getChildren().add(ANCHOR_POINT_INDEX,polygonAnchorPoint);
-            polygonHeader.getChildren().add(VERTEX_HEADER_INDEX,polygonVertices);
-            metadataTree=polygonHeader;
-        }
-        return metadataTree;
-    }
-
     @Override
-    public TreeItem<Metadata> getMetadataTree() {
-        return metadataTree;
+    public void initMetadataTree() {
+        super.initMetadataTree();
+        TreeItem<Metadata> polygonVertices= new TreeItem<>(new PolygonMetadata("Vertices",  MetadataTag.POLYGON_VERTEX_HEADER,this));
+        metadataTree.getChildren().add(VERTEX_HEADER_INDEX,polygonVertices);
     }
 
     @Override
@@ -234,7 +195,7 @@ public class PolygonViewController extends ShapeViewController implements Polygo
     }
 
     @Override
-    protected ShapeModel getShapeModel() {
+    public PolygonModel getItemModel() {
         return polygonModelController.getPolygonModel();
     }
 

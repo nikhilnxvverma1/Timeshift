@@ -53,7 +53,7 @@ public class MoveItem extends SpatialActionOnSingleItem{
         SpatialMetadata translationMetadata = itemViewController.getSpatialMetadata(MetadataTag.TRANSLATION);
         if(translationMetadata.isKeyframable()){
             final double currentTime = itemViewController.getCompositionViewController().getTime();
-            translationMetadata.getSpatialKeyframeChangeNode().setTime(currentTime);
+            translationMetadata.getKeyframeChangeNode().setTime(currentTime);
         }else{
             UtilPoint translation = itemViewController.getTranslation();
             itemViewController.moveTo(x, y);

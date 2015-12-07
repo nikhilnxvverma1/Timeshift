@@ -9,5 +9,7 @@ public interface ItemViewDelegate {
     void mousePressed(MouseEvent mouseEvent);
     void mouseDragged(MouseEvent mouseEvent);
     void mouseReleased(MouseEvent mouseEvent);
+
+    /**Callback at each step of a property getting tweaked.*/
     void propertyCurrentlyGettingTweaked();
 }

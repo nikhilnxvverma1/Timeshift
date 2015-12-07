@@ -4,6 +4,7 @@ import com.nikhil.timeline.keyframe.Keyframe;
 import com.nikhil.timeline.keyframe.TemporalKeyframe;
 
 /**
+ * Base class for each keyframe change node.
  * Created by NikhilVerma on 25/11/15.
  */
 public abstract class KeyframeChangeNode extends ChangeNode{

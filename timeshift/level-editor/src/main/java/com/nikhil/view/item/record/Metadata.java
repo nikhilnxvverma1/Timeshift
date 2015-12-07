@@ -14,8 +14,10 @@ public abstract class Metadata { //TODO Property Metadata required
     public static final double CELL_HEIGHT= 25;
     protected String name;
     protected MetadataTag tag;
+    protected ItemViewController itemViewController;
 
-    public Metadata(String name, MetadataTag tag) {
+    public Metadata(ItemViewController itemViewController,String name, MetadataTag tag) {
+        this.itemViewController=itemViewController;
         this.name=name;
         this.tag = tag;
     }
@@ -24,7 +26,9 @@ public abstract class Metadata { //TODO Property Metadata required
         return name;
     }
 
-    public abstract ItemViewController getItemViewController();
+    public ItemViewController getItemViewController(){
+        return itemViewController;
+    }
 
     public MetadataTag getTag() {
         return tag;

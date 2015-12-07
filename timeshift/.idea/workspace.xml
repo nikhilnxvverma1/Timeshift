@@ -5,75 +5,71 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="fbabe40c-a25f-4f81-a178-f8a94da87cbf" name="Default" comment="Worked on ruler which auto lays out markings on resizing">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/level-editor/src/main/java/com/nikhil/controller/CircleViewController.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/level-editor/src/main/java/com/nikhil/editor/gizmo/Gizmo.java" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/level-editor/build/classes/main/com/nikhil/editor/gizmo/CircleGizmo.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/motion/build/classes/main/com/nikhil/model/shape/Circle.class" afterPath="" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/motion/src/main/java/com/nikhil/model/shape/Circle.java" afterPath="$PROJECT_DIR$/motion/src/main/java/com/nikhil/model/shape/CircleModel.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/level-editor/build/classes/main/com/nikhil/command/AddKeyframe.class" afterPath="$PROJECT_DIR$/level-editor/build/classes/main/com/nikhil/command/AddKeyframe.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/level-editor/build/classes/main/com/nikhil/editor/tool/BaseTool.class" afterPath="$PROJECT_DIR$/level-editor/build/classes/main/com/nikhil/editor/tool/BaseTool.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/motion/build/classes/main/com/nikhil/controller/item/CircleModelController.class" afterPath="$PROJECT_DIR$/motion/build/classes/main/com/nikhil/controller/item/CircleModelController.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/level-editor/src/main/java/com/nikhil/view/item/delegate/CircleViewDelegate.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/level-editor/src/main/java/com/nikhil/view/item/record/PropertyMetadata.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/level-editor/src/main/java/com/nikhil/view/item/ShapeView.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/level-editor/build/classes/main/com/nikhil/command/AddCircle.class" afterPath="$PROJECT_DIR$/level-editor/build/classes/main/com/nikhil/command/AddCircle.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/level-editor/build/classes/main/com/nikhil/command/AddPolygon.class" afterPath="$PROJECT_DIR$/level-editor/build/classes/main/com/nikhil/command/AddPolygon.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/level-editor/build/classes/main/com/nikhil/editor/gizmo/CircleGizmo.class" afterPath="$PROJECT_DIR$/level-editor/build/classes/main/com/nikhil/editor/gizmo/CircleGizmo.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/motion/build/classes/main/com/nikhil/model/shape/CircleModel.class" afterPath="$PROJECT_DIR$/motion/build/classes/main/com/nikhil/model/shape/CircleModel.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/level-editor/build/classes/main/com/nikhil/editor/tool/CircleTool.class" afterPath="$PROJECT_DIR$/level-editor/build/classes/main/com/nikhil/editor/tool/CircleTool.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/level-editor/build/classes/main/com/nikhil/view/item/CircleView.class" afterPath="$PROJECT_DIR$/level-editor/build/classes/main/com/nikhil/view/item/CircleView.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/level-editor/build/classes/main/com/nikhil/editor/selection/Clipboard.class" afterPath="$PROJECT_DIR$/level-editor/build/classes/main/com/nikhil/editor/selection/Clipboard.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/motion/build/classes/main/com/nikhil/xml/ControllerFactory.class" afterPath="$PROJECT_DIR$/motion/build/classes/main/com/nikhil/xml/ControllerFactory.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/level-editor/build/classes/main/com/nikhil/view/bezier/GraphicalBezierPoint.class" afterPath="$PROJECT_DIR$/level-editor/build/classes/main/com/nikhil/view/bezier/GraphicalBezierPoint.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/level-editor/build/classes/main/com/nikhil/editor/tool/IsoscelesTriangleTool.class" afterPath="$PROJECT_DIR$/level-editor/build/classes/main/com/nikhil/editor/tool/IsoscelesTriangleTool.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/level-editor/build/classes/main/com/nikhil/controller/ItemViewController.class" afterPath="$PROJECT_DIR$/level-editor/build/classes/main/com/nikhil/controller/ItemViewController.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/level-editor/build/classes/main/com/nikhil/controller/ui/MainWindowController.class" afterPath="$PROJECT_DIR$/level-editor/build/classes/main/com/nikhil/controller/ui/MainWindowController.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/motion/build/classes/main/com/nikhil/model/ModelVisitor.class" afterPath="$PROJECT_DIR$/motion/build/classes/main/com/nikhil/model/ModelVisitor.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/level-editor/build/classes/main/com/nikhil/command/keyframe/ModifySpatialKeyframe.class" afterPath="$PROJECT_DIR$/level-editor/build/classes/main/com/nikhil/command/keyframe/ModifySpatialKeyframe.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/level-editor/build/classes/main/com/nikhil/command/keyframe/ModifyTemporalKeyframe.class" afterPath="$PROJECT_DIR$/level-editor/build/classes/main/com/nikhil/command/keyframe/ModifyTemporalKeyframe.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/level-editor/build/classes/main/com/nikhil/command/item/MoveItem.class" afterPath="$PROJECT_DIR$/level-editor/build/classes/main/com/nikhil/command/item/MoveItem.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/level-editor/build/classes/main/com/nikhil/command/item/MoveItemSet.class" afterPath="$PROJECT_DIR$/level-editor/build/classes/main/com/nikhil/command/item/MoveItemSet.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/level-editor/build/classes/main/com/nikhil/controller/CircleViewController.class" afterPath="$PROJECT_DIR$/level-editor/build/classes/main/com/nikhil/controller/CircleViewController.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/level-editor/build/classes/main/com/nikhil/controller/CompositionViewController$1.class" afterPath="$PROJECT_DIR$/level-editor/build/classes/main/com/nikhil/controller/CompositionViewController$1.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/level-editor/build/classes/main/com/nikhil/controller/CompositionViewController.class" afterPath="$PROJECT_DIR$/level-editor/build/classes/main/com/nikhil/controller/CompositionViewController.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/level-editor/build/classes/main/com/nikhil/view/item/record/HeaderMetadata.class" afterPath="$PROJECT_DIR$/level-editor/build/classes/main/com/nikhil/view/item/record/HeaderMetadata.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/level-editor/build/classes/main/com/nikhil/view/custom/keyframe/KeyframeTreeView.class" afterPath="$PROJECT_DIR$/level-editor/build/classes/main/com/nikhil/view/custom/keyframe/KeyframeTreeView.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/level-editor/build/classes/main/com/nikhil/view/item/record/Metadata.class" afterPath="$PROJECT_DIR$/level-editor/build/classes/main/com/nikhil/view/item/record/Metadata.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/level-editor/build/classes/main/com/nikhil/editor/tool/ParallelogramTool.class" afterPath="$PROJECT_DIR$/level-editor/build/classes/main/com/nikhil/editor/tool/ParallelogramTool.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/level-editor/build/classes/main/com/nikhil/editor/tool/PenTool.class" afterPath="$PROJECT_DIR$/level-editor/build/classes/main/com/nikhil/editor/tool/PenTool.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/level-editor/build/classes/main/com/nikhil/editor/tool/PolygonTool.class" afterPath="$PROJECT_DIR$/level-editor/build/classes/main/com/nikhil/editor/tool/PolygonTool.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/level-editor/build/classes/main/com/nikhil/controller/Playback.class" afterPath="$PROJECT_DIR$/level-editor/build/classes/main/com/nikhil/controller/Playback.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/level-editor/build/classes/main/com/nikhil/view/item/record/PolygonMetadata.class" afterPath="$PROJECT_DIR$/level-editor/build/classes/main/com/nikhil/view/item/record/PolygonMetadata.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/level-editor/build/classes/main/com/nikhil/view/item/PolygonView.class" afterPath="$PROJECT_DIR$/level-editor/build/classes/main/com/nikhil/view/item/PolygonView.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/level-editor/build/classes/main/com/nikhil/controller/PolygonViewController$1.class" afterPath="$PROJECT_DIR$/level-editor/build/classes/main/com/nikhil/controller/PolygonViewController$1.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/level-editor/build/classes/main/com/nikhil/controller/PolygonViewController.class" afterPath="$PROJECT_DIR$/level-editor/build/classes/main/com/nikhil/controller/PolygonViewController.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/level-editor/build/classes/main/com/nikhil/command/item/RotateShape.class" afterPath="$PROJECT_DIR$/level-editor/build/classes/main/com/nikhil/command/item/RotateShape.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/level-editor/build/classes/main/com/nikhil/command/item/ScaleShape.class" afterPath="$PROJECT_DIR$/level-editor/build/classes/main/com/nikhil/command/item/ScaleShape.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/level-editor/build/classes/main/com/nikhil/editor/tool/SelectionTool.class" afterPath="$PROJECT_DIR$/level-editor/build/classes/main/com/nikhil/editor/tool/SelectionTool.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/level-editor/build/classes/main/com/nikhil/view/custom/keyframe/SpatialKeyframePane.class" afterPath="$PROJECT_DIR$/level-editor/build/classes/main/com/nikhil/view/custom/keyframe/SpatialKeyframePane.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/level-editor/build/classes/main/com/nikhil/controller/ShapeViewController.class" afterPath="$PROJECT_DIR$/level-editor/build/classes/main/com/nikhil/controller/ShapeViewController.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/level-editor/build/classes/main/com/nikhil/view/item/record/SpatialMetadata$1.class" afterPath="$PROJECT_DIR$/level-editor/build/classes/main/com/nikhil/view/item/record/SpatialMetadata$1.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/level-editor/build/classes/main/com/nikhil/view/item/record/SpatialMetadata$2.class" afterPath="$PROJECT_DIR$/level-editor/build/classes/main/com/nikhil/view/item/record/SpatialMetadata$2.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/level-editor/build/classes/main/com/nikhil/view/item/record/SpatialMetadata$3.class" afterPath="$PROJECT_DIR$/level-editor/build/classes/main/com/nikhil/view/item/record/SpatialMetadata$3.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/level-editor/build/classes/main/com/nikhil/view/item/record/SpatialMetadata$4.class" afterPath="$PROJECT_DIR$/level-editor/build/classes/main/com/nikhil/view/item/record/SpatialMetadata$4.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/level-editor/build/classes/main/com/nikhil/view/item/record/SpatialMetadata$5.class" afterPath="$PROJECT_DIR$/level-editor/build/classes/main/com/nikhil/view/item/record/SpatialMetadata$5.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/level-editor/build/classes/main/com/nikhil/view/item/record/SpatialMetadata.class" afterPath="$PROJECT_DIR$/level-editor/build/classes/main/com/nikhil/view/item/record/SpatialMetadata.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/level-editor/build/classes/main/com/nikhil/view/custom/keyframe/TemporalKeyframePane.class" afterPath="$PROJECT_DIR$/level-editor/build/classes/main/com/nikhil/view/custom/keyframe/TemporalKeyframePane.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/level-editor/build/classes/main/com/nikhil/view/custom/keyframe/TemporalKeyframeView.class" afterPath="$PROJECT_DIR$/level-editor/build/classes/main/com/nikhil/view/custom/keyframe/TemporalKeyframeView.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/level-editor/build/classes/main/com/nikhil/view/item/record/TemporalMetadata$1.class" afterPath="$PROJECT_DIR$/level-editor/build/classes/main/com/nikhil/view/item/record/TemporalMetadata$1.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/level-editor/build/classes/main/com/nikhil/view/item/record/TemporalMetadata$2.class" afterPath="$PROJECT_DIR$/level-editor/build/classes/main/com/nikhil/view/item/record/TemporalMetadata$2.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/level-editor/build/classes/main/com/nikhil/view/item/record/TemporalMetadata$3.class" afterPath="$PROJECT_DIR$/level-editor/build/classes/main/com/nikhil/view/item/record/TemporalMetadata$3.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/level-editor/build/classes/main/com/nikhil/view/item/record/TemporalMetadata.class" afterPath="$PROJECT_DIR$/level-editor/build/classes/main/com/nikhil/view/item/record/TemporalMetadata.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/level-editor/build/classes/main/com/nikhil/editor/tool/Tool.class" afterPath="$PROJECT_DIR$/level-editor/build/classes/main/com/nikhil/editor/tool/Tool.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/level-editor/build/classes/main/com/nikhil/editor/tool/TravelPathTool.class" afterPath="$PROJECT_DIR$/level-editor/build/classes/main/com/nikhil/editor/tool/TravelPathTool.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/motion/build/classes/main/com/nikhil/xml/XMLWriter.class" afterPath="$PROJECT_DIR$/motion/build/classes/main/com/nikhil/xml/XMLWriter.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/level-editor/src/main/java/com/nikhil/command/AddKeyframe.java" afterPath="$PROJECT_DIR$/level-editor/src/main/java/com/nikhil/command/AddKeyframe.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/level-editor/src/main/java/com/nikhil/editor/tool/BaseTool.java" afterPath="$PROJECT_DIR$/level-editor/src/main/java/com/nikhil/editor/tool/BaseTool.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/level-editor/src/main/java/com/nikhil/command/AddCircle.java" afterPath="$PROJECT_DIR$/level-editor/src/main/java/com/nikhil/command/AddCircle.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/level-editor/src/main/java/com/nikhil/command/AddPolygon.java" afterPath="$PROJECT_DIR$/level-editor/src/main/java/com/nikhil/command/AddPolygon.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/level-editor/src/main/java/com/nikhil/editor/gizmo/CircleGizmo.java" afterPath="$PROJECT_DIR$/level-editor/src/main/java/com/nikhil/editor/gizmo/CircleGizmo.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/motion/src/main/java/com/nikhil/controller/item/CircleModelController.java" afterPath="$PROJECT_DIR$/motion/src/main/java/com/nikhil/controller/item/CircleModelController.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/motion/src/main/java/com/nikhil/model/shape/CircleModel.java" afterPath="$PROJECT_DIR$/motion/src/main/java/com/nikhil/model/shape/CircleModel.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/level-editor/src/main/java/com/nikhil/editor/tool/CircleTool.java" afterPath="$PROJECT_DIR$/level-editor/src/main/java/com/nikhil/editor/tool/CircleTool.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/level-editor/src/main/java/com/nikhil/view/item/CircleView.java" afterPath="$PROJECT_DIR$/level-editor/src/main/java/com/nikhil/view/item/CircleView.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/level-editor/src/main/java/com/nikhil/editor/selection/Clipboard.java" afterPath="$PROJECT_DIR$/level-editor/src/main/java/com/nikhil/editor/selection/Clipboard.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/level-editor/src/main/java/com/nikhil/controller/CircleViewController.java" afterPath="$PROJECT_DIR$/level-editor/src/main/java/com/nikhil/controller/CircleViewController.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/level-editor/src/main/java/com/nikhil/controller/CompositionViewController.java" afterPath="$PROJECT_DIR$/level-editor/src/main/java/com/nikhil/controller/CompositionViewController.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/motion/src/main/java/com/nikhil/xml/ControllerFactory.java" afterPath="$PROJECT_DIR$/motion/src/main/java/com/nikhil/xml/ControllerFactory.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/level-editor/src/main/java/com/nikhil/view/bezier/GraphicalBezierPoint.java" afterPath="$PROJECT_DIR$/level-editor/src/main/java/com/nikhil/view/bezier/GraphicalBezierPoint.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/level-editor/src/main/java/com/nikhil/editor/tool/IsoscelesTriangleTool.java" afterPath="$PROJECT_DIR$/level-editor/src/main/java/com/nikhil/editor/tool/IsoscelesTriangleTool.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/level-editor/src/main/java/com/nikhil/controller/ItemViewController.java" afterPath="$PROJECT_DIR$/level-editor/src/main/java/com/nikhil/controller/ItemViewController.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/level-editor/src/main/java/com/nikhil/controller/ui/MainWindowController.java" afterPath="$PROJECT_DIR$/level-editor/src/main/java/com/nikhil/controller/ui/MainWindowController.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/motion/src/main/java/com/nikhil/model/ModelVisitor.java" afterPath="$PROJECT_DIR$/motion/src/main/java/com/nikhil/model/ModelVisitor.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/level-editor/src/main/java/com/nikhil/command/keyframe/ModifySpatialKeyframe.java" afterPath="$PROJECT_DIR$/level-editor/src/main/java/com/nikhil/command/keyframe/ModifySpatialKeyframe.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/level-editor/src/main/java/com/nikhil/command/keyframe/ModifyTemporalKeyframe.java" afterPath="$PROJECT_DIR$/level-editor/src/main/java/com/nikhil/command/keyframe/ModifyTemporalKeyframe.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/level-editor/src/main/java/com/nikhil/view/item/record/HeaderMetadata.java" afterPath="$PROJECT_DIR$/level-editor/src/main/java/com/nikhil/view/item/record/HeaderMetadata.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/level-editor/src/main/java/com/nikhil/view/item/delegate/ItemViewDelegate.java" afterPath="$PROJECT_DIR$/level-editor/src/main/java/com/nikhil/view/item/delegate/ItemViewDelegate.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/timeline/src/main/java/com/nikhil/timeline/change/KeyframeChangeNode.java" afterPath="$PROJECT_DIR$/timeline/src/main/java/com/nikhil/timeline/change/KeyframeChangeNode.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/level-editor/src/main/java/com/nikhil/view/item/record/Metadata.java" afterPath="$PROJECT_DIR$/level-editor/src/main/java/com/nikhil/view/item/record/Metadata.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/level-editor/src/main/java/com/nikhil/command/item/MoveItem.java" afterPath="$PROJECT_DIR$/level-editor/src/main/java/com/nikhil/command/item/MoveItem.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/level-editor/src/main/java/com/nikhil/command/item/MoveItemSet.java" afterPath="$PROJECT_DIR$/level-editor/src/main/java/com/nikhil/command/item/MoveItemSet.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/level-editor/src/main/java/com/nikhil/command/item/MovePolygonPoint.java" afterPath="$PROJECT_DIR$/level-editor/src/main/java/com/nikhil/command/item/MovePolygonPoint.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/level-editor/src/main/java/com/nikhil/editor/tool/ParallelogramTool.java" afterPath="$PROJECT_DIR$/level-editor/src/main/java/com/nikhil/editor/tool/ParallelogramTool.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/level-editor/src/main/java/com/nikhil/editor/tool/PenTool.java" afterPath="$PROJECT_DIR$/level-editor/src/main/java/com/nikhil/editor/tool/PenTool.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/level-editor/src/main/java/com/nikhil/editor/gizmo/PolygonGizmo.java" afterPath="$PROJECT_DIR$/level-editor/src/main/java/com/nikhil/editor/gizmo/PolygonGizmo.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/level-editor/src/main/java/com/nikhil/view/item/record/PolygonMetadata.java" afterPath="$PROJECT_DIR$/level-editor/src/main/java/com/nikhil/view/item/record/PolygonMetadata.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/level-editor/src/main/java/com/nikhil/editor/tool/PolygonTool.java" afterPath="$PROJECT_DIR$/level-editor/src/main/java/com/nikhil/editor/tool/PolygonTool.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/level-editor/src/main/java/com/nikhil/view/item/PolygonView.java" afterPath="$PROJECT_DIR$/level-editor/src/main/java/com/nikhil/view/item/PolygonView.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/level-editor/src/main/java/com/nikhil/controller/PolygonViewController.java" afterPath="$PROJECT_DIR$/level-editor/src/main/java/com/nikhil/controller/PolygonViewController.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/level-editor/src/main/java/com/nikhil/command/item/RotateShape.java" afterPath="$PROJECT_DIR$/level-editor/src/main/java/com/nikhil/command/item/RotateShape.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/level-editor/src/main/java/com/nikhil/command/item/ScaleShape.java" afterPath="$PROJECT_DIR$/level-editor/src/main/java/com/nikhil/command/item/ScaleShape.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/level-editor/src/main/java/com/nikhil/editor/tool/SelectionTool.java" afterPath="$PROJECT_DIR$/level-editor/src/main/java/com/nikhil/editor/tool/SelectionTool.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/level-editor/src/main/java/com/nikhil/controller/ShapeViewController.java" afterPath="$PROJECT_DIR$/level-editor/src/main/java/com/nikhil/controller/ShapeViewController.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/level-editor/src/main/java/com/nikhil/view/custom/keyframe/SpatialKeyframePane.java" afterPath="$PROJECT_DIR$/level-editor/src/main/java/com/nikhil/view/custom/keyframe/SpatialKeyframePane.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/level-editor/src/main/java/com/nikhil/view/custom/keyframe/SpatialKeyframeView.java" afterPath="$PROJECT_DIR$/level-editor/src/main/java/com/nikhil/view/custom/keyframe/SpatialKeyframeView.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/level-editor/src/main/java/com/nikhil/view/item/record/SpatialMetadata.java" afterPath="$PROJECT_DIR$/level-editor/src/main/java/com/nikhil/view/item/record/SpatialMetadata.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/level-editor/src/main/java/com/nikhil/view/custom/keyframe/TemporalKeyframePane.java" afterPath="$PROJECT_DIR$/level-editor/src/main/java/com/nikhil/view/custom/keyframe/TemporalKeyframePane.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/level-editor/src/main/java/com/nikhil/view/custom/keyframe/TemporalKeyframeView.java" afterPath="$PROJECT_DIR$/level-editor/src/main/java/com/nikhil/view/custom/keyframe/TemporalKeyframeView.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/level-editor/src/main/java/com/nikhil/view/item/record/TemporalMetadata.java" afterPath="$PROJECT_DIR$/level-editor/src/main/java/com/nikhil/view/item/record/TemporalMetadata.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/level-editor/src/main/java/com/nikhil/editor/tool/Tool.java" afterPath="$PROJECT_DIR$/level-editor/src/main/java/com/nikhil/editor/tool/Tool.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/level-editor/src/main/java/com/nikhil/editor/tool/TravelPathTool.java" afterPath="$PROJECT_DIR$/level-editor/src/main/java/com/nikhil/editor/tool/TravelPathTool.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/motion/src/main/java/com/nikhil/xml/XMLWriter.java" afterPath="$PROJECT_DIR$/motion/src/main/java/com/nikhil/xml/XMLWriter.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="timeshift.iws" />
@@ -130,183 +126,150 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="CircleViewController.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/level-editor/src/main/java/com/nikhil/controller/CircleViewController.java">
+      <file leaf-file-name="PropertyMetadata.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/level-editor/src/main/java/com/nikhil/view/item/record/PropertyMetadata.java">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="10" column="37" selection-start-line="10" selection-start-column="37" selection-end-line="10" selection-end-column="37" />
+              <caret line="34" column="61" selection-start-line="34" selection-start-column="61" selection-end-line="34" selection-end-column="61" />
               <folding>
-                <element signature="e#816#817#0" expanded="true" />
-                <element signature="e#843#844#0" expanded="true" />
-                <element signature="e#923#924#0" expanded="true" />
-                <element signature="e#951#952#0" expanded="true" />
-                <element signature="e#1020#1021#0" expanded="true" />
-                <element signature="e#1047#1048#0" expanded="true" />
-                <element signature="e#1105#1106#0" expanded="true" />
-                <element signature="e#1132#1133#0" expanded="true" />
-                <element signature="e#1197#1198#0" expanded="true" />
-                <element signature="e#1224#1225#0" expanded="true" />
-                <element signature="e#1272#1273#0" expanded="true" />
-                <element signature="e#1299#1300#0" expanded="true" />
-                <element signature="e#1381#1382#0" expanded="true" />
-                <element signature="e#1408#1409#0" expanded="true" />
-                <element signature="e#1488#1489#0" expanded="true" />
-                <element signature="e#1515#1516#0" expanded="true" />
-                <element signature="e#1560#1561#0" expanded="true" />
-                <element signature="e#1587#1588#0" expanded="true" />
-                <element signature="e#1645#1646#0" expanded="true" />
-                <element signature="e#1672#1673#0" expanded="true" />
+                <element signature="imports" expanded="true" />
+                <element signature="method#getOptionNode#0;class#PropertyMetadata#0" expanded="false" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="CircleView.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/level-editor/src/main/java/com/nikhil/view/item/CircleView.java">
+      <file leaf-file-name="HeaderMetadata.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/level-editor/src/main/java/com/nikhil/view/item/record/HeaderMetadata.java">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="49" column="32" selection-start-line="49" selection-start-column="32" selection-end-line="49" selection-end-column="32" />
-              <folding>
-                <element signature="docComment;class#CircleView#0" expanded="false" />
-                <element signature="e#1935#1936#0" expanded="true" />
-                <element signature="e#1968#1969#0" expanded="true" />
-                <element signature="e#2121#2122#0" expanded="true" />
-                <element signature="e#2152#2153#0" expanded="true" />
-                <element signature="e#2300#2301#0" expanded="true" />
-                <element signature="e#2334#2335#0" expanded="true" />
-                <element signature="e#2494#2495#0" expanded="true" />
-                <element signature="e#2528#2529#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="CircleGizmo.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/level-editor/src/main/java/com/nikhil/editor/gizmo/CircleGizmo.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="54" column="5" selection-start-line="54" selection-start-column="5" selection-end-line="54" selection-end-column="5" />
-              <folding>
-                <element signature="e#1598#1599#0" expanded="true" />
-                <element signature="e#1634#1635#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="PolygonGizmo.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/level-editor/src/main/java/com/nikhil/editor/gizmo/PolygonGizmo.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="76" column="4" selection-start-line="76" selection-start-column="4" selection-end-line="76" selection-end-column="4" />
-              <folding>
-                <element signature="e#3090#3091#0" expanded="true" />
-                <element signature="e#3127#3128#0" expanded="true" />
-                <element signature="method#handle#0;class#PolygonGizmo#0" expanded="false" />
-                <element signature="method#tweakPolygonPoint#0;class#PolygonGizmo#0" expanded="false" />
-                <element signature="method#notifyChangesToDelegate#0;class#PolygonGizmo#0" expanded="false" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="PolygonViewController.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/level-editor/src/main/java/com/nikhil/controller/PolygonViewController.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="283" column="0" selection-start-line="283" selection-start-column="0" selection-end-line="283" selection-end-column="0" />
-              <folding>
-                <element signature="e#8180#8181#0" expanded="true" />
-                <element signature="e#8215#8216#0" expanded="true" />
-                <element signature="e#8269#8270#0" expanded="true" />
-                <element signature="e#8303#8304#0" expanded="true" />
-                <element signature="e#9581#9582#0" expanded="true" />
-                <element signature="e#9644#9645#0" expanded="true" />
-                <element signature="e#9696#9697#0" expanded="true" />
-                <element signature="e#9731#9732#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="ShapeViewController.java" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/level-editor/src/main/java/com/nikhil/controller/ShapeViewController.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="7.451404">
-              <caret line="245" column="0" selection-start-line="245" selection-start-column="0" selection-end-line="245" selection-end-column="0" />
-              <folding>
-                <element signature="e#3185#3186#0" expanded="true" />
-                <element signature="e#3233#3234#0" expanded="true" />
-                <element signature="e#3267#3268#0" expanded="true" />
-                <element signature="e#3315#3316#0" expanded="true" />
-                <element signature="e#3916#3917#0" expanded="true" />
-                <element signature="e#3966#3967#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="MovePolygonPoint.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/level-editor/src/main/java/com/nikhil/command/item/MovePolygonPoint.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="41" column="0" selection-start-line="41" selection-start-column="0" selection-end-line="41" selection-end-column="0" />
+              <caret line="31" column="5" selection-start-line="31" selection-start-column="5" selection-end-line="31" selection-end-column="5" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="PolygonMetadata.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/level-editor/src/main/java/com/nikhil/view/item/record/PolygonMetadata.java">
+      <file leaf-file-name="SpatialMetadata.java" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/level-editor/src/main/java/com/nikhil/view/item/record/SpatialMetadata.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="286" column="13" selection-start-line="286" selection-start-column="13" selection-end-line="286" selection-end-column="13" />
+            <state vertical-scroll-proportion="4.2440605">
+              <caret line="158" column="0" selection-start-line="158" selection-start-column="0" selection-end-line="158" selection-end-column="0" />
               <folding>
-                <element signature="e#6209#6210#0" expanded="true" />
-                <element signature="e#6285#6286#0" expanded="true" />
-                <element signature="e#8801#8802#0" expanded="true" />
-                <element signature="e#8877#8878#0" expanded="true" />
-                <element signature="e#11396#11397#0" expanded="true" />
-                <element signature="e#11472#11473#0" expanded="true" />
-                <element signature="e#12533#12534#0" expanded="true" />
-                <element signature="e#12609#12610#0" expanded="true" />
-                <element signature="e#13421#13422#0" expanded="true" />
-                <element signature="e#13497#13498#0" expanded="true" />
+                <element signature="e#3724#3725#0" expanded="true" />
+                <element signature="e#3772#3773#0" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="ItemViewController.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/level-editor/src/main/java/com/nikhil/controller/ItemViewController.java">
+      <file leaf-file-name="SpatialKeyframePane.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/level-editor/src/main/java/com/nikhil/view/custom/keyframe/SpatialKeyframePane.java">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="166" column="61" selection-start-line="166" selection-start-column="61" selection-end-line="166" selection-end-column="61" />
+              <caret line="80" column="31" selection-start-line="80" selection-start-column="31" selection-end-line="80" selection-end-column="31" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Metadata.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/level-editor/src/main/java/com/nikhil/view/item/record/Metadata.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="54" column="33" selection-start-line="54" selection-start-column="33" selection-end-line="54" selection-end-column="33" />
               <folding>
-                <element signature="docComment;class#ItemViewController#0" expanded="false" />
-                <element signature="method#setCompositionViewController#0;class#ItemViewController#0" expanded="false" />
-                <element signature="docComment;method#selectFromItemTable#0;class#ItemViewController#0" expanded="false" />
-                <element signature="docComment;method#scaleBy#0;class#ItemViewController#0" expanded="false" />
-                <element signature="e#5676#5677#0" expanded="true" />
-                <element signature="e#5727#5728#0" expanded="true" />
-                <element signature="docComment;method#isKeyframableProperty#0;class#ItemViewController#0" expanded="false" />
-                <element signature="method#isKeyframableProperty#0;class#ItemViewController#0" expanded="false" />
-                <element signature="docComment;method#getTemporalMetadata#0;class#ItemViewController#0" expanded="false" />
-                <element signature="docComment;method#getSpatialMetadata#0;class#ItemViewController#0" expanded="false" />
-                <element signature="docComment;method#getHeaderMetadata#0;class#ItemViewController#0" expanded="false" />
+                <element signature="e#887#888#0" expanded="true" />
+                <element signature="e#928#929#0" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Gizmo.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/level-editor/src/main/java/com/nikhil/editor/gizmo/Gizmo.java">
+      <file leaf-file-name="KeyframeChangeNode.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/timeline/src/main/java/com/nikhil/timeline/change/KeyframeChangeNode.java">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="71" column="25" selection-start-line="71" selection-start-column="25" selection-end-line="71" selection-end-column="25" />
+              <caret line="6" column="44" selection-start-line="6" selection-start-column="44" selection-end-line="6" selection-end-column="44" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="TemporalMetadata.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/level-editor/src/main/java/com/nikhil/view/item/record/TemporalMetadata.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="38" column="76" selection-start-line="38" selection-start-column="76" selection-end-line="38" selection-end-column="76" />
+              <folding>
+                <element signature="method#TemporalMetadata#0;class#TemporalMetadata#0" expanded="false" />
+                <element signature="method#pushManualKeyframeCommand#0;class#TemporalMetadata#0" expanded="false" />
+                <element signature="method#createNewKeyframe#0;class#TemporalMetadata#0" expanded="false" />
+                <element signature="method#initKeyframePane#0;class#TemporalMetadata#0" expanded="false" />
+                <element signature="docComment;method#createNewKeyframe#1;class#TemporalMetadata#0" expanded="false" />
+                <element signature="method#createNewKeyframe#1;class#TemporalMetadata#0" expanded="false" />
+                <element signature="docComment;method#registerContinuousChange#0;class#TemporalMetadata#0" expanded="false" />
+                <element signature="method#registerContinuousChange#0;class#TemporalMetadata#0" expanded="false" />
+                <element signature="docComment;method#pushWithKeyframe#0;class#TemporalMetadata#0" expanded="false" />
+                <element signature="method#pushWithKeyframe#0;class#TemporalMetadata#0" expanded="false" />
+                <element signature="e#9276#9328#0" expanded="false" />
+                <element signature="e#10354#10413#0" expanded="false" />
+                <element signature="e#10625#10692#0" expanded="false" />
+                <element signature="docComment;method#pushDirectChangeWithKeyframe#0;class#TemporalMetadata#0" expanded="false" />
+                <element signature="method#pushDirectChangeWithKeyframe#0;class#TemporalMetadata#0" expanded="false" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="ShapeViewController.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/level-editor/src/main/java/com/nikhil/controller/ShapeViewController.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="152" column="41" selection-start-line="152" selection-start-column="41" selection-end-line="152" selection-end-column="41" />
+              <folding>
+                <element signature="e#3657#3658#0" expanded="true" />
+                <element signature="e#3713#3714#0" expanded="true" />
+                <element signature="e#5401#5402#0" expanded="true" />
+                <element signature="e#5436#5437#0" expanded="true" />
+                <element signature="e#5713#5714#0" expanded="true" />
+                <element signature="e#5761#5762#0" expanded="true" />
+                <element signature="e#5795#5796#0" expanded="true" />
+                <element signature="e#5843#5844#0" expanded="true" />
+                <element signature="e#6444#6445#0" expanded="true" />
+                <element signature="e#6494#6495#0" expanded="true" />
+                <element signature="e#8405#8406#0" expanded="true" />
+                <element signature="e#8459#8460#0" expanded="true" />
+                <element signature="e#10420#10421#0" expanded="true" />
+                <element signature="e#10474#10475#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="ShapeView.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/level-editor/src/main/java/com/nikhil/view/item/ShapeView.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="22" column="5" selection-start-line="22" selection-start-column="5" selection-end-line="22" selection-end-column="5" />
               <folding>
                 <element signature="imports" expanded="true" />
+                <element signature="e#357#358#0" expanded="true" />
+                <element signature="e#422#423#0" expanded="true" />
+                <element signature="e#454#455#0" expanded="true" />
+                <element signature="e#488#489#0" expanded="true" />
+                <element signature="e#530#531#0" expanded="true" />
+                <element signature="e#567#568#0" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="PolygonView.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/level-editor/src/main/java/com/nikhil/view/item/PolygonView.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="85" column="5" selection-start-line="85" selection-start-column="5" selection-end-line="85" selection-end-column="5" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -317,8 +280,8 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="JUnit4 Test Class" />
-        <option value="Interface" />
         <option value="Enum" />
+        <option value="Interface" />
         <option value="Class" />
       </list>
     </option>
@@ -1334,20 +1297,10 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/motion/src/main/java/com/nikhil/xml/XMLAttribute.java" />
-        <option value="$PROJECT_DIR$/motion/src/main/java/com/nikhil/xml/XMLWriter.java" />
-        <option value="$PROJECT_DIR$/timeline/src/main/java/com/nikhil/timeline/KeyValue.java" />
-        <option value="$PROJECT_DIR$/level-editor/src/main/java/com/nikhil/Main.java" />
-        <option value="$PROJECT_DIR$/motion/src/main/java/com/nikhil/controller/CompositionController.java" />
-        <option value="$PROJECT_DIR$/level-editor/src/main/java/com/nikhil/editor/XMLLoader.java" />
-        <option value="$PROJECT_DIR$/timeline/src/main/java/com/nikhil/timeline/change/temporal/TemporalKeyframeChangeNode.java" />
-        <option value="$PROJECT_DIR$/timeline/src/main/java/com/nikhil/timeline/change/spatial/SpatialKeyframeChangeNode.java" />
-        <option value="$PROJECT_DIR$/util/src/main/java/com/nikhil/util/modal/UtilPoint.java" />
         <option value="$PROJECT_DIR$/motion/src/main/java/com/nikhil/xml/XMLTag.java" />
         <option value="$PROJECT_DIR$/level-editor/src/main/java/com/nikhil/view/custom/keyframe/KeyframePane.java" />
         <option value="$PROJECT_DIR$/level-editor/src/main/java/com/nikhil/view/custom/keyframe/TemporalKeyframePane.java" />
         <option value="$PROJECT_DIR$/level-editor/src/main/java/com/nikhil/view/custom/keyframe/SpatialKeyframeView.java" />
-        <option value="$PROJECT_DIR$/level-editor/src/main/java/com/nikhil/view/item/record/SpatialMetadata.java" />
         <option value="$PROJECT_DIR$/level-editor/src/main/java/com/nikhil/editor/workspace/Workspace.java" />
         <option value="$PROJECT_DIR$/motion/src/main/java/com/nikhil/xml/ModelFactory.java" />
         <option value="$PROJECT_DIR$/motion/src/main/java/com/nikhil/xml/XMLReader.java" />
@@ -1358,7 +1311,6 @@
         <option value="$PROJECT_DIR$/level-editor/src/main/java/com/nikhil/command/keyframe/ModifySpatialKeyframe.java" />
         <option value="$PROJECT_DIR$/level-editor/src/main/java/com/nikhil/command/item/MoveItemSet.java" />
         <option value="$PROJECT_DIR$/level-editor/src/main/java/com/nikhil/command/item/MoveItem.java" />
-        <option value="$PROJECT_DIR$/level-editor/src/main/java/com/nikhil/view/item/record/TemporalMetadata.java" />
         <option value="$PROJECT_DIR$/level-editor/src/main/java/com/nikhil/view/custom/keyframe/SpatialKeyframePane.java" />
         <option value="$PROJECT_DIR$/level-editor/src/main/java/com/nikhil/view/bezier/GraphicalBezierPoint.java" />
         <option value="$PROJECT_DIR$/level-editor/src/main/java/com/nikhil/controller/ui/MainWindowController.java" />
@@ -1366,25 +1318,36 @@
         <option value="$PROJECT_DIR$/level-editor/src/main/java/com/nikhil/editor/tool/Tool.java" />
         <option value="$PROJECT_DIR$/level-editor/src/main/java/com/nikhil/editor/tool/PolygonTool.java" />
         <option value="$PROJECT_DIR$/level-editor/src/main/java/com/nikhil/editor/tool/IsoscelesTriangleTool.java" />
-        <option value="$PROJECT_DIR$/level-editor/src/main/java/com/nikhil/editor/tool/PenTool.java" />
         <option value="$PROJECT_DIR$/level-editor/src/main/java/com/nikhil/editor/tool/SelectionTool.java" />
-        <option value="$PROJECT_DIR$/level-editor/src/main/java/com/nikhil/editor/tool/ParallelogramTool.java" />
         <option value="$PROJECT_DIR$/level-editor/src/main/java/com/nikhil/editor/tool/TravelPathTool.java" />
-        <option value="$PROJECT_DIR$/level-editor/src/main/java/com/nikhil/editor/tool/CircleTool.java" />
         <option value="$PROJECT_DIR$/motion/src/main/java/com/nikhil/model/shape/Circle.java" />
-        <option value="$PROJECT_DIR$/level-editor/src/main/java/com/nikhil/view/item/PolygonView.java" />
-        <option value="$PROJECT_DIR$/motion/src/main/java/com/nikhil/model/shape/CircleModel.java" />
-        <option value="$PROJECT_DIR$/level-editor/src/main/java/com/nikhil/view/item/CircleView.java" />
-        <option value="$PROJECT_DIR$/level-editor/src/main/java/com/nikhil/controller/CompositionViewController.java" />
         <option value="$PROJECT_DIR$/level-editor/src/main/java/com/nikhil/controller/ItemViewController.java" />
         <option value="$PROJECT_DIR$/level-editor/src/main/java/com/nikhil/editor/gizmo/Gizmo.java" />
         <option value="$PROJECT_DIR$/level-editor/src/main/java/com/nikhil/editor/gizmo/PolygonGizmo.java" />
-        <option value="$PROJECT_DIR$/level-editor/src/main/java/com/nikhil/editor/gizmo/CircleGizmo.java" />
         <option value="$PROJECT_DIR$/level-editor/src/main/java/com/nikhil/command/item/MovePolygonPoint.java" />
-        <option value="$PROJECT_DIR$/level-editor/src/main/java/com/nikhil/view/item/record/PolygonMetadata.java" />
-        <option value="$PROJECT_DIR$/level-editor/src/main/java/com/nikhil/controller/ShapeViewController.java" />
+        <option value="$PROJECT_DIR$/level-editor/src/main/java/com/nikhil/editor/tool/PenTool.java" />
+        <option value="$PROJECT_DIR$/level-editor/src/main/java/com/nikhil/editor/tool/ParallelogramTool.java" />
+        <option value="$PROJECT_DIR$/level-editor/src/main/java/com/nikhil/command/AddPolygon.java" />
+        <option value="$PROJECT_DIR$/level-editor/src/main/java/com/nikhil/view/item/delegate/ItemViewDelegate.java" />
+        <option value="$PROJECT_DIR$/level-editor/src/main/java/com/nikhil/view/item/delegate/CircleViewDelegate.java" />
+        <option value="$PROJECT_DIR$/level-editor/src/main/java/com/nikhil/editor/tool/CircleTool.java" />
         <option value="$PROJECT_DIR$/level-editor/src/main/java/com/nikhil/controller/PolygonViewController.java" />
         <option value="$PROJECT_DIR$/level-editor/src/main/java/com/nikhil/controller/CircleViewController.java" />
+        <option value="$PROJECT_DIR$/motion/src/main/java/com/nikhil/model/shape/CircleModel.java" />
+        <option value="$PROJECT_DIR$/level-editor/src/main/java/com/nikhil/controller/CompositionViewController.java" />
+        <option value="$PROJECT_DIR$/level-editor/src/main/java/com/nikhil/command/AddCircle.java" />
+        <option value="$PROJECT_DIR$/level-editor/src/main/java/com/nikhil/view/item/PolygonView.java" />
+        <option value="$PROJECT_DIR$/level-editor/src/main/java/com/nikhil/view/item/ShapeView.java" />
+        <option value="$PROJECT_DIR$/level-editor/src/main/java/com/nikhil/view/item/CircleView.java" />
+        <option value="$PROJECT_DIR$/level-editor/src/main/java/com/nikhil/editor/gizmo/CircleGizmo.java" />
+        <option value="$PROJECT_DIR$/level-editor/src/main/java/com/nikhil/view/item/record/Metadata.java" />
+        <option value="$PROJECT_DIR$/level-editor/src/main/java/com/nikhil/view/item/record/HeaderMetadata.java" />
+        <option value="$PROJECT_DIR$/level-editor/src/main/java/com/nikhil/view/item/record/PolygonMetadata.java" />
+        <option value="$PROJECT_DIR$/level-editor/src/main/java/com/nikhil/view/item/record/PropertyMetadata.java" />
+        <option value="$PROJECT_DIR$/timeline/src/main/java/com/nikhil/timeline/change/KeyframeChangeNode.java" />
+        <option value="$PROJECT_DIR$/level-editor/src/main/java/com/nikhil/controller/ShapeViewController.java" />
+        <option value="$PROJECT_DIR$/level-editor/src/main/java/com/nikhil/view/item/record/TemporalMetadata.java" />
+        <option value="$PROJECT_DIR$/level-editor/src/main/java/com/nikhil/view/item/record/SpatialMetadata.java" />
       </list>
     </option>
   </component>
@@ -1886,6 +1849,120 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="nikhil" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="timeshift" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="timeshift" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="level-editor" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="main" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="java" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="nikhil" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="view" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="timeshift" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="timeshift" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="level-editor" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="main" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="java" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="nikhil" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="view" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="item" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="timeshift" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="timeshift" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="level-editor" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="main" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="java" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="nikhil" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="view" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="item" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="record" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -2518,10 +2595,10 @@
       <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3219858" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3248227" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Gradle" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3297568" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.24964234" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.24964234" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.24177396" sideWeight="0.49518073" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.24177396" sideWeight="0.49518073" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32891566" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Documentation" active="false" anchor="right" auto_hide="true" internal_type="DOCKED" type="FLOATING" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" x="100" y="100" width="1240" height="700" />
       <window_info id="Coverage" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3297568" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
@@ -2599,104 +2676,6 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/level-editor/src/main/java/com/nikhil/view/custom/keyframe/TemporalKeyframePane.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-0.9762419">
-          <caret line="51" column="87" selection-start-line="51" selection-start-column="87" selection-end-line="51" selection-end-column="87" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar:///Library/Java/JavaVirtualMachines/jdk1.8.0_45.jdk/Contents/Home/jre/lib/ext/jfxrt.jar!/javafx/event/EventTarget.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding>
-            <element signature="e#0#276#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/motion/src/main/java/com/nikhil/controller/CompositionController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.032397408">
-          <caret line="99" column="0" selection-start-line="99" selection-start-column="0" selection-end-line="99" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/motion/src/main/java/com/nikhil/xml/XMLReader.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.9762419">
-          <caret line="172" column="17" selection-start-line="172" selection-start-column="17" selection-end-line="172" selection-end-column="17" />
-          <folding>
-            <element signature="docComment;class#XMLReader#0" expanded="false" />
-            <element signature="method#XMLReader#1;class#XMLReader#0" expanded="false" />
-            <element signature="method#setControllerFactory#0;class#XMLReader#0" expanded="false" />
-            <element signature="docComment;method#load#0;class#XMLReader#0" expanded="false" />
-            <element signature="e#2408#2482#0" expanded="false" />
-            <element signature="method#parseRoot#0;class#XMLReader#0" expanded="false" />
-            <element signature="docComment;method#parseDirectChildOfRoot#0;class#XMLReader#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/motion/src/main/java/com/nikhil/xml/ModelFactory.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="35" column="61" selection-start-line="35" selection-start-column="61" selection-end-line="35" selection-end-column="61" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/motion/src/main/java/com/nikhil/model/freeform/MovablePoint.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-0.03671706">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/level-editor/src/main/java/com/nikhil/command/keyframe/AddTemporalKeyframe.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/level-editor/src/main/java/com/nikhil/command/keyframe/AddSpatialKeyframe.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/level-editor/src/main/java/com/nikhil/command/item/ScaleShape.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="24" column="8" selection-start-line="24" selection-start-column="8" selection-end-line="31" selection-end-column="9" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/level-editor/src/main/java/com/nikhil/command/keyframe/ModifySpatialKeyframe.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="59" column="8" selection-start-line="59" selection-start-column="8" selection-end-line="59" selection-end-column="8" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/level-editor/src/main/java/com/nikhil/command/keyframe/ModifyTemporalKeyframe.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.8099352">
-          <caret line="45" column="9" selection-start-line="45" selection-start-column="9" selection-end-line="45" selection-end-column="9" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/level-editor/src/main/java/com/nikhil/command/item/RotateShape.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.87473005">
@@ -2721,81 +2700,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/level-editor/src/main/java/com/nikhil/view/item/record/SpatialMetadata.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="90" column="75" selection-start-line="90" selection-start-column="75" selection-end-line="90" selection-end-column="75" />
-          <folding>
-            <element signature="docComment;class#SpatialMetadata#0" expanded="false" />
-            <element signature="e#3895#3964#0" expanded="false" />
-            <element signature="method#getValueNode#0;class#SpatialMetadata#0" expanded="false" />
-            <element signature="method#getOptionNode#0;class#SpatialMetadata#0" expanded="false" />
-            <element signature="method#getTranslationValueNode#0;class#SpatialMetadata#0" expanded="false" />
-            <element signature="class#7723:9435" expanded="false" />
-            <element signature="method#valueBeingDragged#0;class#7723:9435" expanded="false" />
-            <element signature="method#valueFinishedChanging#0;class#7723:9435" expanded="false" />
-            <element signature="class#10164:11886" expanded="false" />
-            <element signature="method#valueBeingDragged#0;class#10164:11886" expanded="false" />
-            <element signature="method#valueFinishedChanging#0;class#10164:11886" expanded="false" />
-            <element signature="method#getAnchorPointValueNode#0;class#SpatialMetadata#0" expanded="false" />
-            <element signature="class#12479:13014" expanded="false" />
-            <element signature="method#valueBeingDragged#0;class#12479:13014" expanded="false" />
-            <element signature="method#valueFinishedChanging#0;class#12479:13014" expanded="false" />
-            <element signature="class#13358:13893" expanded="false" />
-            <element signature="method#valueBeingDragged#0;class#13358:13893" expanded="false" />
-            <element signature="method#valueFinishedChanging#0;class#13358:13893" expanded="false" />
-            <element signature="docComment;method#createNewKeyframe#0;class#SpatialMetadata#0" expanded="false" />
-            <element signature="method#createNewKeyframe#0;class#SpatialMetadata#0" expanded="false" />
-            <element signature="docComment;method#wasPreviouslyExecuted#0;class#SpatialMetadata#0" expanded="false" />
-            <element signature="method#wasPreviouslyExecuted#0;class#SpatialMetadata#0" expanded="false" />
-            <element signature="docComment;method#push#0;class#SpatialMetadata#0" expanded="false" />
-            <element signature="method#push#0;class#SpatialMetadata#0" expanded="false" />
-            <element signature="docComment;method#registerContinuousChange#0;class#SpatialMetadata#0" expanded="false" />
-            <element signature="method#registerContinuousChange#0;class#SpatialMetadata#0" expanded="false" />
-            <element signature="docComment;method#endContinuousChange#0;class#SpatialMetadata#0" expanded="false" />
-            <element signature="method#endContinuousChange#0;class#SpatialMetadata#0" expanded="false" />
-            <element signature="e#23253#23305#0" expanded="false" />
-            <element signature="e#24419#24478#0" expanded="false" />
-            <element signature="e#24686#24753#0" expanded="false" />
-            <element signature="docComment;method#pushDirectChangeWithKeyframe#0;class#SpatialMetadata#0" expanded="false" />
-            <element signature="method#pushDirectChangeWithKeyframe#0;class#SpatialMetadata#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/level-editor/src/main/java/com/nikhil/view/item/record/TemporalMetadata.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="95" column="38" selection-start-line="95" selection-start-column="38" selection-end-line="95" selection-end-column="38" />
-          <folding>
-            <element signature="docComment;class#TemporalMetadata#0" expanded="false" />
-            <element signature="e#4298#4367#0" expanded="false" />
-            <element signature="method#getValueNode#0;class#TemporalMetadata#0" expanded="false" />
-            <element signature="method#getOptionNode#0;class#TemporalMetadata#0" expanded="false" />
-            <element signature="method#initKeyframePane#0;class#TemporalMetadata#0" expanded="false" />
-            <element signature="method#getScaleValueNode#0;class#TemporalMetadata#0" expanded="false" />
-            <element signature="class#8165:9437" expanded="false" />
-            <element signature="method#valueBeingDragged#0;class#8165:9437" expanded="false" />
-            <element signature="method#valueFinishedChanging#0;class#8165:9437" expanded="false" />
-            <element signature="method#getRotationValueNode#0;class#TemporalMetadata#0" expanded="false" />
-            <element signature="class#10432:11946" expanded="false" />
-            <element signature="method#valueBeingDragged#0;class#10432:11946" expanded="false" />
-            <element signature="method#valueFinishedChanging#0;class#10432:11946" expanded="false" />
-            <element signature="docComment;method#createNewKeyframe#0;class#TemporalMetadata#0" expanded="false" />
-            <element signature="method#createNewKeyframe#0;class#TemporalMetadata#0" expanded="false" />
-            <element signature="docComment;method#registerContinuousChange#0;class#TemporalMetadata#0" expanded="false" />
-            <element signature="method#registerContinuousChange#0;class#TemporalMetadata#0" expanded="false" />
-            <element signature="docComment;method#pushWithKeyframe#0;class#TemporalMetadata#0" expanded="false" />
-            <element signature="method#pushWithKeyframe#0;class#TemporalMetadata#0" expanded="false" />
-            <element signature="e#18007#18059#0" expanded="false" />
-            <element signature="e#19085#19144#0" expanded="false" />
-            <element signature="e#19356#19423#0" expanded="false" />
-            <element signature="docComment;method#pushDirectChangeWithKeyframe#0;class#TemporalMetadata#0" expanded="false" />
-            <element signature="method#pushDirectChangeWithKeyframe#0;class#TemporalMetadata#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/level-editor/src/main/java/com/nikhil/view/custom/keyframe/KeyframeView.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.7408207">
@@ -2817,19 +2721,11 @@
         <state vertical-scroll-proportion="0.0">
           <caret line="73" column="19" selection-start-line="73" selection-start-column="19" selection-end-line="73" selection-end-column="19" />
           <folding>
-            <element signature="e#2474#2475#0" expanded="true" />
-            <element signature="e#2520#2521#0" expanded="true" />
-            <element signature="e#2587#2588#0" expanded="true" />
-            <element signature="e#2643#2644#0" expanded="true" />
+            <element signature="e#2441#2442#0" expanded="true" />
+            <element signature="e#2487#2488#0" expanded="true" />
+            <element signature="e#2554#2555#0" expanded="true" />
+            <element signature="e#2610#2611#0" expanded="true" />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/level-editor/src/main/java/com/nikhil/view/custom/keyframe/SpatialKeyframePane.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="83" column="61" selection-start-line="83" selection-start-column="61" selection-end-line="83" selection-end-column="61" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -2922,8 +2818,8 @@
         <state vertical-scroll-proportion="0.0">
           <caret line="32" column="0" selection-start-line="32" selection-start-column="0" selection-end-line="32" selection-end-column="0" />
           <folding>
-            <element signature="e#454#455#0" expanded="true" />
-            <element signature="e#496#497#0" expanded="true" />
+            <element signature="e#454#455#0" expanded="false" />
+            <element signature="e#496#497#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -2955,22 +2851,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/level-editor/src/main/java/com/nikhil/editor/tool/IsoscelesTriangleTool.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="26" column="0" selection-start-line="26" selection-start-column="0" selection-end-line="26" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/level-editor/src/main/java/com/nikhil/editor/tool/PenTool.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.61555076">
-          <caret line="89" column="0" selection-start-line="89" selection-start-column="0" selection-end-line="89" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/level-editor/src/main/java/com/nikhil/editor/tool/SelectionTool.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.29157668">
@@ -2979,14 +2859,6 @@
             <element signature="e#1295#1296#0" expanded="false" />
             <element signature="e#1339#1340#0" expanded="false" />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/level-editor/src/main/java/com/nikhil/editor/tool/ParallelogramTool.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.6112311">
-          <caret line="56" column="46" selection-start-line="56" selection-start-column="46" selection-end-line="56" selection-end-column="46" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -3003,8 +2875,8 @@
         <state vertical-scroll-proportion="0.0">
           <caret line="20" column="46" selection-start-line="20" selection-start-column="46" selection-end-line="20" selection-end-column="46" />
           <folding>
-            <element signature="e#2178#2179#0" expanded="true" />
-            <element signature="e#2203#2204#0" expanded="true" />
+            <element signature="e#2178#2179#0" expanded="false" />
+            <element signature="e#2203#2204#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -3017,106 +2889,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/level-editor/src/main/java/com/nikhil/editor/tool/CircleTool.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="30" column="0" selection-start-line="30" selection-start-column="0" selection-end-line="30" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/level-editor/bin/com/nikhil/view/container/CircleView.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding>
-            <element signature="e#0#1724#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/motion/src/main/java/com/nikhil/model/shape/CircleModel.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.2688331">
-          <caret line="24" column="55" selection-start-line="24" selection-start-column="55" selection-end-line="24" selection-end-column="55" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/level-editor/src/main/java/com/nikhil/view/item/delegate/PolygonViewDelegate.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.11078287">
-          <caret line="5" column="17" selection-start-line="5" selection-start-column="17" selection-end-line="5" selection-end-column="17" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/level-editor/src/main/java/com/nikhil/view/item/PolygonView.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="69" column="27" selection-start-line="69" selection-start-column="27" selection-end-line="69" selection-end-column="27" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="jar:///Library/Java/JavaVirtualMachines/jdk1.8.0_45.jdk/Contents/Home/javafx-src.zip!/javafx/scene/paint/Color.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.42097488">
           <caret line="1411" column="138" selection-start-line="1411" selection-start-column="138" selection-end-line="1411" selection-end-column="138" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/level-editor/src/main/java/com/nikhil/view/item/CircleView.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="49" column="32" selection-start-line="49" selection-start-column="32" selection-end-line="49" selection-end-column="32" />
-          <folding>
-            <element signature="docComment;class#CircleView#0" expanded="false" />
-            <element signature="e#1935#1936#0" expanded="true" />
-            <element signature="e#1968#1969#0" expanded="true" />
-            <element signature="e#2121#2122#0" expanded="true" />
-            <element signature="e#2152#2153#0" expanded="true" />
-            <element signature="e#2300#2301#0" expanded="true" />
-            <element signature="e#2334#2335#0" expanded="true" />
-            <element signature="e#2494#2495#0" expanded="true" />
-            <element signature="e#2528#2529#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/level-editor/src/main/java/com/nikhil/controller/ItemViewController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="166" column="61" selection-start-line="166" selection-start-column="61" selection-end-line="166" selection-end-column="61" />
-          <folding>
-            <element signature="docComment;class#ItemViewController#0" expanded="false" />
-            <element signature="method#setCompositionViewController#0;class#ItemViewController#0" expanded="false" />
-            <element signature="docComment;method#selectFromItemTable#0;class#ItemViewController#0" expanded="false" />
-            <element signature="docComment;method#scaleBy#0;class#ItemViewController#0" expanded="false" />
-            <element signature="e#5676#5677#0" expanded="true" />
-            <element signature="e#5727#5728#0" expanded="true" />
-            <element signature="docComment;method#isKeyframableProperty#0;class#ItemViewController#0" expanded="false" />
-            <element signature="method#isKeyframableProperty#0;class#ItemViewController#0" expanded="false" />
-            <element signature="docComment;method#getTemporalMetadata#0;class#ItemViewController#0" expanded="false" />
-            <element signature="docComment;method#getSpatialMetadata#0;class#ItemViewController#0" expanded="false" />
-            <element signature="docComment;method#getHeaderMetadata#0;class#ItemViewController#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/level-editor/src/main/java/com/nikhil/controller/CompositionViewController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="4.827214">
-          <caret line="194" column="0" selection-start-line="194" selection-start-column="0" selection-end-line="194" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/level-editor/src/main/java/com/nikhil/command/AddPolygon.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.8423326">
-          <caret line="35" column="0" selection-start-line="35" selection-start-column="0" selection-end-line="35" selection-end-column="0" />
           <folding />
         </state>
       </provider>
@@ -3131,86 +2907,52 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/level-editor/src/main/java/com/nikhil/editor/gizmo/CircleGizmo.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="54" column="5" selection-start-line="54" selection-start-column="5" selection-end-line="54" selection-end-column="5" />
-          <folding>
-            <element signature="e#1598#1599#0" expanded="true" />
-            <element signature="e#1634#1635#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/level-editor/src/main/java/com/nikhil/view/item/record/PolygonMetadata.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="286" column="13" selection-start-line="286" selection-start-column="13" selection-end-line="286" selection-end-column="13" />
-          <folding>
-            <element signature="e#6209#6210#0" expanded="true" />
-            <element signature="e#6285#6286#0" expanded="true" />
-            <element signature="e#8801#8802#0" expanded="true" />
-            <element signature="e#8877#8878#0" expanded="true" />
-            <element signature="e#11396#11397#0" expanded="true" />
-            <element signature="e#11472#11473#0" expanded="true" />
-            <element signature="e#12533#12534#0" expanded="true" />
-            <element signature="e#12609#12610#0" expanded="true" />
-            <element signature="e#13421#13422#0" expanded="true" />
-            <element signature="e#13497#13498#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/level-editor/src/main/java/com/nikhil/command/item/MovePolygonPoint.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
+        <state vertical-scroll-proportion="0.7235421">
           <caret line="41" column="0" selection-start-line="41" selection-start-column="0" selection-end-line="41" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/level-editor/src/main/java/com/nikhil/controller/CircleViewController.java">
+    <entry file="file://$PROJECT_DIR$/motion/src/main/java/com/nikhil/model/shape/Parallelogram.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="10" column="37" selection-start-line="10" selection-start-column="37" selection-end-line="10" selection-end-column="37" />
-          <folding>
-            <element signature="e#816#817#0" expanded="true" />
-            <element signature="e#843#844#0" expanded="true" />
-            <element signature="e#923#924#0" expanded="true" />
-            <element signature="e#951#952#0" expanded="true" />
-            <element signature="e#1020#1021#0" expanded="true" />
-            <element signature="e#1047#1048#0" expanded="true" />
-            <element signature="e#1105#1106#0" expanded="true" />
-            <element signature="e#1132#1133#0" expanded="true" />
-            <element signature="e#1197#1198#0" expanded="true" />
-            <element signature="e#1224#1225#0" expanded="true" />
-            <element signature="e#1272#1273#0" expanded="true" />
-            <element signature="e#1299#1300#0" expanded="true" />
-            <element signature="e#1381#1382#0" expanded="true" />
-            <element signature="e#1408#1409#0" expanded="true" />
-            <element signature="e#1488#1489#0" expanded="true" />
-            <element signature="e#1515#1516#0" expanded="true" />
-            <element signature="e#1560#1561#0" expanded="true" />
-            <element signature="e#1587#1588#0" expanded="true" />
-            <element signature="e#1645#1646#0" expanded="true" />
-            <element signature="e#1672#1673#0" expanded="true" />
-          </folding>
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/level-editor/src/main/java/com/nikhil/controller/PolygonViewController.java">
+    <entry file="file://$PROJECT_DIR$/level-editor/src/main/java/com/nikhil/editor/tool/PenTool.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="283" column="0" selection-start-line="283" selection-start-column="0" selection-end-line="283" selection-end-column="0" />
+          <caret line="81" column="89" selection-start-line="81" selection-start-column="89" selection-end-line="81" selection-end-column="89" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/level-editor/src/main/java/com/nikhil/editor/tool/IsoscelesTriangleTool.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.7451404">
+          <caret line="26" column="0" selection-start-line="26" selection-start-column="0" selection-end-line="26" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/level-editor/src/main/java/com/nikhil/editor/tool/ParallelogramTool.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.3563715">
+          <caret line="16" column="37" selection-start-line="16" selection-start-column="37" selection-end-line="16" selection-end-column="37" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/level-editor/bin/com/nikhil/view/container/CircleView.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
-            <element signature="e#8180#8181#0" expanded="true" />
-            <element signature="e#8215#8216#0" expanded="true" />
-            <element signature="e#8269#8270#0" expanded="true" />
-            <element signature="e#8303#8304#0" expanded="true" />
-            <element signature="e#9581#9582#0" expanded="true" />
-            <element signature="e#9644#9645#0" expanded="true" />
-            <element signature="e#9696#9697#0" expanded="true" />
-            <element signature="e#9731#9732#0" expanded="true" />
+            <element signature="e#0#1724#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -3218,28 +2960,309 @@
     <entry file="file://$PROJECT_DIR$/level-editor/src/main/java/com/nikhil/editor/gizmo/PolygonGizmo.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="76" column="4" selection-start-line="76" selection-start-column="4" selection-end-line="76" selection-end-column="4" />
+          <caret line="130" column="46" selection-start-line="130" selection-start-column="46" selection-end-line="130" selection-end-column="46" />
           <folding>
-            <element signature="e#3090#3091#0" expanded="true" />
-            <element signature="e#3127#3128#0" expanded="true" />
             <element signature="method#handle#0;class#PolygonGizmo#0" expanded="false" />
-            <element signature="method#tweakPolygonPoint#0;class#PolygonGizmo#0" expanded="false" />
             <element signature="method#notifyChangesToDelegate#0;class#PolygonGizmo#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/level-editor/src/main/java/com/nikhil/view/item/delegate/ItemViewDelegate.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="12" column="59" selection-start-line="12" selection-start-column="59" selection-end-line="12" selection-end-column="59" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/level-editor/src/main/java/com/nikhil/view/item/delegate/CircleViewDelegate.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.4496788">
+          <caret line="14" column="64" selection-start-line="14" selection-start-column="64" selection-end-line="14" selection-end-column="64" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/level-editor/src/main/java/com/nikhil/view/item/delegate/PolygonViewDelegate.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.16059957">
+          <caret line="5" column="17" selection-start-line="5" selection-start-column="17" selection-end-line="5" selection-end-column="17" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/level-editor/src/main/java/com/nikhil/editor/selection/SelectedItems.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="164" column="0" selection-start-line="164" selection-start-column="0" selection-end-line="164" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/level-editor/src/main/java/org/eclipse/fx/FilterableTreeItem.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="47" column="47" selection-start-line="47" selection-start-column="47" selection-end-line="47" selection-end-column="47" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/motion/src/main/java/com/nikhil/model/shape/CircleModel.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="43" column="58" selection-start-line="43" selection-start-column="58" selection-end-line="43" selection-end-column="58" />
+          <folding>
+            <element signature="e#1662#1663#0" expanded="false" />
+            <element signature="e#1718#1719#0" expanded="false" />
+            <element signature="e#1829#1830#0" expanded="false" />
+            <element signature="e#1863#1864#0" expanded="false" />
+            <element signature="e#1919#1920#0" expanded="false" />
+            <element signature="e#2030#2031#0" expanded="false" />
+            <element signature="e#2066#2067#0" expanded="false" />
+            <element signature="e#2124#2125#0" expanded="false" />
+            <element signature="e#2243#2244#0" expanded="false" />
+            <element signature="e#2277#2278#0" expanded="false" />
+            <element signature="e#2333#2334#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/level-editor/src/main/java/com/nikhil/controller/CompositionViewController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="227" column="77" selection-start-line="227" selection-start-column="77" selection-end-line="227" selection-end-column="77" />
+          <folding>
+            <element signature="e#15888#15889#0" expanded="true" />
+            <element signature="e#15982#15983#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/level-editor/src/main/java/com/nikhil/command/AddPolygon.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="31" column="47" selection-start-line="31" selection-start-column="47" selection-end-line="31" selection-end-column="47" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/level-editor/src/main/java/com/nikhil/editor/tool/CircleTool.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="23" column="48" selection-start-line="23" selection-start-column="48" selection-end-line="23" selection-end-column="48" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/level-editor/src/main/java/com/nikhil/command/AddCircle.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="50" column="5" selection-start-line="50" selection-start-column="5" selection-end-line="50" selection-end-column="5" />
+          <folding>
+            <element signature="e#1489#1490#0" expanded="true" />
+            <element signature="e#1551#1552#0" expanded="true" />
+            <element signature="e#1627#1628#0" expanded="true" />
+            <element signature="e#1688#1689#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/level-editor/src/main/java/com/nikhil/view/item/CircleView.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="153" column="40" selection-start-line="153" selection-start-column="40" selection-end-line="153" selection-end-column="40" />
+          <folding>
+            <element signature="docComment;class#CircleView#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/level-editor/src/main/java/com/nikhil/view/item/PolygonView.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="85" column="5" selection-start-line="85" selection-start-column="5" selection-end-line="85" selection-end-column="5" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/level-editor/src/main/java/com/nikhil/controller/ItemViewController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.33261338">
+          <caret line="171" column="26" selection-start-line="171" selection-start-column="26" selection-end-line="171" selection-end-column="26" />
+          <folding>
+            <element signature="docComment;class#ItemViewController#0" expanded="false" />
+            <element signature="method#setCompositionViewController#0;class#ItemViewController#0" expanded="false" />
+            <element signature="docComment;method#selectFromItemTable#0;class#ItemViewController#0" expanded="false" />
+            <element signature="docComment;method#scaleBy#0;class#ItemViewController#0" expanded="false" />
+            <element signature="docComment;method#isKeyframableProperty#0;class#ItemViewController#0" expanded="false" />
+            <element signature="method#isKeyframableProperty#0;class#ItemViewController#0" expanded="false" />
+            <element signature="docComment;method#getTemporalMetadata#0;class#ItemViewController#0" expanded="false" />
+            <element signature="docComment;method#getSpatialMetadata#0;class#ItemViewController#0" expanded="false" />
+            <element signature="docComment;method#getHeaderMetadata#0;class#ItemViewController#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/level-editor/src/main/java/com/nikhil/controller/PolygonViewController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.33261338">
+          <caret line="156" column="23" selection-start-line="156" selection-start-column="23" selection-end-line="156" selection-end-column="23" />
+          <folding>
+            <element signature="e#6230#6231#0" expanded="true" />
+            <element signature="e#6264#6265#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/level-editor/src/main/java/com/nikhil/controller/CircleViewController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.33261338">
+          <caret line="47" column="22" selection-start-line="47" selection-start-column="22" selection-end-line="47" selection-end-column="22" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#1684#1685#0" expanded="true" />
+            <element signature="e#1717#1718#0" expanded="true" />
+            <element signature="e#1984#1985#0" expanded="true" />
+            <element signature="e#2018#2019#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/level-editor/src/main/java/com/nikhil/view/item/ShapeView.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="22" column="5" selection-start-line="22" selection-start-column="5" selection-end-line="22" selection-end-column="5" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#357#358#0" expanded="true" />
+            <element signature="e#422#423#0" expanded="true" />
+            <element signature="e#454#455#0" expanded="true" />
+            <element signature="e#488#489#0" expanded="true" />
+            <element signature="e#530#531#0" expanded="true" />
+            <element signature="e#567#568#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/level-editor/src/main/java/com/nikhil/editor/gizmo/CircleGizmo.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="140" column="30" selection-start-line="140" selection-start-column="30" selection-end-line="140" selection-end-column="30" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/level-editor/src/main/java/com/nikhil/view/item/record/PolygonMetadata.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.3563715">
+          <caret line="46" column="59" selection-start-line="46" selection-start-column="59" selection-end-line="46" selection-end-column="59" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/level-editor/src/main/java/com/nikhil/view/item/record/HeaderMetadata.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="31" column="5" selection-start-line="31" selection-start-column="5" selection-end-line="31" selection-end-column="5" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/level-editor/src/main/java/com/nikhil/view/item/record/PropertyMetadata.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="34" column="61" selection-start-line="34" selection-start-column="61" selection-end-line="34" selection-end-column="61" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="method#getOptionNode#0;class#PropertyMetadata#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/level-editor/src/main/java/com/nikhil/view/item/record/Metadata.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="54" column="33" selection-start-line="54" selection-start-column="33" selection-end-line="54" selection-end-column="33" />
+          <folding>
+            <element signature="e#887#888#0" expanded="true" />
+            <element signature="e#928#929#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/level-editor/src/main/java/com/nikhil/controller/ShapeViewController.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="7.451404">
-          <caret line="245" column="0" selection-start-line="245" selection-start-column="0" selection-end-line="245" selection-end-column="0" />
+        <state vertical-scroll-proportion="0.0">
+          <caret line="152" column="41" selection-start-line="152" selection-start-column="41" selection-end-line="152" selection-end-column="41" />
           <folding>
-            <element signature="e#3185#3186#0" expanded="true" />
-            <element signature="e#3233#3234#0" expanded="true" />
-            <element signature="e#3267#3268#0" expanded="true" />
-            <element signature="e#3315#3316#0" expanded="true" />
-            <element signature="e#3916#3917#0" expanded="true" />
-            <element signature="e#3966#3967#0" expanded="true" />
+            <element signature="e#3657#3658#0" expanded="true" />
+            <element signature="e#3713#3714#0" expanded="true" />
+            <element signature="e#5401#5402#0" expanded="true" />
+            <element signature="e#5436#5437#0" expanded="true" />
+            <element signature="e#5713#5714#0" expanded="true" />
+            <element signature="e#5761#5762#0" expanded="true" />
+            <element signature="e#5795#5796#0" expanded="true" />
+            <element signature="e#5843#5844#0" expanded="true" />
+            <element signature="e#6444#6445#0" expanded="true" />
+            <element signature="e#6494#6495#0" expanded="true" />
+            <element signature="e#8405#8406#0" expanded="true" />
+            <element signature="e#8459#8460#0" expanded="true" />
+            <element signature="e#10420#10421#0" expanded="true" />
+            <element signature="e#10474#10475#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/timeline/src/main/java/com/nikhil/timeline/change/KeyframeChangeNode.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="6" column="44" selection-start-line="6" selection-start-column="44" selection-end-line="6" selection-end-column="44" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/level-editor/src/main/java/com/nikhil/view/item/record/TemporalMetadata.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="38" column="76" selection-start-line="38" selection-start-column="76" selection-end-line="38" selection-end-column="76" />
+          <folding>
+            <element signature="method#TemporalMetadata#0;class#TemporalMetadata#0" expanded="false" />
+            <element signature="method#pushManualKeyframeCommand#0;class#TemporalMetadata#0" expanded="false" />
+            <element signature="method#createNewKeyframe#0;class#TemporalMetadata#0" expanded="false" />
+            <element signature="method#initKeyframePane#0;class#TemporalMetadata#0" expanded="false" />
+            <element signature="docComment;method#createNewKeyframe#1;class#TemporalMetadata#0" expanded="false" />
+            <element signature="method#createNewKeyframe#1;class#TemporalMetadata#0" expanded="false" />
+            <element signature="docComment;method#registerContinuousChange#0;class#TemporalMetadata#0" expanded="false" />
+            <element signature="method#registerContinuousChange#0;class#TemporalMetadata#0" expanded="false" />
+            <element signature="docComment;method#pushWithKeyframe#0;class#TemporalMetadata#0" expanded="false" />
+            <element signature="method#pushWithKeyframe#0;class#TemporalMetadata#0" expanded="false" />
+            <element signature="e#9276#9328#0" expanded="false" />
+            <element signature="e#10354#10413#0" expanded="false" />
+            <element signature="e#10625#10692#0" expanded="false" />
+            <element signature="docComment;method#pushDirectChangeWithKeyframe#0;class#TemporalMetadata#0" expanded="false" />
+            <element signature="method#pushDirectChangeWithKeyframe#0;class#TemporalMetadata#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/level-editor/src/main/java/com/nikhil/view/custom/keyframe/SpatialKeyframePane.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="80" column="31" selection-start-line="80" selection-start-column="31" selection-end-line="80" selection-end-column="31" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/level-editor/src/main/java/com/nikhil/view/item/record/SpatialMetadata.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="4.2440605">
+          <caret line="158" column="0" selection-start-line="158" selection-start-column="0" selection-end-line="158" selection-end-column="0" />
+          <folding>
+            <element signature="e#3724#3725#0" expanded="true" />
+            <element signature="e#3772#3773#0" expanded="true" />
           </folding>
         </state>
       </provider>

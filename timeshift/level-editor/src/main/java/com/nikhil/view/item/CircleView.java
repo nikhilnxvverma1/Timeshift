@@ -1,5 +1,7 @@
 package com.nikhil.view.item;
 
+import com.nikhil.model.shape.CircleModel;
+import com.nikhil.view.item.delegate.CircleViewDelegate;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.*;
 
@@ -8,7 +10,9 @@ import javafx.scene.shape.*;
  * circle item
  * Created by NikhilVerma on 02/09/15.
  */
-public class CircleView extends Path{
+public class CircleView extends ShapeView{
+
+    private CircleViewDelegate delegate;
 
     //=============================================================================================
     //Circle Properties
@@ -29,7 +33,7 @@ public class CircleView extends Path{
     protected ArcTo arcToD;
 
     public CircleView() {
-        this(0,1,0,359);
+        this(0,1, CircleModel.DEFAULT_STARTING_ANGLE,CircleModel.DEFAULT_ENDING_ANGLE);
     }
 
     public CircleView(CircleView circleView){
@@ -59,7 +63,7 @@ public class CircleView extends Path{
         this.getElements().add(new ClosePath());
     }
 
-    public double getStartAngle() {
+    public double getStartingAngle() {
         return startAngle;
     }
 
@@ -68,7 +72,7 @@ public class CircleView extends Path{
         updateView();
     }
 
-    public double getEndAngle() {
+    public double getEndingAngle() {
         return endAngle;
     }
 
@@ -143,8 +147,7 @@ public class CircleView extends Path{
         endAngle=circleView.endAngle;
         updateView();
 
-        setScaleX(circleView.getScaleX());
-        setScaleY(circleView.getScaleX());
+        setScale(circleView.getScale());
         setRotate(circleView.getRotate());
         setTranslateX(circleView.getTranslateX());
         setTranslateY(circleView.getTranslateY());
@@ -155,5 +158,14 @@ public class CircleView extends Path{
         setOuterRadius(circleView.outerRadius);
         setStartAngle(circleView.startAngle);
         setEndAngle(circleView.endAngle);
+    }
+
+    public CircleViewDelegate getDelegate() {
+        return delegate;
+    }
+
+    public void setDelegate(CircleViewDelegate delegate) {
+        this.delegate = delegate;
+        setDelegateAsEventHandler();
     }
 }

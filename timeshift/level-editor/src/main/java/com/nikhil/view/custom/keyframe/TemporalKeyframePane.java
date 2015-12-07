@@ -33,7 +33,7 @@ public class TemporalKeyframePane extends KeyframePane{
     public TemporalKeyframeView addKeyframe(double time, KeyValue keyValue){
         //create and add the keyframe model
         TemporalKeyframe keyframeModel=new TemporalKeyframe(time,keyValue);
-        metadata.getTemporalKeyframeChangeNode().addKeyframe(keyframeModel);
+        metadata.getKeyframeChangeNode().addKeyframe(keyframeModel);
 
         //insert a new keyframe view and select it
         TemporalKeyframeView keyframeView = insertNewKeyframeView(keyframeModel);
@@ -62,7 +62,7 @@ public class TemporalKeyframePane extends KeyframePane{
      */
     public void addKeyframe(TemporalKeyframeView keyframeView){
         //add the keyframe model to the temporal change node
-        metadata.getTemporalKeyframeChangeNode().addKeyframe(keyframeView.getKeyframeModel());
+        metadata.getKeyframeChangeNode().addKeyframe(keyframeView.getKeyframeModel());
 
         //select it and add it to the "keyContainer" node.
         keyframeView.setSelected(true);
@@ -80,7 +80,7 @@ public class TemporalKeyframePane extends KeyframePane{
         boolean wasRemoved = keyContainer.getChildren().remove(keyframeView);
         if(wasRemoved){
             //remove the value from the change node too
-            metadata.getTemporalKeyframeChangeNode().removeKeyframe(keyframeView.getKeyframeModel());
+            metadata.getKeyframeChangeNode().removeKeyframe(keyframeView.getKeyframeModel());
         }
         return wasRemoved;
     }
@@ -93,11 +93,11 @@ public class TemporalKeyframePane extends KeyframePane{
     @Override
     public void keyframesMoved(int totalKeysMoved) {
         double currentTime = getMetadata().getItemViewController().getCompositionViewController().getTime();
-        getMetadata().getTemporalKeyframeChangeNode().setTime(currentTime);
+        getMetadata().getKeyframeChangeNode().setTime(currentTime);
     }
 
     private void initKeyframes(){
-        TemporalKeyframe t=metadata.getTemporalKeyframeChangeNode().getStart();
+        TemporalKeyframe t=metadata.getKeyframeChangeNode().getStart();
         while(t!=null){
             insertNewKeyframeView(t);
             t=t.getNext();

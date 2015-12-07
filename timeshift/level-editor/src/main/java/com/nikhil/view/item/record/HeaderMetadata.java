@@ -16,7 +16,6 @@ import javafx.scene.layout.HBox;
  * Created by NikhilVerma on 11/11/15.
  */
 public class HeaderMetadata extends Metadata {
-    private ItemViewController itemViewController;
     private boolean itemNameHeader;
 
     private CheckBox visibility;
@@ -24,16 +23,12 @@ public class HeaderMetadata extends Metadata {
     private CheckBox lock;
 
     public HeaderMetadata(String name, MetadataTag tag, ItemViewController itemViewController, boolean itemNameHeader) {
-        super(name, tag);
+        super(itemViewController,name, tag);
         this.itemNameHeader = itemNameHeader;
         this.itemViewController = itemViewController;
         if(itemNameHeader){
             initSwitches();
         }
-    }
-
-    public ItemViewController getItemViewController(){
-        return itemViewController;
     }
 
     public CheckBox getVisibility() {
