@@ -80,7 +80,7 @@ public class SpatialKeyframePane extends KeyframePane{
         if(wasRemoved){
             //remove the value from the change node too
             metadata.getSpatialKeyframeChangeNode().removeKeyframe(keyframeView.getKeyframeModel());
-            Pane worksheetPane = metadata.getItemViewController().getCompositionViewController().getWorksheet();
+            Group worksheetPane = metadata.getItemViewController().getCompositionViewController().getOutlineGroup();
             keyframeView.getInteractiveBezierPoint().removeAsChildrenFrom(worksheetPane);
             if (previousKeyframeView != null) {
                 previousKeyframeView.updateMotionPathOnlyForNext();

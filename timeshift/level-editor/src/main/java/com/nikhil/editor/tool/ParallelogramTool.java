@@ -1,28 +1,24 @@
 package com.nikhil.editor.tool;
 
 import com.nikhil.command.AddParallelogram;
-import com.nikhil.command.Command;
+import com.nikhil.editor.workspace.Workspace;
 import com.nikhil.math.MathUtil;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.shape.Rectangle;
-
-import java.util.Stack;
 
 /**
  * Created by NikhilVerma on 23/08/15.
  */
 public class ParallelogramTool extends BaseTool {
 
-    private Pane pane;
-
     private Rectangle rectangle;//TODO soon will be changed to a more sophisticated parallelgoram shape using path
 
     private double initialX,initialY;
     private AddParallelogram addParallelogram;
 
-    public ParallelogramTool(Pane pane) {
-        this.pane = pane;
+    public ParallelogramTool(Workspace workspace) {
+        super(workspace);
     }
 
     @Override
@@ -34,6 +30,7 @@ public class ParallelogramTool extends BaseTool {
         rectangle.setY(initialY);
         rectangle.setWidth(1);
         rectangle.setHeight(1);
+        Pane pane=workspace.getCurrentComposition().getWorksheet();
         pane.getChildren().add(rectangle);
     }
 
@@ -53,11 +50,11 @@ public class ParallelogramTool extends BaseTool {
     }
 
     @Override
-    public Command mouseReleased(MouseEvent mouseEvent) {
+    public void mouseReleased(MouseEvent mouseEvent) {
+        Pane pane=workspace.getCurrentComposition().getWorksheet();
         addParallelogram = new AddParallelogram(rectangle,pane);
 //        addParallelogram.execute();
 //        commandStack.push(addParallelogram);
-        return addParallelogram;
     }
 
     @Override

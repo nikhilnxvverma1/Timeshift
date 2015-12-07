@@ -4,7 +4,6 @@ import com.nikhil.controller.ItemViewController;
 import com.nikhil.util.modal.UtilPoint;
 
 import java.util.HashSet;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 
@@ -55,7 +54,7 @@ public class Clipboard {//TODO synchronize these methods
         Set<ItemViewController> deepCopyOfItems=new HashSet<ItemViewController>();
         for(ItemViewController itemViewController: itemsInClipboard){
             //make a deep copy of this controller
-            ItemViewController deepCopy=itemViewController.clone();
+            ItemViewController deepCopy=itemViewController.deepCopy();
             final UtilPoint translation = deepCopy.getTranslation();
             deepCopy.moveTo(translation.getX()+offsetX,translation.getY()+offsetY);
             deepCopyOfItems.add(deepCopy);

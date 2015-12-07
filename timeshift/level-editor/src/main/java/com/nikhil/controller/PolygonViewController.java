@@ -3,6 +3,7 @@ package com.nikhil.controller;
 import com.nikhil.command.item.MovePolygonPoint;
 import com.nikhil.controller.item.ItemModelController;
 import com.nikhil.controller.item.PolygonModelController;
+import com.nikhil.editor.gizmo.Gizmo;
 import com.nikhil.editor.gizmo.GizmoVisibilityOption;
 import com.nikhil.editor.gizmo.PolygonGizmo;
 import com.nikhil.editor.workspace.Workspace;
@@ -30,10 +31,6 @@ import java.util.List;
  */
 public class PolygonViewController extends ShapeViewController implements PolygonViewDelegate{
 
-    public static final int SCALE_INDEX=0;
-    public static final int ROTATION_INDEX=1;
-    public static final int TRANSLATION_INDEX=2;
-    public static final int ANCHOR_POINT_INDEX=3;
     public static final int VERTEX_HEADER_INDEX=4;
 
     private PolygonModelController polygonModelController;
@@ -50,10 +47,9 @@ public class PolygonViewController extends ShapeViewController implements Polygo
         this.polygonView.setDelegate(this);
         constructModelControllerUsingView();
         polygonGizmo=new PolygonGizmo(polygonView);
-        polygonGizmo.initializeView();
         setSelfAsChangeHandler();
         initMetadataTree();
-        compositionViewController.getWorkspace().getSelectedItems().requestFocus(this,false);
+        compositionViewController.getWorkspace().getSelectedItems().requestFocus(this, false);
     }
 
     public PolygonViewController(CompositionViewController compositionViewController,PolygonModelController polygonModelController){
@@ -62,16 +58,12 @@ public class PolygonViewController extends ShapeViewController implements Polygo
         constructViewUsingModelController();
         this.polygonView.setDelegate(this);
         polygonGizmo=new PolygonGizmo(polygonView);
-        polygonGizmo.initializeView();
         setSelfAsChangeHandler();
         initMetadataTree();
     }
 
-    /**
-     * Uses the view to translate and create a polygon model
-     * and corresponding model controller
-     */
-    private void constructModelControllerUsingView(){
+    @Override
+    protected void constructModelControllerUsingView(){
         PolygonModel polygonModel =new PolygonModel();
         List<UtilPoint> polygonPoints = polygonView.getPolygonPoints();
 
@@ -140,29 +132,6 @@ public class PolygonViewController extends ShapeViewController implements Polygo
         return polygonModelController;
     }
 
-    public PolygonView getPolygonView() {
-        return polygonView;
-    }
-
-    public PolygonGizmo getPolygonGizmo() {
-        return polygonGizmo;
-    }
-
-    @Override
-    public double getScale() {
-        return polygonView.getScale();
-    }
-
-    @Override
-    public double getRotation(){
-        return polygonView.getRotate();
-    }
-
-    @Override
-    public UtilPoint getTranslation() {
-        return new UtilPoint(polygonView.getLayoutX(),polygonView.getLayoutY());
-    }
-
     //=============================================================================================
     //Item View Controller methods
     //=============================================================================================
@@ -179,117 +148,13 @@ public class PolygonViewController extends ShapeViewController implements Polygo
     }
 
     @Override
-    public void addViewsTo(Pane pane){
-        pane.getChildren().add(polygonView);
-        pane.getChildren().add(polygonGizmo);
-    }
-
-    @Override
-    public void removeViews(Pane pane){
-        pane.getChildren().remove(polygonView);
-        pane.getChildren().remove(polygonGizmo);
-    }
-
-    @Override
-    public void moveTo(double newX, double newY) {
-        //change translation component of the view and gizmo
-//        double x=polygonView.getLayoutX();
-//        double y=polygonView.getLayoutY();
-//        double newX = x + dx;
-//        double newY = y + dy;
-        polygonView.setLayoutX(newX);
-        polygonView.setLayoutY(newY);
-        polygonGizmo.updateView();
-
-        //convert to work point and update the business model
-        Workspace workspace=compositionViewController.getWorkspace();
-        double workPointX = workspace.workPointX(newX);
-        double workPointY = workspace.workPointY(newY);
-        polygonModelController.getPolygonModel().setTranslation(new UtilPoint(workPointX,workPointY));
-    }
-
-    @Override
-    public double scaleBy(double dScale) {
-
-        //change scale component of the view and gizmo
-        double oldScale = polygonView.getScale();
-        double newScale=dScale+ oldScale;
-        if(newScale<0.1){
-            return polygonView.getScale();
-        }
-        polygonView.setScale(newScale);
-        polygonGizmo.updateView();
-
-        //TODO convert to work point scale and update the business model
-        double workScale=newScale;
-        polygonModelController.getPolygonModel().setScale((float)workScale);//TODO change types
-        return polygonView.getScale();
-    }
-
-    @Override
-    public void setCompositionViewController(CompositionViewController compositionViewController) {
-        //we do some processing if the composition controller changes
-        super.setCompositionViewController(compositionViewController);
-        constructModelControllerUsingView();//recomputes the model controller based on the new workspace
-    }
-
-    @Override
-    public double rotateBy(double dAngle) {
-        //change rotation component of the view and gizmo
-        double oldRotation= polygonView.getRotate();
-        double newRotation=dAngle+ oldRotation;
-        newRotation= MathUtil.under360(newRotation);
-        polygonView.setRotate(newRotation);
-        polygonGizmo.updateView();
-
-        //TODO convert to work point scale and update the business model
-        double workRotation=newRotation;
-        polygonModelController.getPolygonModel().setRotation((float)workRotation);//TODO change types
-        return newRotation;
-    }
-
-    @Override
-    public boolean contains(double x, double y) {
-        return polygonView.contains(x,y);
-    }
-
-    @Override
     public boolean overlapsWithSceneBounds(Bounds sceneBounds) {
         Bounds polygonBoundsInScene = polygonView.localToScene(polygonView.getLayoutBounds());
         return polygonBoundsInScene.intersects(sceneBounds);
     }
 
     @Override
-    public void hasSelectionFocus(boolean isSelected) {
-        hasSelectionFocus(isSelected,false);
-    }
-
-    @Override
-    public void hasSelectionFocus(boolean isSelected, boolean isSelectedInDetail) {
-        if(isSelected){
-            if(isSelectedInDetail){
-                polygonGizmo.showGizmo(GizmoVisibilityOption.SHOW_ALL);
-            }else{
-                polygonGizmo.showGizmo(GizmoVisibilityOption.SHOW_ONLY_OUTLINE);
-            }
-        }else{
-            polygonGizmo.showGizmo(GizmoVisibilityOption.HIDE_ALL);
-        }
-    }
-
-    @Override
-    public void hoveredOver(boolean isHoveringOver, boolean isSelected){
-        if(!isSelected){
-            if(isHoveringOver){
-                polygonGizmo.showGizmo(GizmoVisibilityOption.SHOW_ONLY_OUTLINE);
-            }else{
-                polygonGizmo.showGizmo(GizmoVisibilityOption.HIDE_ALL);
-            }
-        }
-    }
-
-    @Override
-    public PolygonViewController clone() {
+    public PolygonViewController deepCopy() {
         return new PolygonViewController(this);
     }
 
@@ -328,7 +193,7 @@ public class PolygonViewController extends ShapeViewController implements Polygo
     }
 
     @Override
-    public Shape getItemView() {
+    public PolygonView getItemView() {
         return polygonView;
     }
 
@@ -374,7 +239,7 @@ public class PolygonViewController extends ShapeViewController implements Polygo
     }
 
     @Override
-    public Group getGizmo() {
+    public PolygonGizmo getGizmo() {
         return polygonGizmo;
     }
 

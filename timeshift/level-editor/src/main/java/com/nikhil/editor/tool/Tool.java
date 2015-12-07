@@ -9,10 +9,20 @@ import javafx.scene.input.MouseEvent;
  */
 public interface Tool {
 
-    public void toolAppointed(Tool lastSelectedTool);
-    public void toolDismissed(Tool newToolSelected);
-    public void mousePressed(MouseEvent mouseEvent);
-    public void mouseDragged(MouseEvent mouseEvent);
-    public Command mouseReleased(MouseEvent mouseEvent);
-    public ToolType getToolType();
+    /**
+     * Callback for whenever the tool is selected.
+     *
+     * @param lastSelectedTool the tool that was selected before this tool
+     */
+    void toolAppointed(Tool lastSelectedTool);
+
+    /**
+     * Callback for whenever this tool is dismissed as a result of a new tool being selected
+     * @param newToolSelected the new tool that just got selected
+     */
+    void toolDismissed(Tool newToolSelected);
+    void mousePressed(MouseEvent mouseEvent);
+    void mouseDragged(MouseEvent mouseEvent);
+    void mouseReleased(MouseEvent mouseEvent);
+    ToolType getToolType();
 }

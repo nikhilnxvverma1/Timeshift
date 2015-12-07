@@ -5,22 +5,21 @@ import com.nikhil.common.Subject;
 import com.nikhil.controller.CompositionController;
 import com.nikhil.model.ItemModel;
 import com.nikhil.model.ModelVisitor;
-import com.nikhil.model.shape.Circle;
-import com.nikhil.timeline.Timeline;
+import com.nikhil.model.shape.CircleModel;
 
 /**
  * Created by NikhilVerma on 10/08/15.
  */
 public class CircleModelController extends ItemModelController implements Observer{
 
-    private Circle circle;
+    private CircleModel circleModel;
 
-    public CircleModelController(Circle circle) {
-        this.circle = circle;
+    public CircleModelController(CircleModel circleModel) {
+        this.circleModel = circleModel;
     }
 
-    public Circle getCircle() {
-        return circle;
+    public CircleModel getCircleModel() {
+        return circleModel;
     }
 
     @Override
@@ -30,12 +29,12 @@ public class CircleModelController extends ItemModelController implements Observ
 
     @Override
     public ItemModel getItemModel() {
-        return circle;
+        return circleModel;
     }
 
     @Override
     public void acceptVisitor(ModelVisitor visitor) {
-        circle.acceptVisitor(visitor);
+        circleModel.acceptVisitor(visitor);
     }
 
     @Override

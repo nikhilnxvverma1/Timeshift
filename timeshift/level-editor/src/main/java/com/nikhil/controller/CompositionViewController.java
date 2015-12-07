@@ -210,7 +210,7 @@ public class CompositionViewController {
         if(removed){
             TreeItem<Metadata> metadataTree = itemViewController.getMetadataTree();
             rootTreeItem.getInternalChildren().remove(metadataTree);
-            itemViewController.removeViews(worksheet);
+            worksheet.getChildren().remove(itemViewController.getItemView());
             //remove from timeline
             compositionController.getTimeline().remove(itemViewController.getItemModel().changeNodeIterator());
             compositionController.removeItemController(itemViewController.getModelController());

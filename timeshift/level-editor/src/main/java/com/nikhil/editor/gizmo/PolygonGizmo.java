@@ -21,9 +21,7 @@ import java.util.List;
 /**
  * Created by NikhilVerma on 06/09/15.
  */
-public class PolygonGizmo extends Group implements EventHandler<MouseEvent> {
-
-    public static final int HANDLE_RADIUS = 3;
+public class PolygonGizmo extends Gizmo{
 
     private PolygonView polygonView;
     private PolygonView outlinePolygon;
@@ -35,28 +33,21 @@ public class PolygonGizmo extends Group implements EventHandler<MouseEvent> {
 
     public PolygonGizmo(PolygonView polygonView) {
         this.polygonView = polygonView;
+        initView();
         showGizmo(GizmoVisibilityOption.HIDE_ALL);
     }
 
-    public void initializeView(){
+    private void initView(){
 
         outlinePolygon=new PolygonView(polygonView);
         outlinePolygon.setFill(null);
-        outlinePolygon.setStroke(Color.BLACK);
-        outlinePolygon.getStrokeDashArray().add(7d);
+        outlinePolygon.setStroke(OUTLINE_COLOR);
+        outlinePolygon.getStrokeDashArray().add(OUTLINE_STROKE_DASH);
 
         this.getChildren().add(outlinePolygon);
 
         for(UtilPoint point2D: polygonView.getPolygonPoints()){
             Circle pointHandle=getGenericHandle();
-            //handles should come rotated if the original polygon is rotated by some example
-//            UtilPoint rotatedPoint = MathUtil.getRotatedPoint(point2D, polygonView.getRotate());
-//            UtilPoint transformedPoint = rotatedPoint.multiply(polygonView.getScale());
-//            pointHandle.setCenterX(transformedPoint.getX());
-//            pointHandle.setCenterY(transformedPoint.getY());
-//            pointHandle.setCenterX(0);
-//            pointHandle.setCenterY(0);
-
             //storing location in center later helps us in event handling while tweaking this point
             pointHandle.setCenterX(point2D.getX());
             pointHandle.setCenterY(point2D.getY());
@@ -80,17 +71,11 @@ public class PolygonGizmo extends Group implements EventHandler<MouseEvent> {
 
     }
 
+    @Override
     public void updateView(){
         int index=0;
         for(UtilPoint point2D: polygonView.getPolygonPoints()){
             Circle pointHandle = pointHandles.get(index);
-            //handles should come rotated if the original polygon is rotated by some example
-//            UtilPoint rotatedPoint = MathUtil.getRotatedPoint(point2D, polygonView.getRotate());
-//            UtilPoint transformedPoint = rotatedPoint.multiply(polygonView.getScale());
-//            pointHandle.setCenterX(transformedPoint.getX());
-//            pointHandle.setCenterY(transformedPoint.getY());
-//            pointHandle.setCenterX(0);
-//            pointHandle.setCenterY(0);
             pointHandle.setCenterX(point2D.getX());
             pointHandle.setCenterY(point2D.getY());
             outlinePolygon.updatePoint(index,point2D);
@@ -104,16 +89,9 @@ public class PolygonGizmo extends Group implements EventHandler<MouseEvent> {
         this.setRotate(polygonView.getRotate());
     }
 
-    private Circle getGenericHandle(){
-        Circle genericHandle=new Circle();
-        genericHandle.setRadius(HANDLE_RADIUS);
-        genericHandle.setFill(Color.WHITE);
-        genericHandle.setStroke(Color.BLACK);
-        genericHandle.addEventHandler(MouseEvent.MOUSE_PRESSED,this);
-        genericHandle.addEventHandler(MouseEvent.MOUSE_DRAGGED,this);
-        genericHandle.addEventHandler(MouseEvent.MOUSE_RELEASED,this);
-        genericHandle.setCursor(Cursor.HAND);
-        return genericHandle;
+    @Override
+    public Node getOutline() {
+        return outlinePolygon;
     }
 
     @Override
@@ -165,38 +143,4 @@ public class PolygonGizmo extends Group implements EventHandler<MouseEvent> {
         event.consume();
     }
 
-    public void showGizmo(GizmoVisibilityOption visibilityOption){
-        switch (visibilityOption){
-
-            case HIDE_ALL:
-                this.setVisible(false);
-                break;
-            case SHOW_ALL:
-                this.setVisible(true);
-                for(Node node:this.getChildren()){
-                    node.setVisible(true);
-                }
-                break;
-            case SHOW_ONLY_OUTLINE:
-                this.setVisible(true);
-                for(Node node:this.getChildren()){
-                    if(node==outlinePolygon){
-                        node.setVisible(true);
-                    }else{
-                        node.setVisible(false);
-                    }
-                }
-                break;
-            case SHOW_ONLY_HANDLE:
-                this.setVisible(true);
-                for(Node node:this.getChildren()){
-                    if(node==outlinePolygon){
-                        node.setVisible(false);
-                    }else{
-                        node.setVisible(true);
-                    }
-                }
-                break;
-        }
-    }
 }

@@ -2,6 +2,8 @@ package com.nikhil.command.item;
 
 import com.nikhil.controller.ShapeViewController;
 import com.nikhil.timeline.KeyValue;
+import com.nikhil.view.item.record.MetadataTag;
+import com.nikhil.view.item.record.TemporalMetadata;
 
 /**
  * Created by NikhilVerma on 21/09/15.
@@ -20,14 +22,27 @@ public class ScaleShape extends TemporalActionOnSingleItem {
 
     @Override
     public void execute() {
-        double dScale = finalScale - initialScale;
-        shapeViewController.scaleBy(dScale);
+        TemporalMetadata scaleMetadata = shapeViewController.getTemporalMetadata(MetadataTag.SCALE);
+        if (scaleMetadata.isKeyframable()) {
+            double currentTime = shapeViewController.getCompositionViewController().getTime();
+            scaleMetadata.getTemporalKeyframeChangeNode().setTime(currentTime);
+        }else{
+            double dScale = finalScale - initialScale;
+            shapeViewController.scaleBy(dScale);
+        }
     }
 
     @Override
     public void unexecute() {
-        double dScale = initialScale - finalScale;
-        shapeViewController.scaleBy(dScale);
+        TemporalMetadata scaleMetadata = shapeViewController.getTemporalMetadata(MetadataTag.SCALE);
+        if (scaleMetadata.isKeyframable()) {
+            double currentTime = shapeViewController.getCompositionViewController().getTime();
+            scaleMetadata.getTemporalKeyframeChangeNode().setTime(currentTime);
+        }else{
+            double dScale = initialScale - finalScale;
+            shapeViewController.scaleBy(dScale);
+        }
+
     }
 
     @Override

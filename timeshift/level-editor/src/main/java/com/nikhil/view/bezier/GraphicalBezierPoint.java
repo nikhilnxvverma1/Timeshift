@@ -205,16 +205,23 @@ public class GraphicalBezierPoint extends BezierPoint {
         list.add(anchorPointRect);
     }
 
-    public void removeAsChildrenFrom(Pane parent){
-        parent.getChildren().remove(anchorPointRect);
-        if(cubicCurve!=null){
-            parent.getChildren().remove(cubicCurve);
-        }
-        parent.getChildren().remove(previousControlPointCircle);
-        parent.getChildren().remove(previousControlLine);
-        parent.getChildren().remove(nextControlLine);
-        parent.getChildren().remove(nextControlPointCircle);
+    public void removeAsChildrenFrom(Pane pane){
+        removeFromObservableList(pane.getChildren());
+    }
 
+    public void removeAsChildrenFrom(Group group){
+        removeFromObservableList(group.getChildren());
+    }
+    
+    private void removeFromObservableList(ObservableList<Node> list){
+        list.remove(anchorPointRect);
+        if(cubicCurve!=null){
+            list.remove(cubicCurve);
+        }
+        list.remove(previousControlPointCircle);
+        list.remove(previousControlLine);
+        list.remove(nextControlLine);
+        list.remove(nextControlPointCircle);
     }
 
 

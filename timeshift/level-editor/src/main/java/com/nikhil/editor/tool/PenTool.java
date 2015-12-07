@@ -1,7 +1,7 @@
 package com.nikhil.editor.tool;
 
 import com.nikhil.command.AddBezierPoint;
-import com.nikhil.command.Command;
+import com.nikhil.editor.workspace.Workspace;
 import com.nikhil.logging.Logger;
 import com.nikhil.util.modal.UtilPoint;
 import com.nikhil.view.item.travelpath.LinkPointView;
@@ -18,16 +18,13 @@ import java.util.ArrayList;
  */
 public class PenTool extends BaseTool{
 
-
-
-    private Pane pane;
     private ArrayList<GraphicalBezierPoint> bezierPoints=new ArrayList<GraphicalBezierPoint>();
     private AddBezierPoint lastCommand;
 
     private LinkPointView lastLinkPointView=null;
 
-    public PenTool(Pane pane) {
-        this.pane = pane;
+    public PenTool(Workspace workspace) {
+        super(workspace);
     }
 
     @Override
@@ -68,6 +65,7 @@ public class PenTool extends BaseTool{
         }//no cubic curve for first node
 
         GraphicalBezierPoint graphicalBezierPoint=new GraphicalBezierPoint(new UtilPoint(x,y), cubicCurve);
+        Pane pane=workspace.getCurrentComposition().getWorksheet();
         graphicalBezierPoint.addAsChildrenTo(pane);
         bezierPoints.add(graphicalBezierPoint);
         lastCommand=new AddBezierPoint(pane,graphicalBezierPoint,bezierPoints,true);
@@ -88,8 +86,8 @@ public class PenTool extends BaseTool{
     }
 
     @Override
-    public Command mouseReleased(MouseEvent mouseEvent) {
-        return lastCommand;
+    public void mouseReleased(MouseEvent mouseEvent) {
+
     }
 
     @Override

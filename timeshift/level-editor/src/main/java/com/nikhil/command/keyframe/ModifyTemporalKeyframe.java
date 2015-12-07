@@ -41,10 +41,10 @@ public class ModifyTemporalKeyframe extends ItemCommand {
 
     @Override
     public void unexecute() {
+        temporalKeyframeView.getKeyframeModel().setKeyValue(initialValue);
         if(continuousCommand!=null){
             continuousCommand.unexecute();//this will take care of reverting back to initial value
         }
-        temporalKeyframeView.getKeyframeModel().setKeyValue(initialValue);
     }
 
     public TemporalKeyframeView getTemporalKeyframeView() {

@@ -28,7 +28,7 @@ public class PolygonTool extends BaseTool{
     private AddPolygonPoint lastPolygonPointAddedCommand;
 
     public PolygonTool(Workspace workspace) {
-        this.workspace = workspace;
+        super(workspace);
     }
 
     @Override
@@ -111,7 +111,7 @@ public class PolygonTool extends BaseTool{
     }
 
     @Override
-    public Command mouseReleased(MouseEvent mouseEvent) {
+    public void mouseReleased(MouseEvent mouseEvent) {
 
         Command command;
         //last point was added coincides with first point
@@ -132,7 +132,6 @@ public class PolygonTool extends BaseTool{
             command= lastPolygonPointAddedCommand;
         }
         workspace.pushCommand(command);
-        return command;
     }
 
     private AddPolygon createAddPolygonCommand() {

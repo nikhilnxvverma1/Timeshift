@@ -13,14 +13,18 @@ public abstract class BaseTool implements Tool {
 
     protected Workspace workspace;
 
-    //TODO mandatory parametrized constructor for each subclass
+    /**Mandatory parametrized constructor for each subclass*/
+    public BaseTool(Workspace workspace) {
+        this.workspace = workspace;
+    }
 
-    //handle these events on a need basis
 
+    //handle these events on a need by need basis
     @Override
     public void toolAppointed(Tool lastSelectedTool) {
 
     }
+
 
     @Override
     public void toolDismissed(Tool newToolSelected) {

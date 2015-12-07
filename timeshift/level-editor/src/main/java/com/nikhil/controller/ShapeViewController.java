@@ -3,6 +3,7 @@ package com.nikhil.controller;
 import com.nikhil.editor.selection.SelectedItems;
 import com.nikhil.editor.workspace.Workspace;
 import com.nikhil.logging.Logger;
+import com.nikhil.math.MathUtil;
 import com.nikhil.model.shape.PolygonModel;
 import com.nikhil.model.shape.ShapeModel;
 import com.nikhil.timeline.change.spatial.SpatialChangeHandler;
@@ -21,6 +22,10 @@ import javafx.scene.shape.Shape;
  */
 public abstract class ShapeViewController extends ItemViewController implements TemporalChangeHandler,SpatialChangeHandler {
 
+    public static final int SCALE_INDEX=0;
+    public static final int ROTATION_INDEX=1;
+    public static final int TRANSLATION_INDEX=2;
+    public static final int ANCHOR_POINT_INDEX=3;
     protected TreeItem<Metadata> metadataTree;
 
     public ShapeViewController(CompositionViewController compositionViewController) {
@@ -43,18 +48,6 @@ public abstract class ShapeViewController extends ItemViewController implements 
         double nx=x*Math.cos(theta)-y*Math.sin(theta);
         double ny=y*Math.sin(theta)+y*Math.cos(theta);
         return new UtilPoint(nx,ny);
-    }
-
-    @Override
-    public double rotateBy(double dAngle) {
-        //TODO change rotation component
-        return getRotation();
-    }
-
-    @Override
-    public double scaleBy(double dScale) {
-        //TODO change scale component
-        return 0;
     }
 
     /**
@@ -84,9 +77,82 @@ public abstract class ShapeViewController extends ItemViewController implements 
         return new UtilPoint(itemView.getLayoutX(),itemView.getLayoutY());
     }
 
-    public abstract double getScale();
+    public double getScale(){
+        return getItemView().getScaleX();
+    }
 
-    public abstract double getRotation();
+    public double getRotation(){
+        return getItemView().getRotate();
+    }
+
+    /**
+     * Uses the view to create a shape model
+     * and corresponding model controller
+     */
+    protected abstract void constructModelControllerUsingView();
+
+    @Override
+    public void setCompositionViewController(CompositionViewController compositionViewController) {
+        //we do some processing if the composition controller changes
+        super.setCompositionViewController(compositionViewController);
+        constructModelControllerUsingView();//recomputes the model controller based on the new workspace
+    }
+
+    @Override
+    public boolean contains(double x, double y) {
+        return getItemView().contains(x,y);
+    }
+
+    @Override
+    public void moveTo(double newX, double newY) {
+        //change translation component of the view and gizmo
+//        double x=polygonView.getLayoutX();
+//        double y=polygonView.getLayoutY();
+//        double newX = x + dx;
+//        double newY = y + dy;
+        getItemView().setLayoutX(newX);
+        getItemView().setLayoutY(newY);
+        getGizmo().updateView();
+
+        //convert to work point and update the business model
+        Workspace workspace=compositionViewController.getWorkspace();
+        double workPointX = workspace.workPointX(newX);
+        double workPointY = workspace.workPointY(newY);
+        getShapeModel().setTranslation(new UtilPoint(workPointX, workPointY));
+    }
+
+    @Override
+    public double scaleBy(double dScale) {
+
+        //change scale component of the view and gizmo
+        double oldScale = getItemView().getScaleX();
+        double newScale=dScale+ oldScale;
+        if(newScale<0.1){
+            return getItemView().getScaleX();
+        }
+        getItemView().setScaleX(newScale);
+        getGizmo().updateView();
+
+        //TODO convert to work point scale and update the business model
+        double workScale=newScale;
+        getShapeModel().setScale(workScale);
+        return getScale();
+    }
+
+    @Override
+    public double rotateBy(double dAngle) {
+        //change rotation component of the view and gizmo
+        double oldRotation= getItemView().getRotate();
+        double newRotation=dAngle+ oldRotation;
+        newRotation= MathUtil.under360(newRotation);
+        getItemView().setRotate(newRotation);
+        getGizmo().updateView();
+
+        //TODO convert to work point scale and update the business model
+        double workRotation=newRotation;
+        getShapeModel().setRotation(workRotation);
+        return newRotation;
+    }
 
     public UtilPoint getAnchorPoint(){
         Bounds layoutBoundsInWorksheet = getLayoutBoundsInWorksheet();

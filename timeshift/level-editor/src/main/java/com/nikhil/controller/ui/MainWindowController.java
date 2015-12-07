@@ -75,12 +75,12 @@ public class MainWindowController implements WorkspaceListener {
     private void initializeTools(){
 
         selectionTool =new SelectionTool(workspace);
-        circleTool=new CircleTool(workspacePane);
-        parallelogramTool=new ParallelogramTool(workspacePane);
-        penTool=new PenTool(workspacePane);
+        circleTool=new CircleTool(workspace);
+        parallelogramTool=new ParallelogramTool(workspace);
+        penTool=new PenTool(workspace);
         polygonTool=new PolygonTool(workspace);
-        travelPathTool=new TravelPathTool(workspacePane);
-        isoscelesTriangleTool=new IsoscelesTriangleTool(workspacePane);
+        travelPathTool=new TravelPathTool(workspace);
+        isoscelesTriangleTool=new IsoscelesTriangleTool(workspace);
         setCurrentlySelectedTool(ToolType.SELECTION);
 
         //experiments

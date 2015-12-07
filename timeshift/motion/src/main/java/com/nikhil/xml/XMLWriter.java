@@ -109,7 +109,7 @@ public class XMLWriter implements ModelVisitor {
     }
 
     @Override
-    public void visit(Circle circle) {
+    public void visit(CircleModel circleModel) {
 
     }
 

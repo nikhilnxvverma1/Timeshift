@@ -2,6 +2,8 @@ package com.nikhil.command.item;
 
 import com.nikhil.controller.ItemViewController;
 import com.nikhil.util.modal.UtilPoint;
+import com.nikhil.view.item.record.MetadataTag;
+import com.nikhil.view.item.record.SpatialMetadata;
 import javafx.geometry.Point2D;
 
 import java.util.Set;
@@ -22,11 +24,11 @@ public class MoveItemSet extends ActionOnItemSet {
 
     @Override
     public void execute() {
+
         double dx = to.getX() - from.getX();
         double dy = to.getY() - from.getY();
         for (ItemViewController itemViewController : itemSet) {
-            final UtilPoint translation = itemViewController.getTranslation();
-            itemViewController.moveTo(translation.getX()+dx, translation.getY()+dy);
+            movePossiblyKeyframableItem(itemViewController, dx, dy);
         }
     }
 
@@ -36,8 +38,27 @@ public class MoveItemSet extends ActionOnItemSet {
         double dx = from.getX() - to.getX();
         double dy = from.getY() - to.getY();
         for (ItemViewController itemViewController : itemSet) {
-            final UtilPoint translation = itemViewController.getTranslation();
+            movePossiblyKeyframableItem(itemViewController, dx, dy);
+        }
+    }
+
+    /**
+     * Moves the item ,taking into account that it may be keyframable and in which case, exact movement is
+     * defined by the translation change node with respect to the current time of the composition.
+     * @param itemViewController item to move
+     * @param dx distance to shift horizontally(only used if the item is not keyframable)
+     * @param dy distance to shift vertically(only used if the item is not keyframable)
+     */
+    private void movePossiblyKeyframableItem(ItemViewController itemViewController, double dx, double dy) {
+        SpatialMetadata translationMetadata = itemViewController.getSpatialMetadata(MetadataTag.TRANSLATION);
+        if(translationMetadata.isKeyframable()){
+            final double currentTime = itemViewController.getCompositionViewController().getTime();
+            translationMetadata.getSpatialKeyframeChangeNode().setTime(currentTime);
+        }else{
+            UtilPoint translation = itemViewController.getTranslation();
             itemViewController.moveTo(translation.getX()+dx, translation.getY()+dy);
         }
     }
+
+
 }

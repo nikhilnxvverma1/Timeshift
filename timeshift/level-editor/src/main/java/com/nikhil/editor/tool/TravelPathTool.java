@@ -1,8 +1,7 @@
 package com.nikhil.editor.tool;
 
 import com.nikhil.command.AddLinkPoint;
-import com.nikhil.command.Command;
-import com.nikhil.editor.gizmo.TravelPathGizmo;
+import com.nikhil.editor.workspace.Workspace;
 import com.nikhil.logging.Logger;
 import com.nikhil.view.item.travelpath.LinkPointView;
 import com.nikhil.view.item.travelpath.TravelPathView;
@@ -15,12 +14,11 @@ import javafx.scene.layout.Pane;
  */
 public class TravelPathTool extends BaseTool {
 
-    private Pane pane;
     private AddLinkPoint lastCommand;
     private ViewAltList viewAltList;
 
-    public TravelPathTool(Pane pane) {
-        this.pane = pane;
+    public TravelPathTool(Workspace workspace) {
+        super(workspace);
     }
 
     @Override
@@ -49,6 +47,7 @@ public class TravelPathTool extends BaseTool {
         //add the link point and the travel path to the pane
         TravelPathView travelPathView = viewAltList.getTail().getPrevious();
         //prevent NPE in case this is the first Link Point View added
+        Pane pane=workspace.getCurrentComposition().getWorksheet();
         if(travelPathView!=null){
             pane.getChildren().add(travelPathView);
             //make sure to move the travel path at the back
@@ -68,8 +67,8 @@ public class TravelPathTool extends BaseTool {
     }
 
     @Override
-    public Command mouseReleased(MouseEvent mouseEvent) {
-        return lastCommand;
+    public void mouseReleased(MouseEvent mouseEvent) {
+
     }
 
     @Override

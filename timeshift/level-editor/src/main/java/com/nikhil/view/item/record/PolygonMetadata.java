@@ -103,15 +103,15 @@ public class PolygonMetadata extends Metadata{
         draggableTextValue.setLowerLimit(0);
         draggableTextValue.setLowerLimitExists(true);
         draggableTextValue.setStep(0.01);
-        draggableTextValue.setValue(polygonViewController.getPolygonView().getScale());
+        draggableTextValue.setValue(polygonViewController.getItemView().getScale());
         if(propertyListeners !=null){
-            polygonViewController.getPolygonView().scaleProperty().removeListener(propertyListeners[0]);
+            polygonViewController.getItemView().scaleProperty().removeListener(propertyListeners[0]);
         }
         propertyListeners = new ChangeListener[1];
         propertyListeners[0] = ((observable, oldValue, newValue) -> {
             draggableTextValue.setValue(newValue.doubleValue());
         });
-        polygonViewController.getPolygonView().scaleProperty().addListener(propertyListeners[0]);
+        polygonViewController.getItemView().scaleProperty().addListener(propertyListeners[0]);
         return new HBox(draggableTextValue);
     }
 
@@ -145,17 +145,17 @@ public class PolygonMetadata extends Metadata{
             }
         });
         draggableTextValue.setStep(1);
-        draggableTextValue.setValue(polygonViewController.getPolygonView().getRotate());
+        draggableTextValue.setValue(polygonViewController.getItemView().getRotate());
 
         if(propertyListeners !=null){
-            polygonViewController.getPolygonView().rotateProperty().removeListener(propertyListeners[0]);
+            polygonViewController.getItemView().rotateProperty().removeListener(propertyListeners[0]);
         }
         propertyListeners = new ChangeListener[1];
         propertyListeners[0] = ((observable, oldValue, newValue) -> {
             draggableTextValue.setValue(newValue.doubleValue());
         });
 
-        polygonViewController.getPolygonView().rotateProperty().addListener(propertyListeners[0]);
+        polygonViewController.getItemView().rotateProperty().addListener(propertyListeners[0]);
         return new HBox(draggableTextValue);
     }
 
@@ -196,18 +196,18 @@ public class PolygonMetadata extends Metadata{
             }
         });
         xValue.setStep(1);
-        xValue.setValue(polygonViewController.getPolygonView().getLayoutX());
+        xValue.setValue(polygonViewController.getItemView().getLayoutX());
 
         if((propertyListeners !=null)&&(propertyListeners.length==2)){
-            polygonViewController.getPolygonView().layoutXProperty().removeListener(propertyListeners[0]);
-            polygonViewController.getPolygonView().layoutYProperty().removeListener(propertyListeners[1]);
+            polygonViewController.getItemView().layoutXProperty().removeListener(propertyListeners[0]);
+            polygonViewController.getItemView().layoutYProperty().removeListener(propertyListeners[1]);
         }
         propertyListeners = new ChangeListener[2];
         propertyListeners[0] = ((observable, oldValue, newValue) -> {
             xValue.setValue(newValue.doubleValue());
         });
 
-        polygonViewController.getPolygonView().layoutXProperty().addListener(propertyListeners[0]);
+        polygonViewController.getItemView().layoutXProperty().addListener(propertyListeners[0]);
 
         DraggableTextValue yValue=new DraggableTextValue(new DraggableTextValueDelegate() {
 
@@ -245,13 +245,13 @@ public class PolygonMetadata extends Metadata{
             }
         });
         yValue.setStep(1);
-        yValue.setValue(polygonViewController.getPolygonView().getLayoutY());
+        yValue.setValue(polygonViewController.getItemView().getLayoutY());
 
         //array has been instantiated above (if needed)
         propertyListeners[1] = ((observable, oldValue, newValue) -> {
             yValue.setValue(newValue.doubleValue());
         });
-        polygonViewController.getPolygonView().layoutYProperty().addListener(propertyListeners[1]);
+        polygonViewController.getItemView().layoutYProperty().addListener(propertyListeners[1]);
         return new HBox(xValue,new Label(","),yValue);
     }
 
@@ -274,8 +274,8 @@ public class PolygonMetadata extends Metadata{
             }
         });
         xValue.setStep(1);
-        xValue.setValue(polygonViewController.getPolygonView().getTranslateX());
-        polygonViewController.getPolygonView().translateXProperty().addListener((observable, oldValue, newValue) -> {
+        xValue.setValue(polygonViewController.getItemView().getTranslateX());
+        polygonViewController.getItemView().translateXProperty().addListener((observable, oldValue, newValue) -> {
             xValue.setValue(newValue.doubleValue());
         });
 
@@ -297,15 +297,15 @@ public class PolygonMetadata extends Metadata{
             }
         });
         yValue.setStep(1);
-        yValue.setValue(polygonViewController.getPolygonView().getTranslateY());
-        polygonViewController.getPolygonView().translateYProperty().addListener((observable, oldValue, newValue) -> {
+        yValue.setValue(polygonViewController.getItemView().getTranslateY());
+        polygonViewController.getItemView().translateYProperty().addListener((observable, oldValue, newValue) -> {
             yValue.setValue(newValue.doubleValue());
         });
         return new HBox(xValue,new Label(","),yValue);
     }
 
     private HBox getVertexCountValueNode(){
-        TextField textField=new TextField(""+polygonViewController.getPolygonView().getPolygonPoints().size());
+        TextField textField=new TextField(""+polygonViewController.getItemView().getPolygonPoints().size());
         textField.setDisable(true);
         return new HBox(textField);
     }

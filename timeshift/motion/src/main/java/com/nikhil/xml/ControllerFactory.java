@@ -2,7 +2,7 @@ package com.nikhil.xml;
 
 import com.nikhil.controller.item.*;
 import com.nikhil.model.shape.PolygonModel;
-import com.nikhil.model.shape.Circle;
+import com.nikhil.model.shape.CircleModel;
 import com.nikhil.model.shape.IsoscelesTriangle;
 import com.nikhil.model.shape.Parallelogram;
 
@@ -15,8 +15,8 @@ import com.nikhil.model.shape.Parallelogram;
  */
 public class ControllerFactory {
 
-    public ItemModelController getItemControllerFor(Circle circle){
-        return new CircleModelController(circle);
+    public ItemModelController getItemControllerFor(CircleModel circleModel){
+        return new CircleModelController(circleModel);
     }
 
     public ItemModelController getItemControllerFor(IsoscelesTriangle isoscelesTriangle){

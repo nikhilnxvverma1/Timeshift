@@ -1,6 +1,8 @@
 package com.nikhil.controller;
 
 import com.nikhil.controller.item.ItemModelController;
+import com.nikhil.editor.gizmo.Gizmo;
+import com.nikhil.editor.gizmo.GizmoVisibilityOption;
 import com.nikhil.model.ItemModel;
 import com.nikhil.util.modal.UtilPoint;
 import com.nikhil.view.item.delegate.ItemViewDelegate;
@@ -53,17 +55,8 @@ public abstract class ItemViewController implements ItemViewDelegate {
         this.solo = solo;
         if(solo){
             compositionViewController.setTotalSoloItems(compositionViewController.getTotalSoloItems()+1);
-//            getHeaderMetadata().getVisibility().setOpacity(FULL_OPACITY);
-//            if (visible) {
-//                getItemView().setVisible(true);
-//            }
-//            makeNonSoloItemsVisible(false);
         }else{
             compositionViewController.setTotalSoloItems(compositionViewController.getTotalSoloItems()-1);
-//            if(compositionViewController.getTotalSoloItems()==0){
-//                makeNonSoloItemsVisible(true);
-//                makeNonSoloItemsVisible(true);
-//            }
         }
     }
 
@@ -128,7 +121,28 @@ public abstract class ItemViewController implements ItemViewDelegate {
     }
 
     public abstract boolean contains(double x, double y);
-    public abstract void hoveredOver(boolean isHoveringOver, boolean isSelected);
+
+    public void hasSelectionFocus(boolean isSelected, boolean isSelectedInDetail) {
+        if(isSelected){
+            if(isSelectedInDetail){
+                getGizmo().showGizmo(GizmoVisibilityOption.SHOW_ALL);
+            }else{
+                getGizmo().showGizmo(GizmoVisibilityOption.SHOW_ONLY_OUTLINE);
+            }
+        }else{
+            getGizmo().showGizmo(GizmoVisibilityOption.HIDE_ALL);
+        }
+    }
+
+    public void hoveredOver(boolean isHoveringOver, boolean isSelected){
+        if(!isSelected){
+            if(isHoveringOver){
+                getGizmo().showGizmo(GizmoVisibilityOption.SHOW_ONLY_OUTLINE);
+            }else{
+                getGizmo().showGizmo(GizmoVisibilityOption.HIDE_ALL);
+            }
+        }
+    }
     public abstract Bounds getLayoutBoundsInWorksheet();
     public abstract void moveTo(double dx, double dy);
     public abstract UtilPoint getTranslation();
@@ -147,14 +161,13 @@ public abstract class ItemViewController implements ItemViewDelegate {
      */
     public abstract double scaleBy(double dScale);
     public abstract boolean overlapsWithSceneBounds(Bounds sceneBounds);
-    public abstract void hasSelectionFocus(boolean isSelected);
-    public abstract void hasSelectionFocus(boolean isSelected,boolean isSelectedInDetail);
+    public void hasSelectionFocus(boolean isSelected) {
+        hasSelectionFocus(isSelected,false);
+    }
     public abstract ItemModelController getModelController();
-    public abstract void addViewsTo(Pane pane);
-    public abstract void removeViews(Pane pane);
-    /**@return deep copy of this item controller*/
-    public abstract ItemViewController clone();
-    /**@return returns the metadata that contains all information about the properties of this item*/
+    /**@return deep copy of this item controller but without the keyframes*/
+    public abstract ItemViewController deepCopy();
+    /**@return returns the root metadata that contains all information about the properties of this item*/
     public abstract TreeItem<Metadata> getMetadataTree();
     public abstract Shape getItemView();
 
@@ -183,7 +196,6 @@ public abstract class ItemViewController implements ItemViewDelegate {
      * @return Spatial metadata for the tag, null if this is an irrelevant tag for the item
      */
     public abstract SpatialMetadata getSpatialMetadata(MetadataTag tag);
-
     /**
      * gets the header metadata for this item.
      * Subclasses should override this if they plan to (unreasonably) have the header in
@@ -198,5 +210,5 @@ public abstract class ItemViewController implements ItemViewDelegate {
         return getModelController().getItemModel();
     }
 
-    public abstract Group getGizmo();
+    public abstract Gizmo getGizmo();
 }

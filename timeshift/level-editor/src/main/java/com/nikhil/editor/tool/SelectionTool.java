@@ -1,6 +1,5 @@
 package com.nikhil.editor.tool;
 
-import com.nikhil.command.Command;
 import com.nikhil.controller.CompositionViewController;
 import com.nikhil.controller.ItemViewController;
 import com.nikhil.editor.selection.SelectionArea;
@@ -19,7 +18,7 @@ public class SelectionTool extends BaseTool implements SelectionOverlap {
     private SelectionArea selectionArea;
 
     public SelectionTool(Workspace workspace) {
-        this.workspace = workspace;
+        super(workspace);
         initializeGraphics();
     }
 
@@ -43,9 +42,8 @@ public class SelectionTool extends BaseTool implements SelectionOverlap {
     }
 
     @Override
-    public Command mouseReleased(MouseEvent mouseEvent) {
+    public void mouseReleased(MouseEvent mouseEvent) {
         selectionArea.endSelection();
-        return null;
     }
 
     @Override

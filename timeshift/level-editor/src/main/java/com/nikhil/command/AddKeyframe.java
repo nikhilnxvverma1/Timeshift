@@ -25,7 +25,8 @@ import java.util.List;
  *
  * <p>
  *     Continuous commands can also happen all at once, where the initial and final value along
- *     with the action("Continuous Command") are known in one go.
+ *     with the action("Continuous Command") are known in one go.Also continuous commands will
+ *     always be executed after making the changes in the keyframe.
  * </p>
  *
  * Created by NikhilVerma on 22/11/15.
@@ -35,7 +36,7 @@ public abstract class AddKeyframe extends ItemCommand {
     protected Command continuousCommand;
 
     @Override
-    public void execute() {
+    final public void execute() {
 
         KeyframeView keyframeCreated=getKeyframeCreated();
         //reset the selection of keyframes
@@ -48,12 +49,12 @@ public abstract class AddKeyframe extends ItemCommand {
     }
 
     @Override
-    public void unexecute() {
+    final public void unexecute() {
+        KeyframeView keyframeCreated=getKeyframeCreated();
+        keyframeCreated.removeFromParentKeyframePane();
         if(continuousCommand!=null){
             continuousCommand.unexecute();//this will take care of reverting back to initial value
         }
-        KeyframeView keyframeCreated=getKeyframeCreated();
-        keyframeCreated.removeFromParentKeyframePane();
     }
 
     public Command getContinuousCommand() {

@@ -4,8 +4,6 @@ import com.nikhil.util.modal.UtilPoint;
 import com.nikhil.view.item.delegate.PolygonViewDelegate;
 //import javafx.geometry.Point2D;
 import javafx.beans.property.DoubleProperty;
-import javafx.event.EventHandler;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.ClosePath;
 import javafx.scene.shape.LineTo;
@@ -29,14 +27,14 @@ public class PolygonView extends Path{
 
     public PolygonView(List<UtilPoint> polygonPoints,double x,double y,double rotation,double scale) {
         this.polygonPoints =polygonPoints;
-        initializeView();
+        initView();
         this.setLayoutX(x);
         this.setLayoutY(y);
         this.setRotate(rotation);
         this.setScale(scale);
     }
 
-    private void initializeView(){
+    private void initView(){
         int index=0;
         for(UtilPoint point: polygonPoints){
             if(index==0){

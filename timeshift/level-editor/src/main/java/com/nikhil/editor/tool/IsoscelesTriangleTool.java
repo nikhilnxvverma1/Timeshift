@@ -1,18 +1,15 @@
 package com.nikhil.editor.tool;
 
-import com.nikhil.command.Command;
+import com.nikhil.editor.workspace.Workspace;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.Pane;
 
 /**
  * Created by NikhilVerma on 12/09/15.
  */
 public class IsoscelesTriangleTool extends BaseTool{
 
-    private Pane pane;
-
-    public IsoscelesTriangleTool(Pane pane) {
-        this.pane = pane;
+    public IsoscelesTriangleTool(Workspace workspace) {
+        super(workspace);
     }
 
     @Override
@@ -26,8 +23,8 @@ public class IsoscelesTriangleTool extends BaseTool{
     }
 
     @Override
-    public Command mouseReleased(MouseEvent mouseEvent) {
-        return null;
+    public void mouseReleased(MouseEvent mouseEvent) {
+
     }
 
     @Override

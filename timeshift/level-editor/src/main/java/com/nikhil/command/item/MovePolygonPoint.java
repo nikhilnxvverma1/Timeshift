@@ -27,12 +27,12 @@ public class MovePolygonPoint extends Command {
     public void execute() {
 
         //update the view to final position
-        PolygonView polygonView = polygonViewController.getPolygonView();
+        PolygonView polygonView = polygonViewController.getItemView();
         UtilPoint polygonPoint = polygonView.getPolygonPoints().get(index);
         polygonView.updatePoint(index,finalPosition);
 
         //update the outline too
-        polygonViewController.getPolygonGizmo().updateView();
+        polygonViewController.getGizmo().updateView();
 
         //update the model to final position after converting to work point
         UtilPoint workPolygonPoint=polygonViewController.getCompositionViewController().getWorkspace().workPoint(finalPosition);
@@ -45,12 +45,12 @@ public class MovePolygonPoint extends Command {
     @Override
     public void unexecute() {
         //restore the view to initial position
-        PolygonView polygonView = polygonViewController.getPolygonView();
+        PolygonView polygonView = polygonViewController.getItemView();
         UtilPoint polygonPoint = polygonView.getPolygonPoints().get(index);
         polygonView.updatePoint(index,initialPosition);
 
         //update the outline too
-        polygonViewController.getPolygonGizmo().updateView();
+        polygonViewController.getGizmo().updateView();
 
         //restore the model to initial position after converting to work point
         UtilPoint workPolygonPoint=polygonViewController.getCompositionViewController().getWorkspace().workPoint(initialPosition);

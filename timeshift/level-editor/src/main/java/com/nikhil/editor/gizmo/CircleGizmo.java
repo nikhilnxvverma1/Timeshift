@@ -2,11 +2,9 @@ package com.nikhil.editor.gizmo;
 
 import com.nikhil.math.MathUtil;
 import com.nikhil.view.item.CircleView;
-import javafx.event.EventHandler;
-import javafx.scene.Cursor;
+import javafx.scene.Node;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
-import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 
 /**
@@ -14,58 +12,49 @@ import javafx.scene.shape.Circle;
  * A CircleGizmoDelegate provides mechanism for handling all the callbacks
  * Created by NikhilVerma on 30/08/15.
  */
-public class CircleGizmo implements EventHandler<MouseEvent>{
-
-    public static final int HANDLE_RADIUS = 3;
+public class CircleGizmo extends Gizmo{
 
     //TODO have a delegate for all the tweaking callbacks
     private CircleView circleView;
-//    private Group outline;//TODO might not be needed at all
     private CircleView outlineCircle;
     private Circle innerRadiusHandle;
     private Circle outerRadiusHandle;
     private Circle startAngleHandle;
     private Circle endAngleHandle;
 
-    public CircleGizmo(Pane pane,CircleView circleView){
+    public CircleGizmo(CircleView circleView){
         this.circleView=circleView;
-//        outline=new Group();
-//        outline.getChildren().add(circleView.getPath());
-        initializeGraphics(pane);
+        initView();
         updateView();
     }
 
-    private void initializeGraphics(Pane pane){
+    private void initView(){
         outlineCircle=new CircleView(circleView);
-        outlineCircle.getPath().setFill(null);
-        //TODO define constants somewhere
-        outlineCircle.getPath().setStroke(Color.BLUE);
-        outlineCircle.getPath().getStrokeDashArray().add(7d);
-        pane.getChildren().add(outlineCircle.getPath());
+        outlineCircle.setFill(null);
+
+        outlineCircle.setStroke(OUTLINE_COLOR);
+        outlineCircle.getStrokeDashArray().add(OUTLINE_STROKE_DASH);
+        this.getChildren().add(outlineCircle);
 
         innerRadiusHandle=getGenericHandle();
-        pane.getChildren().add(innerRadiusHandle);
+        this.getChildren().add(innerRadiusHandle);
 
         outerRadiusHandle=getGenericHandle();
-        pane.getChildren().add(outerRadiusHandle);
+        this.getChildren().add(outerRadiusHandle);
 
         startAngleHandle=getGenericHandle();
-        pane.getChildren().add(startAngleHandle);
+        this.getChildren().add(startAngleHandle);
 
         endAngleHandle=getGenericHandle();
-        pane.getChildren().add(endAngleHandle);
+        this.getChildren().add(endAngleHandle);
     }
 
-    private Circle getGenericHandle(){
-        Circle genericHandle=new Circle();
-        genericHandle.setRadius(HANDLE_RADIUS);
-        genericHandle.setFill(Color.WHITE);
-        genericHandle.setStroke(Color.BLACK);
-        genericHandle.addEventHandler(MouseEvent.MOUSE_DRAGGED,this);
-        genericHandle.setCursor(Cursor.HAND);
-        return genericHandle;
+    @Override
+    public Node getOutline() {
+        return outlineCircle;
     }
 
+    @Override
     public void updateView(){
         outlineCircle.copyValuesFrom(circleView);
         updateInnerRadiusHandle();
@@ -80,8 +69,8 @@ public class CircleGizmo implements EventHandler<MouseEvent>{
         double totalRadius=handleRadius+circleView.getOuterRadius();
         double angle=circleView.getEndAngle()-handleReductionAngle;
         angle=Math.toRadians(angle);
-        double x=Math.cos(angle)*totalRadius+circleView.getTranslationX();
-        double y=Math.sin(angle)*totalRadius+circleView.getTranslationY();
+        double x=Math.cos(angle)*totalRadius+circleView.getLayoutX();
+        double y=Math.sin(angle)*totalRadius+circleView.getLayoutY();
         endAngleHandle.setCenterX(x);
         endAngleHandle.setCenterY(y);
     }
@@ -92,8 +81,8 @@ public class CircleGizmo implements EventHandler<MouseEvent>{
         double totalRadius=handleRadius+circleView.getOuterRadius();
         double angle=circleView.getStartAngle()+handleElevationAngle;
         angle=Math.toRadians(angle);
-        double x=Math.cos(angle)*totalRadius+circleView.getTranslationX();
-        double y=Math.sin(angle)*totalRadius+circleView.getTranslationY();
+        double x=Math.cos(angle)*totalRadius+circleView.getLayoutX();
+        double y=Math.sin(angle)*totalRadius+circleView.getLayoutY();
         startAngleHandle.setCenterX(x);
         startAngleHandle.setCenterY(y);
     }
@@ -102,8 +91,8 @@ public class CircleGizmo implements EventHandler<MouseEvent>{
         double averageAngle=(circleView.getStartAngle()+circleView.getEndAngle())/2;
         averageAngle=Math.toRadians(averageAngle);
 
-        double ix=Math.cos(averageAngle)*circleView.getInnerRadius()+circleView.getTranslationX();
-        double iy=Math.sin(averageAngle)*circleView.getInnerRadius()+circleView.getTranslationY();
+        double ix=Math.cos(averageAngle)*circleView.getInnerRadius()+circleView.getLayoutX();
+        double iy=Math.sin(averageAngle)*circleView.getInnerRadius()+circleView.getLayoutY();
         innerRadiusHandle.setCenterX(ix);
         innerRadiusHandle.setCenterY(iy);
     }
@@ -111,8 +100,8 @@ public class CircleGizmo implements EventHandler<MouseEvent>{
     private void updateOuterRadiusHandle() {
         double averageAngle=(circleView.getStartAngle()+circleView.getEndAngle())/2;
         averageAngle=Math.toRadians(averageAngle);
-        double ox=Math.cos(averageAngle)*circleView.getOuterRadius()+circleView.getTranslationX();
-        double oy=Math.sin(averageAngle)*circleView.getOuterRadius()+circleView.getTranslationY();
+        double ox=Math.cos(averageAngle)*circleView.getOuterRadius()+circleView.getLayoutX();
+        double oy=Math.sin(averageAngle)*circleView.getOuterRadius()+circleView.getLayoutY();
         outerRadiusHandle.setCenterX(ox);
         outerRadiusHandle.setCenterY(oy);
     }
@@ -137,8 +126,8 @@ public class CircleGizmo implements EventHandler<MouseEvent>{
     private void tweakEndAngle(MouseEvent event) {
         double handleRadius=endAngleHandle.getRadius();
         double handleReductionAngle=Math.toDegrees(Math.atan(handleRadius / circleView.getOuterRadius()));
-        double centerX=circleView.getTranslationX();
-        double centerY=circleView.getTranslationY();
+        double centerX=circleView.getLayoutX();
+        double centerY=circleView.getLayoutY();
         double angleX=event.getX()+endAngleHandle.getTranslateX();
         double angleY=event.getY()+endAngleHandle.getTranslateY();
         double angle=MathUtil.angleOfPoint(centerX,centerY,angleX,angleY);
@@ -157,8 +146,8 @@ public class CircleGizmo implements EventHandler<MouseEvent>{
     private void tweakStartAngle(MouseEvent event) {
         double handleRadius=startAngleHandle.getRadius();
         double handleReductionAngle=Math.toDegrees(Math.atan(handleRadius / circleView.getOuterRadius()));
-        double centerX=circleView.getTranslationX();
-        double centerY=circleView.getTranslationY();
+        double centerX=circleView.getLayoutX();
+        double centerY=circleView.getLayoutY();
         double angleX=event.getX()+startAngleHandle.getTranslateX();
         double angleY=event.getY()+startAngleHandle.getTranslateY();
         double angle=MathUtil.angleOfPoint(centerX,centerY,angleX,angleY);
@@ -175,8 +164,8 @@ public class CircleGizmo implements EventHandler<MouseEvent>{
     }
 
     private void tweakInnerRadius(MouseEvent event) {
-        double centerX=circleView.getTranslationX();
-        double centerY=circleView.getTranslationY();
+        double centerX=circleView.getLayoutX();
+        double centerY=circleView.getLayoutY();
         double innerX=event.getX()+innerRadiusHandle.getTranslateX();
         double innerY=event.getY()+innerRadiusHandle.getTranslateY();
         double newInnerRadius= MathUtil.distance(centerX,centerY,innerX,innerY);
@@ -194,8 +183,8 @@ public class CircleGizmo implements EventHandler<MouseEvent>{
 
     private void tweakOuterRadius(MouseEvent event){
 
-        double centerX=circleView.getTranslationX();
-        double centerY=circleView.getTranslationY();
+        double centerX=circleView.getLayoutX();
+        double centerY=circleView.getLayoutY();
         double outerX=event.getX()+outerRadiusHandle.getTranslateX();
         double outerY=event.getY()+outerRadiusHandle.getTranslateY();
         double newOuterRadius= MathUtil.distance(centerX,centerY,outerX,outerY);

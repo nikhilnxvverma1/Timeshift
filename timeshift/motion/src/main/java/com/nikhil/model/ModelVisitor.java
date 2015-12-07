@@ -7,8 +7,8 @@ import com.nikhil.model.pathsystem.MovableLinkPoint;
 import com.nikhil.model.pathsystem.TravelPath;
 import com.nikhil.model.pathsystem.TravellingLinkPoint;
 import com.nikhil.model.pathsystem.traveller.TravellerConfiguration;
+import com.nikhil.model.shape.CircleModel;
 import com.nikhil.model.shape.PolygonModel;
-import com.nikhil.model.shape.Circle;
 import com.nikhil.model.shape.IsoscelesTriangle;
 import com.nikhil.model.shape.Parallelogram;
 
@@ -33,7 +33,7 @@ public interface ModelVisitor {
     //Item visitations
     //=============================================================================================
 
-    void visit(Circle circle);
+    void visit(CircleModel circleModel);
     void visit(IsoscelesTriangle isoscelesTriangle);
     void visit(Parallelogram parallelogram);
     void visit(TravelPath travelPath);
