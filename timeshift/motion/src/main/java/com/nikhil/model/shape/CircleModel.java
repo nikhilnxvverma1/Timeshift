@@ -1,12 +1,8 @@
 package com.nikhil.model.shape;
 
 import com.nikhil.timeline.change.temporal.TemporalKeyframeChangeNode;
-import com.nikhil.timeline.keyframe.Keyframe;
-import com.nikhil.timeline.keyframe.TemporalKeyframe;
 import com.nikhil.model.ModelVisitor;
-import com.nikhil.timeline.change.ChangeNode;
 import com.nikhil.timeline.KeyValue;
-import com.nikhil.timeline.Timeline;
 
 /**
  * Circle consists of the following properties:
@@ -28,8 +24,8 @@ public class CircleModel extends ShapeModel {
 
 	private TemporalKeyframeChangeNode innerRadiusChange=new TemporalKeyframeChangeNode(new KeyValue(DEFAULT_INNER_RADIUS));
 	private TemporalKeyframeChangeNode outerRadiusChange=new TemporalKeyframeChangeNode(new KeyValue(DEFAULT_OUTER_RADIUS));
-	private TemporalKeyframeChangeNode startingAngleChange=new TemporalKeyframeChangeNode(new KeyValue(DEFAULT_STARTING_ANGLE));
-	private TemporalKeyframeChangeNode endingAngleChange=new TemporalKeyframeChangeNode(new KeyValue(DEFAULT_ENDING_ANGLE));
+	private TemporalKeyframeChangeNode startAngleChange =new TemporalKeyframeChangeNode(new KeyValue(DEFAULT_STARTING_ANGLE));
+	private TemporalKeyframeChangeNode endAngleChange =new TemporalKeyframeChangeNode(new KeyValue(DEFAULT_ENDING_ANGLE));
 
 
 	public CircleModel() {
@@ -39,8 +35,8 @@ public class CircleModel extends ShapeModel {
 	public CircleModel(double innerRadius, double outerRadius, double startingAngle, double endingAngle){
 		setInnerRadius(innerRadius);
 		setOuterRadius(outerRadius);
-		setStartingAngle(startingAngle);
-		setEndingAngle(endingAngle);
+		setStartAngle(startingAngle);
+		setEndAngle(endingAngle);
 		this.setName("Circle " + (++CIRCLE_COUNT));
 	}
 
@@ -56,17 +52,17 @@ public class CircleModel extends ShapeModel {
 	public void setOuterRadius(double outerRadius) {
 		outerRadiusChange.getCurrentValue().set(0,outerRadius);
 	}
-	public double getStartingAngle() {
-		return startingAngleChange.getCurrentValue().get(0);
+	public double getStartAngle() {
+		return startAngleChange.getCurrentValue().get(0);
 	}
-	public void setStartingAngle(double startingAngle) {
-		startingAngleChange.getCurrentValue().set(0,startingAngle);
+	public void setStartAngle(double startingAngle) {
+		startAngleChange.getCurrentValue().set(0,startingAngle);
 	}
-	public double getEndingAngle() {
-		return endingAngleChange.getCurrentValue().get(0);
+	public double getEndAngle() {
+		return endAngleChange.getCurrentValue().get(0);
 	}
-	public void setEndingAngle(double endingAngle) {
-		endingAngleChange.getCurrentValue().set(0,endingAngle);
+	public void setEndAngle(double endingAngle) {
+		endAngleChange.getCurrentValue().set(0,endingAngle);
 	}
 
 	public TemporalKeyframeChangeNode innerRadiusChange() {
@@ -77,12 +73,12 @@ public class CircleModel extends ShapeModel {
 		return outerRadiusChange;
 	}
 
-	public TemporalKeyframeChangeNode startingAngleChange() {
-		return startingAngleChange;
+	public TemporalKeyframeChangeNode startAngleChange() {
+		return startAngleChange;
 	}
 
-	public TemporalKeyframeChangeNode endingAngleChange() {
-		return endingAngleChange;
+	public TemporalKeyframeChangeNode endAngleChange() {
+		return endAngleChange;
 	}
 
 	@Override

@@ -94,7 +94,11 @@ public abstract class ShapeViewController extends ItemViewController implements 
     public Bounds getLayoutBoundsInWorksheet() {
         return getItemView().getBoundsInParent();
     }
-    
+
+    /**
+     * Initializes the metdata tree sublasses should call this method after making all the initializations.
+     * Also subclasses that override this must call super()
+     */
     protected void initMetadataTree(){
 
         ShapeModel shapeModel = getItemModel();

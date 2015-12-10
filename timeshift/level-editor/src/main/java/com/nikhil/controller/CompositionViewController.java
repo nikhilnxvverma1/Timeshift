@@ -29,6 +29,7 @@ import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
+import javafx.scene.text.Text;
 import org.eclipse.fx.FilterableTreeItem;
 import org.eclipse.fx.TreeItemPredicate;
 
@@ -376,7 +377,7 @@ public class CompositionViewController {
             return TreeItemPredicate.create(new Predicate<Metadata>() {
                 @Override
                 public boolean test(Metadata actor) {
-                    return actor.getName().contains(filterField.getText());
+                    return actor.getName().toLowerCase().contains(filterField.getText().trim().toLowerCase());
                 }
             });
         }, filterField.textProperty()));
@@ -478,6 +479,8 @@ public class CompositionViewController {
 
         TreeTableColumn<Metadata,Metadata> name=new TreeTableColumn<>("Name");
         name.setEditable(true);
+//        name.setGraphic(new TextField("Search"));
+//        name.setGraphic(new Button("Search"));
         name.setCellFactory(param -> new NameCell());
         name.setCellValueFactory(param -> new SimpleObjectProperty<>(param.getValue().getValue()));
         name.setPrefWidth(NAME_COLUMN_WIDTH);

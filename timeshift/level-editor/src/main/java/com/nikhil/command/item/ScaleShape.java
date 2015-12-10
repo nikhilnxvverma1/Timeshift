@@ -1,5 +1,6 @@
 package com.nikhil.command.item;
 
+import com.nikhil.controller.ItemViewController;
 import com.nikhil.controller.ShapeViewController;
 import com.nikhil.timeline.KeyValue;
 import com.nikhil.view.item.record.MetadataTag;
@@ -10,12 +11,14 @@ import com.nikhil.view.item.record.TemporalMetadata;
  */
 public class ScaleShape extends TemporalActionOnSingleItem {
 
+
+    private ShapeViewController shapeViewController;
     private double initialScale;
     private double finalScale;
 
 
     public ScaleShape(ShapeViewController shapeViewController,double initialScale, double finalScale) {
-        super(shapeViewController);
+        this.shapeViewController=shapeViewController;
         this.initialScale = initialScale;
         this.finalScale = finalScale;
     }
@@ -53,5 +56,10 @@ public class ScaleShape extends TemporalActionOnSingleItem {
     @Override
     public KeyValue getFinalValue() {
         return new KeyValue(finalScale);
+    }
+
+    @Override
+    public ShapeViewController getItemViewController() {
+        return shapeViewController;
     }
 }

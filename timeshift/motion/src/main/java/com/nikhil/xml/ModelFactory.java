@@ -6,7 +6,6 @@ import com.nikhil.model.shape.PolygonModel;
 import com.nikhil.model.shape.ShapeModel;
 import com.nikhil.space.bezier.path.BezierPoint;
 import com.nikhil.timeline.KeyValue;
-import com.nikhil.timeline.change.KeyframeChangeNode;
 import com.nikhil.timeline.change.spatial.SpatialKeyframeChangeNode;
 import com.nikhil.timeline.change.temporal.TemporalKeyframeChangeNode;
 import com.nikhil.timeline.keyframe.SpatialKeyframe;
@@ -55,15 +54,15 @@ public class ModelFactory {
                     }
                 }else if (tag == XMLTag.STARTING_ANGLE) {
                     if (keyframesPresent(child)) {
-                        addKeyframes(child, circleModel.startingAngleChange());
+                        addKeyframes(child, circleModel.startAngleChange());
                     } else {
-                        circleModel.setStartingAngle(Double.parseDouble(child.getTextContent()));
+                        circleModel.setStartAngle(Double.parseDouble(child.getTextContent()));
                     }
                 }else if (tag == XMLTag.ENDING_ANGLE) {
                     if (keyframesPresent(child)) {
-                        addKeyframes(child, circleModel.endingAngleChange());
+                        addKeyframes(child, circleModel.endAngleChange());
                     } else {
-                        circleModel.setEndingAngle(Double.parseDouble(child.getTextContent()));
+                        circleModel.setEndAngle(Double.parseDouble(child.getTextContent()));
                     }
                 }
             }

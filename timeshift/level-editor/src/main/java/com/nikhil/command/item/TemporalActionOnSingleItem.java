@@ -11,18 +11,14 @@ import java.util.List;
  * Created by NikhilVerma on 21/09/15.
  */
 public abstract class TemporalActionOnSingleItem extends ItemCommand {
-    protected ShapeViewController shapeViewController;
-
-    public TemporalActionOnSingleItem(ShapeViewController shapeViewController) {
-        this.shapeViewController = shapeViewController;
-    }
 
     @Override
     public List<ItemViewController> getItemList() {
-        return listForSingleItem(shapeViewController);
+        return listForSingleItem(getItemViewController());
     }
 
     public abstract KeyValue getInitialValue();
     public abstract KeyValue getFinalValue();
 
+    public abstract ItemViewController getItemViewController();
 }

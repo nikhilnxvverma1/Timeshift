@@ -461,7 +461,7 @@ public class Workspace  {
             command.unexecute();
             command.unexecutedByWorkspace(this);
             undoStack.push(command);
-
+            fileModified(true);
         } catch (EmptyStackException e) {
             //do nothing if stack is empty
             Logger.log("command stack is empty");
@@ -479,6 +479,7 @@ public class Workspace  {
             command.execute();
             command.executedByWorkspace(this);
             commandStack.push(command);
+
         } catch (EmptyStackException e) {
             //do nothing if stack is empty
             Logger.log("undo stack is empty");

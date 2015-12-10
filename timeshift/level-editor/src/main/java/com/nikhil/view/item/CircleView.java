@@ -2,6 +2,8 @@ package com.nikhil.view.item;
 
 import com.nikhil.model.shape.CircleModel;
 import com.nikhil.view.item.delegate.CircleViewDelegate;
+import javafx.beans.property.DoubleProperty;
+import javafx.beans.property.SimpleDoubleProperty;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.*;
 
@@ -18,10 +20,11 @@ public class CircleView extends ShapeView{
     //Circle Properties
     //=============================================================================================
 
-    protected double startAngle;
-    protected double endAngle;
-    protected double innerRadius;
-    protected double outerRadius;
+    protected DoubleProperty startAngle=new SimpleDoubleProperty();
+    protected DoubleProperty endAngle=new SimpleDoubleProperty();
+    protected DoubleProperty innerRadius=new SimpleDoubleProperty();
+    protected DoubleProperty outerRadius=new SimpleDoubleProperty();
+
 
     //=============================================================================================
     //UI Components
@@ -37,14 +40,14 @@ public class CircleView extends ShapeView{
     }
 
     public CircleView(CircleView circleView){
-        this(circleView.innerRadius,circleView.outerRadius,circleView.startAngle,circleView.endAngle);
+        this(circleView.innerRadius.get(),circleView.outerRadius.get(),circleView.startAngle.get(),circleView.endAngle.get());
     }
 
     public CircleView(double innerRadius,double outerRadius, double startAngle, double endAngle) {
-        this.outerRadius = outerRadius;
-        this.innerRadius = innerRadius;
-        this.endAngle = endAngle;
-        this.startAngle = startAngle;
+        this.outerRadius.set(outerRadius);
+        this.innerRadius.set(innerRadius);
+        this.endAngle.set(endAngle);
+        this.startAngle.set(startAngle);
         initView();
         updateView();
     }
@@ -63,40 +66,57 @@ public class CircleView extends ShapeView{
         this.getElements().add(new ClosePath());
     }
 
-    public double getStartingAngle() {
-        return startAngle;
-    }
-
     public void setStartAngle(double startAngle) {
-        this.startAngle = startAngle;
+        this.startAngle.set(startAngle);
         updateView();
     }
 
-    public double getEndingAngle() {
-        return endAngle;
-    }
 
     public void setEndAngle(double endAngle) {
-        this.endAngle = endAngle;
+        this.endAngle.set(endAngle);
         updateView();
     }
 
     public double getInnerRadius() {
-        return innerRadius;
+        return innerRadius.get();
     }
 
     public void setInnerRadius(double innerRadius) {
-        this.innerRadius = innerRadius;
+        this.innerRadius.set(innerRadius);
         updateView();
     }
 
     public double getOuterRadius() {
-        return outerRadius;
+        return outerRadius.get();
     }
 
     public void setOuterRadius(double outerRadius) {
-        this.outerRadius = outerRadius;
+        this.outerRadius.set(outerRadius);
         updateView();
+    }
+
+    public double getStartAngle() {
+        return startAngle.get();
+    }
+
+    public double getEndAngle() {
+        return endAngle.get();
+    }
+
+    public DoubleProperty startAngleProperty() {
+        return startAngle;
+    }
+
+    public DoubleProperty endAngleProperty() {
+        return endAngle;
+    }
+
+    public DoubleProperty innerRadiusProperty() {
+        return innerRadius;
+    }
+
+    public DoubleProperty outerRadiusProperty() {
+        return outerRadius;
     }
 
     /**
@@ -105,37 +125,37 @@ public class CircleView extends ShapeView{
      */
     public void updateView(){
         //set internal properties
-        double startAngleR = Math.toRadians(startAngle);
-        double endAngleR = Math.toRadians(endAngle);
+        double startAngleR = Math.toRadians(startAngle.get());
+        double endAngleR = Math.toRadians(endAngle.get());
 
-        double ax=Math.cos(startAngleR)*innerRadius;
-        double ay=Math.sin(startAngleR)*innerRadius;
+        double ax=Math.cos(startAngleR)*innerRadius.get();
+        double ay=Math.sin(startAngleR)*innerRadius.get();
         moveToA.setX(ax);
         moveToA.setY(ay);
 
-        double bx=Math.cos(endAngleR)*innerRadius;
-        double by=Math.sin(endAngleR)*innerRadius;
-        arcToB.setRadiusX(innerRadius);
-        arcToB.setRadiusY(innerRadius);
+        double bx=Math.cos(endAngleR)*innerRadius.get();
+        double by=Math.sin(endAngleR)*innerRadius.get();
+        arcToB.setRadiusX(innerRadius.get());
+        arcToB.setRadiusY(innerRadius.get());
         arcToB.setSweepFlag(true);
-        arcToB.setLargeArcFlag(endAngle-startAngle>=180);
+        arcToB.setLargeArcFlag(endAngle.get()-startAngle.get()>=180);
 
         arcToB.setX(bx);
         arcToB.setY(by);
 
-        double cx=Math.cos(endAngleR)*outerRadius;
-        double cy=Math.sin(endAngleR)*outerRadius;
+        double cx=Math.cos(endAngleR)*outerRadius.get();
+        double cy=Math.sin(endAngleR)*outerRadius.get();
         lineToC.setX(cx);
         lineToC.setY(cy);
 
-        double dx=Math.cos(startAngleR)*outerRadius;
-        double dy=Math.sin(startAngleR)*outerRadius;
+        double dx=Math.cos(startAngleR)*outerRadius.get();
+        double dy=Math.sin(startAngleR)*outerRadius.get();
         arcToD.setX(dx);
         arcToD.setY(dy);
-        arcToD.setRadiusX(outerRadius);
-        arcToD.setRadiusY(outerRadius);
+        arcToD.setRadiusX(outerRadius.get());
+        arcToD.setRadiusY(outerRadius.get());
         arcToD.setSweepFlag(false);
-        arcToD.setLargeArcFlag(endAngle-startAngle>=180);
+        arcToD.setLargeArcFlag(endAngle.get()-startAngle.get()>=180);
 
     }
 
@@ -151,13 +171,11 @@ public class CircleView extends ShapeView{
         setRotate(circleView.getRotate());
         setTranslateX(circleView.getTranslateX());
         setTranslateY(circleView.getTranslateY());
-//        setLayoutX(circleView.getLayoutX());
-//        setLayoutY(circleView.getLayoutY());
 
-        setInnerRadius(circleView.innerRadius);
-        setOuterRadius(circleView.outerRadius);
-        setStartAngle(circleView.startAngle);
-        setEndAngle(circleView.endAngle);
+        setInnerRadius(circleView.innerRadius.get());
+        setOuterRadius(circleView.outerRadius.get());
+        setStartAngle(circleView.startAngle.get());
+        setEndAngle(circleView.endAngle.get());
     }
 
     public CircleViewDelegate getDelegate() {

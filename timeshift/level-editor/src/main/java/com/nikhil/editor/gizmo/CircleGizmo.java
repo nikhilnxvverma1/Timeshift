@@ -16,6 +16,7 @@ import javafx.scene.shape.Circle;
 public class CircleGizmo extends Gizmo{
 
     public static final int LARGE_ANGLE_CHANGE = 300;
+    public static final double MAX_ANGLE = 359.99;
     private CircleView circleView;
     private CircleView outlineCircle;
     private Circle innerRadiusHandle;
@@ -74,10 +75,11 @@ public class CircleGizmo extends Gizmo{
         double handleRadius=endAngleHandle.getRadius();
         double handleReductionAngle=Math.toDegrees(Math.atan(handleRadius / circleView.getOuterRadius()));
         double totalRadius=handleRadius+circleView.getOuterRadius();
-        double angle=circleView.getEndingAngle()-handleReductionAngle;
+        double angle=circleView.getRotate()+circleView.getEndAngle()-handleReductionAngle;
         angle=Math.toRadians(angle);
         double x=Math.cos(angle)*totalRadius;//+circleView.getLayoutX();
         double y=Math.sin(angle)*totalRadius;//+circleView.getLayoutY();
+//        Logger.log("x,y="+ x+","+y);
         endAngleHandle.setCenterX(x);
         endAngleHandle.setCenterY(y);
     }
@@ -86,7 +88,7 @@ public class CircleGizmo extends Gizmo{
         double handleRadius=startAngleHandle.getRadius();
         double handleElevationAngle=Math.toDegrees(Math.atan(handleRadius / circleView.getOuterRadius()));
         double totalRadius=handleRadius+circleView.getOuterRadius();
-        double angle=circleView.getStartingAngle()+handleElevationAngle;
+        double angle=circleView.getRotate()+circleView.getStartAngle()+handleElevationAngle;
         angle=Math.toRadians(angle);
         double x=Math.cos(angle)*totalRadius;//+circleView.getLayoutX();
         double y=Math.sin(angle)*totalRadius;//+circleView.getLayoutY();
@@ -95,7 +97,7 @@ public class CircleGizmo extends Gizmo{
     }
 
     private void updateInnerRadiusHandle() {
-        double averageAngle=(circleView.getStartingAngle()+circleView.getEndingAngle())/2;
+        double averageAngle=circleView.getRotate()+(circleView.getStartAngle()+circleView.getEndAngle())/2;
         averageAngle=Math.toRadians(averageAngle);
 
         double ix=Math.cos(averageAngle)*circleView.getInnerRadius();//+circleView.getLayoutX();
@@ -105,7 +107,7 @@ public class CircleGizmo extends Gizmo{
     }
 
     private void updateOuterRadiusHandle() {
-        double averageAngle=(circleView.getStartingAngle()+circleView.getEndingAngle())/2;
+        double averageAngle=circleView.getRotate()+(circleView.getStartAngle()+circleView.getEndAngle())/2;
         averageAngle=Math.toRadians(averageAngle);
         double ox=Math.cos(averageAngle)*circleView.getOuterRadius();//+circleView.getLayoutX();
         double oy=Math.sin(averageAngle)*circleView.getOuterRadius();//+circleView.getLayoutY();
@@ -131,49 +133,66 @@ public class CircleGizmo extends Gizmo{
     }
 
     private void tweakEndAngle(MouseEvent event) {
+        //discount the small angle shift created for the handle
         double handleRadius=endAngleHandle.getRadius();
         double handleReductionAngle=Math.toDegrees(Math.atan(handleRadius / circleView.getOuterRadius()));
+
         double centerX=0;//circleView.getLayoutX();
         double centerY=0;//circleView.getLayoutY();
-        double angleX=event.getX()+endAngleHandle.getTranslateX();
-        double angleY=event.getY()+endAngleHandle.getTranslateY();
-        double angle=MathUtil.angleOfPoint(centerX,centerY,angleX,angleY);
-        angle+=handleReductionAngle;//discount the small angle shift created for the handle
-        double change=circleView.getEndingAngle()-angle;
-        //large sudden changes to angle are not allowed(which may arise if the user rotates one full circle
-        // and goes over)
-        if(angle>circleView.getStartingAngle()){
-            System.out.println("end angle to setting to : " + angle);
-            if(angle<=359.99){
-                circleView.setEndAngle(angle);
-                outlineCircle.setEndAngle(angle);
-            }else{
-                circleView.setEndAngle(359.99);
-                outlineCircle.setEndAngle(359.99);
+        double angleX=event.getX();//+endAngleHandle.getTranslateX();
+        double angleY=event.getY();//+endAngleHandle.getTranslateY();
+        double absoluteEndAngle=circleView.getEndAngle()+circleView.getRotate();
+        double angleOfPoint=MathUtil.angleOfPoint(centerX, centerY, angleX, angleY);
+        double deviation= MathUtil.getAngleDifference(angleOfPoint, absoluteEndAngle);
+        double newAngle = circleView.getEndAngle() + deviation + handleReductionAngle;
+//        Logger.log(deviation+" : deviation, new angle"+newAngle);
+        Logger.log(angleOfPoint+" : angleOfPoint,"+absoluteEndAngle+" absoluteEndAngle");
+        if(newAngle < MAX_ANGLE) {
+            if((newAngle >= 0) && (newAngle > circleView.getStartAngle())){
+                circleView.setEndAngle(newAngle);
+                outlineCircle.setEndAngle(newAngle);
+                updateEndAngleHandle();
+                updateOuterRadiusHandle();
+                updateInnerRadiusHandle();
             }
+        }else{
+            circleView.setEndAngle(MAX_ANGLE);
+            outlineCircle.setEndAngle(MAX_ANGLE);
             updateEndAngleHandle();
             updateOuterRadiusHandle();
             updateInnerRadiusHandle();
-            circleView.getDelegate().propertyCurrentlyGettingTweaked();
-        }else{
-            Logger.log("rejecting angle of "+angle);
         }
+        circleView.getDelegate().propertyCurrentlyGettingTweaked();
         event.consume();
     }
 
     private void tweakStartAngle(MouseEvent event) {
+        //discount the small angle shift created for the handle
         double handleRadius=startAngleHandle.getRadius();
         double handleReductionAngle=Math.toDegrees(Math.atan(handleRadius / circleView.getOuterRadius()));
         double centerX=0;//circleView.getLayoutX();
         double centerY=0;//circleView.getLayoutY();
-        double angleX=event.getX()+startAngleHandle.getTranslateX();
-        double angleY=event.getY()+startAngleHandle.getTranslateY();
-        double angle=MathUtil.angleOfPoint(centerX,centerY,angleX,angleY);
-        angle+=handleReductionAngle;//discount the small angle shift created for the handle
-        System.out.println("start angle to possibly set : "+angle);
-        if(angle<circleView.getEndingAngle()){
-            circleView.setStartAngle(angle);
-            outlineCircle.setStartAngle(angle);
+        double angleX=event.getX();//+startAngleHandle.getTranslateX();
+        double angleY=event.getY();//+startAngleHandle.getTranslateY();
+        double absoluteStartAngle=circleView.getStartAngle()+circleView.getRotate();
+        double angleOfPoint=MathUtil.angleOfPoint(centerX,centerY,angleX,angleY);
+        double deviation= MathUtil.getAngleDifference(angleOfPoint, absoluteStartAngle);
+        double newAngle = circleView.getStartAngle() + deviation + handleReductionAngle;
+
+//        Logger.log(angleOfPoint+" : angleOfPoint,"+absoluteStartAngle+"absoluteStartAngle");
+//        Logger.log(newAngle+" : newAngle");
+        Logger.log(deviation+" : deviation");
+        if(newAngle >=0) {
+            if((newAngle <=MAX_ANGLE) && (newAngle < circleView.getEndAngle())){
+                circleView.setStartAngle(newAngle);
+                outlineCircle.setStartAngle(newAngle);
+                updateStartAngleHandle();
+                updateOuterRadiusHandle();
+                updateInnerRadiusHandle();
+            }
+        }else{
+            circleView.setStartAngle(0);
+            outlineCircle.setStartAngle(0);
             updateStartAngleHandle();
             updateOuterRadiusHandle();
             updateInnerRadiusHandle();
@@ -185,16 +204,14 @@ public class CircleGizmo extends Gizmo{
     private void tweakInnerRadius(MouseEvent event) {
         double centerX=0;//circleView.getLayoutX();
         double centerY=0;//circleView.getLayoutY();
-        double innerX=event.getX()+innerRadiusHandle.getTranslateX();
-        double innerY=event.getY()+innerRadiusHandle.getTranslateY();
+        double innerX=event.getX();//+innerRadiusHandle.getTranslateX();
+        double innerY=event.getY();//+innerRadiusHandle.getTranslateY();
         double newInnerRadius= MathUtil.distance(centerX,centerY,innerX,innerY);
+        double angleOfPoint=MathUtil.angleOfPoint(centerX,centerY,innerX,innerY);
         if(newInnerRadius<circleView.getOuterRadius()){
             circleView.setInnerRadius(newInnerRadius);
             outlineCircle.setInnerRadius(newInnerRadius);
             updateInnerRadiusHandle();
-//            innerRadiusHandle.setCenterX(innerX);
-//            innerRadiusHandle.setCenterY(innerY);
-
         }
         circleView.getDelegate().propertyCurrentlyGettingTweaked();
         event.consume();

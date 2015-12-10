@@ -15,7 +15,17 @@ public enum MetadataTag {
 
     //Polygon
     POLYGON_VERTEX_HEADER,
-    POLYGON_VERTEX;
+    POLYGON_VERTEX,
+
+    //Circle
+    INNER_RADIUS,
+    OUTER_RADIUS,
+    START_ANGLE,
+    END_ANGLE
+
+    ;
+
+
 
     @Override
     public String toString() {
@@ -37,6 +47,14 @@ public enum MetadataTag {
                 return "Vertices";
             case POLYGON_VERTEX:
                 return "Vertex";
+            case INNER_RADIUS:
+                return "Inner Radius";
+            case OUTER_RADIUS:
+                return "Outer Radius";
+            case START_ANGLE:
+                return "Start Angle";
+            case END_ANGLE:
+                return "End Angle";
         }
         return null;
     }

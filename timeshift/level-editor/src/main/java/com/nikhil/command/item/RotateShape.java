@@ -1,5 +1,6 @@
 package com.nikhil.command.item;
 
+import com.nikhil.controller.ItemViewController;
 import com.nikhil.controller.ShapeViewController;
 import com.nikhil.timeline.KeyValue;
 import com.nikhil.view.item.record.MetadataTag;
@@ -10,11 +11,12 @@ import com.nikhil.view.item.record.TemporalMetadata;
  */
 public class RotateShape extends TemporalActionOnSingleItem {
 
+    private ShapeViewController shapeViewController;
     private double initialAngle;
     private double finalAngle;
 
     public RotateShape(ShapeViewController shapeViewController, double initialAngle, double finalAngle) {
-        super(shapeViewController);
+        this.shapeViewController=shapeViewController;
         this.initialAngle = initialAngle;
         this.finalAngle = finalAngle;
     }
@@ -52,5 +54,10 @@ public class RotateShape extends TemporalActionOnSingleItem {
     @Override
     public KeyValue getFinalValue() {
         return new KeyValue(finalAngle);
+    }
+
+    @Override
+    public ShapeViewController getItemViewController() {
+        return shapeViewController;
     }
 }

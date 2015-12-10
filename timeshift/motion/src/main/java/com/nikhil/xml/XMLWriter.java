@@ -150,11 +150,11 @@ public class XMLWriter implements ModelVisitor {
         
         //<StartingAngle>
         Element startingAngleTag=XMLTag.STARTING_ANGLE.element(document);
-        startingAngleTag.appendChild(document.createTextNode(circleModel.getStartingAngle() + ""));
+        startingAngleTag.appendChild(document.createTextNode(circleModel.getStartAngle() + ""));
         
         //<EndingAngle>
         Element endingAngleTag=XMLTag.ENDING_ANGLE.element(document);
-        endingAngleTag.appendChild(document.createTextNode(circleModel.getEndingAngle() + ""));
+        endingAngleTag.appendChild(document.createTextNode(circleModel.getEndAngle() + ""));
 
         circleTag.appendChild(innerRadiusTag);
         circleTag.appendChild(outerRadiusTag);
