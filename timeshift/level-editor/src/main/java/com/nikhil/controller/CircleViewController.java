@@ -8,6 +8,7 @@ import com.nikhil.command.item.circle.ChangeStartAngle;
 import com.nikhil.controller.item.CircleModelController;
 import com.nikhil.controller.item.ItemModelController;
 import com.nikhil.editor.gizmo.CircleGizmo;
+import com.nikhil.logging.Logger;
 import com.nikhil.math.MathUtil;
 import com.nikhil.model.shape.CircleModel;
 import com.nikhil.model.shape.ShapeModel;
@@ -332,7 +333,7 @@ public class CircleViewController extends ShapeViewController implements CircleV
         endAngleDragger.setLowerLimitExists(true);
         endAngleDragger.setLowerLimit(0);
         endAngleDragger.setUpperLimitExists(true);
-        endAngleDragger.setUpperLimit(360);
+        endAngleDragger.setUpperLimit(359.99);
         endAngleDragger.setValue(getItemView().getEndAngle());
 
         //TODO save as field so as to release memory later?
@@ -359,24 +360,49 @@ public class CircleViewController extends ShapeViewController implements CircleV
         }
     }
 
+
+    @Override
+    public void tweakingInnerRadius(double oldInnerRadius, double newInnerRadius) {
+        getTemporalMetadata(MetadataTag.INNER_RADIUS).registerContinuousChange(new KeyValue(oldInnerRadius),new KeyValue(newInnerRadius));
+    }
+
+    @Override
+    public void tweakingOuterRadius(double oldOuterRadius, double newOuterRadius) {
+        getTemporalMetadata(MetadataTag.OUTER_RADIUS).registerContinuousChange(new KeyValue(oldOuterRadius),new KeyValue(newOuterRadius));
+    }
+
+    @Override
+    public void tweakingStartAngle(double oldStartAngle, double newStartAngle) {
+        getTemporalMetadata(MetadataTag.START_ANGLE).registerContinuousChange(new KeyValue(oldStartAngle),new KeyValue(newStartAngle));
+    }
+
+    @Override
+    public void tweakingEndAngle(double oldEndAngle, double newEndAngle) {
+        getTemporalMetadata(MetadataTag.END_ANGLE).registerContinuousChange(new KeyValue(oldEndAngle),new KeyValue(newEndAngle));
+    }
+
     @Override
     public void finishedTweakingInnerRadius(double initialInnerRadius) {
-
+        ChangeInnerRadius changeInnerRadius=new ChangeInnerRadius(this,initialInnerRadius,circleView.getInnerRadius());
+        getTemporalMetadata(MetadataTag.INNER_RADIUS).pushWithKeyframe(changeInnerRadius,false);
     }
 
     @Override
     public void finishedTweakingOuterRadius(double initialOuterRadius) {
-
+        ChangeOuterRadius changeOuterRadius=new ChangeOuterRadius(this,initialOuterRadius,circleView.getOuterRadius());
+        getTemporalMetadata(MetadataTag.OUTER_RADIUS).pushWithKeyframe(changeOuterRadius, false);
     }
 
     @Override
-    public void finishedTweakingStartingAngle(double initialStartingAngle) {
-
+    public void finishedTweakingStartAngle(double initialStartAngle) {
+        ChangeStartAngle changeStartAngle=new ChangeStartAngle(this,initialStartAngle,circleView.getStartAngle());
+        getTemporalMetadata(MetadataTag.START_ANGLE).pushWithKeyframe(changeStartAngle, false);
     }
 
     @Override
-    public void finishedTweakingEndingAngle(double initialEndingAngle) {
-
+    public void finishedTweakingEndAngle(double initialEndAngle) {
+        ChangeEndAngle changeEndAngle=new ChangeEndAngle(this,initialEndAngle,circleView.getEndAngle());
+        getTemporalMetadata(MetadataTag.END_ANGLE).pushWithKeyframe(changeEndAngle, false);
     }
 
     protected void setSelfAsChangeHandler(){

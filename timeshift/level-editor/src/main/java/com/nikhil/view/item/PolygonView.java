@@ -1,5 +1,6 @@
 package com.nikhil.view.item;
 
+import com.nikhil.math.MathUtil;
 import com.nikhil.util.modal.UtilPoint;
 import com.nikhil.view.item.delegate.PolygonViewDelegate;
 //import javafx.geometry.Point2D;
@@ -8,7 +9,6 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.ClosePath;
 import javafx.scene.shape.LineTo;
 import javafx.scene.shape.MoveTo;
-import javafx.scene.shape.Path;
 
 import java.util.List;
 
@@ -57,7 +57,9 @@ public class PolygonView extends ShapeView{
 //        this.scaleYProperty().bind(this.scaleXProperty());
     }
 
-    public void updatePoint(int index,UtilPoint newLocation){
+    public void updatePoint(int index,UtilPoint unrotatedNewLocation){
+        //first rotate around origin because otherwise ,on rotation this polygon will only rotate in its bounding box
+        UtilPoint newLocation=rotatedAroundOrigin(unrotatedNewLocation);
         if(index==0){
             MoveTo firstPolygonPoint=(MoveTo)this.getElements().get(index);
             firstPolygonPoint.setX(newLocation.getX());
@@ -68,12 +70,16 @@ public class PolygonView extends ShapeView{
             polylineTo.setX(newLocation.getX());
             polylineTo.setY(newLocation.getY());
         }
+
+        //we still store the unrotated point since that's what governs the position of the polygon points
+        //if we take away the rotation component
         UtilPoint polygonPoint = polygonPoints.get(index);
-        polygonPoint.set(newLocation.getX(), newLocation.getY());
+        polygonPoint.set(unrotatedNewLocation.getX(), unrotatedNewLocation.getY());
 
     }
 
-    public void updatePoints() {
+    @Override
+    public void updateView() {
         int index=0;
         for(UtilPoint utilPoint : polygonPoints){
             updatePoint(index, utilPoint);
@@ -91,7 +97,7 @@ public class PolygonView extends ShapeView{
 
     public void setPolygonPoints(List<UtilPoint> polygonPoints) {
         this.polygonPoints = polygonPoints;
-        updatePoints();
+        updateView();
     }
 
     @Override
@@ -103,4 +109,9 @@ public class PolygonView extends ShapeView{
         this.delegate = delegate;
         setDelegateAsEventHandler();
     }
+
+    public UtilPoint unRotatedAroundOrigin(double x,double y){
+        return MathUtil.getRotatedPoint(new UtilPoint(x, y), -getOriginRotate());
+    }
+
 }

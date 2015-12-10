@@ -73,11 +73,16 @@ public class PolygonGizmo extends Gizmo{
 
     @Override
     public void updateView(){
+        outlinePolygon.setOriginRotate(polygonView.getOriginRotate());
         int index=0;
         for(UtilPoint point2D: polygonView.getPolygonPoints()){
+            //update the handle
+            UtilPoint rotatedPoint = polygonView.rotatedAroundOrigin(point2D);
             Circle pointHandle = pointHandles.get(index);
-            pointHandle.setCenterX(point2D.getX());
-            pointHandle.setCenterY(point2D.getY());
+            pointHandle.setCenterX(rotatedPoint.getX());
+            pointHandle.setCenterY(rotatedPoint.getY());
+
+            //update the point on the outline too
             outlinePolygon.updatePoint(index,point2D);
             index++;
         }
@@ -86,7 +91,7 @@ public class PolygonGizmo extends Gizmo{
         //TODO work on syncing scale without affecting size of handles
         this.setScaleX(polygonView.getScaleX());
         this.setScaleY(polygonView.getScaleY());
-        this.setRotate(polygonView.getRotate());
+//        this.setRotate(polygonView.getOriginRotate());
     }
 
     @Override
@@ -123,7 +128,9 @@ public class PolygonGizmo extends Gizmo{
             double relativeX=event.getX();
             double relativeY=event.getY();
 
-            UtilPoint relativePoint = new UtilPoint(relativeX, relativeY);
+//            UtilPoint relativePoint = new UtilPoint(relativeX, relativeY);
+            //unrotate because relative x and relative y dont concern themselves with the origin angle
+            UtilPoint relativePoint =polygonView.unRotatedAroundOrigin(relativeX,relativeY);
             polygonView.updatePoint(index, relativePoint);
             outlinePolygon.updatePoint(index, relativePoint);
             handle.setCenterX(relativeX);

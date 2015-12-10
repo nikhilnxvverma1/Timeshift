@@ -1,6 +1,7 @@
 package com.nikhil.view.item;
 
 import com.nikhil.model.shape.CircleModel;
+import com.nikhil.util.modal.UtilPoint;
 import com.nikhil.view.item.delegate.CircleViewDelegate;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.SimpleDoubleProperty;
@@ -119,19 +120,21 @@ public class CircleView extends ShapeView{
         return outerRadius;
     }
 
-    /**
-     * Updates the view based on currently set
-     * properties
-     */
+    @Override
     public void updateView(){
         //set internal properties
         double startAngleR = Math.toRadians(startAngle.get());
         double endAngleR = Math.toRadians(endAngle.get());
+//        double startAngleR = Math.toRadians(rotatedAngle(startAngle.get()));
+//        double endAngleR = Math.toRadians(rotatedAngle(endAngle.get()));
 
         double ax=Math.cos(startAngleR)*innerRadius.get();
         double ay=Math.sin(startAngleR)*innerRadius.get();
         moveToA.setX(ax);
         moveToA.setY(ay);
+        UtilPoint rotatedA=rotatedAroundOrigin(ax,ay);
+        moveToA.setX(rotatedA.getX());
+        moveToA.setY(rotatedA.getY());
 
         double bx=Math.cos(endAngleR)*innerRadius.get();
         double by=Math.sin(endAngleR)*innerRadius.get();
@@ -142,16 +145,25 @@ public class CircleView extends ShapeView{
 
         arcToB.setX(bx);
         arcToB.setY(by);
+        final UtilPoint rotatedB = rotatedAroundOrigin(bx, by);
+        arcToB.setX(rotatedB.getX());
+        arcToB.setY(rotatedB.getY());
 
         double cx=Math.cos(endAngleR)*outerRadius.get();
         double cy=Math.sin(endAngleR)*outerRadius.get();
         lineToC.setX(cx);
         lineToC.setY(cy);
+        final UtilPoint rotatedC = rotatedAroundOrigin(cx, cy);
+        lineToC.setX(rotatedC.getX());
+        lineToC.setY(rotatedC.getY());
 
         double dx=Math.cos(startAngleR)*outerRadius.get();
         double dy=Math.sin(startAngleR)*outerRadius.get();
         arcToD.setX(dx);
         arcToD.setY(dy);
+        final UtilPoint rotatedD = rotatedAroundOrigin(dx, dy);
+        arcToD.setX(rotatedD.getX());
+        arcToD.setY(rotatedD.getY());
         arcToD.setRadiusX(outerRadius.get());
         arcToD.setRadiusY(outerRadius.get());
         arcToD.setSweepFlag(false);
@@ -161,21 +173,23 @@ public class CircleView extends ShapeView{
 
     public void copyValuesFrom(CircleView circleView){
 
-        innerRadius=circleView.innerRadius;
-        outerRadius=circleView.outerRadius;
-        startAngle=circleView.startAngle;
-        endAngle=circleView.endAngle;
-        updateView();
+        this.innerRadius.set(circleView.getInnerRadius());
+        this.outerRadius.set(circleView.getOuterRadius());
+        this.startAngle.set(circleView.getStartAngle());
+        this.endAngle.set(circleView.getEndAngle());
+
 
         setScale(circleView.getScale());
         setRotate(circleView.getRotate());
+        setOriginRotate(circleView.getOriginRotate());
         setTranslateX(circleView.getTranslateX());
         setTranslateY(circleView.getTranslateY());
 
-        setInnerRadius(circleView.innerRadius.get());
-        setOuterRadius(circleView.outerRadius.get());
-        setStartAngle(circleView.startAngle.get());
-        setEndAngle(circleView.endAngle.get());
+        updateView();
+//        setInnerRadius(circleView.innerRadius.get());
+//        setOuterRadius(circleView.outerRadius.get());
+//        setStartAngle(circleView.startAngle.get());
+//        setEndAngle(circleView.endAngle.get());
     }
 
     public CircleViewDelegate getDelegate() {

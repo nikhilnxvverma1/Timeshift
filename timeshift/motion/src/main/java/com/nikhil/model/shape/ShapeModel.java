@@ -78,8 +78,12 @@ public abstract class ShapeModel extends ItemModel implements Subject,ModelEleme
 		//TODO get rid of this interface if possible, this interface is not required
 	}
 
-	@Override
-	public ChangeNodeIterator changeNodeIterator() {
+	/**
+	 * Makes a change node iterator comprising of all the shape's properties.
+	 * This can be used to create a bigger change node iterator which has additional properties
+	 * @return An iterator over all the shape's properties.
+	 */
+	public final ChangeNodeIterator shapeChangeNodes() {
 		ChangeNode[] changeNodes=new ChangeNode[4];
 		changeNodes[0]=scaleChange;
 		changeNodes[1]=rotationChange;

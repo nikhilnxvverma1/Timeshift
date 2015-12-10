@@ -1,15 +1,18 @@
 package com.nikhil.command.item;
 
 import com.nikhil.command.Command;
+import com.nikhil.controller.ItemViewController;
 import com.nikhil.controller.PolygonViewController;
 import com.nikhil.editor.selection.SelectedItems;
 import com.nikhil.util.modal.UtilPoint;
 import com.nikhil.view.item.PolygonView;
 
+import java.util.List;
+
 /**
  * Created by NikhilVerma on 19/09/15.
  */
-public class MovePolygonPoint extends Command {
+public class MovePolygonPoint extends ItemCommand {
 
     private PolygonViewController polygonViewController;
     private int index;
@@ -38,8 +41,6 @@ public class MovePolygonPoint extends Command {
         UtilPoint workPolygonPoint=polygonViewController.getCompositionViewController().getWorkspace().workPoint(finalPosition);
         polygonViewController.getPolygonModelController().getPolygonModel().getPointAtIndex(index).setPoint(workPolygonPoint);
 
-        makeSelectionOfThisShape();
-
     }
 
     @Override
@@ -55,13 +56,10 @@ public class MovePolygonPoint extends Command {
         //restore the model to initial position after converting to work point
         UtilPoint workPolygonPoint=polygonViewController.getCompositionViewController().getWorkspace().workPoint(initialPosition);
         polygonViewController.getPolygonModelController().getPolygonModel().getPointAtIndex(index).setPoint(workPolygonPoint);
-
-        makeSelectionOfThisShape();
     }
 
-    protected void makeSelectionOfThisShape(){
-        SelectedItems selectedItems = polygonViewController.getCompositionViewController().getWorkspace().getSelectedItems();
-        selectedItems.clearSelection();
-        selectedItems.addToSelection(polygonViewController);
+    @Override
+    public List<ItemViewController> getItemList() {
+        return listForSingleItem(polygonViewController);
     }
 }

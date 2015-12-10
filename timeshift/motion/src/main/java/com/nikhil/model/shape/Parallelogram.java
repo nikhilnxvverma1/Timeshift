@@ -1,5 +1,6 @@
 package com.nikhil.model.shape;
 
+import com.nikhil.timeline.change.ChangeNodeIterator;
 import com.nikhil.timeline.keyframe.Keyframe;
 import com.nikhil.timeline.keyframe.TemporalKeyframe;
 import com.nikhil.model.ModelVisitor;
@@ -52,5 +53,10 @@ public class Parallelogram extends ShapeModel {
     @Override
     public void acceptVisitor(ModelVisitor visitor) {
         visitor.visit(this);
+    }
+
+    @Override
+    public ChangeNodeIterator changeNodeIterator() {
+        return shapeChangeNodes();
     }
 }

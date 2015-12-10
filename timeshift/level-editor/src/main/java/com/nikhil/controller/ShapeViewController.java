@@ -291,12 +291,12 @@ public abstract class ShapeViewController extends ItemViewController implements 
     }
 
     @Override
-    public double rotateBy(double dAngle) {
+    public double rotateBy(double dAngle) {//TODO make it absolute
         //change rotation component of the view and gizmo
-        double oldRotation= getItemView().getRotate();
+        double oldRotation= getItemView().getOriginRotate();
         double newRotation=dAngle+ oldRotation;
         newRotation= MathUtil.under360(newRotation);
-        getItemView().setRotate(newRotation);
+        getItemView().setOriginRotate(newRotation);
         getGizmo().updateView();
 
         //TODO convert to work point scale and update the business model
@@ -415,7 +415,7 @@ public abstract class ShapeViewController extends ItemViewController implements 
         if(changeNode==shapeModel.scaleChange()){
             shapeView.setScale(changeNode.getCurrentValue().get(0));// for all shapes, scale y is bind to scale x
         }else if(changeNode==shapeModel.rotationChange()){
-            shapeView.setRotate(changeNode.getCurrentValue().get(0));
+            shapeView.setOriginRotate(changeNode.getCurrentValue().get(0));
         }
     }
 }

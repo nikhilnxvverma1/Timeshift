@@ -91,21 +91,17 @@ public class PolygonModel extends ShapeModel {
 
 	@Override
 	public ChangeNodeIterator changeNodeIterator() {
-		ChangeNode[] changeNodes=new ChangeNode[4+countTotalPoints()];
-		changeNodes[0]=scaleChange;
-		changeNodes[1]=rotationChange;
-		changeNodes[2]=translationChange;
-		changeNodes[3]=anchorPointChange;
+		ChangeNode[] changeNodes=new ChangeNode[countTotalPoints()];
 		//add all the movable points
 		if (polygonPointStart != null) {
-			int index=4;
+			int index=0;
 			MovablePoint t= polygonPointStart;
 			do{
 				changeNodes[index++]=t.positionChange();
 				t=t.getNext();
 			}while(t!= polygonPointStart);
 		}
-		return new ChangeNodeIterator(changeNodes);
+		return new ChangeNodeIterator(shapeChangeNodes(),changeNodes);
 
 	}
 

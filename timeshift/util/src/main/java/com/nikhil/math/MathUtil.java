@@ -3,9 +3,7 @@ package com.nikhil.math;
 import com.nikhil.logging.Logger;
 import com.nikhil.util.modal.UtilPoint;
 
-/**
- * Math library of common math utility methods.Every method is static.
- */
+/** Math library of common math utility methods.Every method is static */
 public class MathUtil {
 
 	public static double getMin(double a,double b){
@@ -29,6 +27,16 @@ public class MathUtil {
 	public static double distance(double fromX,double fromY,double toX,double toY){
 		return Math.sqrt((toX-fromX)*(toX-fromX)+(toY-fromY)*(toY-fromY));
 	}
+
+	/**
+	 * Gets the angle that a vector makes with the x axis.
+	 * <b>Important </b>if the vector is 0 (all arguments 0) than this will return a NaN
+	 * @param originX x of origin
+	 * @param originY y of origin
+	 * @param toX x of endpoint
+	 * @param toY x of endpoint
+	 * @return angle that this vector makes with x axis
+	 */
 	public static double angleOfPoint(double originX,double originY,double toX,double toY){
 		double angle=Math.toDegrees(Math.atan((toY-originY)/(toX-originX)));
 		//get angle in 360
@@ -46,6 +54,7 @@ public class MathUtil {
 				//do nothing
 			}
 		}
+
 		return angle;
 	}
 
@@ -69,6 +78,8 @@ public class MathUtil {
 		double radAng = Math.toRadians(degree);
 		double rx=translatedToOrigin.getX()*Math.cos(radAng)-translatedToOrigin.getY()*Math.sin(radAng);
 		double ry=translatedToOrigin.getX()*Math.sin(radAng)+translatedToOrigin.getY()*Math.cos(radAng);
+//		Logger.log("px,py="+ point.getX()+","+point.getY());
+//		Logger.log("x,y="+ rx+","+ry);
 		return around.add(new UtilPoint(rx,ry));
 	}
 	public static double getNonReflexAngle(double angle1,double angle2){

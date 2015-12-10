@@ -1,5 +1,7 @@
 package com.nikhil.model.shape;
 
+import com.nikhil.timeline.change.ChangeNode;
+import com.nikhil.timeline.change.ChangeNodeIterator;
 import com.nikhil.timeline.change.temporal.TemporalKeyframeChangeNode;
 import com.nikhil.model.ModelVisitor;
 import com.nikhil.timeline.KeyValue;
@@ -84,5 +86,15 @@ public class CircleModel extends ShapeModel {
 	@Override
 	public void acceptVisitor(ModelVisitor visitor) {
 		visitor.visit(this);
+	}
+
+	@Override
+	public ChangeNodeIterator changeNodeIterator() {
+		ChangeNode[] additional=new ChangeNode[4];
+		additional[0]=innerRadiusChange;
+		additional[1]=outerRadiusChange;
+		additional[2]=startAngleChange;
+		additional[3]=endAngleChange;
+		return new ChangeNodeIterator(shapeChangeNodes(),additional);
 	}
 }

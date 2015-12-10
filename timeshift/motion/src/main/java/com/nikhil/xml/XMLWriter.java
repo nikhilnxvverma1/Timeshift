@@ -142,19 +142,36 @@ public class XMLWriter implements ModelVisitor {
         //add the circle specific circle properties
         //<InnerRadius>
         Element innerRadiusTag=XMLTag.INNER_RADIUS.element(document);
-        innerRadiusTag.appendChild(document.createTextNode(circleModel.getInnerRadius() + ""));
+        if(circleModel.innerRadiusChange().isEmpty()){
+            innerRadiusTag.appendChild(document.createTextNode(circleModel.getInnerRadius() + ""));
+        }else{
+            innerRadiusTag.appendChild(getKeyframesTag(circleModel.innerRadiusChange()));
+        }
 
         //<OuterRadius>
         Element outerRadiusTag=XMLTag.OUTER_RADIUS.element(document);
-        outerRadiusTag.appendChild(document.createTextNode(circleModel.getOuterRadius() + ""));
-        
+        if (circleModel.outerRadiusChange().isEmpty()) {
+            outerRadiusTag.appendChild(document.createTextNode(circleModel.getOuterRadius() + ""));
+        }else{
+            outerRadiusTag.appendChild(getKeyframesTag(circleModel.outerRadiusChange()));
+        }
+
         //<StartingAngle>
         Element startingAngleTag=XMLTag.STARTING_ANGLE.element(document);
-        startingAngleTag.appendChild(document.createTextNode(circleModel.getStartAngle() + ""));
-        
+        if (circleModel.startAngleChange().isEmpty()) {
+            startingAngleTag.appendChild(document.createTextNode(circleModel.getStartAngle() + ""));
+        }else{
+            startingAngleTag.appendChild(getKeyframesTag(circleModel.startAngleChange()));
+
+        }
+
         //<EndingAngle>
         Element endingAngleTag=XMLTag.ENDING_ANGLE.element(document);
-        endingAngleTag.appendChild(document.createTextNode(circleModel.getEndAngle() + ""));
+        if (circleModel.endAngleChange().isEmpty()) {
+            endingAngleTag.appendChild(document.createTextNode(circleModel.getEndAngle() + ""));
+        }else{
+            endingAngleTag.appendChild(getKeyframesTag(circleModel.endAngleChange()));
+        }
 
         circleTag.appendChild(innerRadiusTag);
         circleTag.appendChild(outerRadiusTag);
