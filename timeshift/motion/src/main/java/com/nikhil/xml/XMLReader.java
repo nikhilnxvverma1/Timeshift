@@ -4,9 +4,11 @@ import com.nikhil.controller.CompositionController;
 import com.nikhil.controller.RootController;
 import com.nikhil.controller.item.CircleModelController;
 import com.nikhil.controller.item.ItemModelController;
+import com.nikhil.controller.item.ParallelogramModelController;
 import com.nikhil.controller.item.TriangleModelController;
 import com.nikhil.logging.Logger;
 import com.nikhil.model.shape.CircleModel;
+import com.nikhil.model.shape.ParallelogramModel;
 import com.nikhil.model.shape.PolygonModel;
 import com.nikhil.model.shape.TriangleModel;
 import org.w3c.dom.Document;
@@ -178,7 +180,8 @@ public class XMLReader {
                     PolygonModel polygonModel = modelFactory.parsePolygonModel(element);
                     ItemModelController polygonModelController = controllerFactory.getItemControllerFor(polygonModel);
                     compositionController.addItemController(polygonModelController);
-                }else if (tag == XMLTag.CIRCLE) {
+                }
+                else if (tag == XMLTag.CIRCLE) {
                     CircleModel circleModel = modelFactory.parseCircleModel(element);
                     CircleModelController circleModelController = controllerFactory.getItemControllerFor(circleModel);
                     compositionController.addItemController(circleModelController);
@@ -187,6 +190,11 @@ public class XMLReader {
                     TriangleModel triangleModel = modelFactory.parseTriangleModel(element);
                     TriangleModelController triangleModelController = controllerFactory.getItemControllerFor(triangleModel);
                     compositionController.addItemController(triangleModelController);
+                }
+                else if (tag == XMLTag.PARALLELOGRAM) {
+                    ParallelogramModel parallelogramModel = modelFactory.parseParallelogramModel(element);
+                    ParallelogramModelController parallelogramModelController = controllerFactory.getItemControllerFor(parallelogramModel);
+                    compositionController.addItemController(parallelogramModelController);
                 }
                 //extend here
                 else {

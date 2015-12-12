@@ -33,7 +33,7 @@ public class ChangeBase extends TemporalActionOnSingleItem{
 
     @Override
     public void execute() {
-        TemporalMetadata baseMeta = triangleViewController.getTemporalMetadata(MetadataTag.BASE);
+        TemporalMetadata baseMeta = triangleViewController.getTemporalMetadata(MetadataTag.TRIANGLE_BASE);
         if (baseMeta.isKeyframable()) {
             double currentTime = triangleViewController.getCompositionViewController().getTime();
             baseMeta.getKeyframeChangeNode().setTime(currentTime);
@@ -45,7 +45,7 @@ public class ChangeBase extends TemporalActionOnSingleItem{
 
     @Override
     public void unexecute() {
-        TemporalMetadata baseMeta = triangleViewController.getTemporalMetadata(MetadataTag.BASE);
+        TemporalMetadata baseMeta = triangleViewController.getTemporalMetadata(MetadataTag.TRIANGLE_BASE);
         if (baseMeta.isKeyframable()) {
             double currentTime = triangleViewController.getCompositionViewController().getTime();
             baseMeta.getKeyframeChangeNode().setTime(currentTime);

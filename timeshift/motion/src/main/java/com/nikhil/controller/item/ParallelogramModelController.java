@@ -4,29 +4,28 @@ import com.nikhil.common.Subject;
 import com.nikhil.controller.CompositionController;
 import com.nikhil.model.ItemModel;
 import com.nikhil.model.ModelVisitor;
-import com.nikhil.model.shape.Parallelogram;
-import com.nikhil.timeline.Timeline;
+import com.nikhil.model.shape.ParallelogramModel;
 
 /**
  * Created by NikhilVerma on 20/08/15.
  */
 public class ParallelogramModelController extends ItemModelController {
 
-    protected Parallelogram parallelogram;
+    protected ParallelogramModel parallelogramModel;
 
     public ParallelogramModelController() {
     }
 
-    public ParallelogramModelController(Parallelogram parallelogram) {
-        this.parallelogram = parallelogram;
+    public ParallelogramModelController(ParallelogramModel parallelogramModel) {
+        this.parallelogramModel = parallelogramModel;
     }
 
-    public Parallelogram getParallelogram() {
-        return parallelogram;
+    public ParallelogramModel getParallelogramModel() {
+        return parallelogramModel;
     }
 
-    public void setParallelogram(Parallelogram parallelogram) {
-        this.parallelogram = parallelogram;
+    public void setParallelogramModel(ParallelogramModel parallelogramModel) {
+        this.parallelogramModel = parallelogramModel;
     }
 
     @Override
@@ -36,12 +35,12 @@ public class ParallelogramModelController extends ItemModelController {
 
     @Override
     public ItemModel getItemModel() {
-        return parallelogram;
+        return parallelogramModel;
     }
 
     @Override
     public void acceptVisitor(ModelVisitor visitor) {
-        parallelogram.acceptVisitor(visitor);
+        parallelogramModel.acceptVisitor(visitor);
     }
 
     @Override

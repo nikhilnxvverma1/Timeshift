@@ -29,7 +29,6 @@ import java.io.File;
 
 /**
  * Builds XML representation of the system(using a DOM based writer).
- * TODO keyframes are not saved
  * Created by NikhilVerma on 20/08/15.
  */
 public class XMLWriter implements ModelVisitor {
@@ -116,7 +115,7 @@ public class XMLWriter implements ModelVisitor {
 
         //add the triangle specific triangle properties
         //<Base>
-        Element baseTag=XMLTag.BASE.element(document);
+        Element baseTag=XMLTag.TRIANGLE_BASE.element(document);
         if(triangleModel.baseChange().isEmpty()){
             baseTag.appendChild(document.createTextNode(triangleModel.getBase() + ""));
         }else{
@@ -124,7 +123,7 @@ public class XMLWriter implements ModelVisitor {
         }
 
         //<Height>
-        Element heightTag=XMLTag.HEIGHT.element(document);
+        Element heightTag=XMLTag.TRIANGLE_HEIGHT.element(document);
         if (triangleModel.heightChange().isEmpty()) {
             heightTag.appendChild(document.createTextNode(triangleModel.getHeight() + ""));
         }else{
@@ -141,8 +140,44 @@ public class XMLWriter implements ModelVisitor {
     }
 
     @Override
-    public void visit(Parallelogram parallelogram) {
+    public void visit(ParallelogramModel parallelogramModel) {
+        Element parallelogramTag=XMLTag.PARALLELOGRAM.element(document);
+        parallelogramTag.setAttribute(XMLAttribute.NAME.toString(), parallelogramModel.getName());
+        parallelogramTag.appendChild(getShapeTag(parallelogramModel));
 
+        //add the parallelogram specific properties
+        //<Width>
+        Element widthTag=XMLTag.INNER_RADIUS.element(document);
+        if(parallelogramModel.widthChange().isEmpty()){
+            widthTag.appendChild(document.createTextNode(parallelogramModel.getWidth() + ""));
+        }else{
+            widthTag.appendChild(getKeyframesTag(parallelogramModel.widthChange()));
+        }
+
+        //<Height>
+        Element heightTag=XMLTag.OUTER_RADIUS.element(document);
+        if (parallelogramModel.heightChange().isEmpty()) {
+            heightTag.appendChild(document.createTextNode(parallelogramModel.getHeight() + ""));
+        }else{
+            heightTag.appendChild(getKeyframesTag(parallelogramModel.heightChange()));
+        }
+
+        //<SwayingAngle>
+        Element swayAngleTag=XMLTag.PARALLELOGRAM_SWAY_ANGLE.element(document);
+        if (parallelogramModel.swayAngleChange().isEmpty()) {
+            swayAngleTag.appendChild(document.createTextNode(parallelogramModel.getSwayAngle() + ""));
+        }else{
+            swayAngleTag.appendChild(getKeyframesTag(parallelogramModel.swayAngleChange()));
+
+        }
+
+        parallelogramTag.appendChild(widthTag);
+        parallelogramTag.appendChild(heightTag);
+        parallelogramTag.appendChild(swayAngleTag);
+
+        //add to the last composition(this method doesn't know which composition it will  get added to)
+        itemContainer.appendChild(parallelogramTag);
+        Logger.log("Saving Parallelogram model "+parallelogramModel.getName());
     }
 
     @Override

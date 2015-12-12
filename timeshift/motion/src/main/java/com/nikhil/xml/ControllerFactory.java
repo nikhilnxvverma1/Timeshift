@@ -1,10 +1,10 @@
 package com.nikhil.xml;
 
 import com.nikhil.controller.item.*;
+import com.nikhil.model.shape.ParallelogramModel;
 import com.nikhil.model.shape.PolygonModel;
 import com.nikhil.model.shape.CircleModel;
 import com.nikhil.model.shape.TriangleModel;
-import com.nikhil.model.shape.Parallelogram;
 
 /**
  * Controller factory which supplies controllers for each model class.
@@ -23,8 +23,8 @@ public class ControllerFactory {
         return new TriangleModelController(triangleModel);
     }
 
-    public ItemModelController getItemControllerFor(Parallelogram parallelogram){
-        return new ParallelogramModelController(parallelogram);
+    public ParallelogramModelController getItemControllerFor(ParallelogramModel parallelogramModel){
+        return new ParallelogramModelController(parallelogramModel);
     }
 
     public PolygonModelController getItemControllerFor(PolygonModel polygonModel){

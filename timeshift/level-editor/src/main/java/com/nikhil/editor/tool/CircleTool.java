@@ -3,6 +3,7 @@ package com.nikhil.editor.tool;
 import com.nikhil.command.AddCircle;
 import com.nikhil.controller.CircleViewController;
 import com.nikhil.editor.workspace.Workspace;
+import com.nikhil.logging.Logger;
 import com.nikhil.math.MathUtil;
 import com.nikhil.view.item.CircleView;
 import javafx.scene.input.MouseEvent;
@@ -43,6 +44,14 @@ public class CircleTool extends BaseTool{
 
     @Override
     public void mouseReleased(MouseEvent mouseEvent) {
+        //check if enough distance was made or not
+        double x = xInWorksheet(mouseEvent);
+        double y = yInWorksheet(mouseEvent);
+        double distanceWithInitial=MathUtil.distance(initialX,initialY,x,y);
+        if(distanceWithInitial<NEGLIGIBLE_DRAG_DISTANCE){
+            Logger.log("Negligible size of circle,dismissing Adding shape command");
+            return;
+        }
         CircleViewController circleViewController=new CircleViewController(workspace.getCurrentComposition(),circleView);
         AddCircle addCircle=new AddCircle(circleViewController);
         workspace.pushCommand(addCircle);

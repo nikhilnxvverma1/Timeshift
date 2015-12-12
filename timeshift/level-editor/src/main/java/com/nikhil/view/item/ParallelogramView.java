@@ -1,31 +1,28 @@
 package com.nikhil.view.item;
 
+import com.nikhil.model.shape.ParallelogramModel;
+import com.nikhil.view.item.delegate.ParallelogramViewDelegate;
+import javafx.beans.property.DoubleProperty;
+import javafx.beans.property.SimpleDoubleProperty;
 import javafx.geometry.Point2D;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.ClosePath;
 import javafx.scene.shape.LineTo;
 import javafx.scene.shape.MoveTo;
-import javafx.scene.shape.Path;
 
 /**
+ * 
+ * Customizable view for parallelogram that uses Path to display the
+ * parallelogram item
  * Created by NikhilVerma on 04/09/15.
  */
-public class ParallelogramView extends Path {
+public class ParallelogramView extends ShapeView{
 
-    //=============================================================================================
-    //Parallelogram Properties
-    //=============================================================================================
+    private ParallelogramViewDelegate delegate;
 
-    private double scale;
-    private double rotation;
-    private double translationX;
-    private double translationY;
-    private double anchorPointX;
-    private double anchorPointY;
-
-    private double width;
-    private double height;
-    private double swayAngle;
+    private DoubleProperty width=new SimpleDoubleProperty(ParallelogramModel.DEFAULT_WIDTH);
+    private DoubleProperty height=new SimpleDoubleProperty(ParallelogramModel.DEFAULT_HEIGHT);
+    private DoubleProperty swayAngle=new SimpleDoubleProperty(ParallelogramModel.DEFAULT_SWAY_ANGLE);
 
     //=============================================================================================
     //UI components
@@ -37,107 +34,58 @@ public class ParallelogramView extends Path {
     protected LineTo lineToD;
 
 
-    public ParallelogramView(double width, double height, double swayAngle, double scale, double rotation, double translationX, double translationY, double anchorPointX, double anchorPointY) {
-        this.swayAngle = swayAngle;
-        this.height = height;
-        this.width = width;
-        this.anchorPointY = anchorPointY;
-        this.anchorPointX = anchorPointX;
-        this.translationY = translationY;
-        this.translationX = translationX;
-        this.rotation = rotation;
-        this.scale = scale;
-        initializeView();
+    public ParallelogramView(double width, double height, double swayAngle) {
+        this.swayAngle.set(swayAngle);
+        this.height.set(height);
+        this.width.set(width);
+        initView();
         updateView();
     }
 
     public ParallelogramView(ParallelogramView parallelogramView) {
-        this(parallelogramView.width,parallelogramView.height,parallelogramView.swayAngle,parallelogramView.scale,parallelogramView.rotation
-        ,parallelogramView.translationX,parallelogramView.translationY,parallelogramView.anchorPointX,parallelogramView.anchorPointY);
+        this(parallelogramView.width.get(),parallelogramView.height.get(),parallelogramView.swayAngle.get());
     }
-
-    public double getScale() {
-        return scale;
-    }
-
-    public double getRotation() {
-        return rotation;
-    }
-
-    public double getTranslationX() {
-        return translationX;
-    }
-
-    public double getTranslationY() {
-        return translationY;
-    }
-
-    public double getAnchorPointX() {
-        return anchorPointX;
-    }
-
-    public double getAnchorPointY() {
-        return anchorPointY;
-    }
-
+    
     public double getWidth() {
+        return width.get();
+    }
+
+    public DoubleProperty widthProperty() {
         return width;
     }
 
+    public void setWidth(double width) {
+        this.width.set(width);
+        updateView();
+    }
+
     public double getHeight() {
+        return height.get();
+    }
+
+    public DoubleProperty heightProperty() {
         return height;
     }
 
+    public void setHeight(double height) {
+        this.height.set(height);
+        updateView();
+    }
+
     public double getSwayAngle() {
+        return swayAngle.get();
+    }
+
+    public DoubleProperty swayAngleProperty() {
         return swayAngle;
     }
 
-    public void setScale(double scale) {
-        this.scale = scale;
-        updateView();
-    }
-
-    public void setRotation(double rotation) {
-        this.rotation = rotation;
-        updateView();
-    }
-
-    public void setTranslationX(double translationX) {
-        this.translationX = translationX;
-        updateView();
-    }
-
-    public void setTranslationY(double translationY) {
-        this.translationY = translationY;
-        updateView();
-    }
-
-    public void setAnchorPointX(double anchorPointX) {
-        this.anchorPointX = anchorPointX;
-        updateView();
-    }
-
-    public void setAnchorPointY(double anchorPointY) {
-        this.anchorPointY = anchorPointY;
-        updateView();
-    }
-
-    public void setWidth(double width) {
-        this.width = width;
-        updateView();
-    }
-
-    public void setHeight(double height) {
-        this.height = height;
-        updateView();
-    }
-
     public void setSwayAngle(double swayAngle) {
-        this.swayAngle = swayAngle;
+        this.swayAngle.set(swayAngle);
         updateView();
     }
 
-    private void initializeView(){
+    private void initView(){
         this.setFill(Color.ORANGE);
         this.setStroke(null);
         moveToA=new MoveTo();
@@ -153,8 +101,8 @@ public class ParallelogramView extends Path {
      */
     public Point2D getLowerRight(){
         double boundingHeight=getBoundingHeight();
-        double distanceFromMidX=Math.cos(Math.toRadians(swayAngle))*(height/2);
-        double ax= width / 2 + distanceFromMidX;
+        double distanceFromMidX=Math.cos(Math.toRadians(swayAngle.get()))*(height.get()/2);
+        double ax= width.get() / 2 + distanceFromMidX;
         double ay=boundingHeight/2;
         return new Point2D(ax,ay);
     }
@@ -165,8 +113,8 @@ public class ParallelogramView extends Path {
      */
     public Point2D getLowerLeft(){
         double boundingHeight=getBoundingHeight();
-        double distanceFromMidX=Math.cos(Math.toRadians(swayAngle))*(height/2);
-        double bx= -width / 2 + distanceFromMidX;
+        double distanceFromMidX=Math.cos(Math.toRadians(swayAngle.get()))*(height.get()/2);
+        double bx= -width.get() / 2 + distanceFromMidX;
         double by=boundingHeight/2;
         return new Point2D(bx,by);
     }
@@ -178,8 +126,8 @@ public class ParallelogramView extends Path {
      */
     public Point2D getUpperLeft(){
         double boundingHeight=getBoundingHeight();
-        double distanceFromMidX=Math.cos(Math.toRadians(swayAngle))*(height/2);
-        double cx= -width / 2 - distanceFromMidX;
+        double distanceFromMidX=Math.cos(Math.toRadians(swayAngle.get()))*(height.get()/2);
+        double cx= -width.get() / 2 - distanceFromMidX;
         double cy=-boundingHeight/2;
         return new Point2D(cx,cy);
     }
@@ -191,14 +139,24 @@ public class ParallelogramView extends Path {
      */
     public Point2D getUpperRight(){
         double boundingHeight=getBoundingHeight();
-        double distanceFromMidX=Math.cos(Math.toRadians(swayAngle))*(height/2);
-        double dx= width / 2 - distanceFromMidX;
+        double distanceFromMidX=Math.cos(Math.toRadians(swayAngle.get()))*(height.get()/2);
+        double dx= width.get() / 2 - distanceFromMidX;
         double dy=-boundingHeight/2;
         return new Point2D(dx,dy);
     }
 
+    @Override
+    public ParallelogramViewDelegate getDelegate() {
+        return delegate;
+    }
 
-    private void updateView(){
+    public void setDelegate(ParallelogramViewDelegate delegate) {
+        this.delegate = delegate;
+        setDelegateAsEventHandler();
+    }
+
+    @Override
+    public void updateView(){
 
         Point2D a=getLowerLeft();
         moveToA.setX(a.getX());
@@ -216,21 +174,13 @@ public class ParallelogramView extends Path {
         lineToD.setX(d.getX());
         lineToD.setY(d.getY());
 
-        //TODO take into account anchor point
-        setLayoutX(translationX);
-        setLayoutY(translationY);
-//        setTranslateX(translationX);
-//        setTranslateY(translationY);
-        setRotate(rotation);
-        setScaleY(scale);
-
     }
 
     /**
      * @return the absolute bounding height of the parallelogram
      */
     public double getBoundingHeight(){
-        return Math.abs(Math.sin(Math.toRadians(swayAngle))*height);
+        return Math.abs(Math.sin(Math.toRadians(swayAngle.get()))*height.get());
     }
 
     /**
@@ -238,6 +188,26 @@ public class ParallelogramView extends Path {
      */
 
     public double getBoundingWidth(){
-        return width+Math.abs(2*Math.cos(Math.toRadians(swayAngle))*height);
+        return width.get()+Math.abs(2*Math.cos(Math.toRadians(swayAngle.get()))*height.get());
+    }
+
+
+    /**
+     * Copies all properties from the specified view <b>EXCEPT</b> layout x,y properties
+     * @param parallelogramView the view to copy values from
+     */
+    public void copyValuesFrom(ParallelogramView parallelogramView){
+        
+        this.setWidth(parallelogramView.getWidth());
+        this.setHeight(parallelogramView.getHeight());
+        this.setSwayAngle(parallelogramView.getSwayAngle());
+
+        setScale(parallelogramView.getScale());
+        setRotate(parallelogramView.getRotate());
+        setOriginRotate(parallelogramView.getOriginRotate());
+        setTranslateX(parallelogramView.getTranslateX());
+        setTranslateY(parallelogramView.getTranslateY());
+
+        updateView();
     }
 }

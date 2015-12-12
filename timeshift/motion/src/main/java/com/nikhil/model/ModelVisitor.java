@@ -8,9 +8,9 @@ import com.nikhil.model.pathsystem.TravelPath;
 import com.nikhil.model.pathsystem.TravellingLinkPoint;
 import com.nikhil.model.pathsystem.traveller.TravellerConfiguration;
 import com.nikhil.model.shape.CircleModel;
+import com.nikhil.model.shape.ParallelogramModel;
 import com.nikhil.model.shape.PolygonModel;
 import com.nikhil.model.shape.TriangleModel;
-import com.nikhil.model.shape.Parallelogram;
 
 /**
  * Visitor of all data modal , which can be used flexibly to visit each data modal.
@@ -35,7 +35,7 @@ public interface ModelVisitor {
 
     void visit(CircleModel circleModel);
     void visit(TriangleModel triangleModel);
-    void visit(Parallelogram parallelogram);
+    void visit(ParallelogramModel parallelogramModel);
     void visit(TravelPath travelPath);
     void visit(MovableLinkPoint movableLinkPoint);
     void visit(TravellingLinkPoint travellingLinkPoint);

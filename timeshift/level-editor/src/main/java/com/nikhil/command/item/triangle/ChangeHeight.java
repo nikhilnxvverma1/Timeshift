@@ -34,7 +34,7 @@ public class ChangeHeight extends TemporalActionOnSingleItem{
 
     @Override
     public void execute() {
-        TemporalMetadata heightMeta = triangleViewController.getTemporalMetadata(MetadataTag.HEIGHT);
+        TemporalMetadata heightMeta = triangleViewController.getTemporalMetadata(MetadataTag.TRIANGLE_HEIGHT);
         if (heightMeta.isKeyframable()) {
             double currentTime = triangleViewController.getCompositionViewController().getTime();
             heightMeta.getKeyframeChangeNode().setTime(currentTime);
@@ -46,7 +46,7 @@ public class ChangeHeight extends TemporalActionOnSingleItem{
 
     @Override
     public void unexecute() {
-        TemporalMetadata heightMeta = triangleViewController.getTemporalMetadata(MetadataTag.HEIGHT);
+        TemporalMetadata heightMeta = triangleViewController.getTemporalMetadata(MetadataTag.TRIANGLE_HEIGHT);
         if (heightMeta.isKeyframable()) {
             double currentTime = triangleViewController.getCompositionViewController().getTime();
             heightMeta.getKeyframeChangeNode().setTime(currentTime);

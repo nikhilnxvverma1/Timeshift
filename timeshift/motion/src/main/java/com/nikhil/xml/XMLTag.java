@@ -1,7 +1,6 @@
 package com.nikhil.xml;
 
 import com.nikhil.logging.Logger;
-import com.sun.tools.javadoc.Start;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
@@ -38,8 +37,12 @@ public enum XMLTag {
     SPATIAL_KEYFRAMES,
     SPATIAL_KEYFRAME,
     TRIANGLE,
-    BASE,
-    HEIGHT,
+    TRIANGLE_BASE,
+    TRIANGLE_HEIGHT,
+    PARALLELOGRAM,
+    PARALLELOGRAM_WIDTH,
+    PARALLELOGRAM_HEIGHT,
+    PARALLELOGRAM_SWAY_ANGLE,
     CIRCLE,
     INNER_RADIUS,
     OUTER_RADIUS,
@@ -102,10 +105,18 @@ public enum XMLTag {
                 return "spatialKeyframe";
             case TRIANGLE:
                 return "triangle";
-            case BASE:
-                return "base";
-            case HEIGHT:
-                return "height";
+            case TRIANGLE_BASE:
+                return "triangleBase";
+            case TRIANGLE_HEIGHT:
+                return "triangleHeight";
+            case PARALLELOGRAM:
+                return "parallelogram";
+            case PARALLELOGRAM_WIDTH:
+                return "parallelogramWidth";
+            case PARALLELOGRAM_HEIGHT:
+                return "parallelogramHeight";
+            case PARALLELOGRAM_SWAY_ANGLE:
+                return "parallelogramSwayAngle";
             case CIRCLE:
                 return "circle";
             case INNER_RADIUS:
@@ -190,10 +201,18 @@ public enum XMLTag {
                 return ENDING_ANGLE;
             case "triangle":
                 return TRIANGLE;
-            case "base":
-                return BASE;
-            case "height":
-                return HEIGHT;
+            case "triangleBase":
+                return TRIANGLE_BASE;
+            case "triangleHeight":
+                return TRIANGLE_HEIGHT;
+            case "parallelogram":
+                return PARALLELOGRAM;
+            case "parallelogramWidth":
+                return PARALLELOGRAM_WIDTH;
+            case "parallelogramHeight":
+                return PARALLELOGRAM_HEIGHT;
+            case "parallelogramSwayAngle":
+                return PARALLELOGRAM_SWAY_ANGLE;
             default:
                 Logger.log("No tag found for:" + element);
         }

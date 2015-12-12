@@ -14,8 +14,13 @@ public enum MetadataTag {
     ANCHOR_POINT,
 
     //Triangle
-    BASE,
-    HEIGHT,
+    TRIANGLE_BASE,
+    TRIANGLE_HEIGHT,
+
+    //Parallelogram
+    PARALLELOGRAM_WIDTH,
+    PARALLELOGRAM_HEIGHT,
+    PARALLELOGRAM_SWAY_ANGLE,
 
     //Polygon
     POLYGON_VERTEX_HEADER,
@@ -27,10 +32,7 @@ public enum MetadataTag {
     START_ANGLE,
     END_ANGLE
 
-
-
     ;
-
 
 
     @Override
@@ -49,10 +51,16 @@ public enum MetadataTag {
                 return "Translation";
             case ANCHOR_POINT:
                 return "Anchor Point";
-            case BASE:
+            case TRIANGLE_BASE:
                 return "Base";
-            case HEIGHT:
+            case TRIANGLE_HEIGHT:
                 return "Height";
+            case PARALLELOGRAM_WIDTH:
+                return "Width";
+            case PARALLELOGRAM_HEIGHT:
+                return "Height";
+            case PARALLELOGRAM_SWAY_ANGLE:
+                return "Sway Angle";
             case POLYGON_VERTEX_HEADER:
                 return "Vertices";
             case POLYGON_VERTEX:

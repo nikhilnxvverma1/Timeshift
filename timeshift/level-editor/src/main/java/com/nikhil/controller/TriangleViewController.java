@@ -96,12 +96,12 @@ public class TriangleViewController extends ShapeViewController implements Trian
         super.initMetadataTree();
 
         //Base
-        final TemporalMetadata baseMeta = new TemporalMetadata(MetadataTag.BASE, triangleModelController.getTriangleModel().baseChange(), this);
+        final TemporalMetadata baseMeta = new TemporalMetadata(MetadataTag.TRIANGLE_BASE, triangleModelController.getTriangleModel().baseChange(), this);
         baseMeta.setValueNode(createBaseValueNode(baseMeta));
         TreeItem<Metadata> baseTreeItem= new TreeItem<>(baseMeta);
 
         //Height
-        final TemporalMetadata heightMeta = new TemporalMetadata(MetadataTag.HEIGHT, triangleModelController.getTriangleModel().heightChange(), this);
+        final TemporalMetadata heightMeta = new TemporalMetadata(MetadataTag.TRIANGLE_HEIGHT, triangleModelController.getTriangleModel().heightChange(), this);
         heightMeta.setValueNode(createHeightValueNode(heightMeta));
         TreeItem<Metadata> heightTreeItem= new TreeItem<>(heightMeta);
 
@@ -227,9 +227,9 @@ public class TriangleViewController extends ShapeViewController implements Trian
 
     @Override
     public TemporalMetadata getTemporalMetadata(MetadataTag tag) {
-        if (tag == MetadataTag.BASE) {
+        if (tag == MetadataTag.TRIANGLE_BASE) {
             return (TemporalMetadata) metadataTree.getChildren().get(BASE_INDEX).getValue();
-        } else if (tag == MetadataTag.HEIGHT) {
+        } else if (tag == MetadataTag.TRIANGLE_HEIGHT) {
             return (TemporalMetadata) metadataTree.getChildren().get(HEIGHT_INDEX).getValue();
         } else {
             return super.getTemporalMetadata(tag);
@@ -239,25 +239,25 @@ public class TriangleViewController extends ShapeViewController implements Trian
     @Override
     public void tweakingBase(double oldBase, double newBase) {
         getItemModel().setBase(newBase);
-        getTemporalMetadata(MetadataTag.BASE).registerContinuousChange(new KeyValue(oldBase),new KeyValue(newBase));
+        getTemporalMetadata(MetadataTag.TRIANGLE_BASE).registerContinuousChange(new KeyValue(oldBase),new KeyValue(newBase));
     }
 
     @Override
     public void tweakingHeight(double oldHeight, double newHeight) {
         getItemModel().setHeight(newHeight);
-        getTemporalMetadata(MetadataTag.HEIGHT).registerContinuousChange(new KeyValue(oldHeight),new KeyValue(newHeight));
+        getTemporalMetadata(MetadataTag.TRIANGLE_HEIGHT).registerContinuousChange(new KeyValue(oldHeight),new KeyValue(newHeight));
     }
 
     @Override
     public void finishedTweakingBase(double initialBase) {
         ChangeBase changeBase=new ChangeBase(this,initialBase,triangleView.getBase());
-        getTemporalMetadata(MetadataTag.BASE).pushWithKeyframe(changeBase,false);
+        getTemporalMetadata(MetadataTag.TRIANGLE_BASE).pushWithKeyframe(changeBase,false);
     }
 
     @Override
     public void finishedTweakingHeight(double initialHeight) {
         ChangeHeight changeHeight=new ChangeHeight(this,initialHeight,triangleView.getHeight());
-        getTemporalMetadata(MetadataTag.HEIGHT).pushWithKeyframe(changeHeight,false);
+        getTemporalMetadata(MetadataTag.TRIANGLE_HEIGHT).pushWithKeyframe(changeHeight,false);
     }
 
     protected void setSelfAsChangeHandler(){
