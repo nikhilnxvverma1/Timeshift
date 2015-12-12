@@ -40,6 +40,7 @@ public class ChangeEndAngle extends TemporalActionOnSingleItem {
             endAngleMeta.getKeyframeChangeNode().setTime(currentTime);
         }else{
             circleViewController.getItemView().setEndAngle(finalValue);
+            circleViewController.getItemModel().setEndAngle(finalValue);
         }
         circleViewController.getGizmo().updateView();
     }
@@ -52,6 +53,7 @@ public class ChangeEndAngle extends TemporalActionOnSingleItem {
             endAngleMeta.getKeyframeChangeNode().setTime(currentTime);
         }else{
             circleViewController.getItemView().setEndAngle(initialValue);
+            circleViewController.getItemModel().setEndAngle(initialValue);
         }
         circleViewController.getGizmo().updateView();
     }

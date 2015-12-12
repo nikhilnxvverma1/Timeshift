@@ -41,6 +41,7 @@ public class ChangeWidth extends TemporalActionOnSingleItem {
             widthMeta.getKeyframeChangeNode().setTime(currentTime);
         }else{
             parallelogramViewController.getItemView().setWidth(finalValue);
+            parallelogramViewController.getItemModel().setWidth(finalValue);
         }
         parallelogramViewController.getGizmo().updateView();
     }
@@ -53,6 +54,7 @@ public class ChangeWidth extends TemporalActionOnSingleItem {
             widthMeta.getKeyframeChangeNode().setTime(currentTime);
         }else{
             parallelogramViewController.getItemView().setWidth(initialValue);
+            parallelogramViewController.getItemModel().setWidth(initialValue);
         }
         parallelogramViewController.getGizmo().updateView();
     }

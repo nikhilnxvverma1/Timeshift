@@ -40,6 +40,7 @@ public class ChangeInnerRadius extends TemporalActionOnSingleItem {
             innerRadiusMeta.getKeyframeChangeNode().setTime(currentTime);
         }else{
             circleViewController.getItemView().setInnerRadius(finalValue);
+            circleViewController.getItemModel().setInnerRadius(finalValue);
         }
         circleViewController.getGizmo().updateView();
     }
@@ -52,6 +53,7 @@ public class ChangeInnerRadius extends TemporalActionOnSingleItem {
             innerRadiusMeta.getKeyframeChangeNode().setTime(currentTime);
         }else{
             circleViewController.getItemView().setInnerRadius(initialValue);
+            circleViewController.getItemModel().setInnerRadius(initialValue);
         }
         circleViewController.getGizmo().updateView();
     }

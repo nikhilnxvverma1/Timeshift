@@ -1,5 +1,6 @@
 package com.nikhil.model.shape;
 
+import com.nikhil.logging.Logger;
 import com.nikhil.timeline.change.ChangeNodeIterator;
 import com.nikhil.timeline.change.temporal.TemporalKeyframeChangeNode;
 import com.nikhil.timeline.keyframe.Keyframe;
@@ -24,7 +25,7 @@ public class ParallelogramModel extends ShapeModel {
 
     public static final double DEFAULT_WIDTH=10;
     public static final double DEFAULT_HEIGHT=10;
-    public static final double DEFAULT_SWAY_ANGLE=0;
+    public static final double DEFAULT_SWAY_ANGLE=90;
 
 
     private TemporalKeyframeChangeNode widthChange=new TemporalKeyframeChangeNode(new KeyValue(DEFAULT_WIDTH));
@@ -44,7 +45,7 @@ public class ParallelogramModel extends ShapeModel {
     }
 
     public double getWidth() {
-        return 0;
+        return widthChange.getCurrentValue().get(0);
     }
 
     public void setWidth(double width) {
@@ -52,7 +53,7 @@ public class ParallelogramModel extends ShapeModel {
     }
 
     public double getHeight() {
-        return 0;
+        return heightChange.getCurrentValue().get(0);
     }
 
     public void setHeight(double height) {
@@ -60,7 +61,7 @@ public class ParallelogramModel extends ShapeModel {
     }
 
     public double getSwayAngle() {
-        return 0;
+        return swayAngleChange.getCurrentValue().get(0);
     }
 
     public void setSwayAngle(double swayAngle) {

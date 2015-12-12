@@ -39,6 +39,7 @@ public class ChangeBase extends TemporalActionOnSingleItem{
             baseMeta.getKeyframeChangeNode().setTime(currentTime);
         }else{
             triangleViewController.getItemView().setBase(finalValue);
+            triangleViewController.getItemModel().setBase(finalValue);
         }
         triangleViewController.getGizmo().updateView();
     }
@@ -51,6 +52,7 @@ public class ChangeBase extends TemporalActionOnSingleItem{
             baseMeta.getKeyframeChangeNode().setTime(currentTime);
         }else{
             triangleViewController.getItemView().setBase(initialValue);
+            triangleViewController.getItemModel().setBase(initialValue);
         }
         triangleViewController.getGizmo().updateView();
     }

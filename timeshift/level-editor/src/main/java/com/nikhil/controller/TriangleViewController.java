@@ -117,6 +117,7 @@ public class TriangleViewController extends ShapeViewController implements Trian
             public void valueBeingDragged(DraggableTextValue draggableTextValue, double initialValue, double oldValue, double newValue) {
 
                 triangleView.setHeight(newValue);
+                getItemModel().setHeight(newValue);
                 //update the gizmo and the outline
                 triangleGizmo.updateView();
                 getCompositionViewController().getWorkspace().getSelectedItems().updateView();
@@ -131,7 +132,7 @@ public class TriangleViewController extends ShapeViewController implements Trian
                 if(finalValue<0){
                     draggableTextValue.setValue(0);
                 }
-
+                getItemModel().setBase(finalValue);
                 ChangeHeight changeHeight=new ChangeHeight(TriangleViewController.this,initialValue,finalValue);
                 metadata.pushWithKeyframe(changeHeight,!dragged);
             }
@@ -162,6 +163,7 @@ public class TriangleViewController extends ShapeViewController implements Trian
             public void valueBeingDragged(DraggableTextValue draggableTextValue, double initialValue, double oldValue, double newValue) {
 
                 triangleView.setBase(newValue);
+                getItemModel().setBase(newValue);
                 //update the gizmo and the outline
                 triangleGizmo.updateView();
                 getCompositionViewController().getWorkspace().getSelectedItems().updateView();
@@ -176,7 +178,7 @@ public class TriangleViewController extends ShapeViewController implements Trian
                 if(finalValue<0){
                     draggableTextValue.setValue(0);
                 }
-
+                getItemModel().setBase(finalValue);
                 ChangeBase changeBase=new ChangeBase(TriangleViewController.this,initialValue,finalValue);
                 metadata.pushWithKeyframe(changeBase,!dragged);
             }

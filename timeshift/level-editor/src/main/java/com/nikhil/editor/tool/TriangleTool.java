@@ -1,6 +1,6 @@
 package com.nikhil.editor.tool;
 
-import com.nikhil.command.AddTriangle;
+import com.nikhil.command.item.AddItem;
 import com.nikhil.controller.TriangleViewController;
 import com.nikhil.editor.workspace.Workspace;
 import com.nikhil.logging.Logger;
@@ -9,6 +9,7 @@ import com.nikhil.view.item.TriangleView;
 import javafx.scene.input.MouseEvent;
 
 /**
+ * Tool that creates a triangle centering on the original point of press
  * Created by NikhilVerma on 12/09/15.
  */
 public class TriangleTool extends BaseTool{
@@ -47,12 +48,12 @@ public class TriangleTool extends BaseTool{
         double y = yInWorksheet(mouseEvent);
         double distanceWithInitial=MathUtil.distance(initialX,initialY,x,y);
         if(distanceWithInitial<NEGLIGIBLE_DRAG_DISTANCE){
-            Logger.log("Negligible size of triangle,dismissing AddTriangle command");
+            Logger.log("Negligible size of triangle,dismissing Add item command");
             return;
         }
 
         TriangleViewController triangleViewController=new TriangleViewController(workspace.getCurrentComposition(),triangleView);
-        AddTriangle addTriangle=new AddTriangle(triangleViewController);
+        AddItem addTriangle=new AddItem(triangleViewController);
         workspace.pushCommand(addTriangle);
     }
 

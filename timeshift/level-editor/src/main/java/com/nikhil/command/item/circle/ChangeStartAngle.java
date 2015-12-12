@@ -40,6 +40,7 @@ public class ChangeStartAngle extends TemporalActionOnSingleItem {
             startAngleMeta.getKeyframeChangeNode().setTime(currentTime);
         }else{
             circleViewController.getItemView().setStartAngle(finalValue);
+            circleViewController.getItemModel().setStartAngle(finalValue);
         }
         circleViewController.getGizmo().updateView();
     }
@@ -52,6 +53,7 @@ public class ChangeStartAngle extends TemporalActionOnSingleItem {
             startAngleMeta.getKeyframeChangeNode().setTime(currentTime);
         }else{
             circleViewController.getItemView().setStartAngle(initialValue);
+            circleViewController.getItemModel().setStartAngle(initialValue);
         }
         circleViewController.getGizmo().updateView();
     }

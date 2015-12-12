@@ -40,6 +40,7 @@ public class ChangeHeight extends TemporalActionOnSingleItem{
             heightMeta.getKeyframeChangeNode().setTime(currentTime);
         }else{
             triangleViewController.getItemView().setHeight(finalValue);
+            triangleViewController.getItemModel().setHeight(finalValue);
         }
         triangleViewController.getGizmo().updateView();
     }

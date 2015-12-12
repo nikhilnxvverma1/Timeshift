@@ -165,6 +165,7 @@ public class CircleViewController extends ShapeViewController implements CircleV
             public void valueBeingDragged(DraggableTextValue draggableTextValue, double initialValue, double oldValue, double newValue) {
                 
                 circleView.setInnerRadius(newValue);
+                getItemModel().setInnerRadius(newValue);
                 //update the gizmo and the outline
                 circleGizmo.updateView();
                 getCompositionViewController().getWorkspace().getSelectedItems().updateView();
@@ -182,6 +183,7 @@ public class CircleViewController extends ShapeViewController implements CircleV
                 if(finalValue>=circleView.getOuterRadius()){
                     draggableTextValue.setValue(circleView.getOuterRadius()-1);
                 }
+                getItemModel().setInnerRadius(finalValue);
                 ChangeInnerRadius changeInnerRadius=new ChangeInnerRadius(CircleViewController.this,initialValue,finalValue);
                 metadata.pushWithKeyframe(changeInnerRadius,!dragged);
             }
@@ -213,6 +215,7 @@ public class CircleViewController extends ShapeViewController implements CircleV
             public void valueBeingDragged(DraggableTextValue draggableTextValue, double initialValue, double oldValue, double newValue) {
 
                 circleView.setOuterRadius(newValue);
+                getItemModel().setOuterRadius(newValue);
                 //update the gizmo and the outline
                 circleGizmo.updateView();
                 getCompositionViewController().getWorkspace().getSelectedItems().updateView();
@@ -230,6 +233,7 @@ public class CircleViewController extends ShapeViewController implements CircleV
                 if(finalValue<=circleView.getInnerRadius()){
                     draggableTextValue.setValue(circleView.getInnerRadius()+1);
                 }
+                getItemModel().setOuterRadius(finalValue);
                 ChangeOuterRadius changeOuterRadius=new ChangeOuterRadius(CircleViewController.this,initialValue,finalValue);
                 metadata.pushWithKeyframe(changeOuterRadius,!dragged);
             }
@@ -261,6 +265,7 @@ public class CircleViewController extends ShapeViewController implements CircleV
             public void valueBeingDragged(DraggableTextValue draggableTextValue, double initialValue, double oldValue, double newValue) {
 
                 circleView.setStartAngle(newValue);
+                getItemModel().setStartAngle(newValue);
                 //update the gizmo and the outline
                 circleGizmo.updateView();
                 getCompositionViewController().getWorkspace().getSelectedItems().updateView();
@@ -278,6 +283,7 @@ public class CircleViewController extends ShapeViewController implements CircleV
                 if(finalValue>=circleView.getEndAngle()){
                     draggableTextValue.setValue(circleView.getEndAngle()-1);
                 }
+                getItemModel().setStartAngle(finalValue);
                 ChangeStartAngle changeStartAngle=new ChangeStartAngle(CircleViewController.this,initialValue,finalValue);
                 metadata.pushWithKeyframe(changeStartAngle,!dragged);
             }
@@ -311,6 +317,7 @@ public class CircleViewController extends ShapeViewController implements CircleV
             public void valueBeingDragged(DraggableTextValue draggableTextValue, double initialValue, double oldValue, double newValue) {
 
                 circleView.setEndAngle(newValue);
+                getItemModel().setEndAngle(newValue);
                 //update the gizmo and the outline
                 circleGizmo.updateView();
                 getCompositionViewController().getWorkspace().getSelectedItems().updateView();
@@ -328,6 +335,7 @@ public class CircleViewController extends ShapeViewController implements CircleV
                 if(finalValue<=circleView.getStartAngle()){
                     draggableTextValue.setValue(circleView.getStartAngle()+1);
                 }
+                getItemModel().setEndAngle(finalValue);
                 ChangeEndAngle changeEndAngle=new ChangeEndAngle(CircleViewController.this,initialValue,finalValue);
                 metadata.pushWithKeyframe(changeEndAngle,!dragged);
             }

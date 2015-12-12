@@ -2,10 +2,9 @@ package com.nikhil.editor.gizmo;
 
 import com.nikhil.logging.Logger;
 import com.nikhil.math.MathUtil;
+import com.nikhil.util.modal.UtilPoint;
 import com.nikhil.view.item.ParallelogramView;
-import javafx.geometry.Point2D;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.Pane;
 import javafx.scene.shape.Circle;
 
 /**
@@ -59,20 +58,22 @@ public class ParallelogramGizmo extends Gizmo{
 
     @Override
     public void updateView() {
+        this.setLayoutX(parallelogramView.getLayoutX());
+        this.setLayoutY(parallelogramView.getLayoutY());
         double x=0;//parallelogramView.getTranslationX();
         double y=0;//parallelogramView.getTranslationY();
         outlineParallelogram.copyValuesFrom(parallelogramView);
         swayHandle.setCenterX(x);
         swayHandle.setCenterY(y);
 
-        Point2D a=parallelogramView.getLowerLeft();
-        Point2D b=parallelogramView.getLowerRight();
-        Point2D c=parallelogramView.getUpperRight();
-        Point2D d=parallelogramView.getUpperLeft();
-        Point2D abMid=new Point2D((a.getX()+b.getX())/2, (a.getY()+b.getY())/2);
-        Point2D bcMid=new Point2D((b.getX()+c.getX())/2, (b.getY()+c.getY())/2);
-        Point2D cdMid=new Point2D((c.getX()+d.getX())/2, (c.getY()+d.getY())/2);
-        Point2D daMid=new Point2D((d.getX()+a.getX())/2, (d.getY()+a.getY())/2);
+        UtilPoint a=parallelogramView.getLowerLeft();
+        UtilPoint b=parallelogramView.getLowerRight();
+        UtilPoint c=parallelogramView.getUpperRight();
+        UtilPoint d=parallelogramView.getUpperLeft();
+        UtilPoint abMid=new UtilPoint((a.getX()+b.getX())/2, (a.getY()+b.getY())/2);
+        UtilPoint bcMid=new UtilPoint((b.getX()+c.getX())/2, (b.getY()+c.getY())/2);
+        UtilPoint cdMid=new UtilPoint((c.getX()+d.getX())/2, (c.getY()+d.getY())/2);
+        UtilPoint daMid=new UtilPoint((d.getX()+a.getX())/2, (d.getY()+a.getY())/2);
 
         lowerWidthHandle.setCenterX(abMid.getX()+x);
         lowerWidthHandle.setCenterY(abMid.getY()+y);

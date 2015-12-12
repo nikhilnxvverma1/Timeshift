@@ -32,10 +32,9 @@ import javafx.scene.layout.HBox;
  */
 public class ParallelogramViewController extends ShapeViewController implements ParallelogramViewDelegate {
 
-    public static final int INNER_RADIUS_INDEX=4;
-    public static final int OUTER_RADIUS_INDEX=5;
-    public static final int START_ANGLE_INDEX=6;
-    public static final int END_ANGLE_INDEX=7;
+    public static final int WIDTH_INDEX =4;
+    public static final int HEIGHT_INDEX =5;
+    public static final int SWAY_ANGLE_INDEX =6;
 
     //TODO dynamic limits on draggable text values with rejection of invalid values
     private ParallelogramModelController parallelogramModelController;
@@ -126,23 +125,23 @@ public class ParallelogramViewController extends ShapeViewController implements 
         super.initMetadataTree();
 
         //Width
-        final TemporalMetadata widthMeta = new TemporalMetadata(MetadataTag.INNER_RADIUS, parallelogramModelController.getParallelogramModel().widthChange(), this);
+        final TemporalMetadata widthMeta = new TemporalMetadata(MetadataTag.PARALLELOGRAM_WIDTH, parallelogramModelController.getParallelogramModel().widthChange(), this);
         widthMeta.setValueNode(createWidthValueNode(widthMeta));
         TreeItem<Metadata> widthTreeItem= new TreeItem<>(widthMeta);
 
         //Height
-        final TemporalMetadata heightMeta = new TemporalMetadata(MetadataTag.OUTER_RADIUS, parallelogramModelController.getParallelogramModel().heightChange(), this);
+        final TemporalMetadata heightMeta = new TemporalMetadata(MetadataTag.PARALLELOGRAM_HEIGHT, parallelogramModelController.getParallelogramModel().heightChange(), this);
         heightMeta.setValueNode(createHeightValueNode(heightMeta));
         TreeItem<Metadata> heightTreeItem= new TreeItem<>(heightMeta);
 
         //SwayAngle
-        final TemporalMetadata swayAngleMeta = new TemporalMetadata(MetadataTag.START_ANGLE, parallelogramModelController.getParallelogramModel().swayAngleChange(), this);
+        final TemporalMetadata swayAngleMeta = new TemporalMetadata(MetadataTag.PARALLELOGRAM_SWAY_ANGLE, parallelogramModelController.getParallelogramModel().swayAngleChange(), this);
         swayAngleMeta.setValueNode(createSwayAngleValueNode(swayAngleMeta));
         TreeItem<Metadata> swayAngleTreeItem= new TreeItem<>(swayAngleMeta);
 
-        metadataTree.getChildren().add(INNER_RADIUS_INDEX,widthTreeItem);
-        metadataTree.getChildren().add(OUTER_RADIUS_INDEX,heightTreeItem);
-        metadataTree.getChildren().add(START_ANGLE_INDEX,swayAngleTreeItem);
+        metadataTree.getChildren().add(WIDTH_INDEX,widthTreeItem);
+        metadataTree.getChildren().add(HEIGHT_INDEX,heightTreeItem);
+        metadataTree.getChildren().add(SWAY_ANGLE_INDEX,swayAngleTreeItem);
 
 
     }
@@ -155,6 +154,7 @@ public class ParallelogramViewController extends ShapeViewController implements 
             public void valueBeingDragged(DraggableTextValue draggableTextValue, double initialValue, double oldValue, double newValue) {
 
                 parallelogramView.setWidth(newValue);
+                getItemModel().setWidth(newValue);
                 //update the gizmo and the outline
                 parallelogramGizmo.updateView();
                 getCompositionViewController().getWorkspace().getSelectedItems().updateView();
@@ -169,9 +169,7 @@ public class ParallelogramViewController extends ShapeViewController implements 
                 if(finalValue<0){
                     draggableTextValue.setValue(0);
                 }
-                if(finalValue>=parallelogramView.getHeight()){
-                    draggableTextValue.setValue(parallelogramView.getHeight()-1);
-                }
+                getItemModel().setWidth(finalValue);
                 ChangeWidth changeWidth=new ChangeWidth(ParallelogramViewController.this,initialValue,finalValue);
                 metadata.pushWithKeyframe(changeWidth,!dragged);
             }
@@ -203,6 +201,7 @@ public class ParallelogramViewController extends ShapeViewController implements 
             public void valueBeingDragged(DraggableTextValue draggableTextValue, double initialValue, double oldValue, double newValue) {
 
                 parallelogramView.setHeight(newValue);
+                getItemModel().setHeight(newValue);
                 //update the gizmo and the outline
                 parallelogramGizmo.updateView();
                 getCompositionViewController().getWorkspace().getSelectedItems().updateView();
@@ -217,9 +216,8 @@ public class ParallelogramViewController extends ShapeViewController implements 
                 if(finalValue<0){
                     draggableTextValue.setValue(0);
                 }
-                if(finalValue<=parallelogramView.getWidth()){
-                    draggableTextValue.setValue(parallelogramView.getWidth()+1);
-                }
+                getItemModel().setHeight(finalValue);
+
                 ChangeHeight changeHeight=new ChangeHeight(ParallelogramViewController.this,initialValue,finalValue);
                 metadata.pushWithKeyframe(changeHeight,!dragged);
             }
@@ -251,6 +249,7 @@ public class ParallelogramViewController extends ShapeViewController implements 
             public void valueBeingDragged(DraggableTextValue draggableTextValue, double initialValue, double oldValue, double newValue) {
 
                 parallelogramView.setSwayAngle(newValue);
+                getItemModel().setSwayAngle(newValue);
                 //update the gizmo and the outline
                 parallelogramGizmo.updateView();
                 getCompositionViewController().getWorkspace().getSelectedItems().updateView();
@@ -265,6 +264,7 @@ public class ParallelogramViewController extends ShapeViewController implements 
                 if(finalValue<0||finalValue>=360){
                     draggableTextValue.setValue(MathUtil.under360(finalValue));
                 }
+                getItemModel().setSwayAngle(finalValue);
                 ChangeSwayAngle changeSwayAngle=new ChangeSwayAngle(ParallelogramViewController.this,initialValue,finalValue);
                 metadata.pushWithKeyframe(changeSwayAngle,!dragged);
             }
@@ -292,14 +292,12 @@ public class ParallelogramViewController extends ShapeViewController implements 
 
     @Override
     public TemporalMetadata getTemporalMetadata(MetadataTag tag) {
-        if (tag == MetadataTag.INNER_RADIUS) {
-            return (TemporalMetadata) metadataTree.getChildren().get(INNER_RADIUS_INDEX).getValue();
-        } else if (tag == MetadataTag.OUTER_RADIUS) {
-            return (TemporalMetadata) metadataTree.getChildren().get(OUTER_RADIUS_INDEX).getValue();
-        } else if (tag == MetadataTag.START_ANGLE) {
-            return (TemporalMetadata) metadataTree.getChildren().get(START_ANGLE_INDEX).getValue();
-        } else if (tag == MetadataTag.END_ANGLE) {
-            return (TemporalMetadata) metadataTree.getChildren().get(END_ANGLE_INDEX).getValue();
+        if (tag == MetadataTag.PARALLELOGRAM_WIDTH) {
+            return (TemporalMetadata) metadataTree.getChildren().get(WIDTH_INDEX).getValue();
+        } else if (tag == MetadataTag.PARALLELOGRAM_HEIGHT) {
+            return (TemporalMetadata) metadataTree.getChildren().get(HEIGHT_INDEX).getValue();
+        } else if (tag == MetadataTag.PARALLELOGRAM_SWAY_ANGLE) {
+            return (TemporalMetadata) metadataTree.getChildren().get(SWAY_ANGLE_INDEX).getValue();
         } else {
             return super.getTemporalMetadata(tag);
         }
@@ -309,37 +307,37 @@ public class ParallelogramViewController extends ShapeViewController implements 
     @Override
     public void tweakingWidth(double oldWidth, double newWidth) {
         getItemModel().setWidth(newWidth);
-        getTemporalMetadata(MetadataTag.INNER_RADIUS).registerContinuousChange(new KeyValue(oldWidth),new KeyValue(newWidth));
+        getTemporalMetadata(MetadataTag.PARALLELOGRAM_WIDTH).registerContinuousChange(new KeyValue(oldWidth),new KeyValue(newWidth));
     }
 
     @Override
     public void tweakingHeight(double oldHeight, double newHeight) {
         getItemModel().setHeight(newHeight);
-        getTemporalMetadata(MetadataTag.OUTER_RADIUS).registerContinuousChange(new KeyValue(oldHeight),new KeyValue(newHeight));
+        getTemporalMetadata(MetadataTag.PARALLELOGRAM_HEIGHT).registerContinuousChange(new KeyValue(oldHeight),new KeyValue(newHeight));
     }
 
     @Override
     public void tweakingSwayAngle(double oldSwayAngle, double newSwayAngle) {
         getItemModel().setSwayAngle(newSwayAngle);
-        getTemporalMetadata(MetadataTag.START_ANGLE).registerContinuousChange(new KeyValue(oldSwayAngle),new KeyValue(newSwayAngle));
+        getTemporalMetadata(MetadataTag.PARALLELOGRAM_SWAY_ANGLE).registerContinuousChange(new KeyValue(oldSwayAngle),new KeyValue(newSwayAngle));
     }
 
     @Override
     public void finishedTweakingWidth(double initialWidth) {
         ChangeWidth changeWidth=new ChangeWidth(this,initialWidth,parallelogramView.getWidth());
-        getTemporalMetadata(MetadataTag.INNER_RADIUS).pushWithKeyframe(changeWidth,false);
+        getTemporalMetadata(MetadataTag.PARALLELOGRAM_WIDTH).pushWithKeyframe(changeWidth,false);
     }
 
     @Override
     public void finishedTweakingHeight(double initialHeight) {
         ChangeHeight changeHeight=new ChangeHeight(this,initialHeight,parallelogramView.getHeight());
-        getTemporalMetadata(MetadataTag.OUTER_RADIUS).pushWithKeyframe(changeHeight, false);
+        getTemporalMetadata(MetadataTag.PARALLELOGRAM_HEIGHT).pushWithKeyframe(changeHeight, false);
     }
 
     @Override
     public void finishedTweakingSwayAngle(double initialSwayAngle) {
         ChangeSwayAngle changeSwayAngle=new ChangeSwayAngle(this,initialSwayAngle,parallelogramView.getSwayAngle());
-        getTemporalMetadata(MetadataTag.START_ANGLE).pushWithKeyframe(changeSwayAngle, false);
+        getTemporalMetadata(MetadataTag.PARALLELOGRAM_SWAY_ANGLE).pushWithKeyframe(changeSwayAngle, false);
     }
 
     protected void setSelfAsChangeHandler(){

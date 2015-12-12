@@ -1,15 +1,15 @@
 package com.nikhil.editor.tool;
 
-import com.nikhil.command.AddCircle;
+import com.nikhil.command.item.AddItem;
 import com.nikhil.controller.CircleViewController;
 import com.nikhil.editor.workspace.Workspace;
 import com.nikhil.logging.Logger;
 import com.nikhil.math.MathUtil;
 import com.nikhil.view.item.CircleView;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.shape.Circle;
 
 /**
+ * Tool that creates a circle centering on the initial point of mouse press
  * Created by NikhilVerma on 23/08/15.
  */
 public class CircleTool extends BaseTool{
@@ -53,7 +53,7 @@ public class CircleTool extends BaseTool{
             return;
         }
         CircleViewController circleViewController=new CircleViewController(workspace.getCurrentComposition(),circleView);
-        AddCircle addCircle=new AddCircle(circleViewController);
+        AddItem addCircle=new AddItem(circleViewController);
         workspace.pushCommand(addCircle);
     }
 

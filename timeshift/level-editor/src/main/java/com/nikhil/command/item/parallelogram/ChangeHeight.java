@@ -42,6 +42,7 @@ public class ChangeHeight extends TemporalActionOnSingleItem{
             heightMeta.getKeyframeChangeNode().setTime(currentTime);
         }else{
             parallelogramViewController.getItemView().setHeight(finalValue);
+            parallelogramViewController.getItemModel().setHeight(finalValue);
         }
         parallelogramViewController.getGizmo().updateView();
     }
@@ -54,6 +55,7 @@ public class ChangeHeight extends TemporalActionOnSingleItem{
             heightMeta.getKeyframeChangeNode().setTime(currentTime);
         }else{
             parallelogramViewController.getItemView().setHeight(initialValue);
+            parallelogramViewController.getItemModel().setHeight(initialValue);
         }
         parallelogramViewController.getGizmo().updateView();
     }

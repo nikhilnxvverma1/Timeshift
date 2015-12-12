@@ -40,6 +40,7 @@ public class ChangeOuterRadius extends TemporalActionOnSingleItem {
             outerRadiusMeta.getKeyframeChangeNode().setTime(currentTime);
         }else{
             circleViewController.getItemView().setOuterRadius(finalValue);
+            circleViewController.getItemModel().setOuterRadius(finalValue);
         }
         circleViewController.getGizmo().updateView();
     }
@@ -52,6 +53,7 @@ public class ChangeOuterRadius extends TemporalActionOnSingleItem {
             outerRadiusMeta.getKeyframeChangeNode().setTime(currentTime);
         }else{
             circleViewController.getItemView().setOuterRadius(initialValue);
+            circleViewController.getItemModel().setOuterRadius(initialValue);
         }
         circleViewController.getGizmo().updateView();
     }

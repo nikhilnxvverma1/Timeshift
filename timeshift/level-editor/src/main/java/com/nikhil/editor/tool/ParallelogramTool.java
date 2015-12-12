@@ -6,6 +6,7 @@ import com.nikhil.controller.ParallelogramViewController;
 import com.nikhil.editor.workspace.Workspace;
 import com.nikhil.logging.Logger;
 import com.nikhil.math.MathUtil;
+import com.nikhil.model.shape.ParallelogramModel;
 import com.nikhil.view.item.ParallelogramView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
@@ -28,7 +29,7 @@ public class ParallelogramTool extends BaseTool {
     public void mousePressed(MouseEvent mouseEvent) {
         initialX=xInWorksheet(mouseEvent);
         initialY=yInWorksheet(mouseEvent);
-        parallelogramView=new ParallelogramView(1,1,0);
+        parallelogramView=new ParallelogramView(1,1, ParallelogramModel.DEFAULT_SWAY_ANGLE);
         workspace.getCurrentComposition().getWorksheet().getChildren().add(parallelogramView);
     }
 

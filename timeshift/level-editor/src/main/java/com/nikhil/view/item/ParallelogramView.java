@@ -1,10 +1,11 @@
 package com.nikhil.view.item;
 
+import com.nikhil.logging.Logger;
 import com.nikhil.model.shape.ParallelogramModel;
+import com.nikhil.util.modal.UtilPoint;
 import com.nikhil.view.item.delegate.ParallelogramViewDelegate;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.SimpleDoubleProperty;
-import javafx.geometry.Point2D;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.ClosePath;
 import javafx.scene.shape.LineTo;
@@ -99,24 +100,26 @@ public class ParallelogramView extends ShapeView{
      * neverminding the y axis going downwards
      * @return the lower left point on the parallelogram
      */
-    public Point2D getLowerRight(){
+    public UtilPoint getLowerRight(){
         double boundingHeight=getBoundingHeight();
         double distanceFromMidX=Math.cos(Math.toRadians(swayAngle.get()))*(height.get()/2);
         double ax= width.get() / 2 + distanceFromMidX;
         double ay=boundingHeight/2;
-        return new Point2D(ax,ay);
+//        return new UtilPoint(ax,ay);
+        return rotatedAroundOrigin(ax,ay);
     }
 
     /**
      * neverminding the y axis going downwards
      * @return the lower right point on the parallelogram
      */
-    public Point2D getLowerLeft(){
+    public UtilPoint getLowerLeft(){
         double boundingHeight=getBoundingHeight();
         double distanceFromMidX=Math.cos(Math.toRadians(swayAngle.get()))*(height.get()/2);
         double bx= -width.get() / 2 + distanceFromMidX;
         double by=boundingHeight/2;
-        return new Point2D(bx,by);
+//        return new UtilPoint(bx,by);
+        return rotatedAroundOrigin(bx,by);
     }
 
 
@@ -124,12 +127,13 @@ public class ParallelogramView extends ShapeView{
      * neverminding the y axis going downwards
      * @return the upper left point on the parallelogram
      */
-    public Point2D getUpperLeft(){
+    public UtilPoint getUpperLeft(){
         double boundingHeight=getBoundingHeight();
         double distanceFromMidX=Math.cos(Math.toRadians(swayAngle.get()))*(height.get()/2);
         double cx= -width.get() / 2 - distanceFromMidX;
         double cy=-boundingHeight/2;
-        return new Point2D(cx,cy);
+//        return new UtilPoint(cx,cy);
+        return rotatedAroundOrigin(cx,cy);
     }
 
 
@@ -137,12 +141,13 @@ public class ParallelogramView extends ShapeView{
      * neverminding the y axis going downwards
      * @return the upper right point on the parallelogram
      */
-    public Point2D getUpperRight(){
+    public UtilPoint getUpperRight(){
         double boundingHeight=getBoundingHeight();
         double distanceFromMidX=Math.cos(Math.toRadians(swayAngle.get()))*(height.get()/2);
         double dx= width.get() / 2 - distanceFromMidX;
         double dy=-boundingHeight/2;
-        return new Point2D(dx,dy);
+//        return new UtilPoint(dx,dy);
+        return rotatedAroundOrigin(dx,dy);
     }
 
     @Override
@@ -158,35 +163,30 @@ public class ParallelogramView extends ShapeView{
     @Override
     public void updateView(){
 
-        Point2D a=getLowerLeft();
+        UtilPoint a=getLowerLeft();
         moveToA.setX(a.getX());
         moveToA.setY(a.getY());
 
-        Point2D b=getLowerRight();
+        UtilPoint b=getLowerRight();
         lineToB.setX(b.getX());
         lineToB.setY(b.getY());
 
-        Point2D c=getUpperRight();
+        UtilPoint c=getUpperRight();
         lineToC.setX(c.getX());
         lineToC.setY(c.getY());
 
-        Point2D d=getUpperLeft();
+        UtilPoint d=getUpperLeft();
         lineToD.setX(d.getX());
         lineToD.setY(d.getY());
 
     }
 
-    /**
-     * @return the absolute bounding height of the parallelogram
-     */
+    /**@return the absolute bounding height of the parallelogram*/
     public double getBoundingHeight(){
         return Math.abs(Math.sin(Math.toRadians(swayAngle.get()))*height.get());
     }
 
-    /**
-     * @return the absolute bounding width of the parallelogram
-     */
-
+    /**@return the absolute bounding width of the parallelogram*/
     public double getBoundingWidth(){
         return width.get()+Math.abs(2*Math.cos(Math.toRadians(swayAngle.get()))*height.get());
     }
