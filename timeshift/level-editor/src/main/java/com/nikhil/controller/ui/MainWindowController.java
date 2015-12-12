@@ -86,9 +86,9 @@ public class MainWindowController implements WorkspaceListener {
         //experiments
 
         //Isosceles Triangle view
-//        IsoscelesTriangleView isoscelesTriangleView=new IsoscelesTriangleView(100,30,250,300,0,1);
+//        TriangleView isoscelesTriangleView=new TriangleView(100,30,250,300,0,1);
 //        workspacePane.getChildren().add(isoscelesTriangleView);
-//        IsoscelesTriangleGizmo isoscelesTriangleGizmo=new IsoscelesTriangleGizmo(workspacePane,isoscelesTriangleView);
+//        TriangleGizmo isoscelesTriangleGizmo=new TriangleGizmo(workspacePane,isoscelesTriangleView);
 
         //polygon view
 //        ArrayList<Point2D> points=new ArrayList<Point2D>();

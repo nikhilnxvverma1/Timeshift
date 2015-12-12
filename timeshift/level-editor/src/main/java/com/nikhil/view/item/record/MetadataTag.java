@@ -13,6 +13,10 @@ public enum MetadataTag {
     TRANSLATION,
     ANCHOR_POINT,
 
+    //Triangle
+    BASE,
+    HEIGHT,
+
     //Polygon
     POLYGON_VERTEX_HEADER,
     POLYGON_VERTEX,
@@ -22,6 +26,8 @@ public enum MetadataTag {
     OUTER_RADIUS,
     START_ANGLE,
     END_ANGLE
+
+
 
     ;
 

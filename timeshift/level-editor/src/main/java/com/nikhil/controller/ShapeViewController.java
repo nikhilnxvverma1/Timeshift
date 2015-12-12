@@ -35,6 +35,7 @@ public abstract class ShapeViewController extends ItemViewController implements 
     public static final int ROTATION_INDEX=1;
     public static final int TRANSLATION_INDEX=2;
     public static final int ANCHOR_POINT_INDEX=3;
+    /** Root tree item that contains the metadata tree. Subclasses should ensure to call initMetadataTree() */
     protected TreeItem<Metadata> metadataTree;
 
     public ShapeViewController(CompositionViewController compositionViewController) {

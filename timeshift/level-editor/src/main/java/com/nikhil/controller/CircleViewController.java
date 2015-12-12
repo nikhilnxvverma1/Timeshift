@@ -46,6 +46,10 @@ public class CircleViewController extends ShapeViewController implements CircleV
     private CircleView circleView;
     private CircleGizmo circleGizmo;
 
+    public CircleViewController(CircleViewController circleViewController) {
+        this(circleViewController.compositionViewController,new CircleView(circleViewController.circleView));
+    }
+
     public CircleViewController(CompositionViewController compositionViewController,CircleView circleView) {
         super(compositionViewController);
         this.circleView=circleView;
@@ -86,13 +90,13 @@ public class CircleViewController extends ShapeViewController implements CircleV
     }
 
     @Override
-    public ItemModelController getModelController() {
+    public CircleModelController getModelController() {
         return circleModelController;
     }
 
     @Override
-    public ItemViewController deepCopy() {
-        return null;
+    public CircleViewController deepCopy() {
+        return new CircleViewController(this);
     }
 
     @Override

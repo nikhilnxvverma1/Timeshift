@@ -109,8 +109,35 @@ public class XMLWriter implements ModelVisitor {
     }
 
     @Override
-    public void visit(IsoscelesTriangle isoscelesTriangle) {
+    public void visit(TriangleModel triangleModel) {
+        Element triangleTag=XMLTag.TRIANGLE.element(document);
+        triangleTag.setAttribute(XMLAttribute.NAME.toString(), triangleModel.getName());
+        triangleTag.appendChild(getShapeTag(triangleModel));
 
+        //add the triangle specific triangle properties
+        //<Base>
+        Element baseTag=XMLTag.BASE.element(document);
+        if(triangleModel.baseChange().isEmpty()){
+            baseTag.appendChild(document.createTextNode(triangleModel.getBase() + ""));
+        }else{
+            baseTag.appendChild(getKeyframesTag(triangleModel.baseChange()));
+        }
+
+        //<Height>
+        Element heightTag=XMLTag.HEIGHT.element(document);
+        if (triangleModel.heightChange().isEmpty()) {
+            heightTag.appendChild(document.createTextNode(triangleModel.getHeight() + ""));
+        }else{
+            heightTag.appendChild(getKeyframesTag(triangleModel.heightChange()));
+        }
+
+        triangleTag.appendChild(baseTag);
+        triangleTag.appendChild(heightTag);
+        
+
+        //add to the last composition(this method doesn't know which composition it will  get added to)
+        itemContainer.appendChild(triangleTag);
+        Logger.log("Saving Triangle model "+triangleModel.getName());
     }
 
     @Override

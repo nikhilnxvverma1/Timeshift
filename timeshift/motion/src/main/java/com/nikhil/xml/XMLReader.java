@@ -4,9 +4,11 @@ import com.nikhil.controller.CompositionController;
 import com.nikhil.controller.RootController;
 import com.nikhil.controller.item.CircleModelController;
 import com.nikhil.controller.item.ItemModelController;
+import com.nikhil.controller.item.TriangleModelController;
 import com.nikhil.logging.Logger;
 import com.nikhil.model.shape.CircleModel;
 import com.nikhil.model.shape.PolygonModel;
+import com.nikhil.model.shape.TriangleModel;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -176,15 +178,17 @@ public class XMLReader {
                     PolygonModel polygonModel = modelFactory.parsePolygonModel(element);
                     ItemModelController polygonModelController = controllerFactory.getItemControllerFor(polygonModel);
                     compositionController.addItemController(polygonModelController);
-
-                    //extend here
                 }else if (tag == XMLTag.CIRCLE) {
                     CircleModel circleModel = modelFactory.parseCircleModel(element);
                     CircleModelController circleModelController = controllerFactory.getItemControllerFor(circleModel);
                     compositionController.addItemController(circleModelController);
-
-                    //extend here
                 }
+                else if (tag == XMLTag.TRIANGLE) {
+                    TriangleModel triangleModel = modelFactory.parseTriangleModel(element);
+                    TriangleModelController triangleModelController = controllerFactory.getItemControllerFor(triangleModel);
+                    compositionController.addItemController(triangleModelController);
+                }
+                //extend here
                 else {
                     Logger.log("Unknown item in the composition");
                 }

@@ -10,87 +10,84 @@
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 
-<ScrollPane prefHeight="643.0" prefWidth="802.0" style="-fx-background-color: #621792;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
-   <content>
-      <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="592.0" prefWidth="780.0" style="-fx-background-color: #123234;">
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="592.0" prefWidth="780.0" style="-fx-background-color: #123234;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <Path fill="#1f93ff00" layoutX="336.0" layoutY="160.0" rotate="-3.0" stroke="#0088ff" strokeDashArray="4" strokeType="INSIDE">
+         <elements>
+            <MoveTo x="50.0" y="50.0" />
+            <ArcTo radiusX="50.0" radiusY="50.0" x="150.0" y="50.0" />
+            <LineTo x="200.0" y="50.0" />
+            <ArcTo radiusX="100.0" radiusY="100.0" sweepFlag="true" y="50.0" />
+            <ClosePath />
+         </elements>
+      </Path>
+      <Path fill="#1d77c636" layoutX="582.0" layoutY="448.0" stroke="#0088ff" strokeDashArray="4" strokeType="INSIDE">
+         <elements>
+            <MoveTo x="50.0" y="50.0" />
+            <LineTo x="170.0" y="10.0" />
+            <LineTo x="110.0" y="-30.0" />
+            <ClosePath absolute="false" />
+            <MoveTo x="30.0" y="50.0" />
+            <LineTo />
+            <LineTo x="50.0" y="-30.0" />
+            <ClosePath />
+         </elements>
+      </Path>
+      <Path fill="#1d77c636" pickOnBounds="true" rotate="17.7" stroke="#0088ff" strokeDashArray="4" strokeType="INSIDE" translateX="90.0" translateY="90.0">
+         <elements>
+            <MoveTo x="50.0" y="-50.0" />
+            <ArcTo largeArcFlag="true" radiusX="71.0" radiusY="71.0" x="50.0" y="50.0" />
+            <LineTo x="80.0" y="80.0" />
+            <ArcTo largeArcFlag="true" radiusX="113.0" radiusY="113.0" sweepFlag="true" x="80.0" y="-80.0" />
+            <ClosePath absolute="false" />
+         </elements>
+         <rotationAxis>
+            <Point3D z="90.0" />
+         </rotationAxis>
+      </Path>
+      <Path fill="#1d77c636" layoutX="416.0" layoutY="427.0" stroke="#0088ff" strokeDashArray="4" strokeType="INSIDE">
+         <elements>
+            <MoveTo />
+            <ArcTo largeArcFlag="true" />
+            <LineTo x="80.0" />
+            <ArcTo largeArcFlag="true" radiusX="80.0" radiusY="80.0" sweepFlag="true" x="80.0" y="-0.1" />
+            <ClosePath absolute="false" />
+         </elements>
+      </Path>
+      <Path fill="#1d77c636" layoutX="282.0" layoutY="357.0" stroke="#0088ff" strokeDashArray="4" strokeType="INSIDE">
+         <elements>
+            <MoveTo />
+            <ArcTo largeArcFlag="true" />
+            <LineTo x="80.0" y="80.0" />
+            <ArcTo largeArcFlag="true" radiusX="113.0" radiusY="113.0" sweepFlag="true" x="80.0" y="-80.0" />
+            <ClosePath absolute="false" />
+         </elements>
+      </Path>
+      <Path fill="DODGERBLUE" layoutX="249.0" layoutY="129.0" stroke="BLACK" strokeType="INSIDE">
+          <elements>
+              <MoveTo />
+            <CubicCurveTo controlX1="-45.0" controlX2="267.0" controlY1="-45.0" controlY2="-71.0" x="312.0" y="-26.0" />
+          </elements>
+      </Path>
+      <Group layoutX="558.0" layoutY="103.0">
          <children>
-            <Path fill="#1f93ff00" layoutX="336.0" layoutY="160.0" stroke="#0088ff" strokeDashArray="4" strokeType="INSIDE">
-               <elements>
-                  <MoveTo x="50.0" y="50.0" />
-                  <ArcTo radiusX="50.0" radiusY="50.0" x="150.0" y="50.0" />
-                  <LineTo x="200.0" y="50.0" />
-                  <ArcTo radiusX="100.0" radiusY="100.0" sweepFlag="true" y="50.0" />
-                  <ClosePath />
-               </elements>
-            </Path>
-            <Path fill="#1d77c636" layoutX="582.0" layoutY="448.0" stroke="#0088ff" strokeDashArray="4" strokeType="INSIDE">
-               <elements>
-                  <MoveTo x="50.0" y="50.0" />
-                  <LineTo x="170.0" y="10.0" />
-                  <LineTo x="110.0" y="-30.0" />
-                  <ClosePath absolute="false" />
-                  <MoveTo x="30.0" y="50.0" />
-                  <LineTo />
-                  <LineTo x="50.0" y="-30.0" />
-                  <ClosePath />
-               </elements>
-            </Path>
-            <Path fill="#1d77c636" layoutX="572.0" layoutY="187.0" pickOnBounds="true" stroke="#0088ff" strokeDashArray="4" strokeType="INSIDE" translateX="90.0" translateY="90.0">
-               <elements>
-                  <MoveTo x="50.0" y="-50.0" />
-                  <ArcTo largeArcFlag="true" radiusX="71.0" radiusY="71.0" x="50.0" y="50.0" />
-                  <LineTo x="80.0" y="80.0" />
-                  <ArcTo largeArcFlag="true" radiusX="113.0" radiusY="113.0" sweepFlag="true" x="80.0" y="-80.0" />
-                  <ClosePath absolute="false" />
-               </elements>
-               <rotationAxis>
-                  <Point3D x="90.0" y="90.0" z="90.0" />
-               </rotationAxis>
-            </Path>
-            <Path fill="#1d77c636" layoutX="416.0" layoutY="427.0" stroke="#0088ff" strokeDashArray="4" strokeType="INSIDE">
-               <elements>
-                  <MoveTo />
-                  <ArcTo largeArcFlag="true" />
-                  <LineTo x="80.0" />
-                  <ArcTo largeArcFlag="true" radiusX="80.0" radiusY="80.0" sweepFlag="true" x="80.0" y="-0.1" />
-                  <ClosePath absolute="false" />
-               </elements>
-            </Path>
-            <Path fill="#1d77c636" layoutX="282.0" layoutY="357.0" stroke="#0088ff" strokeDashArray="4" strokeType="INSIDE">
-               <elements>
-                  <MoveTo />
-                  <ArcTo largeArcFlag="true" />
-                  <LineTo x="80.0" y="80.0" />
-                  <ArcTo largeArcFlag="true" radiusX="113.0" radiusY="113.0" sweepFlag="true" x="80.0" y="-80.0" />
-                  <ClosePath absolute="false" />
-               </elements>
-            </Path>
-            <Path fill="DODGERBLUE" layoutX="249.0" layoutY="129.0" stroke="BLACK" strokeType="INSIDE">
-                <elements>
-                    <MoveTo />
-                  <CubicCurveTo controlX1="-45.0" controlX2="267.0" controlY1="-45.0" controlY2="-71.0" x="312.0" y="-26.0" />
-                </elements>
-            </Path>
-            <Group layoutX="558.0" layoutY="103.0">
-               <children>
-                  <Line endX="-45.0" endY="-45.0" />
-                  <Circle centerX="-45.0" centerY="-45.0" fill="DODGERBLUE" radius="5.0" stroke="BLACK" strokeType="INSIDE" />
-                  <Line endX="45.0" endY="45.0" />
-                  <Circle centerX="45.0" centerY="45.0" fill="DODGERBLUE" radius="5.0" stroke="BLACK" strokeType="INSIDE" />
-                  <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="15.0" stroke="BLACK" strokeType="INSIDE" translateX="-7.0" translateY="-7.0" width="15.0" />
-               </children>
-            </Group>
-            <Group layoutX="246.0" layoutY="129.0">
-               <children>
-                  <Line endX="-45.0" endY="-45.0" />
-                  <Circle centerX="-45.0" centerY="-45.0" fill="DODGERBLUE" radius="5.0" stroke="BLACK" strokeType="INSIDE" />
-                  <Line endX="45.0" endY="45.0" />
-                  <Circle centerX="45.0" centerY="45.0" fill="DODGERBLUE" radius="5.0" stroke="BLACK" strokeType="INSIDE" />
-                  <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="15.0" stroke="BLACK" strokeType="INSIDE" translateX="-7.0" translateY="-7.0" width="15.0" />
-               </children>
-            </Group>
-            <Pane layoutX="35.0" layoutY="103.0" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #435456;" />
+            <Line endX="-45.0" endY="-45.0" />
+            <Circle centerX="-45.0" centerY="-45.0" fill="DODGERBLUE" radius="5.0" stroke="BLACK" strokeType="INSIDE" />
+            <Line endX="45.0" endY="45.0" />
+            <Circle centerX="45.0" centerY="45.0" fill="DODGERBLUE" radius="5.0" stroke="BLACK" strokeType="INSIDE" />
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="15.0" stroke="BLACK" strokeType="INSIDE" translateX="-7.0" translateY="-7.0" width="15.0" />
          </children>
-      </Pane>
-   </content>
-</ScrollPane>
+      </Group>
+      <Group layoutX="246.0" layoutY="129.0">
+         <children>
+            <Line endX="-45.0" endY="-45.0" />
+            <Circle centerX="-45.0" centerY="-45.0" fill="DODGERBLUE" radius="5.0" stroke="BLACK" strokeType="INSIDE" />
+            <Line endX="45.0" endY="45.0" />
+            <Circle centerX="45.0" centerY="45.0" fill="DODGERBLUE" radius="5.0" stroke="BLACK" strokeType="INSIDE" />
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="15.0" stroke="BLACK" strokeType="INSIDE" translateX="-7.0" translateY="-7.0" width="15.0" />
+         </children>
+      </Group>
+      <Pane layoutX="36.0" layoutY="330.0" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #435456;" />
+   </children>
+</Pane>

@@ -37,6 +37,9 @@ public enum XMLTag {
     TEMPORAL_KEYFRAME,
     SPATIAL_KEYFRAMES,
     SPATIAL_KEYFRAME,
+    TRIANGLE,
+    BASE,
+    HEIGHT,
     CIRCLE,
     INNER_RADIUS,
     OUTER_RADIUS,
@@ -97,6 +100,12 @@ public enum XMLTag {
                 return "spatialKeyframes";
             case SPATIAL_KEYFRAME:
                 return "spatialKeyframe";
+            case TRIANGLE:
+                return "triangle";
+            case BASE:
+                return "base";
+            case HEIGHT:
+                return "height";
             case CIRCLE:
                 return "circle";
             case INNER_RADIUS:
@@ -179,6 +188,12 @@ public enum XMLTag {
                 return STARTING_ANGLE;
             case "endingAngle":
                 return ENDING_ANGLE;
+            case "triangle":
+                return TRIANGLE;
+            case "base":
+                return BASE;
+            case "height":
+                return HEIGHT;
             default:
                 Logger.log("No tag found for:" + element);
         }

@@ -17,7 +17,7 @@ import com.nikhil.timeline.KeyValue;
  */
 public class CircleModel extends ShapeModel {
 
-	private static int CIRCLE_COUNT=0;
+	private static int circleCount =0;
 
 	public static final double DEFAULT_INNER_RADIUS=0;
 	public static final double DEFAULT_OUTER_RADIUS=50;
@@ -39,7 +39,7 @@ public class CircleModel extends ShapeModel {
 		setOuterRadius(outerRadius);
 		setStartAngle(startingAngle);
 		setEndAngle(endingAngle);
-		this.setName("Circle " + (++CIRCLE_COUNT));
+		this.setName("Circle " + (++circleCount));
 	}
 
 	public double getInnerRadius() {

@@ -4,6 +4,7 @@ import com.nikhil.model.freeform.MovablePoint;
 import com.nikhil.model.shape.CircleModel;
 import com.nikhil.model.shape.PolygonModel;
 import com.nikhil.model.shape.ShapeModel;
+import com.nikhil.model.shape.TriangleModel;
 import com.nikhil.space.bezier.path.BezierPoint;
 import com.nikhil.timeline.KeyValue;
 import com.nikhil.timeline.change.spatial.SpatialKeyframeChangeNode;
@@ -24,6 +25,40 @@ import org.w3c.dom.NodeList;
  */
 public class ModelFactory {
 
+    public TriangleModel parseTriangleModel(Element triangleElement){
+        TriangleModel triangleModel=new TriangleModel();
+        triangleModel.setName(triangleElement.getAttribute(XMLAttribute.NAME.toString()));
+
+        //traverse each child of the polygon tag
+        int length=triangleElement.getChildNodes().getLength();
+        for (int i = 0; i < length; i++) {
+
+            //each direct child can either be Shape or Vertices tag
+            Node node=triangleElement.getChildNodes().item(i);
+            if(node instanceof Element){
+                Element child=(Element)node;
+                XMLTag tag=XMLTag.toTag(child.getTagName());
+                if (tag == XMLTag.SHAPE) {
+                    extractShapeProperties(child, triangleModel);
+                } else if (tag == XMLTag.BASE) {
+                    if (keyframesPresent(child)) {
+                        addKeyframes(child, triangleModel.baseChange());
+                    } else {
+                        triangleModel.setBase(Double.parseDouble(child.getTextContent()));
+                    }
+                }else if (tag == XMLTag.HEIGHT) {
+                    if (keyframesPresent(child)) {
+                        addKeyframes(child, triangleModel.heightChange());
+                    } else {
+                        triangleModel.setHeight(Double.parseDouble(child.getTextContent()));
+                    }
+                }
+            }
+        }
+
+        return triangleModel;
+    }
+    
     public CircleModel parseCircleModel(Element circleElement){
 
         CircleModel circleModel=new CircleModel();
