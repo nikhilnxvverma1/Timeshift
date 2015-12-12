@@ -26,6 +26,7 @@ import javafx.stage.Window;
 import java.io.File;
 
 /**
+ * Controller that receives callbacks for every event occurring in the UI.
  * Created by NikhilVerma on 22/08/15.
  */
 public class MainWindowController implements WorkspaceListener {
@@ -42,7 +43,7 @@ public class MainWindowController implements WorkspaceListener {
     private ParallelogramTool parallelogramTool;
     private PolygonTool polygonTool;
     private TravelPathTool travelPathTool;
-    private IsoscelesTriangleTool isoscelesTriangleTool;
+    private TriangleTool triangleTool;
 
     //=============================================================================================
     //UI components
@@ -80,7 +81,7 @@ public class MainWindowController implements WorkspaceListener {
         penTool=new PenTool(workspace);
         polygonTool=new PolygonTool(workspace);
         travelPathTool=new TravelPathTool(workspace);
-        isoscelesTriangleTool=new IsoscelesTriangleTool(workspace);
+        triangleTool =new TriangleTool(workspace);
         setCurrentlySelectedTool(ToolType.SELECTION);
 
         //experiments
@@ -150,6 +151,11 @@ public class MainWindowController implements WorkspaceListener {
     @FXML
     private void circleToolClicked(ActionEvent actionEvent){
         setCurrentlySelectedTool(ToolType.CIRCLE);
+    }
+
+    @FXML
+    private void triangleToolClicked(ActionEvent actionEvent){
+        setCurrentlySelectedTool(ToolType.TRIANGLE);
     }
 
     @FXML
@@ -339,8 +345,8 @@ public class MainWindowController implements WorkspaceListener {
                 return polygonTool;
             case TRAVEL_PATH:
                 return travelPathTool;
-            case ISOSCELES_TRIANGLE:
-                return isoscelesTriangleTool;
+            case TRIANGLE:
+                return triangleTool;
             default:
                 return selectionTool;
         }

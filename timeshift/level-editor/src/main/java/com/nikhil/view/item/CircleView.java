@@ -40,8 +40,16 @@ public class CircleView extends ShapeView{
         this(0,1, CircleModel.DEFAULT_STARTING_ANGLE,CircleModel.DEFAULT_ENDING_ANGLE);
     }
 
+    /**
+     * Creates a carbon copy of this view using another view
+     * @param circleView the view to copy everything from(including layout properties)
+     */
     public CircleView(CircleView circleView){
         this(circleView.innerRadius.get(),circleView.outerRadius.get(),circleView.startAngle.get(),circleView.endAngle.get());
+        copyValuesFrom(circleView);//to copy off SRT values as well
+        //since layout is not copied, we copy here manually
+        this.setLayoutX(circleView.getLayoutX());
+        this.setLayoutY(circleView.getLayoutY());
     }
 
     public CircleView(double innerRadius,double outerRadius, double startAngle, double endAngle) {
@@ -171,6 +179,10 @@ public class CircleView extends ShapeView{
 
     }
 
+    /**
+     * Copies all properties from the specified view <b>EXCEPT</b> layout x,y properties
+     * @param circleView the view to copy values from
+     */
     public void copyValuesFrom(CircleView circleView){
 
         this.innerRadius.set(circleView.getInnerRadius());
@@ -186,10 +198,6 @@ public class CircleView extends ShapeView{
         setTranslateY(circleView.getTranslateY());
 
         updateView();
-//        setInnerRadius(circleView.innerRadius.get());
-//        setOuterRadius(circleView.outerRadius.get());
-//        setStartAngle(circleView.startAngle.get());
-//        setEndAngle(circleView.endAngle.get());
     }
 
     public CircleViewDelegate getDelegate() {

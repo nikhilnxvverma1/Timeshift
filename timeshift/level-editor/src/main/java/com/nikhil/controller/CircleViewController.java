@@ -118,6 +118,10 @@ public class CircleViewController extends ShapeViewController implements CircleV
     protected void constructModelControllerUsingView() {
         CircleModel circleModel=new CircleModel(circleView.getInnerRadius(),circleView.getOuterRadius(),
                 circleView.getStartAngle(),circleView.getEndAngle());
+        circleModel.setScale(circleView.getScale());
+        circleModel.setRotation(circleView.getOriginRotate());
+        circleModel.setTranslation(circleView.getLayoutX(),circleView.getLayoutY());
+        //TODO anchor point
         circleModelController=new CircleModelController(circleModel);
     }
 
@@ -367,21 +371,25 @@ public class CircleViewController extends ShapeViewController implements CircleV
 
     @Override
     public void tweakingInnerRadius(double oldInnerRadius, double newInnerRadius) {
+        getItemModel().setInnerRadius(newInnerRadius);
         getTemporalMetadata(MetadataTag.INNER_RADIUS).registerContinuousChange(new KeyValue(oldInnerRadius),new KeyValue(newInnerRadius));
     }
 
     @Override
     public void tweakingOuterRadius(double oldOuterRadius, double newOuterRadius) {
+        getItemModel().setOuterRadius(newOuterRadius);
         getTemporalMetadata(MetadataTag.OUTER_RADIUS).registerContinuousChange(new KeyValue(oldOuterRadius),new KeyValue(newOuterRadius));
     }
 
     @Override
     public void tweakingStartAngle(double oldStartAngle, double newStartAngle) {
+        getItemModel().setStartAngle(newStartAngle);
         getTemporalMetadata(MetadataTag.START_ANGLE).registerContinuousChange(new KeyValue(oldStartAngle),new KeyValue(newStartAngle));
     }
 
     @Override
     public void tweakingEndAngle(double oldEndAngle, double newEndAngle) {
+        getItemModel().setEndAngle(newEndAngle);
         getTemporalMetadata(MetadataTag.END_ANGLE).registerContinuousChange(new KeyValue(oldEndAngle),new KeyValue(newEndAngle));
     }
 

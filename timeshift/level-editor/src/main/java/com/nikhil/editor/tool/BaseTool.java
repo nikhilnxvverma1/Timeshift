@@ -11,6 +11,8 @@ import javafx.scene.layout.Pane;
  */
 public abstract class BaseTool implements Tool {
 
+    public static final double NEGLIGIBLE_DRAG_DISTANCE=3;
+
     protected Workspace workspace;
 
     /**Mandatory parametrized constructor for each subclass*/

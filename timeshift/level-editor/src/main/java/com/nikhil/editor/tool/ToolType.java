@@ -8,7 +8,7 @@ public enum ToolType {
     POINT_SELECT,
     CIRCLE,
     PARALLELOGRAM,
-    ISOSCELES_TRIANGLE,
+    TRIANGLE,
     POLYGON,
     PEN,
     TRAVEL_PATH;
@@ -29,7 +29,7 @@ public enum ToolType {
             case PARALLELOGRAM:
                 nameOfTool="Parallelogram";
                 break;
-            case ISOSCELES_TRIANGLE:
+            case TRIANGLE:
                 nameOfTool="Isosceles Triangle";
                 break;
             case POLYGON:

@@ -226,7 +226,7 @@
                               </ImageView>
                            </graphic>
                         </ToggleButton>
-                        <ToggleButton mnemonicParsing="false" toggleGroup="$toolbarGroup">
+                        <ToggleButton mnemonicParsing="false" onAction="#triangleToolClicked" toggleGroup="$toolbarGroup">
                            <graphic>
                               <ImageView fitHeight="23.0" fitWidth="23.0" pickOnBounds="true" preserveRatio="true">
                                  <image>

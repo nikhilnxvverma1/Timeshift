@@ -3,16 +3,14 @@ package com.nikhil.controller;
 import com.nikhil.command.item.triangle.ChangeBase;
 import com.nikhil.command.item.triangle.ChangeHeight;
 import com.nikhil.controller.item.TriangleModelController;
-import com.nikhil.editor.gizmo.CircleGizmo;
 import com.nikhil.editor.gizmo.TriangleGizmo;
-import com.nikhil.model.shape.CircleModel;
+import com.nikhil.editor.workspace.Workspace;
 import com.nikhil.model.shape.TriangleModel;
 import com.nikhil.timeline.KeyValue;
 import com.nikhil.timeline.change.temporal.TemporalKeyframeChangeNode;
 import com.nikhil.util.modal.UtilPoint;
 import com.nikhil.view.custom.DraggableTextValue;
 import com.nikhil.view.custom.DraggableTextValueDelegate;
-import com.nikhil.view.item.CircleView;
 import com.nikhil.view.item.TriangleView;
 import com.nikhil.view.item.delegate.TriangleViewDelegate;
 import com.nikhil.view.item.record.Metadata;
@@ -65,6 +63,13 @@ public class TriangleViewController extends ShapeViewController implements Trian
     @Override
     protected void constructModelControllerUsingView() {
         TriangleModel triangleModel=new TriangleModel(triangleView.getBase(),triangleView.getHeight());
+        triangleModel.setScale(triangleView.getScale());
+        triangleModel.setRotation(triangleView.getOriginRotate());
+        Workspace workspace = compositionViewController.getWorkspace();
+        double modelX = workspace.workPointX(triangleView.getLayoutX());
+        double modelY = workspace.workPointY(triangleView.getLayoutY());
+        triangleModel.setTranslation(modelX, modelY);
+        //TODO anchor point
         triangleModelController=new TriangleModelController(triangleModel);
     }
 
@@ -233,11 +238,13 @@ public class TriangleViewController extends ShapeViewController implements Trian
 
     @Override
     public void tweakingBase(double oldBase, double newBase) {
+        getItemModel().setBase(newBase);
         getTemporalMetadata(MetadataTag.BASE).registerContinuousChange(new KeyValue(oldBase),new KeyValue(newBase));
     }
 
     @Override
     public void tweakingHeight(double oldHeight, double newHeight) {
+        getItemModel().setHeight(newHeight);
         getTemporalMetadata(MetadataTag.HEIGHT).registerContinuousChange(new KeyValue(oldHeight),new KeyValue(newHeight));
     }
 

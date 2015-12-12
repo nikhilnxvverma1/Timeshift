@@ -155,7 +155,7 @@ public abstract class ShapeViewController extends ItemViewController implements 
     }
 
     public double getRotation(){
-        return getItemView().getRotate();
+        return getItemView().getOriginRotate();
     }
 
     /**
@@ -262,7 +262,7 @@ public abstract class ShapeViewController extends ItemViewController implements 
             }
         });
         draggableTextValue.setStep(1);
-        draggableTextValue.setValue(getItemView().getRotate());
+        draggableTextValue.setValue(getItemView().getOriginRotate());
 
         //TODO save as field so as to release memory later?
         ChangeListener<? super Number> rotationListener = ((observable, oldValue, newValue) -> {

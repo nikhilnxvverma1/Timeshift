@@ -33,7 +33,7 @@ public class TriangleModel extends ShapeModel {
     public TriangleModel(double base, double height) {
         setBase(base);
         setHeight(height);
-        this.setName("Triangle"+(++triangleCount));
+        this.setName("Triangle "+(++triangleCount));
     }
 
     public TemporalKeyframeChangeNode baseChange() {

@@ -4,6 +4,7 @@ import com.nikhil.controller.*;
 import com.nikhil.controller.item.CircleModelController;
 import com.nikhil.controller.item.ItemModelController;
 import com.nikhil.controller.item.PolygonModelController;
+import com.nikhil.controller.item.TriangleModelController;
 import com.nikhil.editor.workspace.Workspace;
 import com.nikhil.xml.XMLReader;
 import javafx.scene.control.TabPane;
@@ -79,6 +80,8 @@ public class XMLLoader {
             return new PolygonViewController(compositionViewController,(PolygonModelController)itemModelController);
         }else if(itemModelController instanceof CircleModelController){
             return new CircleViewController(compositionViewController,(CircleModelController)itemModelController);
+        }else if(itemModelController instanceof TriangleModelController){
+            return new TriangleViewController(compositionViewController,(TriangleModelController)itemModelController);
         }
         return null;
     }

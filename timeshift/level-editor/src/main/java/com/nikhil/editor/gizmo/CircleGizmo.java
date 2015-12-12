@@ -3,13 +3,14 @@ package com.nikhil.editor.gizmo;
 import com.nikhil.logging.Logger;
 import com.nikhil.math.MathUtil;
 import com.nikhil.view.item.CircleView;
+import com.nikhil.view.item.delegate.CircleViewDelegate;
 import javafx.scene.Node;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.shape.Circle;
 
 /**
  * Gizmo widget that allows customizing a circle from the front end.
- * A CircleGizmoDelegate provides mechanism for handling all the callbacks
+ * A {@link CircleViewDelegate} provides mechanism for handling all the callbacks
  * Created by NikhilVerma on 30/08/15.
  */
 public class CircleGizmo extends Gizmo{
@@ -34,8 +35,12 @@ public class CircleGizmo extends Gizmo{
     private void initView(){
         outlineCircle=new CircleView(circleView);
         outlineCircle.setFill(null);
+        outlineCircle.setStroke(OUTLINE_COLOR);
+        outlineCircle.getStrokeDashArray().add(OUTLINE_STROKE_DASH);
         outlineCircle.setLayoutX(0);
         outlineCircle.setLayoutY(0);
+        outlineCircle.setScale(1);
+        outlineCircle.setRotate(0);
 
         outlineCircle.setStroke(OUTLINE_COLOR);
         outlineCircle.getStrokeDashArray().add(OUTLINE_STROKE_DASH);

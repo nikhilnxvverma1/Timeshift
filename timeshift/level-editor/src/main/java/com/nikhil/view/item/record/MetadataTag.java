@@ -49,6 +49,10 @@ public enum MetadataTag {
                 return "Translation";
             case ANCHOR_POINT:
                 return "Anchor Point";
+            case BASE:
+                return "Base";
+            case HEIGHT:
+                return "Height";
             case POLYGON_VERTEX_HEADER:
                 return "Vertices";
             case POLYGON_VERTEX:

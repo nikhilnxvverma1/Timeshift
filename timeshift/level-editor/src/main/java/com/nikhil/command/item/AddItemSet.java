@@ -23,7 +23,6 @@ public class AddItemSet extends ActionOnItemSet {
     public void execute() {
         for(ItemViewController itemViewController: itemSet){
             itemViewController.setCompositionViewController(compositionViewController);
-//            itemViewController.addViewsTo();
             compositionViewController.addItemViewController(itemViewController);
         }
     }
@@ -32,7 +31,6 @@ public class AddItemSet extends ActionOnItemSet {
     public void unexecute() {
         for(ItemViewController itemViewController: itemSet){
             itemViewController.setCompositionViewController(compositionViewController);
-//            itemViewController.removeViews();
             compositionViewController.removeItemViewController(itemViewController);
         }
     }
