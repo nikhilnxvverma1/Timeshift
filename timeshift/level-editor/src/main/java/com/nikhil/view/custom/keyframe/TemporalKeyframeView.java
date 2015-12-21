@@ -9,6 +9,7 @@ public class TemporalKeyframeView extends KeyframeView{
 
     private TemporalKeyframe keyframeModel;
     private TemporalKeyframePane keyframePane;
+    private TemporalGraphNode graphNode;
 
     public TemporalKeyframeView(TemporalKeyframe keyframeModel,TemporalKeyframePane keyframePane) {
         this(keyframeModel,keyframePane,DEFAULT_WIDTH);
@@ -18,6 +19,11 @@ public class TemporalKeyframeView extends KeyframeView{
         super(width);
         this.keyframeModel = keyframeModel;
         this.keyframePane=keyframePane;
+        this.graphNode=new TemporalGraphNode(this);
+    }
+
+    public TemporalGraphNode getGraphNode() {
+        return graphNode;
     }
 
     @Override

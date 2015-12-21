@@ -30,9 +30,8 @@ public class SelectionArea implements EventHandler<MouseEvent>{
 	public SelectionArea(SelectionOverlap overlapChecker){
 		this.overlapChecker=overlapChecker;
 		selectRect=new Rectangle();
-		selectRect.setStroke(Color.BLACK);
-		selectRect.setFill(Color.TRANSPARENT);
-		selectRect.getStrokeDashArray().add(3d);
+		selectRect.setStyle("-fx-fill: rgba(0,0,255,0.1);-fx-stroke: rgba(0,0,255,1);-fx-stroke-width:1");
+//		selectRect.getStrokeDashArray().add(3d);
 		setVisible(false);
 	}
 

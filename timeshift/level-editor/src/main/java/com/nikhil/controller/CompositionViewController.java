@@ -2,12 +2,14 @@ package com.nikhil.controller;
 
 import com.nikhil.Main;
 import com.nikhil.controller.item.ItemModelController;
+import com.nikhil.editor.selection.SelectionArea;
 import com.nikhil.editor.workspace.Workspace;
 import com.nikhil.view.custom.*;
 import com.nikhil.view.custom.cells.KeyframeCell;
 import com.nikhil.view.custom.cells.NameCell;
 import com.nikhil.view.custom.cells.OptionCell;
 import com.nikhil.view.custom.cells.ValueCell;
+import com.nikhil.view.custom.keyframe.GraphEditor;
 import com.nikhil.view.custom.keyframe.KeyframeView;
 import com.nikhil.view.custom.keyframe.KeyframeTreeView;
 import com.nikhil.view.item.record.HeaderMetadata;
@@ -67,6 +69,8 @@ public class CompositionViewController {
     private Group outlineGroup;
     private TreeTableView<Metadata> itemTable;
     private KeyframeTreeView keyframeTable;
+    private GraphEditor graphEditor;
+    private SelectionArea selectionArea;
     private Playback playback;
     private TextField filterField=new TextField();
 
@@ -260,6 +264,10 @@ public class CompositionViewController {
         return keyframeTable;
     }
 
+    public SelectionArea getSelectionArea() {
+        return selectionArea;
+    }
+
     /**
      * @deprecated
      * finds the vertical virtual scroll bar if present in a node
@@ -331,14 +339,17 @@ public class CompositionViewController {
 
         itemTable = initItemTable(rootTreeItem);
         keyframeTable =new KeyframeTreeView(this, rootTreeItem);
+        graphEditor=new GraphEditor(this);
+        graphEditor.setVisible(false);
+        selectionArea=new SelectionArea(keyframeTable);//by default the keyframe table would be receiving the selections
 
         //bind the scrollbars of the two tables TODO unhook these listeners later
 
         itemTable.getChildrenUnmodifiable().addListener(itemTableUnmodifiedChildrenListener);
         keyframeTable.getChildrenUnmodifiable().addListener(keyframeTableUnmodifiedChildrenListener);
 
-        anchorPane.getChildren().addAll(outerHBox, itemTable, ruler, keyframeTable, selectionBar,
-                thumbSeeker.getLineMark(), thumbSeeker, keyframeTable.getSelectionArea().getSelectRect());
+        anchorPane.getChildren().addAll(outerHBox, itemTable, ruler, keyframeTable,graphEditor, selectionBar,
+                thumbSeeker.getLineMark(), thumbSeeker, selectionArea.getSelectRect());
         thumbSeeker.getLineMark().setLayoutX(LEFT_COMPONENT_WIDTH);
         thumbSeeker.getLineMark().endYProperty().//just below so that it doesn't increase with every resize
                 bind(itemTable.heightProperty().add(PLAYBACK_FEATURES_HEIGHT - 2));
@@ -358,10 +369,17 @@ public class CompositionViewController {
         AnchorPane.setLeftAnchor(thumbSeeker,LEFT_COMPONENT_WIDTH);
         AnchorPane.setRightAnchor(thumbSeeker, 0d);
 
+        //keyframe table will be at the right side
         AnchorPane.setTopAnchor(keyframeTable, PLAYBACK_FEATURES_HEIGHT+selectionBar.getAreaHeight());
         AnchorPane.setLeftAnchor(keyframeTable,LEFT_COMPONENT_WIDTH);
         AnchorPane.setRightAnchor(keyframeTable, 0d);
         AnchorPane.setBottomAnchor(keyframeTable, 0d);
+
+        //constraints for graph editor will be same as keyframe table,such that it overlays on top of the keyframe table
+        AnchorPane.setTopAnchor(graphEditor, PLAYBACK_FEATURES_HEIGHT+selectionBar.getAreaHeight());
+        AnchorPane.setLeftAnchor(graphEditor,LEFT_COMPONENT_WIDTH);
+        AnchorPane.setRightAnchor(graphEditor, 0d);
+        AnchorPane.setBottomAnchor(graphEditor, 0d);
 
         AnchorPane.setTopAnchor(selectionBar, PLAYBACK_FEATURES_HEIGHT);
         AnchorPane.setLeftAnchor(selectionBar,LEFT_COMPONENT_WIDTH);
@@ -387,6 +405,7 @@ public class CompositionViewController {
         DraggableTextValue timeDragger=playback.getTimeDragger();
         //filter field should already be initialized
         filterField.setPromptText("Search");
+        filterField.setPrefWidth(130);//TODO this will soon be moved in the header of the name column
         Button gotoBeginning=new Button("|<");
         Button previousKeyframe=new Button("<|");
         previousKeyframe.setOnAction(event -> this.jumpTimeToPreviousKeyframe());
@@ -396,7 +415,16 @@ public class CompositionViewController {
         nextKeyframe.setOnAction(event -> this.jumpTimeToNextKeyframe());
         Button gotoEnd=new Button(">|");
 
-        ToolBar playerControls=new ToolBar(gotoBeginning,previousKeyframe,playPause,nextKeyframe,gotoEnd);
+        //when the graph editor button is pressed, the graph editor will become visible and it will
+        //receive notifications for the selections
+        ToggleButton graphEditorToggle=new ToggleButton("GE");
+        Tooltip.install(graphEditorToggle,new Tooltip("Graph Editor"));
+        graphEditorToggle.setOnAction(event -> {
+            graphEditor.setVisible(graphEditorToggle.isSelected());
+            selectionArea.setOverlapChecker(graphEditorToggle.isSelected()?graphEditor:keyframeTable);
+        });
+
+        ToolBar playerControls=new ToolBar(gotoBeginning,previousKeyframe,playPause,nextKeyframe,gotoEnd,graphEditorToggle);
         HBox outerHBox=new HBox(timeDragger, filterField,playerControls);
         outerHBox.setAlignment(Pos.CENTER_LEFT);
         outerHBox.setPadding(new Insets(0,2,0,2));

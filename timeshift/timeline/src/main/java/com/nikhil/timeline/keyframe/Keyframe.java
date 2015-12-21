@@ -16,7 +16,7 @@ public abstract class Keyframe {
 	public static final EaseInOut EASE_IN_OUT=new EaseInOut();
 
 	protected double time;
-	protected InterpolationCurve interpolationWithNext=LINEAR;
+	protected InterpolationModel interpolationWithNext=new InterpolationModel();
 
 	public Keyframe(double time) {
 		this.time = time;
@@ -37,7 +37,8 @@ public abstract class Keyframe {
 	public InterpolationCurve getInterpolationWithNext() {
 		return interpolationWithNext;
 	}
-	public void setInterpolationWithNext(InterpolationCurve interpolationWithNext) {
+
+	public void setInterpolationWithNext(InterpolationModel interpolationWithNext) {
 		this.interpolationWithNext = interpolationWithNext;
 	}
 

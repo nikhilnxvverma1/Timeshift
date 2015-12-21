@@ -20,6 +20,7 @@ public class SpatialKeyframeView extends KeyframeView implements BezierPointInte
     private SpatialKeyframe keyframe;
     private SpatialKeyframePane keyframePane;
     private InteractiveBezierPoint interactiveBezierPoint;
+    private SpatialGraphNode graphNode;
 
     public SpatialKeyframeView(SpatialKeyframe keyframe,SpatialKeyframePane keyframePane) {
         this(keyframe,keyframePane,DEFAULT_WIDTH);
@@ -47,6 +48,7 @@ public class SpatialKeyframeView extends KeyframeView implements BezierPointInte
 
             }//TODO why did we override this?
         };
+        graphNode=new SpatialGraphNode(this);
     }
 
     public InteractiveBezierPoint getInteractiveBezierPoint() {
@@ -73,6 +75,9 @@ public class SpatialKeyframeView extends KeyframeView implements BezierPointInte
         return keyframePane.removeKeyframe(this);
     }
 
+    public SpatialGraphNode getGraphNode() {
+        return graphNode;
+    }
 
     /**
      * Updates the motion path w.r.t this keyframe's bezier point.

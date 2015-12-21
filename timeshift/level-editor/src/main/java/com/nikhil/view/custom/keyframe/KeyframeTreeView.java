@@ -26,7 +26,7 @@ import java.util.LinkedList;
  */
 public class KeyframeTreeView extends TreeView<Metadata> implements SelectionOverlap {
 
-    private final SelectionArea selectionArea=new SelectionArea(this);
+//    private final SelectionArea selectionArea=new SelectionArea(this);
     private CompositionViewController compositionViewController;
 
     //=============================================================================================
@@ -65,7 +65,7 @@ public class KeyframeTreeView extends TreeView<Metadata> implements SelectionOve
         //by now we know that that the press is on the virtual flow
         startedPressOnVirtualFlow=true;
         Point2D point2D = this.localToParent(e.getX(), e.getY());
-        selectionArea.startSelection(point2D.getX(),point2D.getY());
+        compositionViewController.getSelectionArea().startSelection(point2D.getX(), point2D.getY());
         e.consume();
     };
     private final EventHandler<MouseEvent> mouseDraggedListener = e-> {
@@ -96,7 +96,7 @@ public class KeyframeTreeView extends TreeView<Metadata> implements SelectionOve
             }
         }
         Point2D point2D = this.localToParent(e.getX(), e.getY());
-        selectionArea.moveSelection(point2D.getX(), point2D.getY());
+        compositionViewController.getSelectionArea().moveSelection(point2D.getX(), point2D.getY());
         e.consume();
     };
     private final EventHandler<MouseEvent> mouseReleasedListener = e->{
@@ -128,7 +128,7 @@ public class KeyframeTreeView extends TreeView<Metadata> implements SelectionOve
             }
         }
         Point2D point2D = this.localToParent(e.getX(), e.getY());
-        selectionArea.endSelection();
+        compositionViewController.getSelectionArea().endSelection();
         e.consume();
         startedPressOnVirtualFlow=false;//resetting the flag here ensures that it maintains the correct state for the next press
     };
@@ -181,10 +181,6 @@ public class KeyframeTreeView extends TreeView<Metadata> implements SelectionOve
             }
         }
         return null;
-    }
-
-    public SelectionArea getSelectionArea() {
-        return selectionArea;
     }
 
     @Override
