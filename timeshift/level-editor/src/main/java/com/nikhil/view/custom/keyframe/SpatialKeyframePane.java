@@ -6,12 +6,15 @@ import com.nikhil.view.item.record.SpatialMetadata;
 import javafx.scene.Group;
 import javafx.scene.Node;
 
+import java.util.TreeSet;
+
 /**
  * Created by NikhilVerma on 11/11/15.
  */
 public class SpatialKeyframePane extends KeyframePane{
 
     private SpatialMetadata metadata;
+    private TreeSet<SpatialGraphNode> graphNodes=new TreeSet<>((o1,o2)-> (int) (o1.getTime()-o2.getTime()));
 
     public SpatialKeyframePane(double totalTime, double length,SpatialMetadata metadata) {
         super(totalTime, length);
@@ -31,6 +34,11 @@ public class SpatialKeyframePane extends KeyframePane{
         updateMotionPath();
         //set the time of the spatial keyframe change node
         metadata.getKeyframeChangeNode().setTime(currentTime);
+    }
+
+    @Override
+    public TreeSet<SpatialGraphNode> getGraphNodes() {
+        return graphNodes;
     }
 
     @Override
@@ -61,10 +69,19 @@ public class SpatialKeyframePane extends KeyframePane{
     private void insertKeyframeWithBezierPoint(SpatialKeyframeView keyframeView) {
         keyframeView.setLayoutX(getLayoutXFor(keyframeView));
         keyContainer.getChildren().add(keyframeView);
+        addGraphNode(keyframeView.getGraphNode());
 
         //add a new bezier point
         Group outlineGroup = metadata.getItemViewController().getCompositionViewController().getOutlineGroup();
         keyframeView.getInteractiveBezierPoint().addAsChildrenTo(outlineGroup);
+    }
+
+    private void addGraphNode(SpatialGraphNode graphNode) {
+        graphNodes.add(graphNode);
+        //add the graph node associated with this keyframe to the graph editor
+        getMetadata().getItemViewController().getCompositionViewController().
+                getGraphEditor().addGraphNode(graphNode);
+
     }
 
     /**
@@ -84,8 +101,17 @@ public class SpatialKeyframePane extends KeyframePane{
             if (previousKeyframeView != null) {
                 previousKeyframeView.updateMotionPathOnlyForNext();
             }
+
+            //remove the graph node associated with this keyframe
+            removeGraphNode(keyframeView.getGraphNode());
         }
         return wasRemoved;
+    }
+
+    private void removeGraphNode(SpatialGraphNode graphNode) {
+        getMetadata().getItemViewController().getCompositionViewController().
+                getGraphEditor().removeGraphNode(graphNode);
+        graphNodes.remove(graphNode);
     }
 
     public void showMotionPath(boolean visible){
@@ -117,5 +143,21 @@ public class SpatialKeyframePane extends KeyframePane{
 
         //hide the motion path
         showMotionPath(false);
+    }
+
+    @Override
+    public void updateGraphNodes(){
+        SpatialGraphNode previous=null;
+        for(SpatialGraphNode graphNode:getGraphNodes()){
+            if(previous!=null){
+                previous.updateView(graphNode);
+            }
+            previous=graphNode;
+        }
+
+        //for the last graph node we will need to explicitly set it to null
+        if (previous!=null) {
+            previous.updateView(null);
+        }
     }
 }

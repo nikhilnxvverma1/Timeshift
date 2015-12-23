@@ -16,6 +16,7 @@ import javafx.scene.layout.AnchorPane;
 
 import java.util.LinkedList;
 import java.util.List;
+import java.util.TreeSet;
 
 /**
  * An abstract pane that contains all the keys along with other elements.
@@ -465,16 +466,6 @@ public abstract class KeyframePane extends AnchorPane implements SelectionOverla
 	}
 
 	/**
-	 * removes all keyframes from this keyframe pane
-	 * @return total number of keyframes removed
-	 */
-	public int removeAllKeyframes(){
-		int size = keyContainer.getChildren().size();
-		keyContainer.getChildren().removeAll();
-		return size;
-	}
-
-	/**
 	 * Finds the keyframe view for the given keyframe model, by linearly
 	 * iterating through all the keyframe views
 	 * @param keyframe keyframe model which is held in one of the keyframe views
@@ -551,4 +542,18 @@ public abstract class KeyframePane extends AnchorPane implements SelectionOverla
 	 */
 	public abstract void keyframesMoved(int totalKeysMoved);
 
+	public abstract TreeSet<? extends GraphNode> getGraphNodes();
+
+	public abstract void updateGraphNodes();
+
+	/**
+	 * Toggles the visibility of all the graph nodes in this keyframe that make up the
+	 * keyframe's interpolation curve
+	 * @param visible true makes the entire curve visible, false does the opposite
+	 */
+	public void showKeyframeCurve(boolean visible){
+		for(GraphNode graphNode: getGraphNodes()){
+			graphNode.setVisible(visible);
+		}
+	}
 }

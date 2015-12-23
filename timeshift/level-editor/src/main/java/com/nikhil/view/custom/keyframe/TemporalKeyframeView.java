@@ -22,6 +22,7 @@ public class TemporalKeyframeView extends KeyframeView{
         this.graphNode=new TemporalGraphNode(this);
     }
 
+    @Override
     public TemporalGraphNode getGraphNode() {
         return graphNode;
     }
@@ -49,5 +50,19 @@ public class TemporalKeyframeView extends KeyframeView{
     @Override
     protected void shiftTimeInChangeNode(double time) {
         keyframePane.getMetadata().getKeyframeChangeNode().shiftKeyframe(keyframeModel,time);
+
+        //Sorting trick: remove and add back to insert the graph node in sorted order
+        keyframePane.getGraphNodes().remove(graphNode);
+        keyframePane.getGraphNodes().add(graphNode);
+
+        //update the (possibly changed) order of graph nodes
+        TemporalGraphNode before= keyframePane.getGraphNodes().floor(graphNode);
+        if (before!=null) {
+            before.updateView(graphNode);
+        }
+        TemporalGraphNode after = keyframePane.getGraphNodes().ceiling(graphNode);
+        if (after!=null) {
+            graphNode.updateView(after);
+        }
     }
 }

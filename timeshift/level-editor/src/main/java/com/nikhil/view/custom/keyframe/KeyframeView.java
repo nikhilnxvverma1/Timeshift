@@ -1,10 +1,7 @@
 package com.nikhil.view.custom.keyframe;
 
 import com.nikhil.timeline.keyframe.Keyframe;
-import com.nikhil.timeline.KeyValue;
 import javafx.beans.binding.DoubleBinding;
-import javafx.beans.property.DoubleProperty;
-import javafx.beans.property.SimpleDoubleProperty;
 import javafx.scene.effect.ColorAdjust;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -89,4 +86,6 @@ public abstract class KeyframeView extends ImageView {
      * @return true if the data structure holding this changed, false otherwise
      */
     public abstract boolean removeFromParentKeyframePane();
+
+    public abstract GraphNode getGraphNode();
 }

@@ -1,6 +1,5 @@
 package com.nikhil.view.custom.keyframe;
 
-import apple.laf.JRSUIUtils;
 import com.nikhil.controller.CompositionViewController;
 import com.nikhil.editor.selection.SelectionArea;
 import com.nikhil.editor.selection.SelectionOverlap;
@@ -469,6 +468,49 @@ public class KeyframeTreeView extends TreeView<Metadata> implements SelectionOve
             KeyframePane keyframePane = treeItem.getValue().getKeyframePane();
             if (keyframePane!=null) {
                 keyframePane.fillWithSelectedKeyframes(keyframeViewList);
+            }
+        }
+    }
+
+    /**Updates the graph node associated with every property (if they exist)*/
+    public void updateAllGraphNodes(){
+        updateGraphNodeOfEach(getRoot());
+    }
+
+    private void updateGraphNodeOfEach(TreeItem<Metadata> treeItem){
+        if(treeItem.getValue().isHeader()){
+            for(TreeItem<Metadata> child:treeItem.getChildren()){
+                updateGraphNodeOfEach(child);
+            }
+
+        }else{
+
+            KeyframePane keyframePane = treeItem.getValue().getKeyframePane();
+            if (keyframePane!=null) {
+                keyframePane.updateGraphNodes();
+            }
+        }
+    }
+
+    /**
+     * Toggles the visibility of the curves of each keyframed property
+     * @param visible true displays all keyframed curves,false hides all keyframed curves
+     */
+    public void showAllKeyframeCurves(boolean visible){
+        showGraphNodeOfEach(getRoot(),visible);
+    }
+
+    private void showGraphNodeOfEach(TreeItem<Metadata> treeItem,boolean visible){
+        if(treeItem.getValue().isHeader()){
+            for(TreeItem<Metadata> child:treeItem.getChildren()){
+                showGraphNodeOfEach(child, visible);
+            }
+
+        }else{
+
+            KeyframePane keyframePane = treeItem.getValue().getKeyframePane();
+            if (keyframePane!=null) {
+                keyframePane.showKeyframeCurve(visible);
             }
         }
     }

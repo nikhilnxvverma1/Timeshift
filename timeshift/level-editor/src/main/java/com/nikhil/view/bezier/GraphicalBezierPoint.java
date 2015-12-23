@@ -5,7 +5,6 @@ import com.nikhil.util.modal.UtilPoint;
 import javafx.collections.ObservableList;
 import javafx.scene.Group;
 import javafx.scene.Node;
-import javafx.scene.Parent;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
@@ -13,8 +12,6 @@ import javafx.scene.shape.Circle;
 import javafx.scene.shape.CubicCurve;
 import javafx.scene.shape.Line;
 import javafx.scene.shape.Rectangle;
-
-import javax.rmi.CORBA.Util;
 
 /**
  * Created by NikhilVerma on 24/08/15.
@@ -33,10 +30,21 @@ public class GraphicalBezierPoint extends BezierPoint {
     protected Circle nextControlPointCircle;
     protected Line nextControlLine;
 
+    /**
+     * Creates a Graphical bezier point without any cubic curve.
+     * Reserved for subclasses and subclasses themselves should take
+     * responsibility to instantiate the cubic curve
+     * @param anchorPoint the anchor point of the graphical bezier point
+     */
     protected GraphicalBezierPoint(UtilPoint anchorPoint){
         this(anchorPoint,null);
     }
 
+    /**
+     * Creates a graphical bezier point with a known(possibly pre configured) cubic curve
+     * @param anchorPoint the anchor point of the graphical bezier point
+     * @param cubicCurve the cubic curve used by this bezier point
+     */
     public GraphicalBezierPoint(UtilPoint anchorPoint, CubicCurve cubicCurve) {
         super(anchorPoint);
         this.cubicCurve = cubicCurve;
@@ -123,8 +131,6 @@ public class GraphicalBezierPoint extends BezierPoint {
         super.setAnchorPoint(anchorPoint);
         double x=anchorPoint.getX();
         double y=anchorPoint.getY();
-//        anchorPointRect.setCenterX(x);
-//        anchorPointRect.setCenterY(y);
         anchorPointRect.setLayoutX(x-anchorPointRect.getWidth()/2);
         anchorPointRect.setLayoutY(y-anchorPointRect.getHeight()/2);
 
@@ -137,37 +143,51 @@ public class GraphicalBezierPoint extends BezierPoint {
     @Override
     public void setControlPointWithPrevious(UtilPoint controlPointWithPrevious) {
         super.setControlPointWithPrevious(controlPointWithPrevious);
-        float absoluteX = (float) (getAnchorPoint().getX() + controlPointWithPrevious.getX());
-        float absoluteY = (float) (getAnchorPoint().getY() + controlPointWithPrevious.getY());
+        double absoluteX = (getAnchorPoint().getX() + controlPointWithPrevious.getX());
+        double absoluteY = (getAnchorPoint().getY() + controlPointWithPrevious.getY());
         if(cubicCurve !=null){
             //control points are relative to layout x,y
             cubicCurve.setControlX1(controlPointWithPrevious.getX());
             cubicCurve.setControlY1(controlPointWithPrevious.getY());
         }
 
+        //make sure not to show any control point circle ("setVisible") if the cubic curve is not visible
+        //if the cubic curve is not visible then the entire thing should not be visible
+
         previousControlPointCircle.setCenterX(absoluteX);
         previousControlPointCircle.setCenterY(absoluteY);
-        previousControlPointCircle.setVisible(true);
+        if (cubicCurve.isVisible()) {
+            previousControlPointCircle.setVisible(true);
+        }
 
         previousControlLine.setEndX(absoluteX);
         previousControlLine.setEndY(absoluteY);
-        previousControlLine.setVisible(true);
+        if (cubicCurve.isVisible()) {
+            previousControlLine.setVisible(true);
+        }
     }
 
     @Override
     public void setControlPointWithNext(UtilPoint controlPointWithNext) {
         super.setControlPointWithNext(controlPointWithNext);
 
-        float absoluteX = (float) (getAnchorPoint().getX() + controlPointWithNext.getX());
-        float absoluteY = (float) (getAnchorPoint().getY() + controlPointWithNext.getY());
+        double absoluteX = (getAnchorPoint().getX() + controlPointWithNext.getX());
+        double absoluteY = (getAnchorPoint().getY() + controlPointWithNext.getY());
+
+        //make sure not to show any control point circle ("setVisible") if the cubic curve is not visible
+        //if the cubic curve is not visible then the entire thing should not be visible
 
         nextControlPointCircle.setCenterX(absoluteX);
         nextControlPointCircle.setCenterY(absoluteY);
-        nextControlPointCircle.setVisible(true);
+        if (cubicCurve.isVisible()) {
+            nextControlPointCircle.setVisible(true);
+        }
 
         nextControlLine.setEndX(absoluteX);
         nextControlLine.setEndY(absoluteY);
-        nextControlLine.setVisible(true);
+        if (cubicCurve.isVisible()) {
+            nextControlLine.setVisible(true);
+        }
 
     }
 
@@ -226,8 +246,8 @@ public class GraphicalBezierPoint extends BezierPoint {
 
 
     /**
-     * Updates the cubic curve of this bezier point
-     * @param next the next bezier point after this point in the bezier path
+     * Updates the cubic curve of this bezier point with the next bezier point that is supplied.
+     * @param next the next bezier point after this point in the bezier path.This may be null.
      */
     public void updateView(BezierPoint next){
 

@@ -17,12 +17,10 @@ import com.nikhil.timeline.change.temporal.TemporalKeyframeChangeNode;
 import com.nikhil.timeline.keyframe.TemporalKeyframe;
 import com.nikhil.view.custom.DraggableTextValue;
 import com.nikhil.view.custom.DraggableTextValueDelegate;
-import com.nikhil.view.custom.keyframe.KeyframePane;
-import com.nikhil.view.custom.keyframe.KeyframeView;
-import com.nikhil.view.custom.keyframe.TemporalKeyframePane;
-import com.nikhil.view.custom.keyframe.TemporalKeyframeView;
+import com.nikhil.view.custom.keyframe.*;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.value.ChangeListener;
+import javafx.collections.transformation.SortedList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Node;
@@ -33,6 +31,8 @@ import javafx.scene.control.Tooltip;
 import javafx.scene.layout.HBox;
 
 import java.time.temporal.Temporal;
+import java.util.Comparator;
+import java.util.TreeSet;
 
 /**
  * Metadata for any temporal property. <b>After instantiating, make sure to

@@ -1,13 +1,11 @@
 package com.nikhil.view.custom.keyframe;
 
-import javafx.scene.Group;
-
 /**
  * Created by NikhilVerma on 20/12/15.
  */
-public abstract class KeyframeGraphNode extends Group{
+public abstract class GraphNode implements Comparable<GraphNode>{
 
-    protected KeyframeGraphNodeBezierPoint []graphNodes;
+    protected GraphNodeBezierPoint[] graphNodesBezierPoints;
 
     public void setTime(double time){
         getKeyframeView().setTime(time);
@@ -25,14 +23,25 @@ public abstract class KeyframeGraphNode extends Group{
         return getKeyframeView().isSelected();
     }
 
-    public abstract KeyframeGraphNode getNext();
-    public abstract KeyframeGraphNode getPrevious();
     public abstract KeyframeView getKeyframeView();
 
     /**
      * Updates the position of this graph node amongst other graph nodes of the same curve
-     * @param graphEditor the graph in which the graph node exists.
      */
-    public abstract void update(GraphEditor graphEditor);
+    protected abstract void updateView();
 
+    @Override
+    public int compareTo(GraphNode o) {
+        return (int) (getTime()-o.getTime());
+    }
+
+    public GraphNodeBezierPoint[] getGraphNodesBezierPoints() {
+        return graphNodesBezierPoints;
+    }
+
+    public void setVisible(boolean visible){
+        for (int i = 0; i < graphNodesBezierPoints.length; i++) {
+            graphNodesBezierPoints[i].setVisible(visible);
+        }
+    }
 }

@@ -10,6 +10,7 @@ import com.nikhil.view.custom.cells.NameCell;
 import com.nikhil.view.custom.cells.OptionCell;
 import com.nikhil.view.custom.cells.ValueCell;
 import com.nikhil.view.custom.keyframe.GraphEditor;
+import com.nikhil.view.custom.keyframe.KeyframePane;
 import com.nikhil.view.custom.keyframe.KeyframeView;
 import com.nikhil.view.custom.keyframe.KeyframeTreeView;
 import com.nikhil.view.item.record.HeaderMetadata;
@@ -262,6 +263,10 @@ public class CompositionViewController {
 
     public KeyframeTreeView getKeyframeTable() {
         return keyframeTable;
+    }
+
+    public GraphEditor getGraphEditor() {
+        return graphEditor;
     }
 
     public SelectionArea getSelectionArea() {
@@ -532,6 +537,13 @@ public class CompositionViewController {
                     newValue.getValue().getItemViewController().isInteractive()){
                 workspace.getSelectedItems().selectOnly(newValue.getValue().getItemViewController());
                 keyframeTable.getSelectionModel().select(newValue);
+
+                //show the keyframe curve of only this selected property
+                keyframeTable.showAllKeyframeCurves(false);
+                KeyframePane keyframePane = newValue.getValue().getKeyframePane();
+                if(keyframePane!=null){//mind it if the metadata is a header which wouldn't have any keyframe pane
+                    keyframePane.showKeyframeCurve(true);
+                }
             }
         });
         treeTableView.getStyleClass().add("no-vertical-scrollbar");

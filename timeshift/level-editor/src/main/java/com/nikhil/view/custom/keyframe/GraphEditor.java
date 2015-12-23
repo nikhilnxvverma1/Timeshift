@@ -9,7 +9,6 @@ import javafx.geometry.Bounds;
 import javafx.geometry.Point2D;
 import javafx.scene.Group;
 import javafx.scene.Node;
-import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
@@ -54,7 +53,6 @@ public class GraphEditor extends Pane implements SelectionOverlap {
         e.consume();
     };
 
-
     public GraphEditor(CompositionViewController compositionViewController) {
         this.compositionViewController = compositionViewController;
         upperX=compositionViewController.getDuration();
@@ -81,10 +79,26 @@ public class GraphEditor extends Pane implements SelectionOverlap {
         return compositionViewController;
     }
 
+    public double getLowerY() {
+        return lowerY;
+    }
+
+    public double getUpperY() {
+        return upperY;
+    }
+
+    public double getLowerX() {
+        return lowerX;
+    }
+
+    public double getUpperX() {
+        return upperX;
+    }
+
     public void update(){
         updateXGridLines();
         updateYGridLinesAndMarkings();
-        updateGraphNodes();
+        compositionViewController.getKeyframeTable().updateAllGraphNodes();
     }
     private void updateXGridLines(){
         xGridLines.getChildren().clear();
@@ -131,10 +145,9 @@ public class GraphEditor extends Pane implements SelectionOverlap {
         }
     }
 
-    private void updateGraphNodes(){
+    public void makeGraphNodesVisible(boolean visible){
         for(Node node: graphNodeContainer.getChildren()){
-            KeyframeGraphNode graphNode=(KeyframeGraphNode)node;
-            graphNode.update(this);
+            node.setVisible(visible);//no need to downcast
         }
     }
 
@@ -143,6 +156,18 @@ public class GraphEditor extends Pane implements SelectionOverlap {
         super.layoutChildren();
         Logger.log("updating");
         update();
+    }
+
+    public void addGraphNode(GraphNode graphNode){
+        for (int i = 0; i < graphNode.getGraphNodesBezierPoints().length; i++) {
+            graphNode.getGraphNodesBezierPoints()[i].addAsChildrenTo(graphNodeContainer);
+        }
+    }
+
+    public void removeGraphNode(GraphNode graphNode){
+        for (int i = 0; i < graphNode.getGraphNodesBezierPoints().length; i++) {
+            graphNode.getGraphNodesBezierPoints()[i].removeAsChildrenFrom(graphNodeContainer);
+        }
     }
 
 }

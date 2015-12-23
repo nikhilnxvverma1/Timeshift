@@ -75,6 +75,7 @@ public class SpatialKeyframeView extends KeyframeView implements BezierPointInte
         return keyframePane.removeKeyframe(this);
     }
 
+    @Override
     public SpatialGraphNode getGraphNode() {
         return graphNode;
     }
@@ -157,5 +158,9 @@ public class SpatialKeyframeView extends KeyframeView implements BezierPointInte
     @Override
     protected void shiftTimeInChangeNode(double time) {
         keyframePane.getMetadata().getKeyframeChangeNode().shiftKeyframe(keyframe,time);
+
+        //Sorting trick: remove and add back to insert the graph node in sorted order
+        keyframePane.getGraphNodes().remove(graphNode);
+        keyframePane.getGraphNodes().add(graphNode);
     }
 }
