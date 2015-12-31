@@ -9,27 +9,27 @@ multiple levels.
 Timeshift is a multi module gradle project written in Java(JavaFX used for the frontend). The project is primarily divided into five 
 sub projects: The first three projects are coded to be completely void of any java specific dependency
 
-1.Util
+#1.Util
 This is a relatively small module that sits at the very top.This project deals with all the utility based classes. Some important ones 
 include UtilPoint, BezierPoint and MathUtil
 
-2.Timeline
+#2.Timeline
 This module is the beating heart of all the animation stuff. Essentially it comprises of a Timeline class and a set of ChangeNode classes
 that facilitate a callback based mechanism for triggering a change.
 
-3.Motion
+#3.Motion
 This module keeps all the shape models and additionally it also has composition controllers that basically "contain" all the elements of
 a composition
 
-4.Level editor
+#4.Level editor
 This is the JavaFX project that has the main class. The term "level editor" is actually used mostly because it started with the intention to be used as a 
 tool in a game. But now its much bigger than that.From this project onwards, there is natural dependency on every Java based feature.
 
-5.Game
+#5.Game
 This project is mostly unused for now but will be used later on while creating a "runtime" for running these animations independently 
 without the editor in a different frontend.In other words , it will essentially house all the "views".Again ignore the word "game"
 
-This project is still under development. Some of the tools will not work.So only the tools that are "pressable" will work. Specifically
+The main project sources exists in the "timeshift" folder.Please note that this project is still under development. Some of the tools will not work.So only the tools that are "pressable" will work. Specifically
 1.Selection
 2.Circle
 3.Triangle
