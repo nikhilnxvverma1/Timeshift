@@ -43,4 +43,4 @@ To run the project , you must have:
 Simply run the Main.java in the "level-editor" project.
 You can import the project in your favorite IDE if you want( I use IntelliJ) 
 
-![alt screenshot](/timeshift-screenshot.png?raw=true "Screenshot")
+![alt screenshot](https://raw.githubusercontent.com/nikhilnxvverma1/Timeshift/master/timshift-screenshot.png)
