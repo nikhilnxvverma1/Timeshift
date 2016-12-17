@@ -8,8 +8,9 @@ Shapes can be selected individually or in a group with an outline around them. O
 
 ![Keyframing action](keyframing.gif)
 
-Timeshift is a multi module gradle project written in Java(JavaFX used for the frontend). The project is primarily divided into five 
-sub projects: The first three projects are coded to be completely void of any java specific dependency
+## System Overview
+
+Timeshift is a multi module gradle project written in Java(JavaFX used for the frontend). The project is primarily divided into five loosely coupled sub projects: The first three projects are coded to be completely void of any java specific dependency
 
 1. **Util**
 This is a relatively small module that sits at the very top.This project deals with all the utility based classes. Some important ones 
@@ -31,7 +32,7 @@ tool in a game. But now its much bigger than that.From this project onwards, the
 This project is mostly unused for now but will be used later on while creating a "runtime" for running these animations independently 
 without the editor in a different frontend.In other words , it will essentially house all the "views".Again ignore the word "game"
 
-The main project sources exists in the "timeshift" folder.Please note that this project is still under development. Some of the tools will not work.So only the tools that are "pressable" will work. Specifically
+The main project sources exists in the _timeshift_ folder. This project is **still under development**, but you can check some of the _pressable_ tools that work. These include :
 
 * Selection
 * Circle
@@ -39,11 +40,20 @@ The main project sources exists in the "timeshift" folder.Please note that this 
 * Parallelogram
 * Polygon
 
-To run the project , you must have:
+## Instructions for running
+
+To run the project , ensure that you have the following installed:
+
 * Gradle
 * JDK 1.8
 
-Simply run the Main.java in the "level-editor" project.
-You can import the project in your favorite IDE if you want( I use IntelliJ) 
+Then open a terminal and proceed with the following commands:
+
+1. cd timeshift (goes to the main project folder )
+2. gradle (builds the project)
+3. cd editor (goes to the _Level Editor_ sub project)
+4. gradle execute (executes the _Level Editor's_ build)
+
+You can import the project(as a gradle project) in your favorite IDE if you want( I use IntelliJ). Please let me know if you face any issues.
 
 ![alt screenshot](https://raw.githubusercontent.com/nikhilnxvverma1/Timeshift/master/timshift-screenshot.png)
