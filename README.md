@@ -1,11 +1,10 @@
 # Timeshift
 Timeshift is an animation tool that allows the animation of various types of shapes. Shapes like rectangles, polygons, circles, triangles etc. contain several properties that can be tweaked to change their appearance. By ‘key framing’ these properties across a timeline, these shapes can be animated. 
+
 ![Workspace preview with shapes](shape-creation.gif)
-The system comprises of a tool based graphical workspace and a tabular key frame table for animating several properties of a shape.
-This also includes motion path for spatial animation.The animations themselves are made in seperate compositions
-Shapes can be selected individually or in a group with an outline around them. On double clicking a shape, a detailed "gizmo" outline
-appears for visually tweaking that particular shape's properties. Every action in the software is undoable(and redoable) to 
-multiple levels.
+
+The system comprises of a tool based graphical workspace and a tabular key frame table for animating several properties of a shape.This also includes motion path for spatial animation.The animations themselves are made in seperate compositions
+Shapes can be selected individually or in a group with an outline around them. On double clicking a shape, a detailed "gizmo" outline appears for visually tweaking that particular shape's properties. Every action in the software is undoable(and redoable) to multiple levels.
 
 ![Keyframing action](keyframing.gif)
 
