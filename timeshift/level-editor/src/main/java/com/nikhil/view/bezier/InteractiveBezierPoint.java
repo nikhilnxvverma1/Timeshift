@@ -1,7 +1,6 @@
 package com.nikhil.view.bezier;
 
 import com.nikhil.util.modal.UtilPoint;
-import com.sun.istack.internal.NotNull;
 import javafx.geometry.Point2D;
 import javafx.scene.Cursor;
 import javafx.scene.input.MouseEvent;
@@ -19,7 +18,7 @@ public class InteractiveBezierPoint extends GraphicalBezierPoint{
     private static double lastX, lastY;
     private BezierPointInteraction delegate;
 
-    public InteractiveBezierPoint(UtilPoint anchorPoint,@NotNull BezierPointInteraction delegate) {
+    public InteractiveBezierPoint(UtilPoint anchorPoint,BezierPointInteraction delegate) {
         super(new UtilPoint(anchorPoint),new CubicCurve());
         cubicCurve.setLayoutX(anchorPoint.getX());
         cubicCurve.setLayoutY(anchorPoint.getY());
